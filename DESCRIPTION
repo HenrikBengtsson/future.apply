@@ -1,0 +1,20 @@
+Package: future.apply
+Version: 0.0.0-9000
+Title: Apply Function to Elements in Parallel using Futures
+Depends:
+    future (>= 1.6.0)
+Imports:
+    globals (>= 0.10.2)
+Suggests:
+    listenv (>= 0.6.0),
+    R.rsp,
+    markdown
+VignetteBuilder: R.rsp
+Authors@R: c(person("Henrik", "Bengtsson", role=c("aut", "cre", "cph"),
+                                          email = "henrikb@braju.com"))
+Description: Implementations of apply(), lapply(), sapply() and friends that can be resolved using any future-supported backend, e.g. parallel on the local machine or distributed on a compute cluster.
+License: LGPL (>= 2.1)
+LazyLoad: TRUE
+URL: https://github.com/HenrikBengtsson/future.apply
+BugReports: https://github.com/HenrikBengtsson/future.apply/issues
+RoxygenNote: 6.0.1

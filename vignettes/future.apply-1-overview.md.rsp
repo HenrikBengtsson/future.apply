@@ -1,0 +1,30 @@
+<%@meta language="R-vignette" content="--------------------------------
+%\VignetteIndexEntry{A Future for R: Apply Function to Elements in Parallel}
+%\VignetteAuthor{Henrik Bengtsson}
+%\VignetteKeyword{R}
+%\VignetteKeyword{package}
+%\VignetteKeyword{vignette}
+%\VignetteKeyword{future}
+%\VignetteKeyword{lazy evaluation}
+%\VignetteKeyword{synchronous}
+%\VignetteKeyword{asynchronous}
+%\VignetteKeyword{parallel}
+%\VignetteKeyword{cluster}
+%\VignetteEngine{R.rsp::rsp}
+%\VignetteTangle{FALSE}
+
+Do not edit the *.md.rsp file.  Instead edit the *.md.rsp.rsp (sic!)
+file found under inst/vignettes-static/ of the source package.
+--------------------------------------------------------------------"%>
+# A Future for R: Apply Function to Elements in Parallel
+
+## Introduction
+
+
+[BatchJobs]: https://cran.r-project.org/package=BatchJobs
+[batchtools]: https://cran.r-project.org/package=batchtools
+[future]: https://cran.r-project.org/package=future
+[future.BatchJobs]: https://cran.r-project.org/package=future.BatchJobs
+[future.batchtools]: https://cran.r-project.org/package=future.batchtools
+---
+Copyright Henrik Bengtsson, 2017

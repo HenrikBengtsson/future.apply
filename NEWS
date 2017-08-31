@@ -1,9 +1,11 @@
 Package: future.apply
 =====================
 
-Version: 0.0.0-9000 [2017-08-29]
+Version: 0.0.0-9000 [2017-08-31]
 
 NEW FEATURES:
+
+ o Added future_sapply().
 
  o Added future_lapply() - originally from the future package.
  

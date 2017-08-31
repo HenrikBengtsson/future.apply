@@ -90,7 +90,6 @@
 future_lapply <- function(x, FUN, ..., future.globals = TRUE, future.packages = NULL, future.seed = FALSE, future.lazy = FALSE, future.scheduling = 1.0) {
   getGlobalsAndPackages <- import_future("getGlobalsAndPackages")
   objectSize <- import_future("objectSize")
-  tweakExpression <- import_future("tweakExpression")
   
   stopifnot(is.function(FUN))
   
@@ -132,7 +131,7 @@ future_lapply <- function(x, FUN, ..., future.globals = TRUE, future.packages = 
       if (debug) mdebug("Finding globals ...")
 
       expr <- do.call(call, args = c(list("FUN"), list(...)))
-      gp <- getGlobalsAndPackages(expr, envir = envir, tweak = tweakExpression, globals = TRUE)
+      gp <- getGlobalsAndPackages(expr, envir = envir, globals = TRUE)
       globals <- gp$globals
       packages <- gp$packages
       gp <- NULL

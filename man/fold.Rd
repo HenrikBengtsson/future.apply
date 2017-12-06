@@ -11,15 +11,18 @@ fold(x, f, left = TRUE, unname = TRUE, threshold = 1000L)
 
 \item{f}{A binary function, i.e. a function take takes two arguments.}
 
-\item{left}{If `TRUE`, vector is combined from the left (the first element),
+\item{left}{If \code{TRUE}, vector is combined from the left (the first element),
 otherwise the right (the last element).}
 
-\item{unname}{If `TRUE`, function `f` is called as `f(unname(y), x[[ii]])`,
-otherwise as `f(y, x[[ii]])`, which may introduce name `"y"`.}
+\item{unname}{If \code{TRUE}, function \code{f} is called as \code{f(unname(y), x[[ii]])},
+otherwise as \code{f(y, x[[ii]])}, which may introduce name \code{"y"}.
+
+[[ii]: R:[ii
+[[ii]: R:[ii}
 
 \item{threshold}{An integer (>= 2) specifying the length where the
 recursive divide'and'conquer call will stop and incremental building of
-the partial value is performed.  Using `threshold = +Inf` will disable
+the partial value is performed.  Using \code{threshold = +Inf} will disable
 recursive folding.}
 }
 \value{
@@ -30,10 +33,18 @@ Efficient fold / reduce / accumulate / combine of a vector
 }
 \details{
 In order for recursive folding to give the same results as non-recursive
-folding, binary function `f` must be _associative_ with itself, i.e.
-`f(f(x[[1]], x[[2]]), x[[3]])` equals `f(x[[1]], f(x[[2]]), x[[3]])`.
+folding, binary function \code{f} must be \emph{associative} with itself, i.e.
+\code{f(f(x[[1]], x[[2]]), x[[3]])} equals \code{f(x[[1]], f(x[[2]]), x[[3]])}.
 
 This function is a more efficient (memory and speed) of
-[`base::Reduce(f, x, right = !left, accumulate = FALSE)`][base::Reduce],
-especially when `x` is long.
+[\code{base::Reduce(f, x, right = !left, accumulate = FALSE)}][base::Reduce],
+especially when \code{x} is long.
+
+[[1]: R:[1
+[[2]: R:[2
+[[3]: R:[3
+[[1]: R:[1
+[[2]: R:[2
+[[3]: R:[3
+[base::Reduce]: R:base::Reduce
 }

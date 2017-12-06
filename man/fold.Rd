@@ -30,7 +30,7 @@ Efficient fold / reduce / accumulate / combine of a vector
 }
 \details{
 In order for recursive folding to give the same results as non-recursive
-folding, function `f` must be _associative_ with itself, i.e. that
+folding, binary function `f` must be _associative_ with itself, i.e.
 `f(f(x[[1]], x[[2]]), x[[3]])` equals `f(x[[1]], f(x[[2]]), x[[3]])`.
 
 This function is a more efficient (memory and speed) of

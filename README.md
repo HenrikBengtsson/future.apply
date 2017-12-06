@@ -1,5 +1,7 @@
 # future.apply: Apply Function to Elements in Parallel using Futures
 
+**WARNING: This package is under construction. Use with care.**
+
 ## Introduction
 
 
@@ -15,6 +17,13 @@ R package future.apply is only available via [GitHub](https://github.com/HenrikB
 source('http://callr.org/install#HenrikBengtsson/future.apply')
 ```
 
+### Pre-release version
+
+To install the pre-release version that is available in Git branch `develop` on GitHub, use:
+```r
+source('http://callr.org/install#HenrikBengtsson/future.apply@develop')
+```
+This will install the package from source.  
 
 
 

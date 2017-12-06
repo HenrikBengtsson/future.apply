@@ -1,3 +1,5 @@
+**WARNING: This package is under construction. Use with care.**
+
 <%
 ## Reuse the main vignette
 md <- R.rsp::rstring(file="vignettes/future.apply-1-overview.md.rsp", postprocess=FALSE)

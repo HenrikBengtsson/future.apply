@@ -83,12 +83,11 @@
 #' @example incl/future_lapply.R
 #'
 #' @importFrom globals globalsByName cleanup
-#' @importFrom future as.FutureGlobals resolve nbrOfWorkers future values
+#' @importFrom future future resolve values as.FutureGlobals nbrOfWorkers getGlobalsAndPackages
 #' @importFrom parallel nextRNGStream nextRNGSubStream splitIndices
 #' @importFrom utils capture.output str
 #' @export
 future_lapply <- function(X, FUN, ..., future.globals = TRUE, future.packages = NULL, future.seed = FALSE, future.lazy = FALSE, future.scheduling = 1.0) {
-  getGlobalsAndPackages <- import_future("getGlobalsAndPackages")
   objectSize <- import_future("objectSize")
   
   stopifnot(is.function(FUN))

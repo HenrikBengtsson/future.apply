@@ -16,30 +16,6 @@ call_my_add_caller <- function(a, b, FUN = call_my_add) {
   do.call(FUN, args = list(a = a, b = b))
 }
 
-main_future <- function(x = 1L, caller = call_my_add_caller,
-                            args = list(FUN = call_my_add)) {
-  f <- future(caller(a = x, b = x + 1L, FUN = args$FUN))
-  value(f)
-}
-
-main_future_no_FUN <- function(x = 1L, caller = call_my_add_caller,
-                            args = list(FUN = call_my_add)) {
-  f <- future(caller(a = x, b = x + 1L))
-  value(f)
-}
-
-main_futureCall <- function(x = 1L, caller = call_my_add_caller,
-                            args = list(FUN = call_my_add)) {
-  f <- futureCall(caller, args = c(list(a = x, b = x+1L), args))
-  value(f)
-}
-
-main_futureCall_no_FUN <- function(x = 1L, caller = call_my_add_caller,
-                            args = list(FUN = call_my_add)) {
-  f <- futureCall(caller, args = list(a = x, b = x+1L))
-  value(f)
-}
-
 main_lapply <- function(x = 1:2, caller = call_my_add_caller,
                                args = list(FUN = call_my_add)) {
   lapply(x, FUN = function(i) {
@@ -74,24 +50,6 @@ for (strategy in supportedStrategies()) {
   
   plan(strategy)
 
-  x <- main_future()
-  str(list(x = x))
-  if (is.null(x0)) x0 <- x
-  stopifnot(identical(x, x0))
-  
-  x2 <- main_future_no_FUN()
-  str(list(x2 = x2))
-  stopifnot(identical(x2, x0))
-  
-  y <- main_futureCall()
-  str(list(y = y))
-  if (is.null(y0)) y0 <- y
-  stopifnot(identical(y, y0))
-
-  y2 <- main_futureCall_no_FUN()
-  str(list(y2 = y2))
-  stopifnot(identical(y2, y0))
-  
   z <- main_lapply()
   str(list(z = z))
   if (is.null(z0)) z0 <- z

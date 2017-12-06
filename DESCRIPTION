@@ -1,10 +1,10 @@
 Package: future.apply
-Version: 0.0.0-9000
+Version: 0.0.2
 Title: Apply Function to Elements in Parallel using Futures
 Depends:
-    future (>= 1.6.0)
+    future (>= 1.6.2)
 Imports:
-    globals (>= 0.10.2)
+    globals (>= 0.10.3)
 Suggests:
     listenv (>= 0.6.0),
     R.rsp,

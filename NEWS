@@ -1,9 +1,21 @@
 Package: future.apply
 =====================
 
-Version: 0.0.0-9000 [2017-08-29]
+Version: 0.0.2 [2017-12-06]
 
 NEW FEATURES:
+
+ o PERFORMANCE: future_lapply(x, ...) is now much faster and more memory
+   efficient for large 'x' vectors because it uses internal fold() function
+   that is more efficient (memory and speed) version of base::Reduce(f, x),
+   especially when length(x) is large.
+
+
+Version: 0.0.0-9000 [2017-08-31]
+
+NEW FEATURES:
+
+ o Added future_sapply().
 
  o Added future_lapply() - originally from the future package.
  

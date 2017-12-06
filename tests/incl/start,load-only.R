@@ -37,9 +37,10 @@ oplan <- future::plan()
 future::plan("sequential")
 
 ## Private future.apply functions
-hpaste <- future:::hpaste
-#mdebug <- future:::mdebug
-get_random_seed <- future:::get_random_seed
+fold <- future.apply:::fold
+hpaste <- future.apply:::hpaste
+mdebug <- future.apply:::mdebug
+get_random_seed <- future.apply:::get_random_seed
 
 ## Local functions for test scripts
 printf <- function(...) cat(sprintf(...))

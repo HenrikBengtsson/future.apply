@@ -150,14 +150,14 @@ The API and identify of the future.apply package will be kept close to the `*app
 ## Installation
 R package future.apply is only available via [GitHub](https://github.com/HenrikBengtsson/future.apply) and can be installed in R as:
 ```r
-source('http://callr.org/install#HenrikBengtsson/future.apply')
+remotes::install_github('HenrikBengtsson/future.apply')
 ```
 
 ### Pre-release version
 
 To install the pre-release version that is available in Git branch `develop` on GitHub, use:
 ```r
-source('http://callr.org/install#HenrikBengtsson/future.apply@develop')
+remotes::install_github('HenrikBengtsson/future.apply@develop')
 ```
 This will install the package from source.  
 

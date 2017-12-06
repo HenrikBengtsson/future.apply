@@ -134,7 +134,7 @@ All future backends via <a href="https://cran.r-project.org/package=doFuture">do
 
 </table>
 
-Note that none of these higher-level APIs implement their own parallel backends, but they rather enhance existing ones.  The foreach framework leverages backends such as [doParallel], [doMC] and [doFuture], and the future.apply framework leverages the [future] ecosystem and therefore backends such as built-in parallel and [future.batchtools].
+Note that, except for the parallel package, none of these higher-level APIs implement their own parallel backends, but they rather enhance existing ones.  The foreach framework leverages backends such as [doParallel], [doMC] and [doFuture], and the future.apply framework leverages the [future] ecosystem and therefore backends such as built-in parallel and [future.batchtools].
 
 By separating `future_lapply()` and friends from the [future] package, it helps clarify the purpose of the future package, which is to define and provide the core Future API, which higher-level parallel APIs can build on and for which any futurized parallel backends can be plugged into.
 

@@ -15,7 +15,9 @@ future_sapply(X, FUN, ..., simplify = TRUE, USE.NAMES = TRUE)
 
 \item{FUN}{A function taking at least one argument.}
 
-\item{...}{(optional) Additional arguments pass to \code{FUN()}.}
+\item{...}{(optional) Additional arguments passed to \code{FUN()}.
+For \code{future_*apply()} functions, any \code{future.*} arguments part of
+\ldots are passed on to \code{future_lapply()}, if that is used internally.}
 
 \item{future.globals}{A logical, a character vector, or a named list for
 controlling how globals are handled. For details, see below section.}
@@ -39,12 +41,13 @@ If \code{2.0}, then each worker will process two futures
 If \code{Inf} or \code{FALSE}, then one future per element of
 \code{X} is used.}
 
-\item{simplify}{logical or character string. [...]}
-
-\item{USE.NAMES}{logical. [...]}
+\item{simplify, USE.NAMES}{See \code{\link[base:sapply]{base::sapply()}} for details.}
 }
 \value{
-A list with same length and names as \code{X}.
+For \code{future_lapply()}, a list with same length and names as \code{X}.
+
+For \code{future_sapply()}, a vector with same length and names as \code{X}.
+See \code{\link[base:sapply]{base::sapply()}} for details.
 }
 \description{
 Apply a Function over a List or Vector via Futures
@@ -53,7 +56,7 @@ Apply a Function over a List or Vector via Futures
 
 Argument \code{future.globals} may be used to control how globals
 should be handled similarly how the \code{globals} argument is used with
-\code{\link{future}()}.
+\code{\link[future:future]{future::future()}}.
 Since all function calls use the same set of globals, this function can do
 any gathering of globals upfront (once), which is more efficient than if
 it would be done for each future independently.
@@ -83,7 +86,7 @@ If \code{future.seed = TRUE}, then \code{\link[base:Random]{.Random.seed}}
 is returned if it holds a L'Ecuyer-CMRG RNG seed, otherwise one is created
 randomly.
 If \code{future.seed = NA}, a L'Ecuyer-CMRG RNG seed is randomly created.
-If none of the function calls \code{FUN(X[[i]], ...)} uses random number
+If none of the function calls \code{FUN(X[[ii]], ...)} uses random number
 generation, then \code{future.seed = FALSE} may be used.
 
 In addition to the above, it is possible to specify a pre-generated
@@ -91,7 +94,7 @@ sequence of RNG seeds as a list such that
 \code{length(future.seed) == length(X)} and where each element is an
 integer seed that can be assigned to \code{\link[base:Random]{.Random.seed}}.
 Use this alternative with caution.
-\emph{Note that as.list(seq_along(X)) is \emph{not} a valid set of such
+\strong{Note that \code{as.list(seq_along(X))} is \emph{not} a valid set of such
 \code{.Random.seed} values.}
 
 In all cases but \code{future.seed = FALSE}, the RNG state of the calling

@@ -1,6 +1,18 @@
 Package: future.apply
 =====================
 
+Version: 0.0.3 [2017-12-06]
+
+DOCUMENTATION:
+
+ o Vignette now covers the basics of the package and describes its role
+   in the R package ecosystem together with a roadmap going forward.
+
+SOFTWARE QUALITY:
+
+ o Added more package tests.  Code coverage is currently at 100%.
+
+
 Version: 0.0.2 [2017-12-06]
 
 NEW FEATURES:

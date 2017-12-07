@@ -4,7 +4,9 @@
 #' 
 #' @param FUN  A function taking at least one argument.
 #' 
-#' @param ...  (optional) Additional arguments pass to \code{FUN()}.
+#' @param ...  (optional) Additional arguments passed to `FUN()`.
+#' For `future_*apply()` functions, any `future.*` arguments part of
+#' \ldots are passed on to `future_lapply()`, if that is used internally.
 #' 
 #' @param future.globals A logical, a character vector, or a named list for
 #'        controlling how globals are handled. For details, see below section.
@@ -13,71 +15,72 @@
 #'        to be attached in the R environment evaluating the future.
 #' 
 #' @param future.seed A logical or an integer (of length one or seven),
-#'        or a list of \code{length(X)} with pre-generated random seeds.
+#'        or a list of `length(X)` with pre-generated random seeds.
 #'        For details, see below section.
 #'  
 #' @param future.lazy Specifies whether the futures should be resolved
 #'        lazily or eagerly (default).
 #' 
 #' @param future.scheduling Average number of futures ("chunks") per worker.
-#'        If \code{0.0}, then a single future is used to process all elements
-#'        of \code{X}.
-#'        If \code{1.0} or \code{TRUE}, then one future per worker is used.
-#'        If \code{2.0}, then each worker will process two futures
-#'        (if there are enough elements in \code{X}).
-#'        If \code{Inf} or \code{FALSE}, then one future per element of
-#'        \code{X} is used.
+#'        If `0.0`, then a single future is used to process all elements
+#'        of `X`.
+#'        If `1.0` or `TRUE`, then one future per worker is used.
+#'        If `2.0`, then each worker will process two futures
+#'        (if there are enough elements in `X`).
+#'        If `Inf` or `FALSE`, then one future per element of
+#'        `X` is used.
 #'
-#' @return A list with same length and names as \code{X}.
+#' @return
+#' For `future_lapply()`, a list with same length and names as `X`.
 #'
 #' @section Global variables:
-#' Argument \code{future.globals} may be used to control how globals
-#' should be handled similarly how the \code{globals} argument is used with
-#' \code{\link{future}()}.
+#' Argument `future.globals` may be used to control how globals
+#' should be handled similarly how the `globals` argument is used with
+#' [future::future()].
 #' Since all function calls use the same set of globals, this function can do
 #' any gathering of globals upfront (once), which is more efficient than if
 #' it would be done for each future independently.
-#' If \code{TRUE}, \code{NULL} or not is specified (default), then globals
+#' If `TRUE`, `NULL` or not is specified (default), then globals
 #' are automatically identified and gathered.
 #' If a character vector of names is specified, then those globals are gathered.
 #' If a named list, then those globals are used as is.
-#' In all cases, \code{FUN} and any \code{...} arguments are automatically
+#' In all cases, `FUN` and any `...` arguments are automatically
 #' passed as globals to each future created as they are always needed.
 #'
 #' @section Reproducible random number generation (RNG):
-#' Unless \code{future.seed = FALSE}, this function guarantees to generate
-#' the exact same sequence of random numbers \emph{given the same initial
-#' seed / RNG state} - this regardless of type of futures and scheduling
+#' Unless `future.seed = FALSE`, this function guarantees to generate
+#' the exact same sequence of random numbers _given the same initial
+#' seed / RNG state_ - this regardless of type of futures and scheduling
 #' ("chunking") strategy.
 #' 
 #' RNG reproducibility is achieved by pregenerating the random seeds for all
-#' iterations (over \code{X}) by using L'Ecuyer-CMRG RNG streams.  In each
+#' iterations (over `X`) by using L'Ecuyer-CMRG RNG streams.  In each
 #' iteration, these seeds are set before calling \code{FUN(X[[ii]], ...)}.
-#' \emph{Note, for large \code{length(X)} this may introduce a large overhead.}
-#' As input (\code{future.seed}), a fixed seed (integer) may be given, either
+#' _Note, for large `length(X)` this may introduce a large overhead._
+#' As input (`future.seed`), a fixed seed (integer) may be given, either
 #' as a full L'Ecuyer-CMRG RNG seed (vector of 1+6 integers) or as a seed
 #' generating such a full L'Ecuyer-CMRG seed.
-#' If \code{future.seed = TRUE}, then \code{\link[base:Random]{.Random.seed}}
+#' If `future.seed = TRUE`, then \code{\link[base:Random]{.Random.seed}}
 #' is returned if it holds a L'Ecuyer-CMRG RNG seed, otherwise one is created
 #' randomly.
-#' If \code{future.seed = NA}, a L'Ecuyer-CMRG RNG seed is randomly created.
-#' If none of the function calls \code{FUN(X[[i]], ...)} uses random number
-#' generation, then \code{future.seed = FALSE} may be used.
+#' If `future.seed = NA`, a L'Ecuyer-CMRG RNG seed is randomly created.
+#' If none of the function calls \code{FUN(X[[ii]], ...)} uses random number
+#' generation, then `future.seed = FALSE` may be used.
 #'
 #' In addition to the above, it is possible to specify a pre-generated
 #' sequence of RNG seeds as a list such that
-#' \code{length(future.seed) == length(X)} and where each element is an
+#' `length(future.seed) == length(X)` and where each element is an
 #' integer seed that can be assigned to \code{\link[base:Random]{.Random.seed}}.
 #' Use this alternative with caution.
-#' \emph{Note that as.list(seq_along(X)) is \emph{not} a valid set of such
-#' \code{.Random.seed} values.}
+#' **Note that `as.list(seq_along(X))` is _not_ a valid set of such
+#' `.Random.seed` values.**
 #' 
-#' In all cases but \code{future.seed = FALSE}, the RNG state of the calling
+#' In all cases but `future.seed = FALSE`, the RNG state of the calling
 #' R processes after this function returns is guaranteed to be
 #' "forwarded one step" from the RNG state that was before the call and
-#' in the same way regardless of \code{future.seed}, \code{future.scheduling}
+#' in the same way regardless of `future.seed`, `future.scheduling`
 #' and future strategy used.  This is done in order to guarantee that an \R
-#' script calling \code{future_lapply()} multiple times should be numerically
+#' script calling `future_lapply()` multiple times should be numerically
 #' reproducible given the same initial seed.
 #'
 #' @example incl/future_lapply.R

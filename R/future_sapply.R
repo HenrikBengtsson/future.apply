@@ -1,13 +1,11 @@
 #' @inheritParams future_lapply
 #' 
-#' @param simplify logical or character string. [...]
-#' 
-#' @param USE.NAMES logical. [...]
+#' @param simplify,USE.NAMES See [base::sapply()] for details.
 #'
-#' @importFrom globals globalsByName cleanup
-#' @importFrom future as.FutureGlobals resolve nbrOfWorkers future values
-#' @importFrom parallel nextRNGStream nextRNGSubStream splitIndices
-#' @importFrom utils capture.output str
+#' @return
+#' For `future_sapply()`, a vector with same length and names as \code{X}.
+#' See [base::sapply()] for details.
+#'
 #' @export
 #'
 #' @rdname future_lapply

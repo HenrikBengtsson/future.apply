@@ -15,7 +15,9 @@ future_sapply(X, FUN, ..., simplify = TRUE, USE.NAMES = TRUE)
 
 \item{FUN}{A function taking at least one argument.}
 
-\item{...}{(optional) Additional arguments passed to \code{FUN()}.}
+\item{...}{(optional) Additional arguments passed to \code{FUN()}.
+For \code{future_*apply()} functions, any \code{future.*} arguments part of
+\ldots are passed on to \code{future_lapply()}, if that is used internally.}
 
 \item{future.globals}{A logical, a character vector, or a named list for
 controlling how globals are handled. For details, see below section.}
@@ -40,9 +42,6 @@ If \code{Inf} or \code{FALSE}, then one future per element of
 \code{X} is used.}
 
 \item{simplify, USE.NAMES}{See \code{\link[base:sapply]{base::sapply()}} for details.}
-
-\item{...}{(optional) Additional arguments passed to \code{\link[=future_lapply]{future_lapply()}}
-(of which some may be passed to \code{FUN()}).}
 }
 \value{
 For \code{future_lapply()}, a list with same length and names as \code{X}.

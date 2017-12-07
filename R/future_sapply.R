@@ -1,8 +1,5 @@
 #' @inheritParams future_lapply
 #' 
-#' @param ...  (optional) Additional arguments passed to [future_lapply()]
-#' (of which some may be passed to \code{FUN()}).
-#'
 #' @param simplify,USE.NAMES See [base::sapply()] for details.
 #'
 #' @return

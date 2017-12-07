@@ -5,6 +5,8 @@
 #' @param FUN  A function taking at least one argument.
 #' 
 #' @param ...  (optional) Additional arguments passed to `FUN()`.
+#' For `future_*apply()` functions, any `future.*` arguments part of
+#' \ldots are passed on to `future_lapply()`, if that is used internally.
 #' 
 #' @param future.globals A logical, a character vector, or a named list for
 #'        controlling how globals are handled. For details, see below section.

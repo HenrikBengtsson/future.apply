@@ -1,5 +1,5 @@
 Package: future.apply
-Version: 0.0.3
+Version: 0.0.3-9000
 Title: Apply Function to Elements in Parallel using Futures
 Depends:
     future (>= 1.6.2)

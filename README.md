@@ -131,7 +131,7 @@ By separating `future_lapply()` and friends from the [future] package, it helps 
 
 3. Consider additional `future_*apply()` functions and features that fit in this package but don't necessarily have a corresponding function in base R.  Examples of this may be "apply" functions that return futures rather than values, mechanisms for benchmarking, and richer control over load balancing.
 
-The API and identify of the future.apply package will be kept close to the `*apply()` functions in base R.  In other words, it will _neither_ keep growing nor be expanded with new, more powerful apply-like functions beyond those core ones in base R.  Such extended functionality should be part of a separate package.
+The API and identity of the future.apply package will be kept close to the `*apply()` functions in base R.  In other words, it will _neither_ keep growing nor be expanded with new, more powerful apply-like functions beyond those core ones in base R.  Such extended functionality should be part of a separate package.
 
 
 

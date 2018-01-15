@@ -36,7 +36,7 @@
 #' @section Global variables:
 #' Argument `future.globals` may be used to control how globals
 #' should be handled similarly how the `globals` argument is used with
-#' [future::future()].
+#' `future()`.
 #' Since all function calls use the same set of globals, this function can do
 #' any gathering of globals upfront (once), which is more efficient than if
 #' it would be done for each future independently.

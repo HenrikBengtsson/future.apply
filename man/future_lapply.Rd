@@ -56,7 +56,7 @@ Apply a Function over a List or Vector via Futures
 
 Argument \code{future.globals} may be used to control how globals
 should be handled similarly how the \code{globals} argument is used with
-\code{\link[future:future]{future::future()}}.
+\code{future()}.
 Since all function calls use the same set of globals, this function can do
 any gathering of globals upfront (once), which is more efficient than if
 it would be done for each future independently.

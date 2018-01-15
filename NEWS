@@ -1,12 +1,17 @@
 Package: future.apply
 =====================
 
+Version: 0.1.0 [2018-01-15]
+
+ o Package submitted to CRAN.
+
+
 Version: 0.0.3 [2017-12-06]
 
 DOCUMENTATION:
 
  o Vignette now covers the basics of the package and describes its role
-   in the R package ecosystem together with a roadmap going forward.
+   in the R package ecosystem together with a road map going forward.
 
 SOFTWARE QUALITY:
 

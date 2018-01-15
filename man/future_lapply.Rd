@@ -56,7 +56,7 @@ Apply a Function over a List or Vector via Futures
 
 Argument \code{future.globals} may be used to control how globals
 should be handled similarly how the \code{globals} argument is used with
-\code{\link[future:future]{future::future()}}.
+\code{future()}.
 Since all function calls use the same set of globals, this function can do
 any gathering of globals upfront (once), which is more efficient than if
 it would be done for each future independently.
@@ -107,15 +107,19 @@ reproducible given the same initial seed.
 }
 
 \examples{
-## Regardless of the future plan, the number of workers,
-## and where they are, the random numbers will be identical
-plan(sequential)
+\donttest{
+## Regardless of the future plan, the number of workers, and
+## where they are, the random numbers produced are identical
+
+plan(multiprocess)
 y1 <- future_lapply(1:5, FUN = rnorm, future.seed = 0xBEEF)
 str(y1)
 
-plan(multiprocess)
+plan(sequential)
 y2 <- future_lapply(1:5, FUN = rnorm, future.seed = 0xBEEF)
 str(y2)
 
 stopifnot(all.equal(y1, y2))
+}
+
 }

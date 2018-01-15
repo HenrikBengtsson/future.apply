@@ -56,4 +56,4 @@ options(mc.cores = 2L)
 [future.BatchJobs]: https://cran.r-project.org/package=future.BatchJobs
 [future.batchtools]: https://cran.r-project.org/package=future.batchtools
 ---
-Copyright Henrik Bengtsson, 2017
+Copyright Henrik Bengtsson, 2017-2018

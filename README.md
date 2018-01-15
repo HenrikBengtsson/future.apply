@@ -19,7 +19,7 @@ x <- 1:10
 y <- future_lapply(x, FUN = quantile, probs = 1:3/4)
 ```
 
-Reproducibility is part of the core design, which means that perfect, parallel random number generation (RNG) is supported regardless of the amount of chunking, type of load balancing, and future backend being used.  To enable parallel RNG, use argument `future.seeds = TRUE`.
+Reproducibility is part of the core design, which means that perfect, parallel random number generation (RNG) is supported regardless of the amount of chunking, type of load balancing, and future backend being used.  To enable parallel RNG, use argument `future.seed = TRUE`.
 
 
 ## Role

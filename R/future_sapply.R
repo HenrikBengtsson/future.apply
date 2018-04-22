@@ -15,7 +15,7 @@ future_sapply <- function(X, FUN, ..., simplify = TRUE, USE.NAMES = TRUE) {
     names(answer) <- X
   }
   
-  if (!identical(simplify, FALSE) && length(answer)) {
+  if (!isFALSE(simplify) && length(answer)) {
     simplify2array(answer, higher = (simplify == "array"))
   } else {
     answer

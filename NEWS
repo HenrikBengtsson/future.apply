@@ -1,11 +1,13 @@
 Package: future.apply
 =====================
 
-Version: 0.1.0-9000 [2018-04-21]
+Version: 0.1.0-9000 [2018-04-22]
 
 NEW FEATURES:
 
  o Added future_vapply().
+
+ o Added future_replicate().
 
 
 Version: 0.1.0 [2018-01-15]

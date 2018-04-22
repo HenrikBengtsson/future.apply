@@ -32,6 +32,7 @@
 #'
 #' @return
 #' For `future_lapply()`, a list with same length and names as `X`.
+#' See [base::lapply()] for details.
 #'
 #' @section Global variables:
 #' Argument `future.globals` may be used to control how globals
@@ -50,8 +51,8 @@
 #' @section Reproducible random number generation (RNG):
 #' Unless `future.seed = FALSE`, this function guarantees to generate
 #' the exact same sequence of random numbers _given the same initial
-#' seed / RNG state_ - this regardless of type of futures and scheduling
-#' ("chunking") strategy.
+#' seed / RNG state_ - this regardless of type of futures, scheduling
+#' ("chunking") strategy, and number of workers.
 #' 
 #' RNG reproducibility is achieved by pregenerating the random seeds for all
 #' iterations (over `X`) by using L'Ecuyer-CMRG RNG streams.  In each

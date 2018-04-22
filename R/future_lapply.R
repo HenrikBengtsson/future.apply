@@ -400,7 +400,7 @@ future_lapply <- function(X, FUN, ..., future.globals = TRUE, future.packages = 
   stop_if_not(length(values) == nchunks)
   
   if (debug) mdebug("Reducing values from %d chunks ...", nchunks)
-  values <- fold(values, c)
+  values <- do.call(c, values)
 
   if (debug) {
     mdebug(" - Number of values collected after folding: %d", length(values))

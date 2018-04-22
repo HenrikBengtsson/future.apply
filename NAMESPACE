@@ -2,6 +2,7 @@
 
 export(future_lapply)
 export(future_sapply)
+export(future_vapply)
 importFrom(future,as.FutureGlobals)
 importFrom(future,future)
 importFrom(future,getGlobalsAndPackages)

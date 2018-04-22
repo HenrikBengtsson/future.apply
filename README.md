@@ -10,8 +10,9 @@ y <- lapply(x, FUN = quantile, probs = 1:3/4)
 ```
 one can do:
 ```r
-library("future")
-plan(multiprocess)
+library("future.apply")
+plan(multiprocess) ## Run in parallel on local computer
+
 library("stats")
 x <- 1:10
 y <- future_lapply(x, FUN = quantile, probs = 1:3/4)

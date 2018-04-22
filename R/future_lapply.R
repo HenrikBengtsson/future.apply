@@ -71,7 +71,8 @@
 #' In addition to the above, it is possible to specify a pre-generated
 #' sequence of RNG seeds as a list such that
 #' `length(future.seed) == length(X)` and where each element is an
-#' integer seed that can be assigned to \code{\link[base:Random]{.Random.seed}}.
+#' integer seed vector that can be assigned to
+#' \code{\link[base:Random]{.Random.seed}}.
 #' Use this alternative with caution.
 #' **Note that `as.list(seq_along(X))` is _not_ a valid set of such
 #' `.Random.seed` values.**

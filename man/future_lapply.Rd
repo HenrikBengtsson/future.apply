@@ -120,7 +120,8 @@ generation, then \code{future.seed = FALSE} may be used.
 In addition to the above, it is possible to specify a pre-generated
 sequence of RNG seeds as a list such that
 \code{length(future.seed) == length(X)} and where each element is an
-integer seed that can be assigned to \code{\link[base:Random]{.Random.seed}}.
+integer seed vector that can be assigned to
+\code{\link[base:Random]{.Random.seed}}.
 Use this alternative with caution.
 \strong{Note that \code{as.list(seq_along(X))} is \emph{not} a valid set of such
 \code{.Random.seed} values.}

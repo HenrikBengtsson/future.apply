@@ -19,7 +19,7 @@ y <- future_lapply(x, FUN = quantile, probs = 1:3/4)
 
 Reproducibility is part of the core design, which means that perfect, parallel random number generation (RNG) is supported regardless of the amount of chunking, type of load balancing, and future backend being used.  _To enable parallel RNG, use argument `future.seed = TRUE`._
 
-Currently, the following functions are implemented: `future_lapply()`, `future_replicate()`, `future_sapply()`, and `future_vapply()`.
+Currently, the following functions are implemented: `future_eapply()`, `future_lapply()`, `future_replicate()`, `future_sapply()`, and `future_vapply()`.
 
 
 ## Role
@@ -119,7 +119,7 @@ All future backends via <a href="https://cran.r-project.org/package=doFuture">do
 
 </table>
 
-Note that, except for the parallel package, none of these higher-level APIs implement their own parallel backends, but they rather enhance existing ones.  The foreach framework leverages backends such as [doParallel], [doMC] and [doFuture], and the future.apply framework leverages the [future] ecosystem and therefore backends such as built-in parallel and [future.batchtools].
+Note that, except for the parallel package, none of these higher-level APIs implement their own parallel backends, but they rather enhance existing ones.  The foreach framework leverages backends such as [doParallel], [doMC] and [doFuture], and the future.apply framework leverages the [future] ecosystem and therefore backends such as built-in parallel, [future.callr], and [future.batchtools].
 
 By separating `future_lapply()` and friends from the [future] package, it helps clarifying the purpose of the future package, which is to define and provide the core Future API, which higher-level parallel APIs can build on and for which any futurized parallel backends can be plugged into.
 
@@ -146,7 +146,9 @@ The API and identity of the future.apply package will be kept close to the `*app
 [future]: https://cran.r-project.org/package=future
 [future.BatchJobs]: https://cran.r-project.org/package=future.BatchJobs
 [future.batchtools]: https://cran.r-project.org/package=future.batchtools
+[future.callr]: https://cran.r-project.org/package=future.callr
 [plyr]: https://cran.r-project.org/package=plyr
+
 
 ## Installation
 R package future.apply is available on [CRAN](https://cran.r-project.org/package=future.apply) and can be installed in R as:

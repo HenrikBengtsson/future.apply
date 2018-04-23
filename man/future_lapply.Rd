@@ -164,3 +164,9 @@ stopifnot(all.equal(y1, y2))
 }
 
 }
+\author{
+The implementations of \code{future_replicate()} and \code{future_sapply()} are
+adopted from the source code of \code{\link[base:replicate]{base::replicate()}} and \code{\link[base:sapply]{base::sapply()}},
+which is licensed under GPL (>= 2) with 'The R Core Team' as the
+copyright holder.
+}

@@ -8,6 +8,12 @@
 #'
 #' @export
 #'
+#' @author
+#' The implementations of `future_replicate()` and `future_sapply()` are
+#' adopted from the source code of [base::replicate()] and [base::sapply()],
+#' which is licensed under GPL (>= 2) with 'The R Core Team' as the
+#' copyright holder.
+#' 
 #' @rdname future_lapply
 future_sapply <- function(X, FUN, ..., simplify = TRUE, USE.NAMES = TRUE) {
   answer <- future_lapply(X = X, FUN = FUN, ...)

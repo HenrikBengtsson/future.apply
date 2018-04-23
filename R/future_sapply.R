@@ -17,13 +17,11 @@
 #' @rdname future_lapply
 future_sapply <- function(X, FUN, ..., simplify = TRUE, USE.NAMES = TRUE) {
   answer <- future_lapply(X = X, FUN = FUN, ...)
-  if (USE.NAMES && is.character(X) && is.null(names(answer))) {
+  if (USE.NAMES && is.character(X) && is.null(names(answer)))
     names(answer) <- X
-  }
-  
-  if (!isFALSE(simplify) && length(answer)) {
+
+  if (!isFALSE(simplify) && length(answer))
     simplify2array(answer, higher = (simplify == "array"))
-  } else {
+  else
     answer
-  }  
 }

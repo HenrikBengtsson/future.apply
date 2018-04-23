@@ -16,9 +16,8 @@
 #'
 #' @rdname future_lapply
 future_replicate <- function(n, expr, simplify = "array",
-                             future.seed = TRUE, ...) {
+                             future.seed = TRUE, ...)
   future_sapply(X = integer(n),
                 FUN = eval.parent(substitute(function(...)expr)),
                 simplify = simplify,
                 future.seed = future.seed, ...)
-}

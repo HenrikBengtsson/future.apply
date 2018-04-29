@@ -7,8 +7,9 @@
 #' @param left If `TRUE`, vector is combined from the left (the first element),
 #' otherwise the right (the last element).
 #'
-#' @param unname If `TRUE`, function `f` is called as `f(unname(y), x[[ii]])`,
-#' otherwise as `f(y, x[[ii]])`, which may introduce name `"y"`.
+#' @param unname If `TRUE`, function `f` is called as
+#' \code{f(unname(y), x[[ii]])}, otherwise as \code{f(y, x[[ii]])},
+#' which may introduce name `"y"`.
 #'
 #' @param threshold An integer (>= 2) specifying the length where the
 #' recursive divide-and-conquer call will stop and incremental building of
@@ -20,10 +21,11 @@
 #' @details
 #' In order for recursive folding to give the same results as non-recursive
 #' folding, binary function `f` must be _associative_ with itself, i.e.
-#' `f(f(x[[1]], x[[2]]), x[[3]])` equals `f(x[[1]], f(x[[2]]), x[[3]])`.
-#' 
+#' \code{f(f(x[[1]], x[[2]]), x[[3]])} equals
+#' \code{f(x[[1]], f(x[[2]]), x[[3]])}.
+#'
 #' This function is a more efficient (memory and speed) of
-#' [base::Reduce(f, x, right = !left, accumulate = FALSE)][base::Reduce],
+#' \code{\link[base:Reduce]{Reduce(f, x, right = !left, accumulate = FALSE)}},
 #' especially when `x` is long.
 #' 
 #' @keywords internal
@@ -34,8 +36,8 @@ fold <- function(x, f, left = TRUE, unname = TRUE, threshold = 1000L) {
   if (!is.vector(x) || is.object(x)) x <- as.list(x)
   if (n == 1L) return(x[[1]])
   stop_if_not(length(left) == 1, is.logical(left), !is.na(left))
-  stop_if_not(length(threshold) == 1, is.numeric(threshold), !is.na(threshold),
-            threshold >= 2)
+  stop_if_not(length(threshold) == 1, is.numeric(threshold),
+              !is.na(threshold), threshold >= 2)
 
   if (n >= threshold) {
     ## Divide and conquer, i.e. split, build the two parts, and merge

@@ -14,11 +14,9 @@ fold(x, f, left = TRUE, unname = TRUE, threshold = 1000L)
 \item{left}{If \code{TRUE}, vector is combined from the left (the first element),
 otherwise the right (the last element).}
 
-\item{unname}{If \code{TRUE}, function \code{f} is called as \code{f(unname(y), x[[ii]])},
-otherwise as \code{f(y, x[[ii]])}, which may introduce name \code{"y"}.
-
-[[ii]: R:[ii
-[[ii]: R:[ii}
+\item{unname}{If \code{TRUE}, function \code{f} is called as
+\code{f(unname(y), x[[ii]])}, otherwise as \code{f(y, x[[ii]])},
+which may introduce name \code{"y"}.}
 
 \item{threshold}{An integer (>= 2) specifying the length where the
 recursive divide-and-conquer call will stop and incremental building of
@@ -34,9 +32,11 @@ Efficient Fold, Reduce, Accumulate, Combine of a Vector
 \details{
 In order for recursive folding to give the same results as non-recursive
 folding, binary function \code{f} must be \emph{associative} with itself, i.e.
+\code{f(f(x[[1]], x[[2]]), x[[3]])} equals
+\code{f(x[[1]], f(x[[2]]), x[[3]])}.
 
 This function is a more efficient (memory and speed) of
-\link[base:Reduce]{base::Reduce(f, x, right = !left, accumulate = FALSE)},
+\code{\link[base:Reduce]{Reduce(f, x, right = !left, accumulate = FALSE)}},
 especially when \code{x} is long.
 }
 \keyword{internal}

@@ -170,3 +170,6 @@ adopted from the source code of \code{\link[base:replicate]{base::replicate()}} 
 which is licensed under GPL (>= 2) with 'The R Core Team' as the
 copyright holder.
 }
+\keyword{iteration}
+\keyword{manip}
+\keyword{programming}

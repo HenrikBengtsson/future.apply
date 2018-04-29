@@ -1,4 +1,4 @@
-#' Efficient fold / reduce / accumulate / combine of a vector
+#' Efficient Fold, Reduce, Accumulate, Combine of a Vector
 #'
 #' @param x A vector.
 #' 
@@ -11,7 +11,7 @@
 #' otherwise as `f(y, x[[ii]])`, which may introduce name `"y"`.
 #'
 #' @param threshold An integer (>= 2) specifying the length where the
-#' recursive divide'and'conquer call will stop and incremental building of
+#' recursive divide-and-conquer call will stop and incremental building of
 #' the partial value is performed.  Using `threshold = +Inf` will disable
 #' recursive folding.
 #'
@@ -23,8 +23,10 @@
 #' `f(f(x[[1]], x[[2]]), x[[3]])` equals `f(x[[1]], f(x[[2]]), x[[3]])`.
 #' 
 #' This function is a more efficient (memory and speed) of
-#' [`base::Reduce(f, x, right = !left, accumulate = FALSE)`][base::Reduce],
+#' [base::Reduce(f, x, right = !left, accumulate = FALSE)][base::Reduce],
 #' especially when `x` is long.
+#' 
+#' @keywords internal
 fold <- function(x, f, left = TRUE, unname = TRUE, threshold = 1000L) {
   f <- match.fun(f)
   n <- length(x)

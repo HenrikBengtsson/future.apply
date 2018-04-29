@@ -87,6 +87,8 @@
 #'
 #' @example incl/future_lapply.R
 #'
+#' @keywords manip programming iteration
+#'
 #' @importFrom globals globalsByName cleanup
 #' @importFrom future future resolve values as.FutureGlobals nbrOfWorkers getGlobalsAndPackages
 #' @importFrom parallel nextRNGStream nextRNGSubStream splitIndices

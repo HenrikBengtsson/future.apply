@@ -68,7 +68,7 @@
 #' the \pkg{future.batchtools} and \pkg{batchtools} packages.
 #'
 #' These are just a few examples of parallel/distributed backend for the
-#' future ecosystem.  For more alternatives, see the 'Reverse depencies'
+#' future ecosystem.  For more alternatives, see the 'Reverse dependencies'
 #' section on the
 #' [future CRAN package page](https://cran.r-project.org/package=future).
 #'

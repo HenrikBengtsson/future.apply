@@ -70,7 +70,7 @@ package provides. For more details on backend configuration, please see
 the \pkg{future.batchtools} and \pkg{batchtools} packages.
 
 These are just a few examples of parallel/distributed backend for the
-future ecosystem.  For more alternatives, see the 'Reverse depencies'
+future ecosystem.  For more alternatives, see the 'Reverse dependencies'
 section on the
 \href{https://cran.r-project.org/package=future}{future CRAN package page}.
 }

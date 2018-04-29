@@ -29,7 +29,9 @@ for (strategy in supportedStrategies()) {
   stopifnot(all.equal(y1, y0))
   
   y0 <- tapply(warpbreaks$breaks, warpbreaks[, 3, drop = FALSE], sum)
+  print(y0)
   y1 <- future_tapply(warpbreaks$breaks, warpbreaks[, 3, drop = FALSE], sum)
+  print(y1)
   stopifnot(all.equal(y1, y0))
   
   n <- 17
@@ -37,36 +39,52 @@ for (strategy in supportedStrategies()) {
   t <- table(fac)
   
   y0 <- tapply(1:n, fac, sum)
+  print(y0)
   y1 <- future_tapply(1:n, fac, sum)
+  print(y1)
   stopifnot(all.equal(y1, y0))
   
   y0 <- tapply(1:n, fac, sum, default = 0) # maybe more desirable
+  print(y0)
   y1 <- future_tapply(1:n, fac, sum, default = 0) # maybe more desirable
+  print(y1)
   stopifnot(all.equal(y1, y0))
   
   y0 <- tapply(1:n, fac, sum, simplify = FALSE)
+  print(y0)
   y1 <- future_tapply(1:n, fac, sum, simplify = FALSE)
+  print(y1)
   stopifnot(all.equal(y1, y0))
   
   y0 <- tapply(1:n, fac, range)
+  print(y0)
   y1 <- future_tapply(1:n, fac, range)
+  print(y1)
   stopifnot(all.equal(y1, y0))
   
   y0 <- tapply(1:n, fac, quantile)
+  print(y0)
   y1 <- future_tapply(1:n, fac, quantile)
+  print(y1)
   stopifnot(all.equal(y1, y0))
   
   y0 <- tapply(1:n, fac, length) ## NA's
+  print(y0)
   y1 <- future_tapply(1:n, fac, length) ## NA's
+  print(y1)
   stopifnot(all.equal(y1, y0))
   
   y0 <- tapply(1:n, fac, length, default = 0) # == table(fac)
+  print(y0)
   y1 <- future_tapply(1:n, fac, length, default = 0) # == table(fac)
+  print(y1)
   stopifnot(all.equal(y1, y0))
   
   ## example of ... argument: find quarterly means
   y0 <- tapply(presidents, cycle(presidents), mean, na.rm = TRUE)
+  print(y0)
   y1 <- future_tapply(presidents, cycle(presidents), mean, na.rm = TRUE)
+  print(y1)
   stopifnot(all.equal(y1, y0))
   
   ind <- list(c(1, 2, 2), c("A", "A", "B"))
@@ -74,11 +92,15 @@ for (strategy in supportedStrategies()) {
   print(t)
   
   y0 <- tapply(1:3, ind) #-> the split vector
+  print(y0)
   y1 <- future_tapply(1:3, ind) #-> the split vector
+  print(y1)
   stopifnot(all.equal(y1, y0))
   
   y0 <- tapply(1:3, ind, sum)
+  print(y0)
   y1 <- future_tapply(1:3, ind, sum)
+  print(y1)
   stopifnot(all.equal(y1, y0))
   
   ## Some assertions (not held by all patch propsals):

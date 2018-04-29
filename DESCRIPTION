@@ -7,6 +7,7 @@ Depends:
 Imports:
     globals (>= 0.11.0)
 Suggests:
+    stats,
     listenv (>= 0.7.0),
     R.rsp,
     markdown

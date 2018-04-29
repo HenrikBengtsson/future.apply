@@ -10,9 +10,8 @@
 #' A named (unless `USE.NAMES = FALSE`) list.
 #' See [base::eapply()] for details.
 #'
-#' @export
-#'
 #' @rdname future_lapply
+#' @export
 future_eapply <- function(env, FUN, ..., all.names = FALSE, USE.NAMES = TRUE) {
   names <- ls(envir = env, all.names = all.names, sorted = FALSE)
   X <- mget(names, envir = env, inherits = FALSE)

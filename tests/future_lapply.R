@@ -30,7 +30,7 @@ for (cores in 1:availCores) {
   options(mc.cores = cores)
   strategies <- supportedStrategies(cores)
 
-  for (strategy in strategies) {
+  for (strategy in supportedStrategies()) {
     message(sprintf("- plan('%s') ...", strategy))
     plan(strategy)
 

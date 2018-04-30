@@ -9,7 +9,7 @@
 #' @return
 #' `future_tapply()` returns an array with mode `"list"`, unless
 #' `simplify = TRUE` (default) _and_ `FUN` returns a scalar, in which
-#' case the mode of the array is the same as the returned scalars
+#' case the mode of the array is the same as the returned scalars.
 #' See [base::tapply()] for details.
 #' 
 #' @rdname future_lapply

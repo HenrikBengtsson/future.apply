@@ -29,10 +29,6 @@ future_vapply(X, FUN, FUN.VALUE, ..., USE.NAMES = TRUE)
 
 \item{FUN}{A function taking at least one argument.}
 
-\item{...}{(optional) Additional arguments passed to \code{FUN()}.
-For \code{future_*apply()} functions, any \code{future.*} arguments part of
-\ldots are passed on to \code{future_lapply()}, if that is used internally.}
-
 \item{all.names}{If \code{TRUE}, the function will also be applied to variables
 that start with a period (\code{.}), otherwise not.
 See \code{\link[base:eapply]{base::eapply()}} for details.}
@@ -80,6 +76,9 @@ each \code{FUN(X[ii], ...)}.
 Types may be promoted to a higher type within the ordering
 logical < integer < double < complex, but not demoted.
 See \code{\link[base:vapply]{base::vapply()}} for details.}
+
+\item{\ldots}{(optional) Additional arguments passed to \code{FUN()}.
+For \code{future_*apply()} functions and \code{replicate(), any}future.*\code{arguments part of \ldots are passed on to}future_lapply()` used internally.}
 }
 \value{
 A named (unless \code{USE.NAMES = FALSE}) list.
@@ -100,7 +99,7 @@ See \code{\link[base:sapply]{base::sapply()}} for details.
 
 \code{future_tapply()} returns an array with mode \code{"list"}, unless
 \code{simplify = TRUE} (default) \emph{and} \code{FUN} returns a scalar, in which
-case the mode of the array is the same as the returned scalars
+case the mode of the array is the same as the returned scalars.
 See \code{\link[base:tapply]{base::tapply()}} for details.
 
 For \code{future_vapply()}, a vector with same length and names as \code{X}.

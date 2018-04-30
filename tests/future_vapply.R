@@ -124,6 +124,16 @@ for (strategy in supportedStrategies()) {
   y1 <- future_vapply(mtcars, FUN = is.numeric, FUN.VALUE = logical(1L))
   str(y1)
   stopifnot(all.equal(y1, y0))
+
+  message("- exceptions ...")
+  res <- tryCatch({
+    y0 <- vapply(1:3, FUN = identity, FUN.VALUE = c(3, 3))
+  }, error = identity)
+  stopifnot(inherits(res, "error"))
+  res <- tryCatch({
+    y1 <- future_vapply(1:3, FUN = identity, FUN.VALUE = c(3, 3))
+  }, error = identity)
+  stopifnot(inherits(res, "error"))
   
   plan(sequential)
   message(sprintf("*** strategy = %s ... done", sQuote(strategy)))

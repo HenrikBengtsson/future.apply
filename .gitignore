@@ -16,4 +16,7 @@
 .future
 .ghi
 .issues
-.make/
+.make
+revdep/data.sqlite
+revdep/checks/*
+revdep/library/*

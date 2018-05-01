@@ -90,9 +90,9 @@
 #' @keywords manip programming iteration
 #'
 #' @importFrom globals globalsByName cleanup
-#' @importFrom future future resolve values as.FutureGlobals nbrOfWorkers getGlobalsAndPackages
+#' @importFrom future future resolve values as.FutureGlobals nbrOfWorkers getGlobalsAndPackages FutureError
 #' @importFrom parallel nextRNGStream nextRNGSubStream splitIndices
-#' @importFrom utils capture.output str
+#' @importFrom utils capture.output head str
 #' @export
 future_lapply <- function(X, FUN, ..., future.globals = TRUE, future.packages = NULL, future.seed = FALSE, future.lazy = FALSE, future.scheduling = 1.0) {
   objectSize <- import_future("objectSize")
@@ -404,16 +404,40 @@ future_lapply <- function(X, FUN, ..., future.globals = TRUE, future.packages = 
   stop_if_not(length(values) == nchunks)
   
   if (debug) mdebug("Reducing values from %d chunks ...", nchunks)
-  values <- do.call(c, values)
-
+  values2 <- do.call(c, args = values)
+  
   if (debug) {
-    mdebug(" - Number of values collected after folding: %d", length(values))
-    mdebug(" - Number of values expected: %d", length(X))
+    mdebug(" - Number of values collected after concatenation: %d",
+           length(values2))
+    mdebug(" - Number of values expected: %d", nX)
   }
+
+  if (length(values2) != nX) {
+    chunk_sizes <- sapply(values, FUN = length)
+    chunk_sizes <- table(chunk_sizes)
+    chunk_summary <- sprintf("%d chunks with %s elements",
+                             chunk_sizes, names(chunk_sizes))
+    chunk_summary <- paste(chunk_summary, collapse = ", ")
+    msg <- sprintf("Unexpected error in doFuture(): After gathering and merging the values from %d chunks in to a list, the total number of elements (= %d) does not match the number of input elements in 'X' (= %d). There were in total %d chunks and %d elements (%s)", nchunks, length(values2), nX, nchunks, sum(chunk_sizes), chunk_summary)
+    if (debug) {
+      mdebug(msg)
+      message(capture.output(print(chunk_sizes)))
+      mdebug("Results before merge chunks:")
+      message(capture.output(str(values)))
+      mdebug("Results after merge chunks:")
+      message(capture.output(str(values2)))
+    }
+    msg <- sprintf("%s. Example of the first few values: %s", msg,
+                   paste(capture.output(str(head(values2, 3L))),
+                         collapse = "\\n"))
+    ex <- FutureError(msg)
+    stop(ex)
+  }
+  values <- values2
+  rm(list = "values2")
   
   ## Sanity check (this may happen if the future backend is broken)
-  stop_if_not(length(values) == length(X))
-  
+  stop_if_not(length(values) == nX)
   names(values) <- names(X)
   
   if (debug) mdebug("Reducing values from %d chunks ... DONE", nchunks)

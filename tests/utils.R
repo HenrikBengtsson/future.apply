@@ -140,7 +140,7 @@ res <- tryCatch({
 }, error = identity)
 stopifnot(inherits(res, "simpleError"))
 res <- tryCatch({
-  stop_if_not(TRUE, FALSE)
+  stop_if_not(TRUE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE)
 }, error = identity)
 stopifnot(inherits(res, "simpleError"))
 

@@ -1,5 +1,4 @@
 source("incl/start.R")
-library("listenv")
 
 message("*** future_sapply() ...")
 
@@ -16,29 +15,36 @@ FUNS <- list(
   c = function(x, y = 2 * 1:5) outer(rep(x, length.out = 3L), y)
 )
 
-for (x in xs) {
-  FUNS_x <- FUNS
-  if (!is.numeric(x)) FUNS_x[["c"]] <- NULL
+for (strategy in supportedStrategies()) {
+  message(sprintf("*** strategy = %s ...", sQuote(strategy)))
+  plan(strategy)
   
-  for (USE.NAMES in list(FALSE, TRUE)) {
-    for (simplify in list(FALSE, TRUE, "array")) {
-      for (FUN in FUNS_x) {
-        y0 <-        sapply(x, FUN = FUN,
-                            USE.NAMES = USE.NAMES, simplify = simplify)
-        y1 <- future_sapply(x, FUN = FUN,
-                            USE.NAMES = USE.NAMES, simplify = simplify)
-        str(list(y0 = y0, y1 = y1))
-        stopifnot(identical(y1, y0))
-        if (identical(simplify, FALSE)) {
-           y2 <- lapply(x, FUN = FUN)
-           str(list(y0 = y0, y2 = y2))
-           stopifnot(identical(unname(y2), unname(y0)))
+  for (x in xs) {
+    FUNS_x <- FUNS
+    if (!is.numeric(x)) FUNS_x[["c"]] <- NULL
+    
+    for (USE.NAMES in list(FALSE, TRUE)) {
+      for (simplify in list(FALSE, TRUE, "array")) {
+        for (FUN in FUNS_x) {
+          y0 <-        sapply(x, FUN = FUN,
+                              USE.NAMES = USE.NAMES, simplify = simplify)
+          y1 <- future_sapply(x, FUN = FUN,
+                              USE.NAMES = USE.NAMES, simplify = simplify)
+          str(list(y0 = y0, y1 = y1))
+          stopifnot(identical(y1, y0))
+          if (identical(simplify, FALSE)) {
+             y2 <- lapply(x, FUN = FUN)
+             str(list(y0 = y0, y2 = y2))
+             stopifnot(identical(unname(y2), unname(y0)))
+          }
         }
       }
     }
   }
-}
-
+  
+  plan(sequential)
+  message(sprintf("*** strategy = %s ... done", sQuote(strategy)))
+} ## for (strategy in ...) 
 
 message("*** future_sapply() ... DONE")
 

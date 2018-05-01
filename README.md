@@ -10,19 +10,22 @@ y <- lapply(x, FUN = quantile, probs = 1:3/4)
 ```
 one can do:
 ```r
-library("future")
-plan(multiprocess)
+library("future.apply")
+plan(multiprocess) ## Run in parallel on local computer
+
 library("stats")
 x <- 1:10
 y <- future_lapply(x, FUN = quantile, probs = 1:3/4)
 ```
 
-Reproducibility is part of the core design, which means that perfect, parallel random number generation (RNG) is supported regardless of the amount of chunking, type of load balancing, and future backend being used.  To enable parallel RNG, use argument `future.seed = TRUE`.
+Reproducibility is part of the core design, which means that perfect, parallel random number generation (RNG) is supported regardless of the amount of chunking, type of load balancing, and future backend being used.  _To enable parallel RNG, use argument `future.seed = TRUE`._
+
+Currently, the following functions are implemented: `future_eapply()`, `future_lapply()`, `future_replicate()`, `future_sapply()`, `future_tapply()`, and `future_vapply()`.
 
 
 ## Role
 
-Where does the future.apply package fit in the software stack?  You can think of it as a sibling to [foreach], [BiocParallel], [plyr], etc.  Just as parallel provides `parLapply()`, foreach provides `foreach()`, BiocParallel provides `bplapply()`, and plyr provides `llply()`, future.apply provides `future_lapply()`.  Below is a table summarizing this idea:
+Where does the [future.apply] package fit in the software stack?  You can think of it as a sibling to [foreach], [BiocParallel], [plyr], etc.  Just as parallel provides `parLapply()`, foreach provides `foreach()`, BiocParallel provides `bplapply()`, and plyr provides `llply()`, future.apply provides `future_lapply()`.  Below is a table summarizing this idea:
 
 <table>
 <tr>
@@ -33,22 +36,23 @@ Where does the future.apply package fit in the software stack?  You can think of
 
 <tr style="vertical-align: top">
 <td>
-<a href="https://github.com/HenrikBengtsson/future.apply">future.apply</a><br>
+<a href="https://cran.r-project.org/package=future.apply">future.apply</a><br>
 <br>
 </td>
 <td>
 Future-versions of common goto <code>*apply()</code> functions available in core R (the 'base' package and some 'stats' package):<br>
-<code>future_apply()</code>, 
 <code>future_eapply()</code>, 
 <code>future_lapply()</code>, 
-<code>future_mapply()</code>, 
-<code>future_rapply()</code>, 
-<code>future_sapply()</code>, 
-<code>future_tapply()</code>, 
-<code>future_vapply()</code>,
-<code>future_aggregate()</code>, ...<br>
+<code>future_replicate()</code>,
+<code>future_sapply()</code>,
+<code>future_tapply()</code>, and 
+<code>future_vapply()</code>.
 <br>
-<em>Note, several of these functions are yet to be implemented.</em>
+<em>The following functions are yet to be implemented:</em><br>
+<code>future_apply()</code>, 
+<code>future_mapply()</code>, 
+<code>future_Map()</code>, 
+<code>future_rapply()</code>, ...<br>
 </td>
 <td>
 All future backends
@@ -60,8 +64,8 @@ All future backends
 parallel
 </td>
 <td>
-<code>mclapply()</code>,
-<code>parApply()</code>, <code>parLapply()</code>, <code>parSapply()</code>, ...
+<code>mclapply()</code>, <code>mcmapply()</code>,
+<code>clusterMap()</code>, <code>parApply()</code>, <code>parLapply()</code>, <code>parSapply()</code>, ...
 </td>
 <td>
 Built-in and conditional on operating system</a>
@@ -116,7 +120,7 @@ All future backends via <a href="https://cran.r-project.org/package=doFuture">do
 
 </table>
 
-Note that, except for the parallel package, none of these higher-level APIs implement their own parallel backends, but they rather enhance existing ones.  The foreach framework leverages backends such as [doParallel], [doMC] and [doFuture], and the future.apply framework leverages the [future] ecosystem and therefore backends such as built-in parallel and [future.batchtools].
+Note that, except for the built-in parallel package, none of these higher-level APIs implement their own parallel backends, but they rather enhance existing ones.  The foreach framework leverages backends such as [doParallel], [doMC] and [doFuture], and the future.apply framework leverages the [future] ecosystem and therefore backends such as built-in parallel, [future.callr], and [future.batchtools].
 
 By separating `future_lapply()` and friends from the [future] package, it helps clarifying the purpose of the future package, which is to define and provide the core Future API, which higher-level parallel APIs can build on and for which any futurized parallel backends can be plugged into.
 
@@ -141,9 +145,12 @@ The API and identity of the future.apply package will be kept close to the `*app
 [doParallel]: https://cran.r-project.org/package=doParallel
 [foreach]: https://cran.r-project.org/package=foreach
 [future]: https://cran.r-project.org/package=future
+[future.apply]: https://cran.r-project.org/package=future.apply
 [future.BatchJobs]: https://cran.r-project.org/package=future.BatchJobs
 [future.batchtools]: https://cran.r-project.org/package=future.batchtools
+[future.callr]: https://cran.r-project.org/package=future.callr
 [plyr]: https://cran.r-project.org/package=plyr
+
 
 ## Installation
 R package future.apply is available on [CRAN](https://cran.r-project.org/package=future.apply) and can be installed in R as:
@@ -151,6 +158,13 @@ R package future.apply is available on [CRAN](https://cran.r-project.org/package
 install.packages('future.apply')
 ```
 
+### Pre-release version
+
+To install the pre-release version that is available in Git branch `develop` on GitHub, use:
+```r
+remotes::install_github('HenrikBengtsson/future.apply@develop')
+```
+This will install the package from source.  
 
 
 

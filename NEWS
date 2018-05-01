@@ -1,6 +1,14 @@
 Package: future.apply
 =====================
 
+Version: 0.2.0 [2018-05-01]
+
+NEW FEATURES:
+
+ o Added future_eapply(), future_tapply(), future_vapply(), and
+   future_replicate().
+ 
+
 Version: 0.1.0 [2018-01-15]
 
  o Package submitted to CRAN.

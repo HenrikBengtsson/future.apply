@@ -1,3 +1,23 @@
+isFALSE <- function(x) {
+  is.logical(x) && length(x) == 1L && !is.na(x) && !x
+}
+
+stop_if_not <- function(...) {
+  res <- list(...)
+  for (ii in 1L:length(res)) {
+    res_ii <- .subset2(res, ii)
+    if (length(res_ii) != 1L || is.na(res_ii) || !res_ii) {
+        mc <- match.call()
+        call <- deparse(mc[[ii + 1]], width.cutoff = 60L)
+        if (length(call) > 1L) call <- paste(call[1L], "....")
+        stop(sprintf("%s is not TRUE", sQuote(call)),
+             call. = FALSE, domain = NA)
+    }
+  }
+  
+  NULL
+}
+
 ## From R.utils 2.0.2 (2015-05-23)
 hpaste <- function(..., sep = "", collapse = ", ", lastCollapse = NULL, maxHead = if (missing(lastCollapse)) 3 else Inf, maxTail = if (is.finite(maxHead)) 1 else Inf, abbreviate = "...") {
   if (is.null(lastCollapse)) lastCollapse <- collapse
@@ -65,7 +85,7 @@ set_random_seed <- function(seed) {
 next_random_seed <- function(seed = get_random_seed()) {
   sample.int(n = 1L, size = 1L, replace = FALSE)
   seed_next <- get_random_seed()
-  stopifnot(!any(seed_next != seed))
+  stop_if_not(!any(seed_next != seed))
   invisible(seed_next)
 }
 
@@ -89,7 +109,7 @@ is_lecyer_cmrg_seed <- function(seed) {
 as_lecyer_cmrg_seed <- function(seed) {
   ## Generate a L'Ecuyer-CMRG seed (existing or random)?
   if (is.logical(seed)) {
-    stopifnot(length(seed) == 1L)
+    stop_if_not(length(seed) == 1L)
     if (!is.na(seed) && !seed) {
       stop("Argument 'seed' must be TRUE if logical: ", seed)
     }
@@ -107,7 +127,7 @@ as_lecyer_cmrg_seed <- function(seed) {
     return(get_random_seed())
   }
 
-  stopifnot(is.numeric(seed), all(is.finite(seed)))
+  stop_if_not(is.numeric(seed), all(is.finite(seed)))
   seed <- as.integer(seed)
 
   ## Already a L'Ecuyer-CMRG seed?

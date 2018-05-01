@@ -1,4 +1,5 @@
 source("incl/start,load-only.R")
+stop_if_not <- future.apply:::stop_if_not
 
 message("*** utils ...")
 
@@ -128,6 +129,22 @@ print(res)
 stopifnot(inherits(res, "simpleError"))
 
 message("*** Random seeds ... DONE")
+
+
+message("*** stop_if_not() ...")
+
+stop_if_not(TRUE)
+stop_if_not(TRUE, TRUE)
+res <- tryCatch({
+  stop_if_not(FALSE)
+}, error = identity)
+stopifnot(inherits(res, "simpleError"))
+res <- tryCatch({
+  stop_if_not(TRUE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE)
+}, error = identity)
+stopifnot(inherits(res, "simpleError"))
+
+message("*** stop_if_not() ... DONE")
 
 
 message("*** utils ... DONE")

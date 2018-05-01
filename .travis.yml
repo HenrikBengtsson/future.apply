@@ -1,11 +1,6 @@
 #----------------------------------------------------------------
-# Travis-CI configuration for R packages
-#
-# REFERENCES:
-# * Travis CI: https://docs.travis-ci.com/user/languages/r
-# * covr: https://github.com/jimhester/covr
-#
-# Validate your .travis.yml file at http://lint.travis-ci.org/
+# Travis-CI Configuration for R Packages
+# https://docs.travis-ci.com/user/languages/r
 #----------------------------------------------------------------
 language: r
 sudo: false
@@ -22,15 +17,20 @@ matrix:
       r: release
     - os: linux
       r: devel
+      env:
+      - R_KEEP_PKG_SOURCE=yes
+      - _R_S3_METHOD_LOOKUP_BASEENV_AFTER_GLOBALENV_=true
+      - _R_S3_METHOD_LOOKUP_USE_TOPENV_AS_DEFENV_=true
     - os: osx
       r: oldrel
+      before_install:
+        - Rscript -e 'c(physical = parallel::detectCores(logical = FALSE), logical = parallel::detectCores())'
+        - Rscript -e 'install.packages("future", type = "source")'
     - os: osx
       r: release
     - os: linux
       r: release
       r_check_args: --no-build-vignettes --no-codoc --no-examples --no-tests --no-manual --ignore-vignettes
-      r_github_packages:
-        - jimhester/covr
       r_packages:
         - covr
       after_success:
@@ -40,7 +40,6 @@ matrix:
 before_install:
   - Rscript -e 'c(physical = parallel::detectCores(logical = FALSE), logical = parallel::detectCores())'
   - export _R_CHECK_TIMINGS_=0
-
 
 notifications:
   email:

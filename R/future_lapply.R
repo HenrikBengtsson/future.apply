@@ -4,9 +4,9 @@
 #' 
 #' @param FUN  A function taking at least one argument.
 #' 
-#' @param ...  (optional) Additional arguments passed to `FUN()`.
-#' For `future_*apply()` functions, any `future.*` arguments part of
-#' \ldots are passed on to `future_lapply()`, if that is used internally.
+#' @param \ldots  (optional) Additional arguments passed to `FUN()`.
+#' For `future_*apply()` functions and `replicate(), any `future.*` arguments
+#' part of \ldots are passed on to `future_lapply()` used internally.
 #' 
 #' @param future.globals A logical, a character vector, or a named list for
 #'        controlling how globals are handled. For details, see below section.
@@ -32,6 +32,7 @@
 #'
 #' @return
 #' For `future_lapply()`, a list with same length and names as `X`.
+#' See [base::lapply()] for details.
 #'
 #' @section Global variables:
 #' Argument `future.globals` may be used to control how globals
@@ -50,8 +51,8 @@
 #' @section Reproducible random number generation (RNG):
 #' Unless `future.seed = FALSE`, this function guarantees to generate
 #' the exact same sequence of random numbers _given the same initial
-#' seed / RNG state_ - this regardless of type of futures and scheduling
-#' ("chunking") strategy.
+#' seed / RNG state_ - this regardless of type of futures, scheduling
+#' ("chunking") strategy, and number of workers.
 #' 
 #' RNG reproducibility is achieved by pregenerating the random seeds for all
 #' iterations (over `X`) by using L'Ecuyer-CMRG RNG streams.  In each
@@ -70,7 +71,8 @@
 #' In addition to the above, it is possible to specify a pre-generated
 #' sequence of RNG seeds as a list such that
 #' `length(future.seed) == length(X)` and where each element is an
-#' integer seed that can be assigned to \code{\link[base:Random]{.Random.seed}}.
+#' integer seed vector that can be assigned to
+#' \code{\link[base:Random]{.Random.seed}}.
 #' Use this alternative with caution.
 #' **Note that `as.list(seq_along(X))` is _not_ a valid set of such
 #' `.Random.seed` values.**
@@ -85,21 +87,23 @@
 #'
 #' @example incl/future_lapply.R
 #'
+#' @keywords manip programming iteration
+#'
 #' @importFrom globals globalsByName cleanup
-#' @importFrom future future resolve values as.FutureGlobals nbrOfWorkers getGlobalsAndPackages
+#' @importFrom future future resolve values as.FutureGlobals nbrOfWorkers getGlobalsAndPackages FutureError
 #' @importFrom parallel nextRNGStream nextRNGSubStream splitIndices
-#' @importFrom utils capture.output str
+#' @importFrom utils capture.output head str
 #' @export
 future_lapply <- function(X, FUN, ..., future.globals = TRUE, future.packages = NULL, future.seed = FALSE, future.lazy = FALSE, future.scheduling = 1.0) {
   objectSize <- import_future("objectSize")
   
-  stopifnot(is.function(FUN))
+  stop_if_not(is.function(FUN))
   
-  stopifnot(is.logical(future.lazy))
+  stop_if_not(is.logical(future.lazy))
 
-  stopifnot(!is.null(future.seed))
+  stop_if_not(!is.null(future.seed))
   
-  stopifnot(length(future.scheduling) == 1, !is.na(future.scheduling),
+  stop_if_not(length(future.scheduling) == 1, !is.na(future.scheduling),
             is.numeric(future.scheduling) || is.logical(future.scheduling))
 
   ## Nothing to do?
@@ -160,7 +164,7 @@ future_lapply <- function(X, FUN, ..., future.globals = TRUE, future.packages = 
     stop("Invalid argument 'future.globals': ", mode(globals))
   }
   globals <- as.FutureGlobals(globals)
-  stopifnot(inherits(globals, "FutureGlobals"))
+  stop_if_not(inherits(globals, "FutureGlobals"))
   
   names <- names(globals)
   if (!is.element("FUN", names)) {
@@ -200,9 +204,9 @@ future_lapply <- function(X, FUN, ..., future.globals = TRUE, future.packages = 
   ## 2. Packages
   ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (!is.null(future.packages)) {
-    stopifnot(is.character(future.packages))
+    stop_if_not(is.character(future.packages))
     future.packages <- unique(future.packages)
-    stopifnot(!anyNA(future.packages), all(nzchar(future.packages)))
+    stop_if_not(!anyNA(future.packages), all(nzchar(future.packages)))
     packages <- unique(c(packages, future.packages))
   }
   
@@ -309,7 +313,7 @@ future_lapply <- function(X, FUN, ..., future.globals = TRUE, future.packages = 
     }
   } else {
     ## Treat 'future.scheduling' as the number of futures per worker.
-    stopifnot(future.scheduling >= 0)
+    stop_if_not(future.scheduling >= 0)
     nbr_of_workers <- nbrOfWorkers()
     if (nbr_of_workers > nX) nbr_of_workers <- nX
     nbr_of_futures <- future.scheduling * nbr_of_workers
@@ -334,7 +338,7 @@ future_lapply <- function(X, FUN, ..., future.globals = TRUE, future.packages = 
   globals <- c(globals, globals_extra)
 
   ## At this point a globals should be resolved and we should know their total size
-##  stopifnot(attr(globals, "resolved"), !is.na(attr(globals, "total_size")))
+##  stop_if_not(attr(globals, "resolved"), !is.na(attr(globals, "total_size")))
 
     ## To please R CMD check
   ...future.FUN <- ...future.X_ii <- ...future.seeds_ii <- NULL
@@ -351,7 +355,7 @@ future_lapply <- function(X, FUN, ..., future.globals = TRUE, future.packages = 
     ## Subsetting outside future is more efficient
     globals_ii <- globals
     globals_ii[["...future.X_ii"]] <- X[chunk]
-##    stopifnot(attr(globals_ii, "resolved"))
+##    stop_if_not(attr(globals_ii, "resolved"))
     
     ## Using RNG seeds or not?
     if (is.null(seeds)) {
@@ -386,17 +390,58 @@ future_lapply <- function(X, FUN, ..., future.globals = TRUE, future.packages = 
 
   ## 4. Resolving futures
   if (debug) mdebug("Resolving %d futures (chunks) ...", nchunks)
-  values <- values(fs)
-  if (debug) mdebug("Resolving %d futures (chunks) ... DONE", nchunks)
   
+  values <- values(fs)
   ## Not needed anymore
   rm(list = "fs")
+
+  if (debug) {
+    mdebug(" - Number of value chunks collected: %d", length(values))
+    mdebug("Resolving %d futures (chunks) ... DONE", nchunks)
+  }
+
+  ## Sanity check
+  stop_if_not(length(values) == nchunks)
   
   if (debug) mdebug("Reducing values from %d chunks ...", nchunks)
-  values <- fold(values, c)
-  names(values) <- names(X)
-  if (debug) mdebug("Reducing values from %d chunks ... DONE", nchunks)
+  values2 <- do.call(c, args = values)
+  
+  if (debug) {
+    mdebug(" - Number of values collected after concatenation: %d",
+           length(values2))
+    mdebug(" - Number of values expected: %d", nX)
+  }
 
+  if (length(values2) != nX) {
+    chunk_sizes <- sapply(values, FUN = length)
+    chunk_sizes <- table(chunk_sizes)
+    chunk_summary <- sprintf("%d chunks with %s elements",
+                             chunk_sizes, names(chunk_sizes))
+    chunk_summary <- paste(chunk_summary, collapse = ", ")
+    msg <- sprintf("Unexpected error in doFuture(): After gathering and merging the values from %d chunks in to a list, the total number of elements (= %d) does not match the number of input elements in 'X' (= %d). There were in total %d chunks and %d elements (%s)", nchunks, length(values2), nX, nchunks, sum(chunk_sizes), chunk_summary)
+    if (debug) {
+      mdebug(msg)
+      message(capture.output(print(chunk_sizes)))
+      mdebug("Results before merge chunks:")
+      message(capture.output(str(values)))
+      mdebug("Results after merge chunks:")
+      message(capture.output(str(values2)))
+    }
+    msg <- sprintf("%s. Example of the first few values: %s", msg,
+                   paste(capture.output(str(head(values2, 3L))),
+                         collapse = "\\n"))
+    ex <- FutureError(msg)
+    stop(ex)
+  }
+  values <- values2
+  rm(list = "values2")
+  
+  ## Sanity check (this may happen if the future backend is broken)
+  stop_if_not(length(values) == nX)
+  names(values) <- names(X)
+  
+  if (debug) mdebug("Reducing values from %d chunks ... DONE", nchunks)
+  
   if (debug) mdebug("future_lapply() ... DONE")
   
   values

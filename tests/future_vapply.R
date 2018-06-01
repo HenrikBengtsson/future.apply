@@ -94,6 +94,11 @@ for (strategy in supportedStrategies()) {
   stopifnot(all.equal(y1, y0))
   
   message("- From example(vapply) ...")
+  x <- list(a = 1:10, beta = exp(-3:3), logic = c(TRUE, FALSE, FALSE, TRUE))
+  y0 <- vapply(x, FUN = quantile, FUN.VALUE = double(5L))
+  y1 <- future_vapply(x, FUN = quantile, FUN.VALUE = double(5L))
+  str(y1)
+  stopifnot(all.equal(y1, y0, check.attributes = FALSE)) ## FIXME
   
   i39 <- sapply(3:9, seq)
   ys0 <- sapply(i39, fivenum)

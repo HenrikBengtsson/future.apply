@@ -13,7 +13,12 @@ NEW FEATURES:
 
  o Added future_apply().
  
+BUG FIXES:
 
+ o future_vapply() did not return the same dimension names as vapply() when
+   FUN.VALUE had no names but FUN(X[[1]]) had.
+ 
+ 
 Version: 0.2.0 [2018-05-01]
 
 NEW FEATURES:

@@ -98,7 +98,7 @@ for (strategy in supportedStrategies()) {
   y0 <- vapply(x, FUN = quantile, FUN.VALUE = double(5L))
   y1 <- future_vapply(x, FUN = quantile, FUN.VALUE = double(5L))
   str(y1)
-  stopifnot(all.equal(y1, y0, check.attributes = FALSE)) ## FIXME
+  stopifnot(all.equal(y1, y0))
   
   i39 <- sapply(3:9, seq)
   ys0 <- sapply(i39, fivenum)

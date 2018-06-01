@@ -9,6 +9,10 @@ SIGNIFICANT CHANGES:
    compatible with the source code adopted from R base's replicate(),
    sapply(), and tapply(), which are all GPL (>= 2.1).
  
+NEW FEATURES:
+
+ o Added future_apply().
+ 
 
 Version: 0.2.0 [2018-05-01]
 

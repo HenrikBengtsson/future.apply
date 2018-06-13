@@ -25,7 +25,7 @@
 #' @author
 #' The implementations of `future_apply()` is adopted from the source code
 #' of the corresponding base \R function, which is licensed under GPL (>= 2)
-#' with The R Core Team' as the copyright holder.
+#' with 'The R Core Team' as the copyright holder.
 #'
 #' @example incl/future_apply.R
 #' 

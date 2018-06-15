@@ -75,6 +75,13 @@
 #' section on the
 #' [future CRAN package page](https://cran.r-project.org/package=future).
 #'
+#' @author
+#' Henrik Bengtsson, except for the implementations of `future_replicate()`,
+#' `future_sapply()`, and `future_tapply()`, which are adopted from the
+#' source code of the corresponding base \R functions, which are licensed
+#' under GPL (>= 2) with 'The R Core Team' as the copyright holder.
+#' Because of these dependencies, the license of this package is GPL (>= 2).
+#' 
 #' @keywords manip programming iteration
 #'
 #' @docType package

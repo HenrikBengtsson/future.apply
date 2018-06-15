@@ -1,6 +1,6 @@
 #' Apply a Function to Multiple List or Vector Arguments
 #'
-#' future_mapply()` is a multivariate version of `future_sapply().
+#' `future_mapply()` is a multivariate version of `future_sapply()`.
 #' It applies `FUN` to the first elements of each \ldots argument,
 #' the second elements, the third elements, and so on.
 #' Arguments are recycled if necessary.

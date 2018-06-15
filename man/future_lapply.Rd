@@ -181,7 +181,7 @@ stopifnot(all.equal(y1, y0))
 y0 <- vapply(x, FUN = quantile, FUN.VALUE = double(5L))
 y1 <- future_vapply(x, FUN = quantile, FUN.VALUE = double(5L))
 print(y1)
-stopifnot(all.equal(y1, y0, check.attributes = FALSE)) ## FIXME
+stopifnot(all.equal(y1, y0))
 
 
 ## ---------------------------------------------------------

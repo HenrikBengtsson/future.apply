@@ -54,19 +54,21 @@ stopifnot(all.equal(Y1, Y0))
 ## Regardless of the future plan, the number of workers, and
 ## where they are, the random numbers produced are identical
 
+X <- matrix(c(1:4, 1, 6:8), nrow = 2L)
+
 plan(multiprocess)
-y1 <- future_lapply(1:5, FUN = rnorm, future.seed = 0xBEEF)
-str(y1)
+Y1 <- future_apply(X, MARGIN = 1L, FUN = sample, future.seed = 0xBEEF)
+print(Y1)
 
 plan(sequential)
-y2 <- future_lapply(1:5, FUN = rnorm, future.seed = 0xBEEF)
-str(y2)
+Y2 <- future_apply(X, MARGIN = 1L, FUN = sample, future.seed = 0xBEEF)
+print(Y2)
 
-stopifnot(all.equal(y1, y2))
+stopifnot(all.equal(Y1, Y2))
 }
 }
 \author{
 The implementations of \code{future_apply()} is adopted from the source code
 of the corresponding base \R function, which is licensed under GPL (>= 2)
-with The R Core Team' as the copyright holder.
+with 'The R Core Team' as the copyright holder.
 }

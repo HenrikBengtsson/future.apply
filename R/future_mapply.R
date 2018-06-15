@@ -333,7 +333,7 @@ future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES 
   for (ii in seq_along(chunks)) {
     chunk <- chunks[[ii]]
     if (debug) mdebug("Chunk #%d of %d ...", ii, length(chunks))
-#    str(list(chunk = chunk, dots = dots))
+##    str(list(ii = ii, chunk = chunk, dots = dots))
     ## Subsetting outside future is more efficient
     globals_ii <- globals
     ...future.dots_ii <- lapply(dots, FUN = .subset, chunk)
@@ -352,13 +352,15 @@ future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES 
     } else {
       if (debug) mdebug(" - seeds: [%d] <seeds>", length(chunk))
       globals_ii[["...future.seeds_ii"]] <- seeds[chunk]
+##      str(list(globals_ii = globals_ii))
       fs[[ii]] <- future({
-        lapply(seq_along(...future.dots_ii[[1L]]), FUN = function(jj) {
-           ...future.dots_jj <- ...future.dots_ii[[jj]]
-           assign(".Random.seed", ...future.seeds_ii[[jj]], envir = globalenv(), inherits = FALSE)
-           ## FIXME: Add MoreArgs
-           do.call(...future.FUN, args = list(...future.dots_jj))
-        })
+        ...future.FUN2 <- function(..., ...future.seeds_ii_jj) {
+          assign(".Random.seed", ...future.seeds_ii_jj, envir = globalenv(), inherits = FALSE)
+          ...future.FUN(...)
+        }
+        args <- c(list(FUN = ...future.FUN2), ...future.dots_ii, list(...future.seeds_ii_jj = ...future.seeds_ii), MoreArgs, SIMPLIFY = FALSE, USE.NAMES = FALSE)
+##        str(list(args = args))
+        do.call(mapply, args = args)
       }, envir = envir, lazy = future.lazy, globals = globals_ii, packages = packages)
     }
     

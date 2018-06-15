@@ -1,7 +1,7 @@
 Package: future.apply
 =====================
 
-Version: 0.2.0-9000 [2018-05-31]
+Version: 0.2.0-9000 [2018-06-12]
 
 SIGNIFICANT CHANGES:
 
@@ -10,6 +10,8 @@ SIGNIFICANT CHANGES:
    sapply(), and tapply(), which are all GPL (>= 2.1).
  
 NEW FEATURES:
+
+ o Added future_mapply().
 
  o Added future_apply().
  

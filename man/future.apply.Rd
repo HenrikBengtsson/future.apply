@@ -18,6 +18,7 @@ Currently implemented functions are:
 \item \code{\link[=future_apply]{future_apply()}}: a parallel version of \link[base:apply]{apply()}
 \item \code{\link[=future_eapply]{future_eapply()}}: a parallel version of \link[base:lapply]{eapply()}
 \item \code{\link[=future_lapply]{future_lapply()}}: a parallel version of \link[base:lapply]{lapply()}
+\item \code{\link[=future_mapply]{future_mapply()}}: a parallel version of \link[base:mapply]{mapply()}
 \item \code{\link[=future_sapply]{future_sapply()}}: a parallel version of \link[base:sapply]{sapply()}
 \item \code{\link[=future_tapply]{future_tapply()}}: a parallel version of \link[base:tapply]{tapply()}
 \item \code{\link[=future_vapply]{future_vapply()}}: a parallel version of \link[base:vapply]{vapply()}
@@ -75,6 +76,13 @@ These are just a few examples of parallel/distributed backend for the
 future ecosystem.  For more alternatives, see the 'Reverse dependencies'
 section on the
 \href{https://cran.r-project.org/package=future}{future CRAN package page}.
+}
+\author{
+Henrik Bengtsson, except for the implementations of \code{future_replicate()},
+\code{future_sapply()}, and \code{future_tapply()}, which are adopted from the
+source code of the corresponding base \R functions, which are licensed
+under GPL (>= 2) with 'The R Core Team' as the copyright holder.
+Because of these dependencies, the license of this package is GPL (>= 2).
 }
 \keyword{iteration}
 \keyword{manip}

@@ -1,6 +1,7 @@
 #' Apply Functions Over Array Margins via Futures
 #'
-#' Returns a vector or array or list of values obtained by applying a
+#' `future_apply()` implements [base::apply()] using futures.
+#' It returns a vector or array or list of values obtained by applying a
 #' function to margins of an array or matrix.
 #'
 #' @inheritParams future_lapply

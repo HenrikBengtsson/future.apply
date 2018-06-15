@@ -3,6 +3,7 @@
 export(future_apply)
 export(future_eapply)
 export(future_lapply)
+export(future_mapply)
 export(future_replicate)
 export(future_sapply)
 export(future_tapply)

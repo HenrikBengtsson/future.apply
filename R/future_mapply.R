@@ -69,7 +69,7 @@ future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES 
   if (all(ns == 0L)) {
     return(list())
   }
-  stop_if_not(all(ns > 1L))
+  stop_if_not(all(ns > 0L))
   
   ## Recycle?
   nX <- max(ns)

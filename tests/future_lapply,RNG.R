@@ -81,7 +81,7 @@ seed_sets <- list(
   A = TRUE,
   B = NA,
   C = 42L,
-  D = future:::as_lecyer_cmrg_seed(42L),
+  D = as_lecyer_cmrg_seed(42L),
   E = list(),
   F = vector("list", length = length(x))
 )

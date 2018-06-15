@@ -106,7 +106,8 @@ For \code{future_vapply()}, a vector with same length and names as \code{X}.
 See \code{\link[base:vapply]{base::vapply()}} for details.
 }
 \description{
-Apply a Function over a List or Vector via Futures
+\code{future_lapply()} implements \code{\link[base:lapply]{base::lapply()}} using futures, and
+analogously for all the other \code{future_nnn()} functions.
 }
 \section{Global variables}{
 

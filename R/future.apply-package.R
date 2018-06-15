@@ -11,6 +11,7 @@
 #' * [future_apply()]: a parallel version of [apply()][base::apply]
 #' * [future_eapply()]: a parallel version of [eapply()][base::lapply]
 #' * [future_lapply()]: a parallel version of [lapply()][base::lapply]
+#' * [future_mapply()]: a parallel version of [mapply()][base::mapply]
 #' * [future_sapply()]: a parallel version of [sapply()][base::sapply]
 #' * [future_tapply()]: a parallel version of [tapply()][base::tapply]
 #' * [future_vapply()]: a parallel version of [vapply()][base::vapply]

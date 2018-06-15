@@ -28,7 +28,7 @@ controlling how globals are handled. For details, see below section.}
 to be attached in the R environment evaluating the future.}
 
 \item{future.seed}{A logical or an integer (of length one or seven),
-or a list of \code{length(X)} with pre-generated random seeds.
+or a list of \code{length(list(...)[[1]])} with pre-generated random seeds.
 For details, see below section.}
 
 \item{future.lazy}{Specifies whether the futures should be resolved
@@ -36,12 +36,12 @@ lazily or eagerly (default).}
 
 \item{future.scheduling}{Average number of futures ("chunks") per worker.
 If \code{0.0}, then a single future is used to process all elements
-of \code{X}.
+of \code{list(...)[[1]]}.
 If \code{1.0} or \code{TRUE}, then one future per worker is used.
 If \code{2.0}, then each worker will process two futures
-(if there are enough elements in \code{X}).
+(if there are enough elements in \code{list(...)[[1]]}).
 If \code{Inf} or \code{FALSE}, then one future per element of
-\code{X} is used.}
+\code{list(...)[[1]]} is used.}
 
 \item{\ldots}{Arguments to vectorize over (vectors or lists of strictly
 positive length, or all of zero length).}
@@ -51,7 +51,8 @@ A list, or for \code{SIMPLIFY = TRUE}, a vector, array or list.
 See \code{\link[base:sapply]{base::sapply()}} for details.
 }
 \description{
-\code{future_mapply()} is a multivariate version of \code{future_sapply()}.
+\code{future_mapply()} implements \code{\link[base:mapply]{base::mapply()}} using futures, where
+\code{mapply()} is a multivariate version of \code{sapply()}.
 It applies \code{FUN} to the first elements of each \ldots argument,
 the second elements, the third elements, and so on.
 Arguments are recycled if necessary.

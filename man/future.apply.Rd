@@ -18,6 +18,7 @@ Currently implemented functions are:
 \item \code{\link[=future_apply]{future_apply()}}: a parallel version of \link[base:apply]{apply()}
 \item \code{\link[=future_eapply]{future_eapply()}}: a parallel version of \link[base:lapply]{eapply()}
 \item \code{\link[=future_lapply]{future_lapply()}}: a parallel version of \link[base:lapply]{lapply()}
+\item \code{\link[=future_mapply]{future_mapply()}}: a parallel version of \link[base:mapply]{mapply()}
 \item \code{\link[=future_sapply]{future_sapply()}}: a parallel version of \link[base:sapply]{sapply()}
 \item \code{\link[=future_tapply]{future_tapply()}}: a parallel version of \link[base:tapply]{tapply()}
 \item \code{\link[=future_vapply]{future_vapply()}}: a parallel version of \link[base:vapply]{vapply()}

@@ -1,6 +1,7 @@
 #' Apply a Function to Multiple List or Vector Arguments
 #'
-#' `future_mapply()` is a multivariate version of `future_sapply()`.
+#' `future_mapply()` implements [base::mapply()] using futures, where
+#' `mapply()` is a multivariate version of `sapply()`.
 #' It applies `FUN` to the first elements of each \ldots argument,
 #' the second elements, the third elements, and so on.
 #' Arguments are recycled if necessary.
@@ -27,7 +28,7 @@
 #'        to be attached in the R environment evaluating the future.
 #' 
 #' @param future.seed A logical or an integer (of length one or seven),
-#'        or a list of `length(X)` with pre-generated random seeds.
+#'        or a list of \code{length(list(...)[[1]])} with pre-generated random seeds.
 #'        For details, see below section.
 #'  
 #' @param future.lazy Specifies whether the futures should be resolved
@@ -35,12 +36,12 @@
 #' 
 #' @param future.scheduling Average number of futures ("chunks") per worker.
 #'        If `0.0`, then a single future is used to process all elements
-#'        of `X`.
+#'        of \code{list(...)[[1]]}.
 #'        If `1.0` or `TRUE`, then one future per worker is used.
 #'        If `2.0`, then each worker will process two futures
-#'        (if there are enough elements in `X`).
+#'        (if there are enough elements in \code{list(...)[[1]]}).
 #'        If `Inf` or `FALSE`, then one future per element of
-#'        `X` is used.
+#'        \code{list(...)[[1]]} is used.
 #'
 #' @return
 #' A list, or for `SIMPLIFY = TRUE`, a vector, array or list.

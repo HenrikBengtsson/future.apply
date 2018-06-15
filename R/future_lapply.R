@@ -1,5 +1,8 @@
 #' Apply a Function over a List or Vector via Futures
 #'
+#' `future_lapply()` implements [base::lapply()] using futures, and
+#' analogously for all the other `future_nnn()` functions.
+#' 
 #' @param X  A vector-like object to iterate over.
 #' 
 #' @param FUN  A function taking at least one argument.

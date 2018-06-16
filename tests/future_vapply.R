@@ -92,6 +92,17 @@ for (strategy in supportedStrategies()) {
   y1 <- future_vapply(x, FUN = fun, FUN.VALUE = fun_value)
   str(y1)
   stopifnot(all.equal(y1, y0))
+
+  ## Ditto with dimnames on FUN.VALUE
+  fun <- function(x) {
+    matrix(x, nrow = 2L, ncol = 2L, dimnames = list(c("a", "b"), c("A", "B")))
+  }
+  fun_value <- fun(double(1L))
+  y0 <- vapply(x, FUN = fun, FUN.VALUE = fun_value)
+  str(y0)
+  y1 <- future_vapply(x, FUN = fun, FUN.VALUE = fun_value)
+  str(y1)
+  stopifnot(all.equal(y1, y0))
   
   message("- From example(vapply) ...")
   x <- list(a = 1:10, beta = exp(-3:3), logic = c(TRUE, FALSE, FALSE, TRUE))

@@ -42,11 +42,47 @@ for (strategy in supportedStrategies()) {
   print(y1)
   stopifnot(identical(y1, y0))
 
-  message("- exceptions ...")
-  
+  message("- apply(X, MARGIN = <character>, ...) ...")
+  X <- matrix(1:2, nrow = 2L, ncol = 1L, dimnames = list(rows = c("a", "b")))
+  y0 <- apply(X, MARGIN = "rows", FUN = identity)
+  y1 <- future_apply(X, MARGIN = "rows", FUN = identity)
+  print(y1)
+  stopifnot(identical(y1, y0))
+
   plan(sequential)
   message(sprintf("*** strategy = %s ... done", sQuote(strategy)))
 } ## for (strategy in ...) 
+
+
+message("*** apply(X, ...) - prod(dim(X)) == 0 [non-parallel] ...")
+X <- matrix(nrow = 0L, ncol = 2L)
+y0 <- apply(X, MARGIN = 1L, FUN = identity)
+y1 <- future_apply(X, MARGIN = 1L, FUN = identity)
+print(y1)
+stopifnot(identical(y1, y0))
+  
+
+message("*** exceptions ...")
+
+## Error: dim(X) must have a positive length
+res <- tryCatch({
+  y <- future_apply(1L, MARGIN = 1L, FUN = identity)
+}, error = identity)
+stopifnot(inherits(res, "error"))
+
+## Error: 'X' must have named dimnames
+X <- matrix(1:2, nrow = 2L, ncol = 1L)
+res <- tryCatch({
+  y <- future_apply(X, MARGIN = "rows", FUN = identity)
+}, error = identity)
+stopifnot(inherits(res, "error"))
+
+## Error: not all elements of 'MARGIN' are names of dimensions
+X <- matrix(1:2, nrow = 2L, ncol = 1L, dimnames = list(rows = c("a", "b")))
+res <- tryCatch({
+  y <- future_apply(X, MARGIN = "cols", FUN = identity)
+}, error = identity)
+stopifnot(inherits(res, "error"))
 
 
 message("*** future_apply() ... DONE")

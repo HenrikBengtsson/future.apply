@@ -46,7 +46,12 @@ for (strategy in supportedStrategies()) {
   stopifnot(all.equal(y_rng_1, y_rng_0))
 
   
-  message("- exceptions ...")
+  message("- future_Map() ...")
+  xs <- replicate(5, stats::runif(10), simplify = FALSE)
+  ws <- replicate(5, stats::rpois(10, 5) + 1, simplify = FALSE)
+  y0 <- Map(weighted.mean, xs, ws)
+  y1 <- future_Map(stats::weighted.mean, xs, ws)
+  stopifnot(all.equal(y1, y0))
   
   plan(sequential)
   message(sprintf("*** strategy = %s ... done", sQuote(strategy)))

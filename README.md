@@ -49,8 +49,8 @@ Future-versions of common goto <code>*apply()</code> functions available in core
 <code>future_tapply()</code>, and 
 <code>future_vapply()</code>.
 <br>
-<em>The following functions are yet to be implemented:</em><br>
-<code>future_rapply()</code>, ...<br>
+<em>The following function is yet not implemented:</em><br>
+<code>future_rapply()</code><br>
 </td>
 <td>
 All future backends

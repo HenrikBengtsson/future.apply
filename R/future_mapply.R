@@ -109,6 +109,8 @@ future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES 
   ## The default is to gather globals
   if (is.null(future.globals)) future.globals <- TRUE
 
+  globals_dots <- list()
+  packages_dots <- character(0L)
   packages <- NULL
   globals <- future.globals
   if (is.logical(globals)) {
@@ -126,6 +128,18 @@ future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES 
         mdebug(" - globals found: [%d] %s", length(globals), hpaste(sQuote(names(globals))))
         mdebug(" - needed namespaces: [%d] %s", length(packages), hpaste(sQuote(packages)))
         mdebug("Finding globals ... DONE")
+      }
+
+      ## Search for globals in '...':
+      gp <- getGlobalsAndPackages(dots, envir = envir, globals = TRUE)
+      globals_dots <- gp$globals
+      packages_dots <- gp$packages
+      gp <- NULL
+
+      if (debug) {
+        mdebug(" - globals found in '...': [%d] %s", length(globals_dots), hpaste(sQuote(names(globals_dots))))
+        mdebug(" - needed namespaces for '...': [%d] %s", length(packages_dots), hpaste(sQuote(packages_dots)))
+        mdebug("Finding globals in 'FUN' and '...' arguments ... DONE")
       }
     } else {
       ## globals = FALSE
@@ -166,7 +180,7 @@ future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES 
 
   ## Assert there are no reserved variables names among globals
   reserved <- intersect(c("...future.FUN", "...future.dots_ii",
-                          "...future.seeds_ii"), names)
+                          "...future.seeds_ii"), c(names, names(globals_dots)))
   if (length(reserved) > 0) {
     stop("Detected globals using reserved variables names: ",
          paste(sQuote(reserved), collapse = ", "))
@@ -178,10 +192,19 @@ future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES 
   names(globals) <- names
 
   if (debug) {
-    mdebug("Globals to be used in all futures:")
+    mdebug("Globals to be used in all futures (excluding any globals in '...'):")
     mdebug(paste(capture.output(str(globals)), collapse = "\n"))
+    mdebug("Globals in '...':")
+    mdebug(paste(capture.output(str(globals_dots)), collapse = "\n"))
   }
 
+  ## Export any globals found in '...' too all futures
+  ## NOTE: This is suboptimal if not all '...' element share the same globals
+  if (length(globals_dots) > 0L) {
+    globals_dots <- as.FutureGlobals(globals_dots)
+    globals <- unique(c(globals, globals_dots))
+  }
+  
 
   ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   ## 2. Packages
@@ -190,7 +213,10 @@ future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES 
     stop_if_not(is.character(future.packages))
     future.packages <- unique(future.packages)
     stop_if_not(!anyNA(future.packages), all(nzchar(future.packages)))
-    packages <- unique(c(packages, future.packages))
+    packages <- c(packages, future.packages)
+    ## Packages needed due to globals in '...'?
+    if (length(packages_dots) > 0L) packages <- c(packages, packages_dots)
+    packages <- unique(packages)
   }
   
   if (debug) {
@@ -338,7 +364,7 @@ future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES 
     ## Subsetting outside future is more efficient
     globals_ii <- globals
     ...future.dots_ii <- lapply(dots, FUN = .subset, chunk)
-#    str(list(...future.dots_ii = ...future.dots_ii))
+#    str(list(dots = dots, ...future.dots_ii = ...future.dots_ii))
     globals_ii[["...future.dots_ii"]] <- ...future.dots_ii
     ...future.dots_ii <- NULL
 ##    stop_if_not(attr(globals_ii, "resolved"))
@@ -347,8 +373,12 @@ future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES 
     if (is.null(seeds)) {
       if (debug) mdebug(" - seeds: <none>")
       fs[[ii]] <- future({
-        args <- c(list(FUN = ...future.FUN), ...future.dots_ii, MoreArgs, SIMPLIFY = FALSE, USE.NAMES = FALSE)
-        do.call(mapply, args = args)
+        args <- c(list(FUN = ...future.FUN), ...future.dots_ii, MoreArgs = list(MoreArgs), SIMPLIFY = FALSE, USE.NAMES = FALSE)
+##        str(list(args = args))
+##        args00 <<- args
+        res <- do.call(mapply, args = args)
+##        str(list(res = res))
+        res
       }, envir = envir, lazy = future.lazy, globals = globals_ii, packages = packages)
     } else {
       if (debug) mdebug(" - seeds: [%d] <seeds>", length(chunk))

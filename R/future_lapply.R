@@ -132,15 +132,14 @@ future_lapply <- function(X, FUN, ..., future.globals = TRUE, future.packages = 
   ## The default is to gather globals
   if (is.null(future.globals)) future.globals <- TRUE
 
-  globals_X <- list()
-  packages_X <- character(0L)
   packages <- NULL
   globals <- future.globals
+  scanForGlobals <- FALSE
   if (is.logical(globals)) {
     ## Gather all globals?
     if (globals) {
       if (debug) mdebug("Finding globals in 'FUN', 'X', and '...' arguments ...")
-      
+      scanForGlobals <- TRUE
       expr <- do.call(call, args = c(list("FUN"), list(...)))
       gp <- getGlobalsAndPackages(expr, envir = envir, globals = TRUE)
       globals <- gp$globals
@@ -150,18 +149,6 @@ future_lapply <- function(X, FUN, ..., future.globals = TRUE, future.packages = 
       if (debug) {
         mdebug(" - globals found: [%d] %s", length(globals), hpaste(sQuote(names(globals))))
         mdebug(" - needed namespaces: [%d] %s", length(packages), hpaste(sQuote(packages)))
-      }
-
-      ## Search for globals in 'X':
-      gp <- getGlobalsAndPackages(X, envir = envir, globals = TRUE)
-      globals_X <- gp$globals
-      packages_X <- gp$packages
-      gp <- NULL
-
-      if (debug) {
-        mdebug(" - globals found in 'X': [%d] %s", length(globals_X), hpaste(sQuote(names(globals_X))))
-        mdebug(" - needed namespaces for 'X': [%d] %s", length(packages_X), hpaste(sQuote(packages_X)))
-        mdebug("Finding globals in 'FUN', 'X', and '...' arguments ... DONE")
       }
     } else {
       ## globals = FALSE
@@ -200,7 +187,7 @@ future_lapply <- function(X, FUN, ..., future.globals = TRUE, future.packages = 
 
   ## Assert there are no reserved variables names among globals
   reserved <- intersect(c("...future.FUN", "...future.X_ii",
-                          "...future.seeds_ii"), c(names, names(globals_X)))
+                          "...future.seeds_ii"), names)
   if (length(reserved) > 0) {
     stop("Detected globals using reserved variables names: ",
          paste(sQuote(reserved), collapse = ", "))
@@ -214,15 +201,6 @@ future_lapply <- function(X, FUN, ..., future.globals = TRUE, future.packages = 
   if (debug) {
     mdebug("Globals to be used in all futures (excluding any globals in 'X'):")
     mdebug(paste(capture.output(str(globals)), collapse = "\n"))
-    mdebug("Globals in 'X':")
-    mdebug(paste(capture.output(str(globals_X)), collapse = "\n"))
-  }
-
-  ## Export any globals found in 'X' too all futures
-  ## NOTE: This is suboptimal if not all 'X' element share the same globals
-  if (length(globals_X) > 0L) {
-    globals_X <- as.FutureGlobals(globals_X)
-    globals <- unique(c(globals, globals_X))
   }
 
 
@@ -233,10 +211,7 @@ future_lapply <- function(X, FUN, ..., future.globals = TRUE, future.packages = 
     stop_if_not(is.character(future.packages))
     future.packages <- unique(future.packages)
     stop_if_not(!anyNA(future.packages), all(nzchar(future.packages)))
-    packages <- c(packages, future.packages)
-    ## Packages needed due to globals in 'X'?
-    if (length(packages_X) > 0L) packages <- c(packages, packages_X)
-    packages <- unique(packages)
+    packages <- unique(c(packages, future.packages))
   }
   
   if (debug) {
@@ -309,9 +284,42 @@ future_lapply <- function(X, FUN, ..., future.globals = TRUE, future.packages = 
     chunk <- chunks[[ii]]
     if (debug) mdebug("Chunk #%d of %d ...", ii, length(chunks))
 
-    ## Subsetting outside future is more efficient
+    X_ii <- X[chunk]
     globals_ii <- globals
-    globals_ii[["...future.X_ii"]] <- X[chunk]
+    ## Subsetting outside future is more efficient
+    globals_ii[["...future.X_ii"]] <- X_ii
+    packages_ii <- packages
+
+    if (scanForGlobals) {
+      ## Search for globals in 'X_ii':
+      gp <- getGlobalsAndPackages(X_ii, envir = envir, globals = TRUE)
+      globals_X <- gp$globals
+      packages_X <- gp$packages
+      gp <- NULL
+
+      if (debug) {
+        mdebug(" - globals found in 'X' for chunk #%d: [%d] %s", chunk, length(globals_X), hpaste(sQuote(names(globals_X))))
+        mdebug(" - needed namespaces for 'X' for chunk #%d: [%d] %s", chunk, length(packages_X), hpaste(sQuote(packages_X)))
+      }
+    
+      ## Export also globals found in 'X_ii'
+      if (length(globals_X) > 0L) {
+        reserved <- intersect(c("...future.FUN", "...future.X_ii",
+                                "...future.seeds_ii"), names(globals_X))
+        if (length(reserved) > 0) {
+          stop("Detected globals using reserved variables names: ",
+               paste(sQuote(reserved), collapse = ", "))
+        }
+        globals_X <- as.FutureGlobals(globals_X)
+        globals_ii <- unique(c(globals_ii, globals_X))
+
+        ## Packages needed due to globals in 'X_ii'?
+        if (length(packages_X) > 0L)
+          packages_ii <- unique(c(packages_ii, packages_X))
+      }
+    }
+    
+    X_ii <- NULL
 ##    stop_if_not(attr(globals_ii, "resolved"))
     
     ## Using RNG seeds or not?
@@ -322,7 +330,7 @@ future_lapply <- function(X, FUN, ..., future.globals = TRUE, future.packages = 
            ...future.X_jj <- ...future.X_ii[[jj]]
            ...future.FUN(...future.X_jj, ...)
         })
-      }, envir = envir, lazy = future.lazy, globals = globals_ii, packages = packages)
+      }, envir = envir, lazy = future.lazy, globals = globals_ii, packages = packages_ii)
     } else {
       if (debug) mdebug(" - seeds: [%d] <seeds>", length(chunk))
       globals_ii[["...future.seeds_ii"]] <- seeds[chunk]
@@ -332,7 +340,7 @@ future_lapply <- function(X, FUN, ..., future.globals = TRUE, future.packages = 
            assign(".Random.seed", ...future.seeds_ii[[jj]], envir = globalenv(), inherits = FALSE)
            ...future.FUN(...future.X_jj, ...)
         })
-      }, envir = envir, lazy = future.lazy, globals = globals_ii, packages = packages)
+      }, envir = envir, lazy = future.lazy, globals = globals_ii, packages = packages_ii)
     }
     
     ## Not needed anymore

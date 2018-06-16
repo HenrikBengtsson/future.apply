@@ -96,7 +96,23 @@ for (strategy in supportedStrategies()) {
     stopifnot(typeof(obj) == "S4")
     y <- future_lapply(1L, function(a, b) typeof(b), b = obj)
     stopifnot(identical(y[[1]], typeof(obj)))
-  }  
+  }
+
+  message("- future_lapply(X, ...) - 'X' containing globals ...")
+  ## From https://github.com/HenrikBengtsson/future.apply/issues/12
+  a <- 42
+  b <- 21
+  X <- list(
+    function(b) 2 * a,
+    function() b / 2,
+    function() a + b,
+    function() 3.14
+  )
+  z0 <- lapply(X, FUN = function(f) f())
+  str(z0)
+  z1 <- future_lapply(X, FUN = function(f) f())
+  str(z1)
+  stopifnot(identical(z1, z0))
 }
 
 message("*** future_lapply() - tricky globals ... DONE")

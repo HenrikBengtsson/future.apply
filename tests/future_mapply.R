@@ -39,6 +39,12 @@ for (strategy in supportedStrategies()) {
   stopifnot(identical(y1, y0))
 
   
+  message("- Recycle arguments to same length ...")
+  y0 <- mapply(rep, 1:4, 2:1)
+  y1 <- future_mapply(rep, 1:4, 2:1)
+  stopifnot(identical(y1, y0))
+
+  
   message("- Parallel RNG ...")
   y_rng_1 <- future_mapply(stats::runif, n = 1:4, max = 2:5,
                            MoreArgs = list(min = 1), future.seed = 0xBEEF)
@@ -57,6 +63,14 @@ for (strategy in supportedStrategies()) {
   message(sprintf("*** strategy = %s ... done", sQuote(strategy)))
 } ## for (strategy in ...) 
 
+message("- Empty input [non parallel] ...")
+y0 <- mapply(search)
+y1 <- future_mapply(search)
+stopifnot(identical(y1, y0))
+
+y0 <- mapply(list, integer(0L))
+y1 <- future_mapply(list, integer(0L))
+stopifnot(identical(y1, y0))
 
 message("*** future_mapply() ... DONE")
 

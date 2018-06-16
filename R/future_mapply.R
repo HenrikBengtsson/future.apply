@@ -63,13 +63,15 @@ future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES 
   stop_if_not(is.function(FUN))
 
   dots <- list(...)
-  stop_if_not(length(dots) > 0L)
+  
+  ## Nothing to do?
+  if (length(dots) == 0L) return(list())
+  
   ns <- lengths(dots)
   
   ## Nothing to do?
-  if (all(ns == 0L)) {
-    return(list())
-  }
+  if (all(ns == 0L)) return(list())
+
   stop_if_not(all(ns > 0L))
   
   ## Recycle?

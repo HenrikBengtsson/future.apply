@@ -51,9 +51,8 @@
 #'
 #' @keywords manip programming iteration
 #'
-#' @importFrom globals globalsByName cleanup
+#' @importFrom globals globalsByName
 #' @importFrom future future resolve values as.FutureGlobals nbrOfWorkers getGlobalsAndPackages FutureError
-#' @importFrom parallel splitIndices
 #' @importFrom utils capture.output head str
 #' @export
 future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES = TRUE, future.globals = TRUE, future.packages = NULL, future.seed = FALSE, future.lazy = FALSE, future.scheduling = 1.0) {
@@ -219,27 +218,8 @@ future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES 
   ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   ## 4. Load balancing ("chunking")
   ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  if (is.logical(future.scheduling)) {
-    if (future.scheduling) {
-      nbr_of_futures <- nbrOfWorkers()
-      if (nbr_of_futures > nX) nbr_of_futures <- nX
-    } else {
-      nbr_of_futures <- nX
-    }
-  } else {
-    ## Treat 'future.scheduling' as the number of futures per worker.
-    stop_if_not(future.scheduling >= 0)
-    nbr_of_workers <- nbrOfWorkers()
-    if (nbr_of_workers > nX) nbr_of_workers <- nX
-    nbr_of_futures <- future.scheduling * nbr_of_workers
-    if (nbr_of_futures < 1) {
-      nbr_of_futures <- 1L
-    } else if (nbr_of_futures > nX) {
-      nbr_of_futures <- nX
-    }
-  }
-
-  chunks <- splitIndices(nX, ncl = nbr_of_futures)
+  chunks <- makeChunks(nX, workers = nbrOfWorkers(),
+                       scheduling = future.scheduling)
   if (debug) mdebug("Number of chunks: %d", length(chunks))
   
   
@@ -397,8 +377,6 @@ future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES 
     }
   }
 
- isFALSE <- function(x) is.logical(x) && length(x) == 1L && !is.na(x) && !x
-  
   if (!isFALSE(SIMPLIFY) && length(values) > 0L) {
     values <- simplify2array(values, higher = (SIMPLIFY == "array"))
   } 

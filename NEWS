@@ -11,7 +11,7 @@ SIGNIFICANT CHANGES:
  
 NEW FEATURES:
 
- o Added future_mapply().
+ o Added future_mapply() and future_Map().
 
  o Added future_apply().
  

@@ -15,6 +15,7 @@
 #' * [future_sapply()]: a parallel version of [sapply()][base::sapply]
 #' * [future_tapply()]: a parallel version of [tapply()][base::tapply]
 #' * [future_vapply()]: a parallel version of [vapply()][base::vapply]
+#' * [future_Map()]: a parallel version of [Map()][base::Map]
 #' * [future_replicate()]: a parallel version of [replicate()][base::replicate]
 #'
 #' Reproducibility is part of the core design, which means that perfect,
@@ -76,10 +77,11 @@
 #' [future CRAN package page](https://cran.r-project.org/package=future).
 #'
 #' @author
-#' Henrik Bengtsson, except for the implementations of `future_replicate()`,
-#' `future_sapply()`, and `future_tapply()`, which are adopted from the
-#' source code of the corresponding base \R functions, which are licensed
-#' under GPL (>= 2) with 'The R Core Team' as the copyright holder.
+#' Henrik Bengtsson, except for the implementations of `future_Map()`,
+#' `future_replicate()`, `future_sapply()`, and `future_tapply()`, which
+#' are adopted from the source code of the corresponding base \R functions,
+#' which are licensed under GPL (>= 2) with 'The R Core Team' as the
+#' copyright holder.
 #' Because of these dependencies, the license of this package is GPL (>= 2).
 #' 
 #' @keywords manip programming iteration

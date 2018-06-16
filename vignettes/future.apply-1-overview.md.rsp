@@ -60,6 +60,7 @@ Future-versions of common goto <code>*apply()</code> functions available in core
 <code>future_apply()</code>, 
 <code>future_eapply()</code>, 
 <code>future_lapply()</code>, 
+<code>future_Map()</code>, 
 <code>future_mapply()</code>, 
 <code>future_replicate()</code>,
 <code>future_sapply()</code>,
@@ -67,7 +68,6 @@ Future-versions of common goto <code>*apply()</code> functions available in core
 <code>future_vapply()</code>.
 <br>
 <em>The following functions are yet to be implemented:</em><br>
-<code>future_Map()</code>, 
 <code>future_rapply()</code>, ...<br>
 </td>
 <td>

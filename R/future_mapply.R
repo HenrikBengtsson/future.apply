@@ -44,8 +44,8 @@
 #'        \code{list(...)[[1]]} is used.
 #'
 #' @return
-#' A list, or for `SIMPLIFY = TRUE`, a vector, array or list.
-#' See [base::sapply()] for details.
+#' `future_mapply() returns a list, or for `SIMPLIFY = TRUE`, a vector,
+#' array or list.  See [base::mapply()] for details.
 #'
 #' @example incl/future_mapply.R
 #'

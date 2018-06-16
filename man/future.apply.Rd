@@ -22,6 +22,7 @@ Currently implemented functions are:
 \item \code{\link[=future_sapply]{future_sapply()}}: a parallel version of \link[base:sapply]{sapply()}
 \item \code{\link[=future_tapply]{future_tapply()}}: a parallel version of \link[base:tapply]{tapply()}
 \item \code{\link[=future_vapply]{future_vapply()}}: a parallel version of \link[base:vapply]{vapply()}
+\item \code{\link[=future_Map]{future_Map()}}: a parallel version of \link[base:Map]{Map()}
 \item \code{\link[=future_replicate]{future_replicate()}}: a parallel version of \link[base:replicate]{replicate()}
 }
 
@@ -78,10 +79,11 @@ section on the
 \href{https://cran.r-project.org/package=future}{future CRAN package page}.
 }
 \author{
-Henrik Bengtsson, except for the implementations of \code{future_replicate()},
-\code{future_sapply()}, and \code{future_tapply()}, which are adopted from the
-source code of the corresponding base \R functions, which are licensed
-under GPL (>= 2) with 'The R Core Team' as the copyright holder.
+Henrik Bengtsson, except for the implementations of \code{future_Map()},
+\code{future_replicate()}, \code{future_sapply()}, and \code{future_tapply()}, which
+are adopted from the source code of the corresponding base \R functions,
+which are licensed under GPL (>= 2) with 'The R Core Team' as the
+copyright holder.
 Because of these dependencies, the license of this package is GPL (>= 2).
 }
 \keyword{iteration}

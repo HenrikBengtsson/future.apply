@@ -98,8 +98,7 @@ future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES 
     if (globals) {
       if (debug) mdebug("Finding globals ...")
       scanForGlobals <- TRUE
-
-      expr <- do.call(call, args = c(list("FUN"), dots, MoreArgs))
+      expr <- do.call(call, args = c(list("FUN"), MoreArgs))
       gp <- getGlobalsAndPackages(expr, envir = envir, globals = TRUE)
       globals <- gp$globals
       packages <- gp$packages
@@ -112,11 +111,11 @@ future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES 
       }
     } else {
       ## globals = FALSE
-      globals <- c("FUN", "MoreArgs", names(dots), "...")
+      globals <- c("FUN", "MoreArgs", "...")
       globals <- globalsByName(globals, envir = envir, mustExist = FALSE)
     }
   } else if (is.character(globals)) {
-    globals <- unique(c(globals, "FUN", "MoreArgs", names(dots), "..."))
+    globals <- unique(c(globals, "FUN", "MoreArgs", "..."))
     globals <- globalsByName(globals, envir = envir, mustExist = FALSE)
   } else if (is.list(globals)) {
     names <- names(globals)

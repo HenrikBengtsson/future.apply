@@ -141,7 +141,7 @@ future_lapply <- function(X, FUN, ..., future.globals = TRUE, future.packages = 
   if (is.logical(globals)) {
     ## Gather all globals?
     if (globals) {
-      if (debug) mdebug("Finding globals in 'FUN', 'X', and '...' arguments ...")
+      if (debug) mdebug("Finding globals ...")
       scanForGlobals <- TRUE
       expr <- do.call(call, args = c(list("FUN"), list(...)))
       gp <- getGlobalsAndPackages(expr, envir = envir, globals = TRUE)

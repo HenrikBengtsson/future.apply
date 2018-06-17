@@ -6,12 +6,12 @@
 #' 
 #' @param nbrOfWorker (integer) Number of workers available.
 #' 
-#' @param scheduling (numeric) A strictly positive scalar.  Only used if
-#' argument `chunkSize` is `NULL`.
+#' @param future.scheduling (numeric) A strictly positive scalar.
+#' Only used if argument `future.chunk.size` is `NULL`.
 #'
-#' @param chunkSize (numeric) The maximum number of elements per chunk,
-#' or `NULL`.  If `NULL`, then the chunk sizes are given by the `scheduling`
-#' argument.
+#' @param future.chunk.size (numeric) The maximum number of elements per
+#' chunk, or `NULL`.  If `NULL`, then the chunk sizes are given by the
+#' `future.scheduling` argument.
 #'
 #' @return A list of chunks, where each chunk is an integer vector of
 #' unique indices \code{[1, nbrOfElements]}.  The union of all chunks
@@ -20,29 +20,32 @@
 #' 
 #' @importFrom parallel splitIndices
 #' @keywords internal
-makeChunks <- function(nbrOfElements, nbrOfWorkers, scheduling = 1.0, chunkSize = NULL) {
+makeChunks <- function(nbrOfElements, nbrOfWorkers,
+                       future.scheduling = 1.0, future.chunk.size = NULL) {
   stop_if_not(nbrOfElements >= 0L, nbrOfWorkers >= 1L)
 
-  ## 'chunkSize != NULL' takes precedence over 'scheduling'
-  if (!is.null(chunkSize)) {
-    stop_if_not(length(chunkSize) == 1L, !is.na(chunkSize), chunkSize > 0)
+  ## 'future.chunk.size != NULL' takes precedence over 'future.scheduling'
+  if (!is.null(future.chunk.size)) {
+    stop_if_not(length(future.chunk.size) == 1L, !is.na(future.chunk.size),
+                future.chunk.size > 0)
     ## Same definition as parallel:::staticNChunks() in R (>= 3.5.0)
-    nbrOfChunks <- max(1, ceiling(nbrOfElements / chunkSize))
+    nbrOfChunks <- max(1, ceiling(nbrOfElements / future.chunk.size))
   } else {
-    if (is.logical(scheduling)) {
-      stop_if_not(length(scheduling) == 1L, !is.na(scheduling))
-      if (scheduling) {
+    if (is.logical(future.scheduling)) {
+      stop_if_not(length(future.scheduling) == 1L, !is.na(future.scheduling))
+      if (future.scheduling) {
         nbrOfChunks <- nbrOfWorkers
         if (nbrOfChunks > nbrOfElements) nbrOfChunks <- nbrOfElements
       } else {
         nbrOfChunks <- nbrOfElements
       }
     } else {
-      ## Treat 'scheduling' as the number of chunks per worker, i.e.
+      ## Treat 'future.scheduling' as the number of chunks per worker, i.e.
       ## the number of chunks each worker should process on average.
-      stop_if_not(length(scheduling) == 1L, !is.na(scheduling), scheduling >= 0)
+      stop_if_not(length(future.scheduling) == 1L, !is.na(future.scheduling),
+                  future.scheduling >= 0)
       if (nbrOfWorkers > nbrOfElements) nbrOfWorkers <- nbrOfElements
-      nbrOfChunks <- scheduling * nbrOfWorkers
+      nbrOfChunks <- future.scheduling * nbrOfWorkers
       if (nbrOfChunks < 1L) {
         nbrOfChunks <- 1L
       } else if (nbrOfChunks > nbrOfElements) {

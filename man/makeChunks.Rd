@@ -4,17 +4,18 @@
 \alias{makeChunks}
 \title{Create Chunks of Index Vectors}
 \usage{
-makeChunks(nbrOfElements, nbrOfWorkers, scheduling = 1, chunkSize = NULL)
+makeChunks(nbrOfElements, nbrOfWorkers, future.scheduling = 1,
+  future.chunk.size = NULL)
 }
 \arguments{
 \item{nbrOfElements}{(integer) Total number of elements to iterate over.}
 
-\item{scheduling}{(numeric) A strictly positive scalar.  Only used if
-argument \code{chunkSize} is \code{NULL}.}
+\item{future.scheduling}{(numeric) A strictly positive scalar.
+Only used if argument \code{future.chunk.size} is \code{NULL}.}
 
-\item{chunkSize}{(numeric) The maximum number of elements per chunk,
-or \code{NULL}.  If \code{NULL}, then the chunk sizes are given by the \code{scheduling}
-argument.}
+\item{future.chunk.size}{(numeric) The maximum number of elements per
+chunk, or \code{NULL}.  If \code{NULL}, then the chunk sizes are given by the
+\code{future.scheduling} argument.}
 
 \item{nbrOfWorker}{(integer) Number of workers available.}
 }

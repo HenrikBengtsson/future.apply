@@ -11,19 +11,17 @@ SIGNIFICANT CHANGES:
  
 NEW FEATURES:
 
+ o Added future_apply(), future_mapply(), and future_Map().
+
  o Added argument `future.chunk.size` as an alternative to argument
    `future.scheduling` for controlling the average number of elements
    processed per future ("chunk").  In R 3.5.0, the parallel package
    introduced argument 'chunk.size'.
 
- o Added future_mapply() and future_Map().
-
- o Added future_apply().
-
  o The maximum total size of globals allowed (option 'future.globals.maxSize')
-   per future ("chunk") is now scaled up by the number of elements processed
-   by the future ("chunk") making the protection invariant to the amount of
-   chunking (arguments 'future.scheduling' and 'future.chunk.size').
+   per future ("chunk") is now scaled up by the number of elements processed by
+   the future ("chunk") making the protection approximately invariant to the
+   amount of chunking (arguments 'future.scheduling' and 'future.chunk.size').
  
 BUG FIXES:
 

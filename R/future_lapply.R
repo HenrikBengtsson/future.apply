@@ -187,7 +187,9 @@ future_lapply <- function(X, FUN, ..., future.globals = TRUE, future.packages = 
   ...future.FUN <- ...future.elements_ii <- ...future.seeds_ii <-
                    ...future.globals.maxSize <- NULL
 
-  globals.maxSize <- getOption("future.globals.maxSize", 500 * 1024 ^ 2)
+  globals.maxSize <- getOption("future.globals.maxSize")
+  globals.maxSize.default <- globals.maxSize
+  if (is.null(globals.maxSize.default)) globals.maxSize.default <- 500 * 1024^2
   
   nchunks <- length(chunks)
   fs <- vector("list", length = nchunks)
@@ -205,7 +207,7 @@ future_lapply <- function(X, FUN, ..., future.globals = TRUE, future.packages = 
     packages_ii <- packages
 
     if (scanForGlobals) {
-      mdebug(" - Finding globals in 'X' for chunk #%d ...", chunk)
+      mdebug(" - Finding globals in 'X' for chunk #%d ...", ii)
       ## Search for globals in 'X_ii':
       gp <- getGlobalsAndPackages(X_ii, envir = envir, globals = TRUE)
       globals_X <- gp$globals
@@ -232,7 +234,7 @@ future_lapply <- function(X, FUN, ..., future.globals = TRUE, future.packages = 
         if (length(packages_X) > 0L)
           packages_ii <- unique(c(packages_ii, packages_X))
       }
-      mdebug(" - Finding globals in 'X' for chunk #%d ... DONE", chunk)
+      mdebug(" - Finding globals in 'X' for chunk #%d ... DONE", ii)
     }
     
     X_ii <- NULL
@@ -244,18 +246,20 @@ future_lapply <- function(X, FUN, ..., future.globals = TRUE, future.packages = 
     ## a "good enough" approach.
     ## (https://github.com/HenrikBengtsson/future.apply/issues/8).
     if (length(chunk) > 1L) {
-      globals_ii[["...future.globals.maxSize"]] <- globals.maxSize
-      oopts <- options(future.globals.maxSize = length(chunk) * globals.maxSize)
-      on.exit(options(oopts), add = TRUE)
+      globals_ii["...future.globals.maxSize"] <- list(globals.maxSize)
+      options(future.globals.maxSize = length(chunk) * globals.maxSize.default)
+      if (debug) mdebug(" - Adjusted option 'future.globals.maxSize': %g -> %d * %g = %g (bytes)", globals.maxSize.default, length(chunk), globals.maxSize.default, getOption("future.globals.maxSize"))
+      on.exit(options(future.globals.maxSize = globals.maxSize), add = TRUE)
     }
     
     ## Using RNG seeds or not?
     if (is.null(seeds)) {
       if (debug) mdebug(" - seeds: <none>")
       fs[[ii]] <- future({
-        if (!is.null(...future.globals.maxSize)) {
+        ...future.globals.maxSize.org <- getOption("future.globals.maxSize")
+        if (!identical(...future.globals.maxSize.org, ...future.globals.maxSize)) {
           oopts <- options(future.globals.maxSize = ...future.globals.maxSize)
-          on.exit(options(oopts))
+          on.exit(options(oopts), add = TRUE)
         }
         lapply(seq_along(...future.elements_ii), FUN = function(jj) {
            ...future.X_jj <- ...future.elements_ii[[jj]]
@@ -266,9 +270,10 @@ future_lapply <- function(X, FUN, ..., future.globals = TRUE, future.packages = 
       if (debug) mdebug(" - seeds: [%d] <seeds>", length(chunk))
       globals_ii[["...future.seeds_ii"]] <- seeds[chunk]
       fs[[ii]] <- future({
-        if (!is.null(...future.globals.maxSize)) {
+        ...future.globals.maxSize.org <- getOption("future.globals.maxSize")
+        if (!identical(...future.globals.maxSize.org, ...future.globals.maxSize)) {
           oopts <- options(future.globals.maxSize = ...future.globals.maxSize)
-          on.exit(options(oopts))
+          on.exit(options(oopts), add = TRUE)
         }
         lapply(seq_along(...future.elements_ii), FUN = function(jj) {
            ...future.X_jj <- ...future.elements_ii[[jj]]

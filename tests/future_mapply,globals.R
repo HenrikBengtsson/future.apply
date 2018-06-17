@@ -145,6 +145,51 @@ stopifnot(identical(y, y0))
 message("*** future_mapply() - false positives ... DONE")
 
 
+message("*** future_mapply() - too large ...")
+
+X <- replicate(10L, 1:100, simplify = FALSE)
+FUN <- function(x) {
+  getOption("future.globals.maxSize")
+}
+
+y0 <- mapply(FUN = FUN, X)
+
+sizes <- unclass(c(FUN = object.size(FUN), X = object.size(X)))
+cat(sprintf("Baseline size of globals: %.2f KiB\n", sizes[["FUN"]] / 1024))
+
+message("- true positive ...")
+oMaxSize <- getOption("future.globals.maxSize")
+options(future.globals.maxSize = 1L)
+res <- tryCatch({
+  y <- future_mapply(FUN = FUN, X)
+}, error = identity)
+stopifnot(inherits(res, "error"))
+res <- NULL
+options(future.globals.maxSize = oMaxSize)
+
+maxSize <- getOption("future.globals.maxSize")
+y <- future_mapply(FUN = FUN, X)
+str(y)
+stopifnot(all(sapply(y, FUN = identical, oMaxSize)))
+
+message("- approximately invariant to chunk size ...")
+maxSize <- sizes[["FUN"]] + sizes[["X"]] / length(X)
+options(future.globals.maxSize = maxSize)
+
+for (chunk.size in c(1L, 2L, 5L, 10L)) {
+  y <- future_mapply(FUN = FUN, X, future.chunk.size = chunk.size)
+  str(y)
+  stopifnot(all(unlist(y) == maxSize))
+  cat(sprintf("maxSize = %g bytes\nfuture.globals.maxSize = %g bytes\n",
+              maxSize, getOption("future.globals.maxSize")))
+  stopifnot(getOption("future.globals.maxSize") == maxSize)
+}
+y <- NULL
+options(future.globals.maxSize = oMaxSize)
+
+message("*** future_mapply() - too large ... DONE")
+
+
 message("*** future_mapply() - globals exceptions ...")
 
 res <- tryCatch({

@@ -141,7 +141,9 @@ future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES 
   ...future.FUN <- ...future.elements_ii <- ...future.seeds_ii <-
                    ...future.globals.maxSize <- NULL
 
-  globals.maxSize <- getOption("future.globals.maxSize", 500 * 1024 ^ 2)
+  globals.maxSize <- getOption("future.globals.maxSize")
+  globals.maxSize.default <- globals.maxSize
+  if (is.null(globals.maxSize.default)) globals.maxSize.default <- 500 * 1024^2
   
   nchunks <- length(chunks)
   fs <- vector("list", length = nchunks)
@@ -197,18 +199,20 @@ future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES 
     ## a "good enough" approach.
     ## (https://github.com/HenrikBengtsson/future.apply/issues/8).
     if (length(chunk) > 1L) {
-      globals_ii[["...future.globals.maxSize"]] <- globals.maxSize
-      oopts <- options(future.globals.maxSize = length(chunk) * globals.maxSize)
-      on.exit(options(oopts), add = TRUE)
+      globals_ii["...future.globals.maxSize"] <- list(globals.maxSize)
+      options(future.globals.maxSize = length(chunk) * globals.maxSize.default)
+      if (debug) mdebug(" - Adjusted option 'future.globals.maxSize': %g -> %d * %g = %g (bytes)", globals.maxSize.default, length(chunk), globals.maxSize.default, getOption("future.globals.maxSize"))
+      on.exit(options(future.globals.maxSize = globals.maxSize), add = TRUE)
     }
     
     ## Using RNG seeds or not?
     if (is.null(seeds)) {
       if (debug) mdebug(" - seeds: <none>")
       fs[[ii]] <- future({
-        if (!is.null(...future.globals.maxSize)) {
+        ...future.globals.maxSize.org <- getOption("future.globals.maxSize")
+        if (!identical(...future.globals.maxSize.org, ...future.globals.maxSize)) {
           oopts <- options(future.globals.maxSize = ...future.globals.maxSize)
-          on.exit(options(oopts))
+          on.exit(options(oopts), add = TRUE)
         }
         args <- c(list(FUN = ...future.FUN), ...future.elements_ii, MoreArgs = list(MoreArgs), SIMPLIFY = FALSE, USE.NAMES = FALSE)
         res <- do.call(mapply, args = args)
@@ -218,9 +222,10 @@ future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES 
       if (debug) mdebug(" - seeds: [%d] <seeds>", length(chunk))
       globals_ii[["...future.seeds_ii"]] <- seeds[chunk]
       fs[[ii]] <- future({
-        if (!is.null(...future.globals.maxSize)) {
+        ...future.globals.maxSize.org <- getOption("future.globals.maxSize")
+        if (!identical(...future.globals.maxSize.org, ...future.globals.maxSize)) {
           oopts <- options(future.globals.maxSize = ...future.globals.maxSize)
-          on.exit(options(oopts))
+          on.exit(options(oopts), add = TRUE)
         }
         ...future.FUN2 <- function(..., ...future.seeds_ii_jj) {
           assign(".Random.seed", ...future.seeds_ii_jj, envir = globalenv(), inherits = FALSE)

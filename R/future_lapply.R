@@ -101,8 +101,6 @@
 #' @importFrom utils capture.output head str
 #' @export
 future_lapply <- function(X, FUN, ..., future.globals = TRUE, future.packages = NULL, future.seed = FALSE, future.lazy = FALSE, future.scheduling = 1.0, future.chunk.size = NULL) {
-  objectSize <- import_future("objectSize")
-  
   stop_if_not(is.function(FUN))
   
   stop_if_not(is.logical(future.lazy))
@@ -130,98 +128,21 @@ future_lapply <- function(X, FUN, ..., future.globals = TRUE, future.packages = 
   envir <- future.envir
   
   ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  ## 1. Global variables
+  ## 1. Globals and Packages
   ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   ## The default is to gather globals
   if (is.null(future.globals)) future.globals <- TRUE
 
-  packages <- NULL
-  globals <- future.globals
-  scanForGlobals <- FALSE
-  if (is.logical(globals)) {
-    ## Gather all globals?
-    if (globals) {
-      if (debug) mdebug("Finding globals ...")
-      scanForGlobals <- TRUE
-      expr <- do.call(call, args = c(list("FUN"), list(...)))
-      gp <- getGlobalsAndPackages(expr, envir = envir, globals = TRUE)
-      globals <- gp$globals
-      packages <- gp$packages
-      gp <- NULL
-      
-      if (debug) {
-        mdebug(" - globals found: [%d] %s", length(globals), hpaste(sQuote(names(globals))))
-        mdebug(" - needed namespaces: [%d] %s", length(packages), hpaste(sQuote(packages)))
-      }
-    } else {
-      ## globals = FALSE
-      globals <- c("FUN", names(list(...)), "...")
-      globals <- globalsByName(globals, envir = envir, mustExist = FALSE)
-    }
-  } else if (is.character(globals)) {
-    globals <- unique(c(globals, "FUN", names(list(...)), "..."))
-    globals <- globalsByName(globals, envir = envir, mustExist = FALSE)
-  } else if (is.list(globals)) {
-    names <- names(globals)
-    if (length(globals) > 0 && is.null(names)) {
-      stop("Invalid argument 'future.globals'. All globals must be named.")
-    }
-  } else {
-    stop("Invalid argument 'future.globals': ", mode(globals))
-  }
-
-  globals <- as.FutureGlobals(globals)
-  stop_if_not(inherits(globals, "FutureGlobals"))
-
-  names <- names(globals)
-  if (!is.element("FUN", names)) {
-    globals <- c(globals, FUN = FUN)
-  }
-  
-  if (!is.element("...", names)) {
-    if (debug) mdebug("Getting '...' globals ...")
-    dotdotdot <- globalsByName("...", envir = envir, mustExist = TRUE)
-    dotdotdot <- as.FutureGlobals(dotdotdot)
-    dotdotdot <- resolve(dotdotdot)
-    attr(dotdotdot, "total_size") <- objectSize(dotdotdot)
-    if (debug) mdebug("Getting '...' globals ... DONE")
-    globals <- c(globals, dotdotdot)
-  }
-
-  ## Assert there are no reserved variables names among globals
-  reserved <- intersect(c("...future.FUN", "...future.X_ii",
-                          "...future.seeds_ii"), names)
-  if (length(reserved) > 0) {
-    stop("Detected globals using reserved variables names: ",
-         paste(sQuote(reserved), collapse = ", "))
-  }
-
-  ## Avoid FUN() clash with lapply(..., FUN) below.
-  names <- names(globals)
-  names[names == "FUN"] <- "...future.FUN"
-  names(globals) <- names
-
-  if (debug) {
-    mdebug("Globals to be used in all futures (excluding any globals in 'X'):")
-    mdebug(paste(capture.output(str(globals)), collapse = "\n"))
-  }
-
-
-  ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  ## 2. Packages
-  ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  if (!is.null(future.packages)) {
-    stop_if_not(is.character(future.packages))
-    future.packages <- unique(future.packages)
-    stop_if_not(!anyNA(future.packages), all(nzchar(future.packages)))
-    packages <- unique(c(packages, future.packages))
-  }
-  
-  if (debug) {
-    mdebug("Packages to be attached in all futures:")
-    mdebug(paste(capture.output(str(packages)), collapse = "\n"))
-  }
-
+  gp <- getGlobalsAndPackagesXApply(FUN = FUN,
+                                    args = list(...),
+                                    envir = envir,
+                                    future.globals = future.globals,
+                                    future.packages = future.packages,
+                                    debug = debug)
+  packages <- gp$packages
+  globals <- gp$globals
+  scanForGlobals <- gp$scanForGlobals
+    
 
   ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   ## 3. Reproducible RNG (for sequential and parallel processing)
@@ -254,6 +175,7 @@ future_lapply <- function(X, FUN, ..., future.globals = TRUE, future.packages = 
   attr(globals_extra, "total_size") <- 0
   globals <- c(globals, globals_extra)
 
+  
   ## At this point a globals should be resolved and we should know their total size
 ##  stop_if_not(attr(globals, "resolved"), !is.na(attr(globals, "total_size")))
 
@@ -276,6 +198,7 @@ future_lapply <- function(X, FUN, ..., future.globals = TRUE, future.packages = 
     packages_ii <- packages
 
     if (scanForGlobals) {
+      mdebug(" - Finding globals in 'X' for chunk #%d ...", chunk)
       ## Search for globals in 'X_ii':
       gp <- getGlobalsAndPackages(X_ii, envir = envir, globals = TRUE)
       globals_X <- gp$globals
@@ -283,8 +206,8 @@ future_lapply <- function(X, FUN, ..., future.globals = TRUE, future.packages = 
       gp <- NULL
 
       if (debug) {
-        mdebug(" - globals found in 'X' for chunk #%d: [%d] %s", chunk, length(globals_X), hpaste(sQuote(names(globals_X))))
-        mdebug(" - needed namespaces for 'X' for chunk #%d: [%d] %s", chunk, length(packages_X), hpaste(sQuote(packages_X)))
+        mdebug("   + globals found in 'X' for chunk #%d: [%d] %s", chunk, length(globals_X), hpaste(sQuote(names(globals_X))))
+        mdebug("   + needed namespaces for 'X' for chunk #%d: [%d] %s", chunk, length(packages_X), hpaste(sQuote(packages_X)))
       }
     
       ## Export also globals found in 'X_ii'
@@ -302,6 +225,7 @@ future_lapply <- function(X, FUN, ..., future.globals = TRUE, future.packages = 
         if (length(packages_X) > 0L)
           packages_ii <- unique(c(packages_ii, packages_X))
       }
+      mdebug(" - Finding globals in 'X' for chunk #%d ... DONE", chunk)
     }
     
     X_ii <- NULL

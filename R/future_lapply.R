@@ -235,7 +235,7 @@ future_lapply <- function(X, FUN, ..., future.globals = TRUE, future.packages = 
   ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   ## 4. Load balancing ("chunking")
   ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  chunks <- makeChunks(nX, workers = nbrOfWorkers(),
+  chunks <- makeChunks(nX, nbrOfWorkers = nbrOfWorkers(),
                        scheduling = future.scheduling)
   if (debug) mdebug("Number of chunks: %d", length(chunks))   
 

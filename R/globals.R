@@ -13,7 +13,8 @@ getGlobalsAndPackagesXApply <- function(FUN, args = NULL, MoreArgs = NULL, envir
     if (globals) {
       if (debug) mdebug("Finding globals ...")
       scanForGlobals <- TRUE
-      expr <- do.call(call, args = c(list("FUN"), args, MoreArgs))
+      expr <- do.call(call, args = c(list("FUN"),
+                                     if (use_args) args else MoreArgs))
       gp <- getGlobalsAndPackages(expr, envir = envir, globals = TRUE)
       globals <- gp$globals
       packages <- gp$packages
@@ -26,11 +27,11 @@ getGlobalsAndPackagesXApply <- function(FUN, args = NULL, MoreArgs = NULL, envir
       }
     } else {
       ## globals = FALSE
-      globals <- c("FUN", "MoreArgs", "...")
+      globals <- c("FUN", if (use_args) "..." else "MoreArgs")
       globals <- globalsByName(globals, envir = envir, mustExist = FALSE)
     }
   } else if (is.character(globals)) {
-    globals <- unique(c(globals, "FUN", "MoreArgs", "..."))
+    globals <- unique(c(globals, "FUN", if (use_args) "..." else "MoreArgs"))
     globals <- globalsByName(globals, envir = envir, mustExist = FALSE)
   } else if (is.list(globals)) {
     names <- names(globals)
@@ -59,20 +60,13 @@ getGlobalsAndPackagesXApply <- function(FUN, args = NULL, MoreArgs = NULL, envir
       if (debug) mdebug("Getting '...' globals ... DONE")
       globals <- c(globals, dotdotdot)
     }
-    reserved_names <- c("...future.FUN",
-                        "...future.X_ii",
-                        "...future.seeds_ii")
-  } else {
-    if (!is.element("MoreArgs", names)) {
-      globals <- c(globals, list(MoreArgs = MoreArgs))
-    }
-    reserved_names <- c("...future.FUN",
-                        "...future.dots_ii",
-                        "...future.seeds_ii")
+  } else if (!is.element("MoreArgs", names)) {
+    globals <- c(globals, list(MoreArgs = MoreArgs))
   }
 
   ## Assert there are no reserved variables names among globals
-  reserved <- intersect(reserved_names, names)
+  reserved <- intersect(c("...future.FUN", "...future.elements_ii",
+                        "...future.seeds_ii"), names)
   if (length(reserved) > 0) {
     stop("Detected globals using reserved variables names: ",
          paste(sQuote(reserved), collapse = ", "))
@@ -82,11 +76,9 @@ getGlobalsAndPackagesXApply <- function(FUN, args = NULL, MoreArgs = NULL, envir
   names <- names(globals)
   names[names == "FUN"] <- "...future.FUN"
   names(globals) <- names
-
-  stop_if_not(!is.null(names), all(nzchar(names)))
   
   if (debug) {
-    mdebug("Globals to be used in all futures (excluding any globals in '...'):")
+    mdebug("Globals to be used in all futures:")
     mdebug(paste(capture.output(str(globals)), collapse = "\n"))
   }
 

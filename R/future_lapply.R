@@ -161,8 +161,8 @@ future_lapply <- function(X, FUN, ..., future.globals = TRUE, future.packages = 
   ## 4. Load balancing ("chunking")
   ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   chunks <- makeChunks(nX, nbrOfWorkers = nbrOfWorkers(),
-                       scheduling = future.scheduling,
-                       chunkSize = future.chunk.size)
+                       future.scheduling = future.scheduling,
+                       future.chunk.size = future.chunk.size)
   if (debug) mdebug("Number of chunks: %d", length(chunks))   
 
   
@@ -170,7 +170,7 @@ future_lapply <- function(X, FUN, ..., future.globals = TRUE, future.packages = 
   ## 5. Create futures
   ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   ## Add argument placeholders
-  globals_extra <- as.FutureGlobals(list(...future.X_ii = NULL, ...future.seeds_ii = NULL))
+  globals_extra <- as.FutureGlobals(list(...future.elements_ii = NULL, ...future.seeds_ii = NULL))
   attr(globals_extra, "resolved") <- TRUE
   attr(globals_extra, "total_size") <- 0
   globals <- c(globals, globals_extra)
@@ -180,7 +180,7 @@ future_lapply <- function(X, FUN, ..., future.globals = TRUE, future.packages = 
 ##  stop_if_not(attr(globals, "resolved"), !is.na(attr(globals, "total_size")))
 
     ## To please R CMD check
-  ...future.FUN <- ...future.X_ii <- ...future.seeds_ii <- NULL
+  ...future.FUN <- ...future.elements_ii <- ...future.seeds_ii <- NULL
 
   nchunks <- length(chunks)
   fs <- vector("list", length = nchunks)
@@ -194,7 +194,7 @@ future_lapply <- function(X, FUN, ..., future.globals = TRUE, future.packages = 
     X_ii <- X[chunk]
     globals_ii <- globals
     ## Subsetting outside future is more efficient
-    globals_ii[["...future.X_ii"]] <- X_ii
+    globals_ii[["...future.elements_ii"]] <- X_ii
     packages_ii <- packages
 
     if (scanForGlobals) {
@@ -212,7 +212,7 @@ future_lapply <- function(X, FUN, ..., future.globals = TRUE, future.packages = 
     
       ## Export also globals found in 'X_ii'
       if (length(globals_X) > 0L) {
-        reserved <- intersect(c("...future.FUN", "...future.X_ii",
+        reserved <- intersect(c("...future.FUN", "...future.elements_ii",
                                 "...future.seeds_ii"), names(globals_X))
         if (length(reserved) > 0) {
           stop("Detected globals using reserved variables names: ",
@@ -235,8 +235,8 @@ future_lapply <- function(X, FUN, ..., future.globals = TRUE, future.packages = 
     if (is.null(seeds)) {
       if (debug) mdebug(" - seeds: <none>")
       fs[[ii]] <- future({
-        lapply(seq_along(...future.X_ii), FUN = function(jj) {
-           ...future.X_jj <- ...future.X_ii[[jj]]
+        lapply(seq_along(...future.elements_ii), FUN = function(jj) {
+           ...future.X_jj <- ...future.elements_ii[[jj]]
            ...future.FUN(...future.X_jj, ...)
         })
       }, envir = envir, lazy = future.lazy, globals = globals_ii, packages = packages_ii)
@@ -244,8 +244,8 @@ future_lapply <- function(X, FUN, ..., future.globals = TRUE, future.packages = 
       if (debug) mdebug(" - seeds: [%d] <seeds>", length(chunk))
       globals_ii[["...future.seeds_ii"]] <- seeds[chunk]
       fs[[ii]] <- future({
-        lapply(seq_along(...future.X_ii), FUN = function(jj) {
-           ...future.X_jj <- ...future.X_ii[[jj]]
+        lapply(seq_along(...future.elements_ii), FUN = function(jj) {
+           ...future.X_jj <- ...future.elements_ii[[jj]]
            assign(".Random.seed", ...future.seeds_ii[[jj]], envir = globalenv(), inherits = FALSE)
            ...future.FUN(...future.X_jj, ...)
         })

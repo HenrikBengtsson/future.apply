@@ -116,8 +116,8 @@ future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES 
   ## 4. Load balancing ("chunking")
   ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   chunks <- makeChunks(nX, nbrOfWorkers = nbrOfWorkers(),
-                       scheduling = future.scheduling,
-                       chunkSize = future.chunk.size)
+                       future.scheduling = future.scheduling,
+                       future.chunk.size = future.chunk.size)
   if (debug) mdebug("Number of chunks: %d", length(chunks))
   
   
@@ -125,7 +125,7 @@ future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES 
   ## 5. Create futures
   ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   ## Add argument placeholders
-  globals_extra <- as.FutureGlobals(list(...future.dots_ii = NULL, ...future.seeds_ii = NULL))
+  globals_extra <- as.FutureGlobals(list(...future.elements_ii = NULL, ...future.seeds_ii = NULL))
   attr(globals_extra, "resolved") <- TRUE
   attr(globals_extra, "total_size") <- 0
   globals <- c(globals, globals_extra)
@@ -134,7 +134,7 @@ future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES 
 ##  stop_if_not(attr(globals, "resolved"), !is.na(attr(globals, "total_size")))
 
     ## To please R CMD check
-  ...future.FUN <- ...future.dots_ii <- ...future.seeds_ii <- NULL
+  ...future.FUN <- ...future.elements_ii <- ...future.seeds_ii <- NULL
 
   nchunks <- length(chunks)
   fs <- vector("list", length = nchunks)
@@ -149,7 +149,7 @@ future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES 
     dots_ii <- lapply(dots, FUN = .subset, chunk)
     globals_ii <- globals
     ## Subsetting outside future is more efficient
-    globals_ii[["...future.dots_ii"]] <- dots_ii
+    globals_ii[["...future.elements_ii"]] <- dots_ii
     packages_ii <- packages
 
     if (scanForGlobals) {
@@ -166,7 +166,7 @@ future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES 
     
       ## Export also globals found in 'dots_ii'
       if (length(globals_dots) > 0L) {
-        reserved <- intersect(c("...future.FUN", "...future.dots_ii",
+        reserved <- intersect(c("...future.FUN", "...future.elements_ii",
                                 "...future.seeds_ii"), names(globals_dots))
         if (length(reserved) > 0) {
           stop("Detected globals using reserved variables names: ",
@@ -188,7 +188,7 @@ future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES 
     if (is.null(seeds)) {
       if (debug) mdebug(" - seeds: <none>")
       fs[[ii]] <- future({
-        args <- c(list(FUN = ...future.FUN), ...future.dots_ii, MoreArgs = list(MoreArgs), SIMPLIFY = FALSE, USE.NAMES = FALSE)
+        args <- c(list(FUN = ...future.FUN), ...future.elements_ii, MoreArgs = list(MoreArgs), SIMPLIFY = FALSE, USE.NAMES = FALSE)
         res <- do.call(mapply, args = args)
         res
       }, envir = envir, lazy = future.lazy, globals = globals_ii, packages = packages_ii)
@@ -200,7 +200,7 @@ future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES 
           assign(".Random.seed", ...future.seeds_ii_jj, envir = globalenv(), inherits = FALSE)
           ...future.FUN(...)
         }
-        args <- c(list(FUN = ...future.FUN2), ...future.dots_ii, list(...future.seeds_ii_jj = ...future.seeds_ii), MoreArgs, SIMPLIFY = FALSE, USE.NAMES = FALSE)
+        args <- c(list(FUN = ...future.FUN2), ...future.elements_ii, list(...future.seeds_ii_jj = ...future.seeds_ii), MoreArgs, SIMPLIFY = FALSE, USE.NAMES = FALSE)
         do.call(mapply, args = args)
       }, envir = envir, lazy = future.lazy, globals = globals_ii, packages = packages_ii)
     }

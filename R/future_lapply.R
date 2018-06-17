@@ -32,7 +32,11 @@
 #'        (if there are enough elements in `X`).
 #'        If `Inf` or `FALSE`, then one future per element of
 #'        `X` is used.
+#'        Only used if `future.chunk.size` is `NULL`.
 #'
+#' @param future.chunk.size The average number of elements per future ("chunk").
+#'        If `NULL`, then argument `future.scheduling` is used.
+#' 
 #' @return
 #' For `future_lapply()`, a list with same length and names as `X`.
 #' See [base::lapply()] for details.
@@ -96,7 +100,7 @@
 #' @importFrom future future resolve values as.FutureGlobals nbrOfWorkers getGlobalsAndPackages FutureError
 #' @importFrom utils capture.output head str
 #' @export
-future_lapply <- function(X, FUN, ..., future.globals = TRUE, future.packages = NULL, future.seed = FALSE, future.lazy = FALSE, future.scheduling = 1.0) {
+future_lapply <- function(X, FUN, ..., future.globals = TRUE, future.packages = NULL, future.seed = FALSE, future.lazy = FALSE, future.scheduling = 1.0, future.chunk.size = NULL) {
   objectSize <- import_future("objectSize")
   
   stop_if_not(is.function(FUN))
@@ -236,7 +240,8 @@ future_lapply <- function(X, FUN, ..., future.globals = TRUE, future.packages = 
   ## 4. Load balancing ("chunking")
   ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   chunks <- makeChunks(nX, nbrOfWorkers = nbrOfWorkers(),
-                       scheduling = future.scheduling)
+                       scheduling = future.scheduling,
+                       chunkSize = future.chunk.size)
   if (debug) mdebug("Number of chunks: %d", length(chunks))   
 
   

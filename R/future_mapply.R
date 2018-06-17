@@ -6,6 +6,8 @@
 #' the second elements, the third elements, and so on.
 #' Arguments are recycled if necessary.
 #' 
+#' @inheritParams future_lapply
+#' 
 #' @param FUN  A function to apply, found via [base::match.fun()].
 #' 
 #' @param \ldots  Arguments to vectorize over (vectors or lists of strictly
@@ -21,28 +23,6 @@
 #' names, or if it is a character vector, use that character vector as the
 #' names.
 #'
-#' @param future.globals A logical, a character vector, or a named list for
-#'        controlling how globals are handled. For details, see below section.
-#'
-#' @param future.packages (optional) a character vector specifying packages
-#'        to be attached in the R environment evaluating the future.
-#' 
-#' @param future.seed A logical or an integer (of length one or seven),
-#'        or a list of \code{length(list(...)[[1]])} with pre-generated random seeds.
-#'        For details, see below section.
-#'  
-#' @param future.lazy Specifies whether the futures should be resolved
-#'        lazily or eagerly (default).
-#' 
-#' @param future.scheduling Average number of futures ("chunks") per worker.
-#'        If `0.0`, then a single future is used to process all elements
-#'        of \code{list(...)[[1]]}.
-#'        If `1.0` or `TRUE`, then one future per worker is used.
-#'        If `2.0`, then each worker will process two futures
-#'        (if there are enough elements in \code{list(...)[[1]]}).
-#'        If `Inf` or `FALSE`, then one future per element of
-#'        \code{list(...)[[1]]} is used.
-#'
 #' @return
 #' `future_mapply() returns a list, or for `SIMPLIFY = TRUE`, a vector,
 #' array or list.  See [base::mapply()] for details.
@@ -55,7 +35,7 @@
 #' @importFrom future future resolve values as.FutureGlobals nbrOfWorkers getGlobalsAndPackages FutureError
 #' @importFrom utils capture.output head str
 #' @export
-future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES = TRUE, future.globals = TRUE, future.packages = NULL, future.seed = FALSE, future.lazy = FALSE, future.scheduling = 1.0) {
+future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES = TRUE, future.globals = TRUE, future.packages = NULL, future.seed = FALSE, future.lazy = FALSE, future.scheduling = 1.0, future.chunk.size = NULL) {
   objectSize <- import_future("objectSize")
   
   FUN <- match.fun(FUN)
@@ -219,7 +199,8 @@ future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES 
   ## 4. Load balancing ("chunking")
   ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   chunks <- makeChunks(nX, nbrOfWorkers = nbrOfWorkers(),
-                       scheduling = future.scheduling)
+                       scheduling = future.scheduling,
+                       chunkSize = future.chunk.size)
   if (debug) mdebug("Number of chunks: %d", length(chunks))
   
   

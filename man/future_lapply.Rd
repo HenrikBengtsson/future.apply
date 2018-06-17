@@ -14,7 +14,8 @@
 future_eapply(env, FUN, ..., all.names = FALSE, USE.NAMES = TRUE)
 
 future_lapply(X, FUN, ..., future.globals = TRUE, future.packages = NULL,
-  future.seed = FALSE, future.lazy = FALSE, future.scheduling = 1)
+  future.seed = FALSE, future.lazy = FALSE, future.scheduling = 1,
+  future.chunk.size = NULL)
 
 future_replicate(n, expr, simplify = "array", future.seed = TRUE, ...)
 
@@ -57,7 +58,11 @@ If \code{1.0} or \code{TRUE}, then one future per worker is used.
 If \code{2.0}, then each worker will process two futures
 (if there are enough elements in \code{X}).
 If \code{Inf} or \code{FALSE}, then one future per element of
-\code{X} is used.}
+\code{X} is used.
+Only used if \code{future.chunk.size} is \code{NULL}.}
+
+\item{future.chunk.size}{The average number of elements per future ("chunk").
+If \code{NULL}, then argument \code{future.scheduling} is used.}
 
 \item{n}{The number of replicates.}
 

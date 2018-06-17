@@ -9,7 +9,8 @@ future_Map(f, ...)
 
 future_mapply(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE,
   USE.NAMES = TRUE, future.globals = TRUE, future.packages = NULL,
-  future.seed = FALSE, future.lazy = FALSE, future.scheduling = 1)
+  future.seed = FALSE, future.lazy = FALSE, future.scheduling = 1,
+  future.chunk.size = NULL)
 }
 \arguments{
 \item{f}{A function of the arity \eqn{k} if \code{future_Map()} is called with
@@ -34,7 +35,7 @@ controlling how globals are handled. For details, see below section.}
 to be attached in the R environment evaluating the future.}
 
 \item{future.seed}{A logical or an integer (of length one or seven),
-or a list of \code{length(list(...)[[1]])} with pre-generated random seeds.
+or a list of \code{length(X)} with pre-generated random seeds.
 For details, see below section.}
 
 \item{future.lazy}{Specifies whether the futures should be resolved
@@ -42,12 +43,16 @@ lazily or eagerly (default).}
 
 \item{future.scheduling}{Average number of futures ("chunks") per worker.
 If \code{0.0}, then a single future is used to process all elements
-of \code{list(...)[[1]]}.
+of \code{X}.
 If \code{1.0} or \code{TRUE}, then one future per worker is used.
 If \code{2.0}, then each worker will process two futures
-(if there are enough elements in \code{list(...)[[1]]}).
+(if there are enough elements in \code{X}).
 If \code{Inf} or \code{FALSE}, then one future per element of
-\code{list(...)[[1]]} is used.}
+\code{X} is used.
+Only used if \code{future.chunk.size} is \code{NULL}.}
+
+\item{future.chunk.size}{The average number of elements per future ("chunk").
+If \code{NULL}, then argument \code{future.scheduling} is used.}
 
 \item{\ldots}{Arguments to vectorize over (vectors or lists of strictly
 positive length, or all of zero length).}

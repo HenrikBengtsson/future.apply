@@ -130,9 +130,6 @@ future_lapply <- function(X, FUN, ..., future.globals = TRUE, future.packages = 
   ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   ## 1. Globals and Packages
   ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  ## The default is to gather globals
-  if (is.null(future.globals)) future.globals <- TRUE
-
   gp <- getGlobalsAndPackagesXApply(FUN = FUN,
                                     args = list(...),
                                     envir = envir,
@@ -142,7 +139,7 @@ future_lapply <- function(X, FUN, ..., future.globals = TRUE, future.packages = 
   packages <- gp$packages
   globals <- gp$globals
   scanForGlobals <- gp$scanForGlobals
-    
+  gp <- NULL
 
   ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   ## 3. Reproducible RNG (for sequential and parallel processing)

@@ -90,11 +90,23 @@ res <- tryCatch({
 }, error = identity)
 stopifnot(inherits(res, "simpleError"))
 res <- tryCatch({
-  stop_if_not(TRUE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE)
+  stop_if_not(list(TRUE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE))
 }, error = identity)
 stopifnot(inherits(res, "simpleError"))
 
 message("*** stop_if_not() ... DONE")
+
+
+message("*** assert_values2() ...")
+
+assert_values2 <- future.apply:::assert_values2
+assert_values2(nX = 2L, values2 = as.list(1:2))
+res <- tryCatch({
+  assert_values2(nX = 1L, values = as.list(1:2), values2 = as.list(1:2), fcn = "tests", debug = TRUE)
+}, error = identity)
+stopifnot(inherits(res, "simpleError"))
+
+message("*** assert_values2() ... DONE")
 
 
 message("*** utils ... DONE")

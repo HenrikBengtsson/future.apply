@@ -85,9 +85,6 @@ future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES 
   ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   ## 1. Globals and Packages
   ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  ## The default is to gather globals
-  if (is.null(future.globals)) future.globals <- TRUE
-
   gp <- getGlobalsAndPackagesXApply(FUN = FUN,
                                     MoreArgs = MoreArgs,
                                     envir = envir,
@@ -97,7 +94,7 @@ future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES 
   packages <- gp$packages
   globals <- gp$globals
   scanForGlobals <- gp$scanForGlobals
-
+  gp <- NULL
 
   ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   ## 3. Reproducible RNG (for sequential and parallel processing)

@@ -208,9 +208,10 @@ res <- tryCatch({
 }, error = identity)
 stopifnot(inherits(res, "error"))
 
+...future.elements_ii <- 42L
+X <- list(function() 2 * ...future.elements_ii)
 res <- tryCatch({
-  y <- future_mapply(1, FUN = function(x) x,
-                     future.globals = "...future.elements_ii")
+  y <- future_mapply(FUN = function(f) f(), X)
 }, error = identity)
 stopifnot(inherits(res, "error"))
 

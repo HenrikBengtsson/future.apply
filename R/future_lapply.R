@@ -224,7 +224,7 @@ future_lapply <- function(X, FUN, ..., future.globals = TRUE, future.packages = 
         reserved <- intersect(c("...future.FUN", "...future.elements_ii",
                                 "...future.seeds_ii"), names(globals_X))
         if (length(reserved) > 0) {
-          stop("Detected globals using reserved variables names: ",
+          stop("Detected globals in 'X' using reserved variables names: ",
                paste(sQuote(reserved), collapse = ", "))
         }
         globals_X <- as.FutureGlobals(globals_X)

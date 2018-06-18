@@ -103,9 +103,7 @@ make_rng_seeds <- function(count, seed = FALSE,
   ## Don't use RNGs? (seed = FALSE)
   if (is.logical(seed) && !is.na(seed) && !seed) return(NULL)
 
-  ## Don't use RNGs? (seed = NULL)
-  if (is.null(seed)) return(NULL)
-
+  stop_if_not(!is.null(seed))
   stop_if_not(is.numeric(count), length(count) == 1L, !is.na(count),
               count >= 0L)
   

@@ -80,3 +80,27 @@ import_from <- function(name, default = NULL, package) {
 import_future <- function(name, default = NULL) {
   import_from(name, default = default, package = "future")
 }
+
+assert_values2 <- function(nX, values, values2, fcn, debug = FALSE) {
+  if (length(values2) != nX) {
+    chunk_sizes <- sapply(values, FUN = length)
+    chunk_sizes <- table(chunk_sizes)
+    chunk_summary <- sprintf("%d chunks with %s elements",
+                             chunk_sizes, names(chunk_sizes))
+    chunk_summary <- paste(chunk_summary, collapse = ", ")
+    msg <- sprintf("Unexpected error in %s(): After gathering and merging the values from %d chunks in to a list, the total number of elements (= %d) does not match the number of input elements in 'X' (= %d). There were in total %d chunks and %d elements (%s)", fcn, length(values), length(values2), nX, length(values), sum(chunk_sizes), chunk_summary)
+    if (debug) {
+      mdebug(msg)
+      message(capture.output(print(chunk_sizes)))
+      mdebug("Results before merge chunks:")
+      message(capture.output(str(values)))
+      mdebug("Results after merge chunks:")
+      message(capture.output(str(values2)))
+    }
+    msg <- sprintf("%s. Example of the first few values: %s", msg,
+                   paste(capture.output(str(head(values2, 3L))),
+                         collapse = "\\n"))
+    ex <- FutureError(msg)
+    stop(ex)
+  }
+}

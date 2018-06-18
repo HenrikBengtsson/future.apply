@@ -317,27 +317,7 @@ future_lapply <- function(X, FUN, ..., future.globals = TRUE, future.packages = 
     mdebug(" - Number of values expected: %d", nX)
   }
 
-  if (length(values2) != nX) {
-    chunk_sizes <- sapply(values, FUN = length)
-    chunk_sizes <- table(chunk_sizes)
-    chunk_summary <- sprintf("%d chunks with %s elements",
-                             chunk_sizes, names(chunk_sizes))
-    chunk_summary <- paste(chunk_summary, collapse = ", ")
-    msg <- sprintf("Unexpected error in doFuture(): After gathering and merging the values from %d chunks in to a list, the total number of elements (= %d) does not match the number of input elements in 'X' (= %d). There were in total %d chunks and %d elements (%s)", nchunks, length(values2), nX, nchunks, sum(chunk_sizes), chunk_summary)
-    if (debug) {
-      mdebug(msg)
-      message(capture.output(print(chunk_sizes)))
-      mdebug("Results before merge chunks:")
-      message(capture.output(str(values)))
-      mdebug("Results after merge chunks:")
-      message(capture.output(str(values2)))
-    }
-    msg <- sprintf("%s. Example of the first few values: %s", msg,
-                   paste(capture.output(str(head(values2, 3L))),
-                         collapse = "\\n"))
-    ex <- FutureError(msg)
-    stop(ex)
-  }
+  assert_values2(nX, values, values2, fcn = "future_lapply()", debug = debug)
   values <- values2
   rm(list = "values2")
   

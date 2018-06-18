@@ -49,6 +49,24 @@ for (strategy in supportedStrategies()) {
   print(y1)
   stopifnot(identical(y1, y0))
 
+  message("- apply(X, ...) - dim(X) > 2 ...")
+  X <- array(1:12, dim = c(2, 2, 3))
+  y0 <- apply(X, MARGIN = 1L, FUN = identity)
+  y1 <- future_apply(X, MARGIN = 1L, FUN = identity)
+  print(y1)
+  stopifnot(identical(y1, y0))
+
+  message("- apply(X, ...) - not all same names ...")
+  FUN <- function(x) {
+    if (x[1] == 1L) names(x) <- letters[seq_along(x)]
+    x
+  }
+  X <- matrix(1:4, nrow = 2L, ncol = 2L)
+  y0 <- apply(X, MARGIN = 1L, FUN = FUN)
+  y1 <- future_apply(X, MARGIN = 1L, FUN = FUN)
+  print(y1)
+  stopifnot(identical(y1, y0))
+  
   plan(sequential)
   message(sprintf("*** strategy = %s ... done", sQuote(strategy)))
 } ## for (strategy in ...) 

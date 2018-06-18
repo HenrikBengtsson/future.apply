@@ -3,11 +3,13 @@ Version: 0.2.0-9000
 Title: Apply Function to Elements in Parallel using Futures
 Depends:
     R (>= 3.2.0),
-    future (>= 1.8.0)
+    future (>= 1.8.1)
 Imports:
-    globals (>= 0.11.0)
+    globals (>= 0.12.0)
 Suggests:
+    datasets,
     stats,
+    tools,
     listenv (>= 0.7.0),
     R.rsp,
     markdown

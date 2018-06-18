@@ -23,8 +23,7 @@ if (length(envs) > 0L) {
 }
 
 ## WORKAROUND: The following packages are not automatically installed
-## crancache::install_packages(c("forecast", "randomForest", "pacman",
-##                               "Ecdat", "cranlogs"))
+## crancache::install_packages(c("surface", "bayou", "geiger", "caperforecast", "RSAGA"))
 
 revdep_check(bioc = TRUE, num_workers = availableCores(),
              timeout = as.difftime(30, units = "mins"), quiet = FALSE)

@@ -1,4 +1,5 @@
 source("incl/start.R")
+library("tools") ## toTitleCase()
 
 message("*** future_lapply() - globals ...")
 
@@ -106,7 +107,7 @@ for (strategy in supportedStrategies()) {
     function(b) 2 * a,
     function() b / 2,
     function() a + b,
-    function() 3.14
+    function() nchar(toTitleCase("hello world"))
   )
   z0 <- lapply(X, FUN = function(f) f())
   str(z0)
@@ -201,6 +202,17 @@ stopifnot(inherits(res, "error"))
 
 res <- tryCatch({
   y <- future_lapply(1, FUN = function(x) x, future.globals = "...future.FUN")
+}, error = identity)
+stopifnot(inherits(res, "error"))
+
+res <- tryCatch({
+  y <- future_lapply(1, FUN = function(x) x, future.globals = "...future.FUN")
+}, error = identity)
+stopifnot(inherits(res, "error"))
+
+res <- tryCatch({
+  y <- future_lapply(1, FUN = function(x) x,
+                     future.globals = "...future.elements_ii")
 }, error = identity)
 stopifnot(inherits(res, "error"))
 

@@ -1,4 +1,5 @@
 source("incl/start.R")
+library("tools") ## toTitleCase()
 
 message("*** future_mapply() - globals ...")
 
@@ -107,7 +108,7 @@ for (strategy in supportedStrategies()) {
     function(b) 2 * a,
     function() b / 2,
     function() a + b,
-    function() 3.14
+    function() nchar(toTitleCase("hello world"))
   )
   z0 <- mapply(function(s, f) f() + s, s = seq_along(X), X)
   str(z0)
@@ -204,6 +205,12 @@ stopifnot(inherits(res, "error"))
 
 res <- tryCatch({
   y <- future_mapply(function(x) x, 1, future.globals = "...future.FUN")
+}, error = identity)
+stopifnot(inherits(res, "error"))
+
+res <- tryCatch({
+  y <- future_mapply(1, FUN = function(x) x,
+                     future.globals = "...future.elements_ii")
 }, error = identity)
 stopifnot(inherits(res, "error"))
 

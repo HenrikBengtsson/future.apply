@@ -30,6 +30,10 @@ BUG FIXES:
  o future_vapply() did not return the same dimension names as vapply() when
    FUN.VALUE had no names but FUN(X[[1]]) had.
  
+SOFTWARE QUALITY:
+
+ o Code coverage is 99.9% - one line from 100%.
+ 
  
 Version: 0.2.0 [2018-05-01]
 

@@ -20,7 +20,7 @@ file found under inst/vignettes-static/ of the source package.
 
 ## Introduction
 
-The purpose of this package is to provide worry-free parallel alternatives to base-R functions `lapply()` and friends.  The goal is that in most cases one should be able to just replace `lapply()` in the code with the futurized equivalent `future_lapply()` and things will just work.  For example, instead of doing:
+The purpose of this package is to provide worry-free parallel alternatives to base-R "apply" functions, e.g. `apply()`, `lapply()`, and `vapply()`.  The goal is that one should be able to replace any of these in the core with its futurized equivalent and things will just work.  For example, instead of doing:
 ```r
 library("stats")
 x <- 1:10
@@ -56,7 +56,7 @@ Where does the [future.apply] package fit in the software stack?  You can think 
 <br>
 </td>
 <td>
-Future-versions of common goto <code>*apply()</code> functions available in core R (the 'base' package and some 'stats' package):<br>
+Future-versions of common goto <code>*apply()</code> functions available in base R (of the 'base' package):<br>
 <code>future_apply()</code>, 
 <code>future_eapply()</code>, 
 <code>future_lapply()</code>, 

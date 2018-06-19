@@ -1,7 +1,7 @@
 Package: future.apply
 =====================
 
-Version: 0.2.0-9000 [2018-06-17]
+Version: 0.2.0-9000 [2018-06-18]
 
 SIGNIFICANT CHANGES:
 
@@ -32,7 +32,7 @@ BUG FIXES:
  
 SOFTWARE QUALITY:
 
- o Code coverage is 99.9% - one line from 100%.
+ o Test code coverage is 100%.
  
  
 Version: 0.2.0 [2018-05-01]

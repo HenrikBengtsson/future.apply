@@ -153,6 +153,12 @@ res <- tryCatch({
 }, error = identity)
 stopifnot(inherits(res, "error"))
 
+## Error: total number of levels >= 2^31
+res <- tryCatch({
+  y <- future_tapply(1:216, INDEX = rep(list(1:216), times = 4L))
+}, error = identity)
+stopifnot(inherits(res, "error"))
+
 ## Error: arguments must have same length
 res <- tryCatch({
   y <- future_tapply(1L, INDEX = list(1:2))

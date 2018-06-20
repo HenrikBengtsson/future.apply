@@ -1,98 +1,33 @@
-#' Apply a Function over a List or Vector via Futures
+#' Apply a Function to Multiple List or Vector Arguments
 #'
-#' `future_lapply()` implements [base::lapply()] using futures, and
-#' analogously for all the other `future_nnn()` functions.
+#' `future_mapply()` implements [base::mapply()] using futures, where
+#' `mapply()` is a multivariate version of `sapply()`.
+#' It applies `FUN` to the first elements of each \ldots argument,
+#' the second elements, the third elements, and so on.
+#' Arguments are recycled if necessary.
 #' 
-#' @param X  A vector-like object to iterate over.
+#' @inheritParams future_lapply
 #' 
-#' @param FUN  A function taking at least one argument.
+#' @param FUN  A function to apply, found via [base::match.fun()].
 #' 
-#' @param \ldots  (optional) Additional arguments passed to `FUN()`.
-#' For `future_*apply()` functions and `replicate(), any `future.*` arguments
-#' part of \ldots are passed on to `future_lapply()` used internally.
-#' 
-#' @param future.globals A logical, a character vector, or a named list for
-#'        controlling how globals are handled. For details, see below section.
+#' @param \ldots  Arguments to vectorize over (vectors or lists of strictly
+#' positive length, or all of zero length).
 #'
-#' @param future.packages (optional) a character vector specifying packages
-#'        to be attached in the R environment evaluating the future.
-#' 
-#' @param future.seed A logical or an integer (of length one or seven),
-#'        or a list of `length(X)` with pre-generated random seeds.
-#'        For details, see below section.
-#'  
-#' @param future.lazy Specifies whether the futures should be resolved
-#'        lazily or eagerly (default).
-#' 
-#' @param future.scheduling Average number of futures ("chunks") per worker.
-#'        If `0.0`, then a single future is used to process all elements
-#'        of `X`.
-#'        If `1.0` or `TRUE`, then one future per worker is used.
-#'        If `2.0`, then each worker will process two futures
-#'        (if there are enough elements in `X`).
-#'        If `Inf` or `FALSE`, then one future per element of
-#'        `X` is used.
-#'        Only used if `future.chunk.size` is `NULL`.
+#' @param MoreArgs  A list of other arguments to `FUN`.
 #'
-#' @param future.chunk.size The average number of elements per future ("chunk").
-#'        If `NULL`, then argument `future.scheduling` is used.
+#' @param SIMPLIFY  A logical or character string; attempt to reduce the
+#' result to a vector, matrix or higher dimensional array; see the simplify
+#' argument of [base::sapply()].
 #' 
+#' @param USE.NAMES A logical; use names if the first \ldots argument has
+#' names, or if it is a character vector, use that character vector as the
+#' names.
+#'
 #' @return
-#' For `future_lapply()`, a list with same length and names as `X`.
-#' See [base::lapply()] for details.
+#' `future_mapply() returns a list, or for `SIMPLIFY = TRUE`, a vector,
+#' array or list.  See [base::mapply()] for details.
 #'
-#' @section Global variables:
-#' Argument `future.globals` may be used to control how globals
-#' should be handled similarly how the `globals` argument is used with
-#' `future()`.
-#' Since all function calls use the same set of globals, this function can do
-#' any gathering of globals upfront (once), which is more efficient than if
-#' it would be done for each future independently.
-#' If `TRUE`, `NULL` or not is specified (default), then globals
-#' are automatically identified and gathered.
-#' If a character vector of names is specified, then those globals are gathered.
-#' If a named list, then those globals are used as is.
-#' In all cases, `FUN` and any `...` arguments are automatically
-#' passed as globals to each future created as they are always needed.
-#'
-#' @section Reproducible random number generation (RNG):
-#' Unless `future.seed = FALSE`, this function guarantees to generate
-#' the exact same sequence of random numbers _given the same initial
-#' seed / RNG state_ - this regardless of type of futures, scheduling
-#' ("chunking") strategy, and number of workers.
-#' 
-#' RNG reproducibility is achieved by pregenerating the random seeds for all
-#' iterations (over `X`) by using L'Ecuyer-CMRG RNG streams.  In each
-#' iteration, these seeds are set before calling \code{FUN(X[[ii]], ...)}.
-#' _Note, for large `length(X)` this may introduce a large overhead._
-#' As input (`future.seed`), a fixed seed (integer) may be given, either
-#' as a full L'Ecuyer-CMRG RNG seed (vector of 1+6 integers) or as a seed
-#' generating such a full L'Ecuyer-CMRG seed.
-#' If `future.seed = TRUE`, then \code{\link[base:Random]{.Random.seed}}
-#' is returned if it holds a L'Ecuyer-CMRG RNG seed, otherwise one is created
-#' randomly.
-#' If `future.seed = NA`, a L'Ecuyer-CMRG RNG seed is randomly created.
-#' If none of the function calls \code{FUN(X[[ii]], ...)} uses random number
-#' generation, then `future.seed = FALSE` may be used.
-#'
-#' In addition to the above, it is possible to specify a pre-generated
-#' sequence of RNG seeds as a list such that
-#' `length(future.seed) == length(X)` and where each element is an
-#' integer seed vector that can be assigned to
-#' \code{\link[base:Random]{.Random.seed}}.
-#' Use this alternative with caution.
-#' **Note that `as.list(seq_along(X))` is _not_ a valid set of such
-#' `.Random.seed` values.**
-#' 
-#' In all cases but `future.seed = FALSE`, the RNG state of the calling
-#' R processes after this function returns is guaranteed to be
-#' "forwarded one step" from the RNG state that was before the call and
-#' in the same way regardless of `future.seed`, `future.scheduling`
-#' and future strategy used.  This is done in order to guarantee that an \R
-#' script calling `future_lapply()` multiple times should be numerically
-#' reproducible given the same initial seed.
-#'
-#' @example incl/future_lapply.R
+#' @example incl/future_mapply.R
 #'
 #' @keywords manip programming iteration
 #'
@@ -100,9 +35,33 @@
 #' @importFrom future future resolve values as.FutureGlobals nbrOfWorkers getGlobalsAndPackages FutureError
 #' @importFrom utils capture.output head str
 #' @export
-future_lapply <- function(X, FUN, ..., future.globals = TRUE, future.packages = NULL, future.seed = FALSE, future.lazy = FALSE, future.scheduling = 1.0, future.chunk.size = NULL) {
+future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES = TRUE, future.globals = TRUE, future.packages = NULL, future.seed = FALSE, future.lazy = FALSE, future.scheduling = 1.0, future.chunk.size = NULL) {
+  FUN <- match.fun(FUN)
   stop_if_not(is.function(FUN))
+
+  dots <- list(...)
   
+  ## Nothing to do?
+  if (length(dots) == 0L) return(list())
+  
+  ns <- lengths(dots)
+  
+  ## Nothing to do?
+  if (all(ns == 0L)) return(list())
+
+  stop_if_not(all(ns > 0L))
+  
+  ## Recycle?
+  nX <- max(ns)
+  stretch <- which(ns < nX)
+  if (length(stretch) > 0L) {
+    for (kk in stretch) dots[[kk]] <- rep(dots[[kk]], length.out = nX)
+    ns <- lengths(dots)
+  }
+  stop_if_not(all(ns == nX))
+  
+  stop_if_not(is.null(MoreArgs) || is.list(MoreArgs))
+
   stop_if_not(is.logical(future.lazy))
 
   stop_if_not(!is.null(future.seed))
@@ -110,16 +69,12 @@ future_lapply <- function(X, FUN, ..., future.globals = TRUE, future.packages = 
   stop_if_not(length(future.scheduling) == 1, !is.na(future.scheduling),
             is.numeric(future.scheduling) || is.logical(future.scheduling))
 
-  ## Nothing to do?
-  nX <- length(X)
-  if (nX == 0) return(list())
-
   debug <- getOption("future.debug", FALSE)
   
-  if (debug) mdebug("future_lapply() ...")
+  if (debug) mdebug("future_mapply() ...")
 
   ## NOTE TO SELF: We'd ideally have a 'future.envir' argument also for
-  ## future_lapply(), cf. future().  However, it's not yet clear to me how
+  ## future_mapply(), cf. future().  However, it's not yet clear to me how
   ## to do this, because we need to have globalsOf() to search for globals
   ## from the current environment in order to identify the globals of 
   ## arguments 'FUN' and '...'. /HB 2017-03-10
@@ -131,7 +86,7 @@ future_lapply <- function(X, FUN, ..., future.globals = TRUE, future.packages = 
   ## 1. Globals and Packages
   ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   gp <- getGlobalsAndPackagesXApply(FUN = FUN,
-                                    args = list(...),
+                                    MoreArgs = MoreArgs,
                                     envir = envir,
                                     future.globals = future.globals,
                                     future.packages = future.packages,
@@ -145,14 +100,14 @@ future_lapply <- function(X, FUN, ..., future.globals = TRUE, future.packages = 
   ## 3. Reproducible RNG (for sequential and parallel processing)
   ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   seeds <- make_rng_seeds(nX, seed = future.seed, debug = debug)
-
+  
   ## If RNG seeds are used (given or generated), make sure to reset
   ## the RNG state afterward
   if (!is.null(seeds)) {
     oseed <- next_random_seed()
     on.exit(set_random_seed(oseed))
   }
-  
+
   
   ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   ## 4. Load balancing ("chunking")
@@ -160,8 +115,8 @@ future_lapply <- function(X, FUN, ..., future.globals = TRUE, future.packages = 
   chunks <- makeChunks(nX, nbrOfWorkers = nbrOfWorkers(),
                        future.scheduling = future.scheduling,
                        future.chunk.size = future.chunk.size)
-  if (debug) mdebug("Number of chunks: %d", length(chunks))   
-
+  if (debug) mdebug("Number of chunks: %d", length(chunks))
+  
   
   ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   ## 5. Create futures
@@ -176,7 +131,6 @@ future_lapply <- function(X, FUN, ..., future.globals = TRUE, future.packages = 
   attr(globals_extra, "total_size") <- 0
   globals <- c(globals, globals_extra)
 
-  
   ## At this point a globals should be resolved and we should know their total size
 ##  stop_if_not(attr(globals, "resolved"), !is.na(attr(globals, "total_size")))
 
@@ -196,45 +150,44 @@ future_lapply <- function(X, FUN, ..., future.globals = TRUE, future.packages = 
   for (ii in seq_along(chunks)) {
     chunk <- chunks[[ii]]
     if (debug) mdebug("Chunk #%d of %d ...", ii, length(chunks))
-
-    X_ii <- X[chunk]
+    ## Subsetting outside future is more efficient
+    
+    dots_ii <- lapply(dots, FUN = .subset, chunk)
     globals_ii <- globals
     ## Subsetting outside future is more efficient
-    globals_ii[["...future.elements_ii"]] <- X_ii
+    globals_ii[["...future.elements_ii"]] <- dots_ii
     packages_ii <- packages
 
     if (scanForGlobals) {
-      mdebug(" - Finding globals in 'X' for chunk #%d ...", ii)
-      ## Search for globals in 'X_ii':
-      gp <- getGlobalsAndPackages(X_ii, envir = envir, globals = TRUE)
-      globals_X <- gp$globals
-      packages_X <- gp$packages
+      ## Search for globals in 'dots_ii':
+      gp <- getGlobalsAndPackages(dots_ii, envir = envir, globals = TRUE)
+      globals_dots <- gp$globals
+      packages_dots <- gp$packages
       gp <- NULL
 
       if (debug) {
-        mdebug("   + globals found in 'X' for chunk #%d: [%d] %s", chunk, length(globals_X), hpaste(sQuote(names(globals_X))))
-        mdebug("   + needed namespaces for 'X' for chunk #%d: [%d] %s", chunk, length(packages_X), hpaste(sQuote(packages_X)))
+        mdebug(" - globals found in '...' for chunk #%d: [%d] %s", chunk, length(globals_dots), hpaste(sQuote(names(globals_dots))))
+        mdebug(" - needed namespaces for '...' for chunk #%d: [%d] %s", chunk, length(packages_dots), hpaste(sQuote(packages_dots)))
       }
     
-      ## Export also globals found in 'X_ii'
-      if (length(globals_X) > 0L) {
+      ## Export also globals found in 'dots_ii'
+      if (length(globals_dots) > 0L) {
         reserved <- intersect(c("...future.FUN", "...future.elements_ii",
-                                "...future.seeds_ii"), names(globals_X))
+                                "...future.seeds_ii"), names(globals_dots))
         if (length(reserved) > 0) {
-          stop("Detected globals in 'X' using reserved variables names: ",
+          stop("Detected globals in '...' using reserved variables names: ",
                paste(sQuote(reserved), collapse = ", "))
         }
-        globals_X <- as.FutureGlobals(globals_X)
-        globals_ii <- unique(c(globals_ii, globals_X))
+        globals_dots <- as.FutureGlobals(globals_dots)
+        globals_ii <- unique(c(globals_ii, globals_dots))
 
-        ## Packages needed due to globals in 'X_ii'?
-        if (length(packages_X) > 0L)
-          packages_ii <- unique(c(packages_ii, packages_X))
+        ## Packages needed due to globals in 'dots_ii'?
+        if (length(packages_dots) > 0L)
+          packages_ii <- unique(c(packages_ii, packages_dots))
       }
-      mdebug(" - Finding globals in 'X' for chunk #%d ... DONE", ii)
     }
     
-    X_ii <- NULL
+
 ##    stop_if_not(attr(globals_ii, "resolved"))
 
     ## Adjust option 'future.globals.maxSize' to account for the fact that more
@@ -258,10 +211,9 @@ future_lapply <- function(X, FUN, ..., future.globals = TRUE, future.packages = 
           oopts <- options(future.globals.maxSize = ...future.globals.maxSize)
           on.exit(options(oopts), add = TRUE)
         }
-        lapply(seq_along(...future.elements_ii), FUN = function(jj) {
-           ...future.X_jj <- ...future.elements_ii[[jj]]
-           ...future.FUN(...future.X_jj, ...)
-        })
+        args <- c(list(FUN = ...future.FUN), ...future.elements_ii, MoreArgs = list(MoreArgs), SIMPLIFY = FALSE, USE.NAMES = FALSE)
+        res <- do.call(mapply, args = args)
+        res
       }, envir = envir, lazy = future.lazy, globals = globals_ii, packages = packages_ii)
     } else {
       if (debug) mdebug(" - seeds: [%d] <seeds>", length(chunk))
@@ -272,11 +224,12 @@ future_lapply <- function(X, FUN, ..., future.globals = TRUE, future.packages = 
           oopts <- options(future.globals.maxSize = ...future.globals.maxSize)
           on.exit(options(oopts), add = TRUE)
         }
-        lapply(seq_along(...future.elements_ii), FUN = function(jj) {
-           ...future.X_jj <- ...future.elements_ii[[jj]]
-           assign(".Random.seed", ...future.seeds_ii[[jj]], envir = globalenv(), inherits = FALSE)
-           ...future.FUN(...future.X_jj, ...)
-        })
+        ...future.FUN2 <- function(..., ...future.seeds_ii_jj) {
+          assign(".Random.seed", ...future.seeds_ii_jj, envir = globalenv(), inherits = FALSE)
+          ...future.FUN(...)
+        }
+        args <- c(list(FUN = ...future.FUN2), ...future.elements_ii, list(...future.seeds_ii_jj = ...future.seeds_ii), MoreArgs, SIMPLIFY = FALSE, USE.NAMES = FALSE)
+        do.call(mapply, args = args)
       }, envir = envir, lazy = future.lazy, globals = globals_ii, packages = packages_ii)
     }
     
@@ -314,17 +267,29 @@ future_lapply <- function(X, FUN, ..., future.globals = TRUE, future.packages = 
     mdebug(" - Number of values expected: %d", nX)
   }
 
-  assert_values2(nX, values, values2, fcn = "future_lapply()", debug = debug)
+  assert_values2(nX, values, values2, fcn = "future_mapply()", debug = debug)
   values <- values2
   rm(list = "values2")
   
   ## Sanity check (this may happen if the future backend is broken)
   stop_if_not(length(values) == nX)
-  names(values) <- names(X)
+#  names(values) <- names(X)
+
+  if (USE.NAMES && length(dots) > 0L) {
+    if (is.null(names1 <- names(dots[[1L]])) && is.character(dots[[1L]])) {
+      names(values) <- dots[[1L]]
+    } else if (!is.null(names1)) {
+      names(values) <- names1
+    }
+  }
+
+  if (!isFALSE(SIMPLIFY) && length(values) > 0L) {
+    values <- simplify2array(values, higher = (SIMPLIFY == "array"))
+  } 
   
   if (debug) mdebug("Reducing values from %d chunks ... DONE", nchunks)
   
-  if (debug) mdebug("future_lapply() ... DONE")
+  if (debug) mdebug("future_mapply() ... DONE")
   
   values
 }

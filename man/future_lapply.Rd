@@ -14,7 +14,8 @@
 future_eapply(env, FUN, ..., all.names = FALSE, USE.NAMES = TRUE)
 
 future_lapply(X, FUN, ..., future.globals = TRUE, future.packages = NULL,
-  future.seed = FALSE, future.lazy = FALSE, future.scheduling = 1)
+  future.seed = FALSE, future.lazy = FALSE, future.scheduling = 1,
+  future.chunk.size = NULL)
 
 future_replicate(n, expr, simplify = "array", future.seed = TRUE, ...)
 
@@ -57,7 +58,11 @@ If \code{1.0} or \code{TRUE}, then one future per worker is used.
 If \code{2.0}, then each worker will process two futures
 (if there are enough elements in \code{X}).
 If \code{Inf} or \code{FALSE}, then one future per element of
-\code{X} is used.}
+\code{X} is used.
+Only used if \code{future.chunk.size} is \code{NULL}.}
+
+\item{future.chunk.size}{The average number of elements per future ("chunk").
+If \code{NULL}, then argument \code{future.scheduling} is used.}
 
 \item{n}{The number of replicates.}
 
@@ -106,7 +111,8 @@ For \code{future_vapply()}, a vector with same length and names as \code{X}.
 See \code{\link[base:vapply]{base::vapply()}} for details.
 }
 \description{
-Apply a Function over a List or Vector via Futures
+\code{future_lapply()} implements \code{\link[base:lapply]{base::lapply()}} using futures, and
+analogously for all the other \code{future_nnn()} functions.
 }
 \section{Global variables}{
 
@@ -164,6 +170,29 @@ reproducible given the same initial seed.
 }
 
 \examples{
+## ---------------------------------------------------------
+## lapply(), sapply(), tapply()
+## ---------------------------------------------------------
+x <- list(a = 1:10, beta = exp(-3:3), logic = c(TRUE, FALSE, FALSE, TRUE))
+y0 <- lapply(x, FUN = quantile, probs = 1:3/4)
+y1 <- future_lapply(x, FUN = quantile, probs = 1:3/4)
+print(y1)
+stopifnot(all.equal(y1, y0))
+
+y0 <- sapply(x, FUN = quantile)
+y1 <- future_sapply(x, FUN = quantile)
+print(y1)
+stopifnot(all.equal(y1, y0))
+
+y0 <- vapply(x, FUN = quantile, FUN.VALUE = double(5L))
+y1 <- future_vapply(x, FUN = quantile, FUN.VALUE = double(5L))
+print(y1)
+stopifnot(all.equal(y1, y0))
+
+
+## ---------------------------------------------------------
+## Parallel Random Number Generation
+## ---------------------------------------------------------
 \donttest{
 ## Regardless of the future plan, the number of workers, and
 ## where they are, the random numbers produced are identical
@@ -178,7 +207,6 @@ str(y2)
 
 stopifnot(all.equal(y1, y2))
 }
-
 }
 \author{
 The implementations of \code{future_replicate()}, \code{future_sapply()}, and

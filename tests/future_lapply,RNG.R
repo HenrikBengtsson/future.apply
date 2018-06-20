@@ -81,9 +81,10 @@ seed_sets <- list(
   A = TRUE,
   B = NA,
   C = 42L,
-  D = future:::as_lecyer_cmrg_seed(42L),
+  D = as_lecyer_cmrg_seed(42L),
   E = list(),
-  F = vector("list", length = length(x))
+  F = vector("list", length = length(x)),
+  G = NULL
 )
 
 ## Generate sequence of seeds of the current RNGkind()
@@ -99,6 +100,7 @@ seeds <- seed_sets$F
 seeds[[1]] <- seed_sets$D
 for (kk in 2:length(x)) seeds[[kk]] <- parallel::nextRNGStream(seeds[[kk - 1]])
 seed_sets$F <- seeds
+seed_sets$G <- seed_sets$A
 
 rm(list = "seeds")
 

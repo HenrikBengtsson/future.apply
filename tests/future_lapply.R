@@ -62,6 +62,12 @@ for (cores in 1:availCores) {
     y <- future_lapply(x_d, FUN = function(z) sqrt(z + a))
     y <- unlist(y, use.names = FALSE)
     stopifnot(all.equal(y, sqrt(x_d + a)))
+
+    message("- future_lapply(x, FUN = table, ...) ...")
+    x <- list(a = 1:4, b = 5:8)
+    y0 <- lapply(x, FUN = table)
+    y1 <- future_lapply(x, FUN = table)
+    stopifnot(all.equal(y1, y0, check.attributes = FALSE)) ## FIXME
   } ## for (strategy ...)
 
   message(sprintf("Testing with %d cores ... DONE", cores))

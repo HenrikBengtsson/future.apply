@@ -1,6 +1,40 @@
 Package: future.apply
 =====================
 
+Version: 1.0.0 [2018-06-19]
+
+SIGNIFICANT CHANGES:
+
+ o License changed from LGPL (>= 2.1) to GPL (>= 2.1) to make sure it is
+   compatible with the source code adopted from R base's replicate(),
+   sapply(), and tapply(), which are all GPL (>= 2.1).
+ 
+NEW FEATURES:
+
+ o Added future_apply(), future_mapply(), and future_Map().
+
+ o Added argument `future.chunk.size` as an alternative to argument
+   `future.scheduling` for controlling the average number of elements
+   processed per future ("chunk").  In R 3.5.0, the parallel package
+   introduced argument 'chunk.size'.
+
+ o The maximum total size of globals allowed (option 'future.globals.maxSize')
+   per future ("chunk") is now scaled up by the number of elements processed by
+   the future ("chunk") making the protection approximately invariant to the
+   amount of chunking (arguments 'future.scheduling' and 'future.chunk.size').
+ 
+BUG FIXES:
+
+ o future_lapply(X, ...) did not search for globals in 'X'.
+
+ o future_vapply() did not return the same dimension names as vapply() when
+   FUN.VALUE had no names but FUN(X[[1]]) had.
+ 
+SOFTWARE QUALITY:
+
+ o Test code coverage is 100%.
+ 
+ 
 Version: 0.2.0 [2018-05-01]
 
 NEW FEATURES:

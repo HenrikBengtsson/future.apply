@@ -5,7 +5,6 @@
 #----------------------------------------------------------------
 environment:
   _R_CHECK_FORCE_SUGGESTS_: false
-  USE_RTOOLS: true
   
   matrix:
   - R_VERSION: devel
@@ -25,7 +24,6 @@ init:
 install:
   ps: |
         Bootstrap
-        InstallRtools
 
 cache:
   - C:\RLibrary -> appveyor.yml

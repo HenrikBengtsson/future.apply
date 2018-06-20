@@ -20,7 +20,7 @@ file found under inst/vignettes-static/ of the source package.
 
 ## Introduction
 
-The purpose of this package is to provide worry-free parallel alternatives to base-R functions `lapply()` and friends.  The goal is that in most cases one should be able to just replace `lapply()` in the code with the futurized equivalent `future_lapply()` and things will just work.  For example, instead of doing:
+The purpose of this package is to provide worry-free parallel alternatives to base-R "apply" functions, e.g. `apply()`, `lapply()`, and `vapply()`.  The goal is that one should be able to replace any of these in the core with its futurized equivalent and things will just work.  For example, instead of doing:
 ```r
 library("stats")
 x <- 1:10
@@ -37,8 +37,6 @@ y <- future_lapply(x, FUN = quantile, probs = 1:3/4)
 ```
 
 Reproducibility is part of the core design, which means that perfect, parallel random number generation (RNG) is supported regardless of the amount of chunking, type of load balancing, and future backend being used.  _To enable parallel RNG, use argument `future.seed = TRUE`._
-
-Currently, the following functions are implemented: `future_eapply()`, `future_lapply()`, `future_replicate()`, `future_sapply()`, `future_tapply()`, and `future_vapply()`.
 
 
 ## Role
@@ -58,19 +56,19 @@ Where does the [future.apply] package fit in the software stack?  You can think 
 <br>
 </td>
 <td>
-Future-versions of common goto <code>*apply()</code> functions available in core R (the 'base' package and some 'stats' package):<br>
+Future-versions of common goto <code>*apply()</code> functions available in base R (of the 'base' package):<br>
+<code>future_apply()</code>, 
 <code>future_eapply()</code>, 
 <code>future_lapply()</code>, 
+<code>future_Map()</code>, 
+<code>future_mapply()</code>, 
 <code>future_replicate()</code>,
 <code>future_sapply()</code>,
 <code>future_tapply()</code>, and 
 <code>future_vapply()</code>.
 <br>
-<em>The following functions are yet to be implemented:</em><br>
-<code>future_apply()</code>, 
-<code>future_mapply()</code>, 
-<code>future_Map()</code>, 
-<code>future_rapply()</code>, ...<br>
+<em>The following function is yet not implemented:</em><br>
+<code>future_rapply()</code><br>
 </td>
 <td>
 All future backends

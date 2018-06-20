@@ -1,5 +1,7 @@
 source("incl/start.R")
 
+library("datasets") ## warpbreaks
+
 options(future.debug = FALSE)
 message("*** future_tapply() ...")
 
@@ -11,7 +13,7 @@ for (strategy in supportedStrategies()[1]) {
 
   message("  - Example #1")
   library("stats")  ## rbinom()
-  groups <- as.factor(rbinom(32, n = 5, prob = 0.4))
+  groups <- as.factor(stats::rbinom(32, n = 5, prob = 0.4))
   t <- table(groups)
   print(t)
   y0 <- tapply(groups, INDEX = groups, FUN = length)
@@ -137,10 +139,31 @@ for (strategy in supportedStrategies()[1]) {
     dim = 4L, dimnames = list(as.character(2:5)))
   stopifnot(identical(tapply(1:n, fac, quantile)[-1], y_truth))
   stopifnot(identical(future_tapply(1:n, fac, quantile)[-1], y_truth))
-  
+
   plan(sequential)
   message(sprintf("*** strategy = %s ... done", sQuote(strategy)))
 } ## for (strategy in ...) 
+
+
+message("*** exceptions ...")
+
+## Error: 'INDEX' is of length zero
+res <- tryCatch({
+  y <- future_tapply(1L, INDEX = list())
+}, error = identity)
+stopifnot(inherits(res, "error"))
+
+## Error: total number of levels >= 2^31
+res <- tryCatch({
+  y <- future_tapply(1:216, INDEX = rep(list(1:216), times = 4L))
+}, error = identity)
+stopifnot(inherits(res, "error"))
+
+## Error: arguments must have same length
+res <- tryCatch({
+  y <- future_tapply(1L, INDEX = list(1:2))
+}, error = identity)
+stopifnot(inherits(res, "error"))
 
 message("*** future_tapply() ... DONE")
 

@@ -11,7 +11,7 @@ options(opts)
 ## (b) Modified
 options(oopts)
 ## (c) Assert that everything was undone
-stopifnot(identical(options(), oopts0))
+stopifnot(all.equal(options(), oopts0))
 
 
 ## Undo system environment variables

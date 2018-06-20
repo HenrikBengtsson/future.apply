@@ -66,91 +66,6 @@ getOption <- local({
   }
 }) ## getOption()
 
-
-
-get_random_seed <- function() {
-  env <- globalenv()
-  env$.Random.seed
-}
-
-set_random_seed <- function(seed) {
-  env <- globalenv()
-  if (is.null(seed)) {
-    rm(list = ".Random.seed", envir = env, inherits = FALSE)
-  } else {
-    env$.Random.seed <- seed
-  }
-}
-
-next_random_seed <- function(seed = get_random_seed()) {
-  sample.int(n = 1L, size = 1L, replace = FALSE)
-  seed_next <- get_random_seed()
-  stop_if_not(!any(seed_next != seed))
-  invisible(seed_next)
-}
-
-is_valid_random_seed <- function(seed) {
-  oseed <- get_random_seed()
-  on.exit(set_random_seed(oseed))
-  env <- globalenv()
-  env$.Random.seed <- seed
-  res <- tryCatch({
-    sample.int(n = 1L, size = 1L, replace = FALSE)
-  }, simpleWarning = function(w) w)
-  !inherits(res, "simpleWarning")
-}
-
-is_lecyer_cmrg_seed <- function(seed) {
-  is.numeric(seed) && length(seed) == 7L &&
-    all(is.finite(seed)) && seed[1] == 407L
-}
-
-# @importFrom utils capture.output
-as_lecyer_cmrg_seed <- function(seed) {
-  ## Generate a L'Ecuyer-CMRG seed (existing or random)?
-  if (is.logical(seed)) {
-    stop_if_not(length(seed) == 1L)
-    if (!is.na(seed) && !seed) {
-      stop("Argument 'seed' must be TRUE if logical: ", seed)
-    }
-
-    oseed <- get_random_seed()
-    
-    ## Already a L'Ecuyer-CMRG seed?  Then use that as is.
-    if (!is.na(seed) && seed) {
-      if (is_lecyer_cmrg_seed(oseed)) return(oseed)
-    }
-    
-    ## Otherwise, generate a random one.
-    on.exit(set_random_seed(oseed), add = TRUE)
-    RNGkind("L'Ecuyer-CMRG")
-    return(get_random_seed())
-  }
-
-  stop_if_not(is.numeric(seed), all(is.finite(seed)))
-  seed <- as.integer(seed)
-
-  ## Already a L'Ecuyer-CMRG seed?
-  if (length(seed) == 7L) {
-    if (seed[1] != 407L) {
-      stop("Argument 'seed' must be L'Ecuyer-CMRG RNG seed as returned by parallel::nextRNGStream() or an single integer: ", capture.output(str(seed)))
-    }
-    return(seed)
-  }
-  
-  ## Generate a new L'Ecuyer-CMRG seed?
-  if (length(seed) == 1L) {
-    oseed <- get_random_seed()
-    on.exit(set_random_seed(oseed), add = TRUE)
-    RNGkind("L'Ecuyer-CMRG")
-    set.seed(seed)
-    return(get_random_seed())
-  }
-  
-  stop("Argument 'seed' must be of length 1 or 7 (= 1+6):", capture.output(str(seed)))
-}
-
-
 import_from <- function(name, default = NULL, package) {
   ns <- getNamespace(package)
   if (exists(name, mode = "function", envir = ns, inherits = FALSE)) {
@@ -164,4 +79,28 @@ import_from <- function(name, default = NULL, package) {
 
 import_future <- function(name, default = NULL) {
   import_from(name, default = default, package = "future")
+}
+
+assert_values2 <- function(nX, values, values2, fcn, debug = FALSE) {
+  if (length(values2) != nX) {
+    chunk_sizes <- sapply(values, FUN = length)
+    chunk_sizes <- table(chunk_sizes)
+    chunk_summary <- sprintf("%d chunks with %s elements",
+                             chunk_sizes, names(chunk_sizes))
+    chunk_summary <- paste(chunk_summary, collapse = ", ")
+    msg <- sprintf("Unexpected error in %s(): After gathering and merging the values from %d chunks in to a list, the total number of elements (= %d) does not match the number of input elements in 'X' (= %d). There were in total %d chunks and %d elements (%s)", fcn, length(values), length(values2), nX, length(values), sum(chunk_sizes), chunk_summary)
+    if (debug) {
+      mdebug(msg)
+      message(capture.output(print(chunk_sizes)))
+      mdebug("Results before merge chunks:")
+      message(capture.output(str(values)))
+      mdebug("Results after merge chunks:")
+      message(capture.output(str(values2)))
+    }
+    msg <- sprintf("%s. Example of the first few values: %s", msg,
+                   paste(capture.output(str(head(values2, 3L))),
+                         collapse = "\\n"))
+    ex <- FutureError(msg)
+    stop(ex)
+  }
 }

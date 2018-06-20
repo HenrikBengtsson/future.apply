@@ -43,15 +43,28 @@ future_vapply <- function(X, FUN, FUN.VALUE, ..., USE.NAMES = TRUE) {
     value
   }, ...)
 
-  res <- unlist(res, use.names = FALSE)
-  if (is.null(res)) res <- vector(mode = type, length = 0L)
-  
   if (!is.null(dim)) {
-    dim(res) <- c(dim, n)
+    dim_res <- c(dim, n)
   } else if (times != 1L) {
-    dim(res) <- c(times, n)
+    dim_res <- c(times, n)
+  } else {
+    dim_res <- NULL
   }
 
+  if (USE.NAMES && length(res) > 0L) {
+    if (is.null(dim)) {
+      names_FUN.VALUE <- names(FUN.VALUE)
+      if (is.null(names_FUN.VALUE)) names_FUN.VALUE <- names(res[[1]])
+    } else {
+      names_FUN.VALUE <- dimnames(FUN.VALUE)
+      if (is.null(names_FUN.VALUE)) names_FUN.VALUE <- dimnames(res[[1]])
+    }
+  }
+  
+  res <- unlist(res, use.names = FALSE)
+  if (is.null(res)) res <- vector(mode = type, length = 0L)
+  if (!is.null(dim_res)) dim(res) <- dim_res
+  
   if (USE.NAMES) {
     if (is.array(res)) {
       n_dim <- length(dim(res))
@@ -59,12 +72,12 @@ future_vapply <- function(X, FUN, FUN.VALUE, ..., USE.NAMES = TRUE) {
       if (is.null(dim)) {
         names <- names(X)
         if (!is.null(names)) dimnames[[2]] <- names
-        names <- names(FUN.VALUE)
+        names <- names_FUN.VALUE
         if (!is.null(names)) dimnames[[1]] <- names
       } else {
         names <- names(X)
         if (!is.null(names)) dimnames[[n_dim]] <- names
-        names <- dimnames(FUN.VALUE)
+        names <- names_FUN.VALUE
         if (!is.null(names)) dimnames[-n_dim] <- names
       }
       if (!all(unlist(lapply(dimnames, FUN = is.null), use.names = FALSE))) {

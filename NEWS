@@ -1,18 +1,23 @@
 Package: future.apply
 =====================
 
-Version: 1.0.0-9000 [2018-06-19]
+Version: 1.0.0-9000 [2018-06-20]
 
  o ...
- 
+
+DOCUMENTATION / LICENCE:
+
+ o The license is GPL (>= 2).  Previously it was documented as GPL (>= 2.1)
+   but that is a non-existing GPL version.
+
 
 Version: 1.0.0 [2018-06-19]
 
 SIGNIFICANT CHANGES:
 
- o License changed from LGPL (>= 2.1) to GPL (>= 2.1) to make sure it is
-   compatible with the source code adopted from R base's replicate(),
-   sapply(), and tapply(), which are all GPL (>= 2.1).
+ o License changed from LGPL (>= 2.1) to GPL (>= 2) to make sure it is
+   compatible with the source code adopted from R base's apply(), Map(),
+   replicate(), sapply(), and tapply(), which are all GPL (>= 2).
  
 NEW FEATURES:
 

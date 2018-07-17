@@ -1,7 +1,7 @@
 Package: future.apply
 =====================
 
-Version: 1.0.0-9000 [2018-06-20]
+Version: 1.0.0-9000 [2018-07-17]
 
  o ...
 
@@ -9,6 +9,12 @@ DOCUMENTATION / LICENCE:
 
  o The license is GPL (>= 2).  Previously it was documented as GPL (>= 2.1)
    but that is a non-existing GPL version.
+
+BUG FIXES:
+
+ o future_mapply() could drop class attribute on elements iterated over,
+   because .subset() was used internally instead of `[`().  For instance,
+   iteration over Date objects were affected.
 
 
 Version: 1.0.0 [2018-06-19]

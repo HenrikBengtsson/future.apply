@@ -152,7 +152,7 @@ future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES 
     if (debug) mdebug("Chunk #%d of %d ...", ii, length(chunks))
     ## Subsetting outside future is more efficient
     
-    dots_ii <- lapply(dots, FUN = .subset, chunk)
+    dots_ii <- lapply(dots, FUN = `[`, chunk)
     globals_ii <- globals
     ## Subsetting outside future is more efficient
     globals_ii[["...future.elements_ii"]] <- dots_ii

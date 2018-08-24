@@ -112,8 +112,9 @@ For \code{future_vapply()}, a vector with same length and names as \code{X}.
 See \code{\link[base:vapply]{base::vapply()}} for details.
 }
 \description{
-\code{future_lapply()} implements \code{\link[base:lapply]{base::lapply()}} using futures, and
-analogously for all the other \code{future_nnn()} functions.
+\code{future_lapply()} implements \code{\link[base:lapply]{base::lapply()}} using futures with perfect
+replication of results, regardless of future backend used.
+Analogously, this is trye for all the other \code{future_nnn()} functions.
 }
 \section{Global variables}{
 

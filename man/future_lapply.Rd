@@ -13,15 +13,16 @@
 \usage{
 future_eapply(env, FUN, ..., all.names = FALSE, USE.NAMES = TRUE)
 
-future_lapply(X, FUN, ..., future.globals = TRUE, future.packages = NULL,
-  future.seed = FALSE, future.lazy = FALSE, future.scheduling = 1,
-  future.chunk.size = NULL)
+future_lapply(X, FUN, ..., future.globals = TRUE,
+  future.packages = NULL, future.seed = FALSE, future.lazy = FALSE,
+  future.scheduling = 1, future.chunk.size = NULL)
 
 future_replicate(n, expr, simplify = "array", future.seed = TRUE, ...)
 
 future_sapply(X, FUN, ..., simplify = TRUE, USE.NAMES = TRUE)
 
-future_tapply(X, INDEX, FUN = NULL, ..., default = NA, simplify = TRUE)
+future_tapply(X, INDEX, FUN = NULL, ..., default = NA,
+  simplify = TRUE)
 
 future_vapply(X, FUN, FUN.VALUE, ..., USE.NAMES = TRUE)
 }

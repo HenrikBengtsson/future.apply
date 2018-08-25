@@ -68,6 +68,14 @@ for (cores in 1:availCores) {
     y0 <- lapply(x, FUN = table)
     y1 <- future_lapply(x, FUN = table)
     stopifnot(all.equal(y1, y0, check.attributes = FALSE)) ## FIXME
+
+    message("- future_lapply(x, ...) where length(x) != length(as.list(x)) ...")
+    x <- structure(list(a = 1, b = 2), class = "Foo")
+    as.list.Foo <- function(x, ...) c(x, c = 3)
+    y0 <- lapply(x, FUN = length)
+    y1 <- future_lapply(x, FUN = length)
+    stopifnot(identical(y1, y0))
+    
   } ## for (strategy ...)
 
   message(sprintf("Testing with %d cores ... DONE", cores))

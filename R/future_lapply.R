@@ -111,6 +111,9 @@ future_lapply <- function(X, FUN, ..., future.globals = TRUE, future.packages = 
   stop_if_not(length(future.scheduling) == 1, !is.na(future.scheduling),
             is.numeric(future.scheduling) || is.logical(future.scheduling))
 
+  ## Coerce to as.list()?
+  if (!is.vector(X) || is.object(X)) X <- as.list(X)
+  
   ## Nothing to do?
   nX <- length(X)
   if (nX == 0) return(list())

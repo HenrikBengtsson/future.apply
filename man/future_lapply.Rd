@@ -114,7 +114,7 @@ See \code{\link[base:vapply]{base::vapply()}} for details.
 \description{
 \code{future_lapply()} implements \code{\link[base:lapply]{base::lapply()}} using futures with perfect
 replication of results, regardless of future backend used.
-Analogously, this is trye for all the other \code{future_nnn()} functions.
+Analogously, this is true for all the other \code{future_nnn()} functions.
 }
 \section{Global variables}{
 

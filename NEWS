@@ -1,7 +1,7 @@
 Package: future.apply
 =====================
 
-Version: 1.0.0-9000 [2018-07-17]
+Version: 1.0.0-9000 [2018-08-25]
 
  o ...
 
@@ -12,6 +12,9 @@ DOCUMENTATION / LICENCE:
 
 BUG FIXES:
 
+ o For list objects 'X' where X != as.list(X), future_lapply(X) did not
+   give the same result as lapply(X).  Analogously for future_vapply(X).
+   
  o future_mapply() could drop class attribute on elements iterated over,
    because .subset() was used internally instead of `[`().  For instance,
    iteration over Date objects were affected.

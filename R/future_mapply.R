@@ -1,7 +1,9 @@
 #' Apply a Function to Multiple List or Vector Arguments
 #'
-#' `future_mapply()` implements [base::mapply()] using futures, where
-#' `mapply()` is a multivariate version of `sapply()`.
+#' `future_mapply()` implements [base::mapply()] using futures with perfect
+#' replication of results, regardless of future backend used.
+#' Analogously to `mapply()`, `future_mapply()` is a multivariate version of
+#' `future_sapply()`.
 #' It applies `FUN` to the first elements of each \ldots argument,
 #' the second elements, the third elements, and so on.
 #' Arguments are recycled if necessary.
@@ -152,7 +154,7 @@ future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES 
     if (debug) mdebug("Chunk #%d of %d ...", ii, length(chunks))
     ## Subsetting outside future is more efficient
     
-    dots_ii <- lapply(dots, FUN = .subset, chunk)
+    dots_ii <- lapply(dots, FUN = `[`, chunk)
     globals_ii <- globals
     ## Subsetting outside future is more efficient
     globals_ii[["...future.elements_ii"]] <- dots_ii

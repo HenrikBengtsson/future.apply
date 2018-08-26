@@ -14,6 +14,9 @@
 #'
 #' @rdname future_lapply
 future_vapply <- function(X, FUN, FUN.VALUE, ..., USE.NAMES = TRUE) {
+  ## Coerce to as.list()?
+  if (!is.vector(X) || is.object(X)) X <- as.list(X)
+  
   n <- length(X)
   stop_if_not(is.function(FUN))
   stop_if_not(is.vector(FUN.VALUE) || is.array(FUN.VALUE))

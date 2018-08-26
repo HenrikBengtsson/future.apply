@@ -79,11 +79,11 @@ section on the
 \href{https://cran.r-project.org/package=future}{future CRAN package page}.
 }
 \author{
-Henrik Bengtsson, except for the implementations of \code{future_Map()},
-\code{future_replicate()}, \code{future_sapply()}, and \code{future_tapply()}, which
-are adopted from the source code of the corresponding base \R functions,
-which are licensed under GPL (>= 2) with 'The R Core Team' as the
-copyright holder.
+Henrik Bengtsson, except for the implementations of \code{future_apply()},
+\code{future_Map()}, \code{future_replicate()}, \code{future_sapply()}, and
+\code{future_tapply()}, which are adopted from the source code of the
+corresponding base \R functions, which are licensed under GPL (>= 2)
+with 'The R Core Team' as the copyright holder.
 Because of these dependencies, the license of this package is GPL (>= 2).
 }
 \keyword{iteration}

@@ -27,7 +27,8 @@ function to margins of an array or matrix.
 See \code{\link[base:apply]{base::apply()}} for details.
 }
 \description{
-\code{future_apply()} implements \code{\link[base:apply]{base::apply()}} using futures.
+\code{future_apply()} implements \code{\link[base:apply]{base::apply()}} using future with perfect
+replication of results, regardless of future backend used.
 It returns a vector or array or list of values obtained by applying a
 function to margins of an array or matrix.
 }

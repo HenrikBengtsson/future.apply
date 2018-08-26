@@ -141,6 +141,13 @@ for (strategy in supportedStrategies()) {
   str(y1)
   stopifnot(all.equal(y1, y0))
 
+  message("- future_vapply(x, ...) where length(x) != length(as.list(x)) ...")
+  x <- structure(list(a = 1, b = 2), class = "Foo")
+  as.list.Foo <- function(x, ...) c(x, c = 3)
+  y0 <- vapply(x, FUN = length, FUN.VALUE = -1L)
+  y1 <- future_vapply(x, FUN = length, FUN.VALUE = -1L)
+  stopifnot(identical(y1, y0))
+
   message("- exceptions ...")
   res <- tryCatch({
     y0 <- vapply(1:3, FUN = identity, FUN.VALUE = c(3, 3))

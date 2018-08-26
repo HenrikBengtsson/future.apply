@@ -38,6 +38,12 @@ for (strategy in supportedStrategies()) {
   y1 <- future_mapply(word, LETTERS[1:6], 6:1, SIMPLIFY = FALSE)
   stopifnot(identical(y1, y0))
 
+
+  message("- Subsetting (Issue #17) ...")
+  X <- as.Date("2018-06-01")
+  y0 <- mapply(FUN = identity, X, SIMPLIFY = FALSE)
+  y1 <- future_mapply(FUN = identity, X, SIMPLIFY = FALSE)
+  stopifnot(identical(y1, y0))
   
   message("- Recycle arguments to same length ...")
   y0 <- mapply(rep, 1:4, 2:1)

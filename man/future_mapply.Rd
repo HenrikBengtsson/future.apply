@@ -66,8 +66,10 @@ See \code{\link[base:Map]{base::Map()}} for details.
 array or list.  See \code{\link[base:mapply]{base::mapply()}} for details.
 }
 \description{
-\code{future_mapply()} implements \code{\link[base:mapply]{base::mapply()}} using futures, where
-\code{mapply()} is a multivariate version of \code{sapply()}.
+\code{future_mapply()} implements \code{\link[base:mapply]{base::mapply()}} using futures with perfect
+replication of results, regardless of future backend used.
+Analogously to \code{mapply()}, \code{future_mapply()} is a multivariate version of
+\code{future_sapply()}.
 It applies \code{FUN} to the first elements of each \ldots argument,
 the second elements, the third elements, and so on.
 Arguments are recycled if necessary.

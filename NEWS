@@ -1,70 +1,87 @@
 Package: future.apply
 =====================
 
+Version: 1.0.1 [2018-08-26]
+
+DOCUMENTATION / LICENCE:
+
+ * The license is GPL (>= 2).  Previously it was documented as GPL (>= 2.1)
+   but that is a non-existing GPL version.
+
+BUG FIXES:
+
+ * For list objects 'X' where X != as.list(X), future_lapply(X) did not
+   give the same result as lapply(X).  Analogously for future_vapply(X).
+   
+ * future_mapply() could drop class attribute on elements iterated over,
+   because .subset() was used internally instead of `[`().  For instance,
+   iteration over Date objects were affected.
+
+
 Version: 1.0.0 [2018-06-19]
 
 SIGNIFICANT CHANGES:
 
- o License changed from LGPL (>= 2.1) to GPL (>= 2.1) to make sure it is
-   compatible with the source code adopted from R base's replicate(),
-   sapply(), and tapply(), which are all GPL (>= 2.1).
+ * License changed from LGPL (>= 2.1) to GPL (>= 2) to make sure it is
+   compatible with the source code adopted from R base's apply(), Map(),
+   replicate(), sapply(), and tapply(), which are all GPL (>= 2).
  
 NEW FEATURES:
 
- o Added future_apply(), future_mapply(), and future_Map().
+ * Added future_apply(), future_mapply(), and future_Map().
 
- o Added argument `future.chunk.size` as an alternative to argument
+ * Added argument `future.chunk.size` as an alternative to argument
    `future.scheduling` for controlling the average number of elements
    processed per future ("chunk").  In R 3.5.0, the parallel package
    introduced argument 'chunk.size'.
 
- o The maximum total size of globals allowed (option 'future.globals.maxSize')
+ * The maximum total size of globals allowed (option 'future.globals.maxSize')
    per future ("chunk") is now scaled up by the number of elements processed by
    the future ("chunk") making the protection approximately invariant to the
    amount of chunking (arguments 'future.scheduling' and 'future.chunk.size').
  
 BUG FIXES:
 
- o future_lapply(X, ...) did not search for globals in 'X'.
+ * future_lapply(X, ...) did not search for globals in 'X'.
 
- o future_vapply() did not return the same dimension names as vapply() when
+ * future_vapply() did not return the same dimension names as vapply() when
    FUN.VALUE had no names but FUN(X[[1]]) had.
  
 SOFTWARE QUALITY:
 
- o Test code coverage is 100%.
+ * Test code coverage is 100%.
  
  
 Version: 0.2.0 [2018-05-01]
 
 NEW FEATURES:
 
- o Added future_eapply(), future_tapply(), future_vapply(), and
+ * Added future_eapply(), future_tapply(), future_vapply(), and
    future_replicate().
  
 
 Version: 0.1.0 [2018-01-15]
 
- o Package submitted to CRAN.
+ * Package submitted to CRAN.
 
 
 Version: 0.0.3 [2017-12-06]
 
 DOCUMENTATION:
 
- o Vignette now covers the basics of the package and describes its role
+ * Vignette now covers the basics of the package and describes its role
    in the R package ecosystem together with a road map going forward.
 
 SOFTWARE QUALITY:
 
- o Added more package tests.  Code coverage is currently at 100%.
+ * Added more package tests.  Code coverage is currently at 100%.
 
 
 Version: 0.0.2 [2017-12-06]
 
 NEW FEATURES:
 
- o PERFORMANCE: future_lapply(x, ...) is now much faster and more memory
+ * PERFORMANCE: future_lapply(x, ...) is now much faster and more memory
    efficient for large 'x' vectors because it uses internal fold() function
    that is more efficient (memory and speed) version of base::Reduce(f, x),
    especially when length(x) is large.
@@ -74,8 +91,8 @@ Version: 0.0.0-9000 [2017-08-31]
 
 NEW FEATURES:
 
- o Added future_sapply().
+ * Added future_sapply().
 
- o Added future_lapply() - originally from the future package.
+ * Added future_lapply() - originally from the future package.
  
- o Created package.
+ * Created package.

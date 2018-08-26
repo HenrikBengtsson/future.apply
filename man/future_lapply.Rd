@@ -13,15 +13,16 @@
 \usage{
 future_eapply(env, FUN, ..., all.names = FALSE, USE.NAMES = TRUE)
 
-future_lapply(X, FUN, ..., future.globals = TRUE, future.packages = NULL,
-  future.seed = FALSE, future.lazy = FALSE, future.scheduling = 1,
-  future.chunk.size = NULL)
+future_lapply(X, FUN, ..., future.globals = TRUE,
+  future.packages = NULL, future.seed = FALSE, future.lazy = FALSE,
+  future.scheduling = 1, future.chunk.size = NULL)
 
 future_replicate(n, expr, simplify = "array", future.seed = TRUE, ...)
 
 future_sapply(X, FUN, ..., simplify = TRUE, USE.NAMES = TRUE)
 
-future_tapply(X, INDEX, FUN = NULL, ..., default = NA, simplify = TRUE)
+future_tapply(X, INDEX, FUN = NULL, ..., default = NA,
+  simplify = TRUE)
 
 future_vapply(X, FUN, FUN.VALUE, ..., USE.NAMES = TRUE)
 }
@@ -111,8 +112,9 @@ For \code{future_vapply()}, a vector with same length and names as \code{X}.
 See \code{\link[base:vapply]{base::vapply()}} for details.
 }
 \description{
-\code{future_lapply()} implements \code{\link[base:lapply]{base::lapply()}} using futures, and
-analogously for all the other \code{future_nnn()} functions.
+\code{future_lapply()} implements \code{\link[base:lapply]{base::lapply()}} using futures with perfect
+replication of results, regardless of future backend used.
+Analogously, this is true for all the other \code{future_nnn()} functions.
 }
 \section{Global variables}{
 

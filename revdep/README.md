@@ -3,13 +3,13 @@
 |field    |value                        |
 |:--------|:----------------------------|
 |version  |R version 3.5.1 (2018-07-02) |
-|os       |Ubuntu 18.04.1 LTS           |
+|os       |CentOS Linux 7 (Core)        |
 |system   |x86_64, linux-gnu            |
 |ui       |X11                          |
 |language |en                           |
 |collate  |en_US.UTF-8                  |
 |tz       |America/Los_Angeles          |
-|date     |2018-08-25                   |
+|date     |2018-08-26                   |
 
 # Dependencies
 
@@ -27,8 +27,8 @@
 
 |package                                    |version |error |warning |note |
 |:------------------------------------------|:-------|:-----|:-------|:----|
-|[BAMBI](problems.md#bambi)                 |2.0.1   |      |        |1    |
-|[DeclareDesign](problems.md#declaredesign) |0.10.0  |1     |        |1    |
+|BAMBI                                      |2.0.1   |      |        |     |
+|[DeclareDesign](problems.md#declaredesign) |0.10.0  |1     |        |2    |
 |drake                                      |5.4.0   |      |        |     |
 |drtmle                                     |1.0.3   |      |        |     |
 |future.BatchJobs                           |0.16.0  |      |        |     |
@@ -36,9 +36,9 @@
 |future.callr                               |0.3.1   |      |        |     |
 |kernelboot                                 |0.1.5   |      |        |     |
 |origami                                    |1.0.0   |      |        |     |
-|[phylolm](problems.md#phylolm)             |2.6     |      |        |1    |
+|phylolm                                    |2.6     |      |        |     |
 |R.filesets                                 |2.12.1  |      |        |     |
-|[robotstxt](problems.md#robotstxt)         |0.6.2   |      |        |1    |
+|[robotstxt](problems.md#robotstxt)         |0.6.2   |      |1       |1    |
 |RTransferEntropy                           |0.2.5   |      |        |     |
-|sperrorest                                 |2.1.5   |      |        |     |
+|[sperrorest](problems.md#sperrorest)       |2.1.5   |      |1       |     |
 

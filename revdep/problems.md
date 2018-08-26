@@ -1,29 +1,48 @@
-# future.batchtools
+# BAMBI
 
-Version: 0.7.0
-
-## In both
-
-*   checking Rd cross-references ... WARNING
-    ```
-    Error in find.package(package, lib.loc) : 
-      there is no package called ‘lattice’
-    Calls: <Anonymous> -> lapply -> FUN -> find.package
-    Execution halted
-    ```
-
-# future.callr
-
-Version: 0.3.0
+Version: 2.0.1
 
 ## In both
 
-*   checking Rd cross-references ... WARNING
+*   checking installed package size ... NOTE
     ```
-    Error in find.package(package, lib.loc) : 
-      there is no package called ‘lattice’
-    Calls: <Anonymous> -> lapply -> FUN -> find.package
-    Execution halted
+      installed size is  5.2Mb
+      sub-directories of 1Mb or more:
+        libs   4.7Mb
+    ```
+
+# DeclareDesign
+
+Version: 0.10.0
+
+## In both
+
+*   checking tests ...
+    ```
+     ERROR
+    Running the tests in ‘tests/testthat.R’ failed.
+    Last 13 lines of output:
+      > library(DeclareDesign)
+      Loading required package: randomizr
+      Loading required package: fabricatr
+      Loading required package: estimatr
+      > 
+      > test_check("DeclareDesign")
+      ── 1. Failure: error if you try to draw POs at a level using a variable that doe
+      `my_potential_outcomes_formula(pop)` did not throw an error.
+      
+      ══ testthat results  ═══════════════════════════════════════════════════════════
+      OK: 436 SKIPPED: 1 FAILED: 1
+      1. Failure: error if you try to draw POs at a level using a variable that doesn't exist at that level (@test-potential-outcomes.R#160) 
+      
+      Error: testthat unit tests failed
+      Execution halted
+    ```
+
+*   checking dependencies in R code ... NOTE
+    ```
+    Namespace in Imports field not imported from: ‘methods’
+      All declared Imports should be used.
     ```
 
 # phylolm
@@ -37,17 +56,15 @@ Version: 2.6
     Packages unavailable to check Rd xrefs: ‘surface’, ‘bayou’, ‘geiger’, ‘caper’
     ```
 
-# R.filesets
+# robotstxt
 
-Version: 2.12.1
+Version: 0.6.2
 
 ## In both
 
-*   checking Rd cross-references ... WARNING
+*   checking dependencies in R code ... NOTE
     ```
-    Error in find.package(package, lib.loc) : 
-      there is no package called ‘lattice’
-    Calls: <Anonymous> -> lapply -> FUN -> find.package
-    Execution halted
+    Namespace in Imports field not imported from: ‘future’
+      All declared Imports should be used.
     ```
 

@@ -8,9 +8,9 @@
 future_Map(f, ...)
 
 future_mapply(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE,
-  USE.NAMES = TRUE, future.globals = TRUE, future.packages = NULL,
-  future.seed = FALSE, future.lazy = FALSE, future.scheduling = 1,
-  future.chunk.size = NULL)
+  USE.NAMES = TRUE, future.stdout = TRUE, future.globals = TRUE,
+  future.packages = NULL, future.lazy = FALSE, future.seed = FALSE,
+  future.scheduling = 1, future.chunk.size = NULL)
 }
 \arguments{
 \item{f}{A function of the arity \eqn{k} if \code{future_Map()} is called with
@@ -28,18 +28,24 @@ argument of \code{\link[base:sapply]{base::sapply()}}.}
 names, or if it is a character vector, use that character vector as the
 names.}
 
+\item{future.stdout}{If TRUE (default), then the standard output of the
+underlying futures is captured, and re-outputted as soon as possible.
+If FALSE, any output is silenced (by sinking it to the null device as
+it is outputted).
+If NA (not recommended), output is \emph{not} intercepted.}
+
 \item{future.globals}{A logical, a character vector, or a named list for
 controlling how globals are handled. For details, see below section.}
 
 \item{future.packages}{(optional) a character vector specifying packages
 to be attached in the R environment evaluating the future.}
 
+\item{future.lazy}{Specifies whether the futures should be resolved
+lazily or eagerly (default).}
+
 \item{future.seed}{A logical or an integer (of length one or seven),
 or a list of \code{length(X)} with pre-generated random seeds.
 For details, see below section.}
-
-\item{future.lazy}{Specifies whether the futures should be resolved
-lazily or eagerly (default).}
 
 \item{future.scheduling}{Average number of futures ("chunks") per worker.
 If \code{0.0}, then a single future is used to process all elements
@@ -62,7 +68,7 @@ positive length, or all of zero length).}
 attempt to simplify the result.
 See \code{\link[base:Map]{base::Map()}} for details.
 
-\code{future_mapply() returns a list, or for}SIMPLIFY = TRUE`, a vector,
+\code{future_mapply() returns a list, or for }SIMPLIFY = TRUE`, a vector,
 array or list.  See \code{\link[base:mapply]{base::mapply()}} for details.
 }
 \description{

@@ -1,9 +1,19 @@
 Package: future.apply
 =====================
 
-Version: 1.0.1-9000 [2018-08-26]
+Version: 1.0.1-9000 [2018-12-12]
 
- * ...
+SIGNIFICANT CHANGES:
+
+ * Added argument 'future.stdout' for controlling wether standard output
+   produced when evaluating futures should be captured and relayed or not.
+   Output is guaranteed to be relayed is the same order as it would when using
+   sequential processing.
+   
+NEW FEATURES:
+
+ * Swapped order of arguments 'future.lazy' and 'future.seed' to be consistent
+   with ditto arguments of future::future().
  
 
 Version: 1.0.1 [2018-08-26]

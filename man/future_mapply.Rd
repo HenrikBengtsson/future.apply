@@ -8,9 +8,9 @@
 future_Map(f, ...)
 
 future_mapply(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE,
-  USE.NAMES = TRUE, future.globals = TRUE, future.packages = NULL,
-  future.lazy = FALSE, future.seed = FALSE, future.scheduling = 1,
-  future.chunk.size = NULL)
+  USE.NAMES = TRUE, future.stdout = NA, future.globals = TRUE,
+  future.packages = NULL, future.lazy = FALSE, future.seed = FALSE,
+  future.scheduling = 1, future.chunk.size = NULL)
 }
 \arguments{
 \item{f}{A function of the arity \eqn{k} if \code{future_Map()} is called with
@@ -27,6 +27,12 @@ argument of \code{\link[base:sapply]{base::sapply()}}.}
 \item{USE.NAMES}{A logical; use names if the first \ldots argument has
 names, or if it is a character vector, use that character vector as the
 names.}
+
+\item{future.stdout}{If TRUE, then the standard output of the
+underlying futures is captured, and re-outputted as soon as possible.
+If FALSE, any output is silenced (by sinking it to the null device as
+it is outputted).
+If NA, output is \emph{not} intercepted.}
 
 \item{future.globals}{A logical, a character vector, or a named list for
 controlling how globals are handled. For details, see below section.}

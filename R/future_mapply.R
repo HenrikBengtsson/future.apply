@@ -37,7 +37,7 @@
 #' @importFrom future future resolve values as.FutureGlobals nbrOfWorkers getGlobalsAndPackages FutureError
 #' @importFrom utils capture.output head str
 #' @export
-future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES = TRUE, future.globals = TRUE, future.packages = NULL, future.lazy = FALSE, future.seed = FALSE, future.scheduling = 1.0, future.chunk.size = NULL) {
+future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES = TRUE, future.stdout = NA, future.globals = TRUE, future.packages = NULL, future.lazy = FALSE, future.seed = FALSE, future.scheduling = 1.0, future.chunk.size = NULL) {
   FUN <- match.fun(FUN)
   stop_if_not(is.function(FUN))
 
@@ -64,7 +64,9 @@ future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES 
   
   stop_if_not(is.null(MoreArgs) || is.list(MoreArgs))
 
-  stop_if_not(is.logical(future.lazy))
+  stop_if_not(is.logical(future.stdout), length(future.stdout) == 1L)
+
+  stop_if_not(is.logical(future.lazy), length(future.lazy) == 1L)
 
   stop_if_not(!is.null(future.seed))
   
@@ -216,7 +218,10 @@ future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES 
         args <- c(list(FUN = ...future.FUN), ...future.elements_ii, MoreArgs = list(MoreArgs), SIMPLIFY = FALSE, USE.NAMES = FALSE)
         res <- do.call(mapply, args = args)
         res
-      }, envir = envir, lazy = future.lazy, globals = globals_ii, packages = packages_ii)
+      }, envir = envir,
+         stdout = future.stdout,
+	 globals = globals_ii, packages = packages_ii,
+	 lazy = future.lazy)
     } else {
       if (debug) mdebug(" - seeds: [%d] <seeds>", length(chunk))
       globals_ii[["...future.seeds_ii"]] <- seeds[chunk]
@@ -232,7 +237,10 @@ future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES 
         }
         args <- c(list(FUN = ...future.FUN2), ...future.elements_ii, list(...future.seeds_ii_jj = ...future.seeds_ii), MoreArgs, SIMPLIFY = FALSE, USE.NAMES = FALSE)
         do.call(mapply, args = args)
-      }, envir = envir, lazy = future.lazy, globals = globals_ii, packages = packages_ii)
+      }, envir = envir,
+         stdout = future.stdout,
+	 globals = globals_ii, packages = packages_ii,
+         lazy = future.lazy)
     }
     
     ## Not needed anymore

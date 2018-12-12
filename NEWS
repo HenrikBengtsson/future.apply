@@ -3,6 +3,11 @@ Package: future.apply
 
 Version: 1.0.1-9000 [2018-12-12]
 
+SIGNIFICANT CHANGES:
+
+ * Added argument 'future.stdout' for controlling wether standard output
+   produced when evaluating futures should be captured and relayed or not.
+   
 NEW FEATURES:
 
  * Swapped order of arguments 'future.lazy' and 'future.seed' to be consistent

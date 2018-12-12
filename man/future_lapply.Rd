@@ -13,7 +13,7 @@
 \usage{
 future_eapply(env, FUN, ..., all.names = FALSE, USE.NAMES = TRUE)
 
-future_lapply(X, FUN, ..., future.globals = TRUE,
+future_lapply(X, FUN, ..., future.stdout = NA, future.globals = TRUE,
   future.packages = NULL, future.lazy = FALSE, future.seed = FALSE,
   future.scheduling = 1, future.chunk.size = NULL)
 
@@ -38,6 +38,12 @@ See \code{\link[base:eapply]{base::eapply()}} for details.}
 \item{USE.NAMES}{See \code{\link[base:sapply]{base::sapply()}}.}
 
 \item{X}{A vector-like object to iterate over.}
+
+\item{future.stdout}{If TRUE, then the standard output of the
+underlying futures is captured, and re-outputted as soon as possible.
+If FALSE, any output is silenced (by sinking it to the null device as
+it is outputted).
+If NA, output is \emph{not} intercepted.}
 
 \item{future.globals}{A logical, a character vector, or a named list for
 controlling how globals are handled. For details, see below section.}

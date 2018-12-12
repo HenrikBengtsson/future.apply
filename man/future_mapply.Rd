@@ -8,7 +8,7 @@
 future_Map(f, ...)
 
 future_mapply(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE,
-  USE.NAMES = TRUE, future.stdout = NA, future.globals = TRUE,
+  USE.NAMES = TRUE, future.stdout = TRUE, future.globals = TRUE,
   future.packages = NULL, future.lazy = FALSE, future.seed = FALSE,
   future.scheduling = 1, future.chunk.size = NULL)
 }
@@ -28,11 +28,11 @@ argument of \code{\link[base:sapply]{base::sapply()}}.}
 names, or if it is a character vector, use that character vector as the
 names.}
 
-\item{future.stdout}{If TRUE, then the standard output of the
+\item{future.stdout}{If TRUE (default), then the standard output of the
 underlying futures is captured, and re-outputted as soon as possible.
 If FALSE, any output is silenced (by sinking it to the null device as
 it is outputted).
-If NA, output is \emph{not} intercepted.}
+If NA (not recommended), output is \emph{not} intercepted.}
 
 \item{future.globals}{A logical, a character vector, or a named list for
 controlling how globals are handled. For details, see below section.}

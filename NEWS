@@ -7,6 +7,8 @@ SIGNIFICANT CHANGES:
 
  * Added argument 'future.stdout' for controlling wether standard output
    produced when evaluating futures should be captured and relayed or not.
+   Output is guaranteed to be relayed is the same order as it would when using
+   sequential processing.
    
 NEW FEATURES:
 

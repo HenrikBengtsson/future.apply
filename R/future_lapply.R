@@ -12,11 +12,11 @@
 #' For `future_*apply()` functions and `replicate(), any `future.*` arguments
 #' part of \ldots are passed on to `future_lapply()` used internally.
 #' 
-#' @param future.stdout If TRUE, then the standard output of the
+#' @param future.stdout If TRUE (default), then the standard output of the
 #'        underlying futures is captured, and re-outputted as soon as possible.
 #'        If FALSE, any output is silenced (by sinking it to the null device as
 #'        it is outputted).
-#'        If NA, output is _not_ intercepted.
+#'        If NA (not recommended), output is _not_ intercepted.
 #'
 #' @param future.globals A logical, a character vector, or a named list for
 #'        controlling how globals are handled. For details, see below section.
@@ -107,7 +107,7 @@
 #' @importFrom future future resolve values as.FutureGlobals nbrOfWorkers getGlobalsAndPackages FutureError
 #' @importFrom utils capture.output head str
 #' @export
-future_lapply <- function(X, FUN, ..., future.stdout = NA, future.globals = TRUE, future.packages = NULL, future.lazy = FALSE, future.seed = FALSE, future.scheduling = 1.0, future.chunk.size = NULL) {
+future_lapply <- function(X, FUN, ..., future.stdout = TRUE, future.globals = TRUE, future.packages = NULL, future.lazy = FALSE, future.seed = FALSE, future.scheduling = 1.0, future.chunk.size = NULL) {
   stop_if_not(is.function(FUN))
   
   stop_if_not(is.logical(future.stdout), length(future.stdout) == 1L)

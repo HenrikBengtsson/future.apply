@@ -9,7 +9,7 @@ future_Map(f, ...)
 
 future_mapply(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE,
   USE.NAMES = TRUE, future.globals = TRUE, future.packages = NULL,
-  future.seed = FALSE, future.lazy = FALSE, future.scheduling = 1,
+  future.lazy = FALSE, future.seed = FALSE, future.scheduling = 1,
   future.chunk.size = NULL)
 }
 \arguments{
@@ -34,12 +34,12 @@ controlling how globals are handled. For details, see below section.}
 \item{future.packages}{(optional) a character vector specifying packages
 to be attached in the R environment evaluating the future.}
 
+\item{future.lazy}{Specifies whether the futures should be resolved
+lazily or eagerly (default).}
+
 \item{future.seed}{A logical or an integer (of length one or seven),
 or a list of \code{length(X)} with pre-generated random seeds.
 For details, see below section.}
-
-\item{future.lazy}{Specifies whether the futures should be resolved
-lazily or eagerly (default).}
 
 \item{future.scheduling}{Average number of futures ("chunks") per worker.
 If \code{0.0}, then a single future is used to process all elements
@@ -62,7 +62,7 @@ positive length, or all of zero length).}
 attempt to simplify the result.
 See \code{\link[base:Map]{base::Map()}} for details.
 
-\code{future_mapply() returns a list, or for}SIMPLIFY = TRUE`, a vector,
+\code{future_mapply() returns a list, or for }SIMPLIFY = TRUE`, a vector,
 array or list.  See \code{\link[base:mapply]{base::mapply()}} for details.
 }
 \description{

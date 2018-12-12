@@ -18,13 +18,13 @@
 #' @param future.packages (optional) a character vector specifying packages
 #'        to be attached in the R environment evaluating the future.
 #' 
+#' @param future.lazy Specifies whether the futures should be resolved
+#'        lazily or eagerly (default).
+#' 
 #' @param future.seed A logical or an integer (of length one or seven),
 #'        or a list of `length(X)` with pre-generated random seeds.
 #'        For details, see below section.
 #'  
-#' @param future.lazy Specifies whether the futures should be resolved
-#'        lazily or eagerly (default).
-#' 
 #' @param future.scheduling Average number of futures ("chunks") per worker.
 #'        If `0.0`, then a single future is used to process all elements
 #'        of `X`.
@@ -101,7 +101,7 @@
 #' @importFrom future future resolve values as.FutureGlobals nbrOfWorkers getGlobalsAndPackages FutureError
 #' @importFrom utils capture.output head str
 #' @export
-future_lapply <- function(X, FUN, ..., future.globals = TRUE, future.packages = NULL, future.seed = FALSE, future.lazy = FALSE, future.scheduling = 1.0, future.chunk.size = NULL) {
+future_lapply <- function(X, FUN, ..., future.globals = TRUE, future.packages = NULL, future.lazy = FALSE, future.seed = FALSE, future.scheduling = 1.0, future.chunk.size = NULL) {
   stop_if_not(is.function(FUN))
   
   stop_if_not(is.logical(future.lazy))

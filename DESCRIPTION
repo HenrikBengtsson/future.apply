@@ -22,5 +22,5 @@ License: GPL (>= 2)
 LazyLoad: TRUE
 URL: https://github.com/HenrikBengtsson/future.apply
 BugReports: https://github.com/HenrikBengtsson/future.apply/issues
-RoxygenNote: 6.1.0
+RoxygenNote: 6.1.1
 Roxygen: list(markdown = TRUE)

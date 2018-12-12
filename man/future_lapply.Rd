@@ -14,7 +14,7 @@
 future_eapply(env, FUN, ..., all.names = FALSE, USE.NAMES = TRUE)
 
 future_lapply(X, FUN, ..., future.globals = TRUE,
-  future.packages = NULL, future.seed = FALSE, future.lazy = FALSE,
+  future.packages = NULL, future.lazy = FALSE, future.seed = FALSE,
   future.scheduling = 1, future.chunk.size = NULL)
 
 future_replicate(n, expr, simplify = "array", future.seed = TRUE, ...)
@@ -45,12 +45,12 @@ controlling how globals are handled. For details, see below section.}
 \item{future.packages}{(optional) a character vector specifying packages
 to be attached in the R environment evaluating the future.}
 
+\item{future.lazy}{Specifies whether the futures should be resolved
+lazily or eagerly (default).}
+
 \item{future.seed}{A logical or an integer (of length one or seven),
 or a list of \code{length(X)} with pre-generated random seeds.
 For details, see below section.}
-
-\item{future.lazy}{Specifies whether the futures should be resolved
-lazily or eagerly (default).}
 
 \item{future.scheduling}{Average number of futures ("chunks") per worker.
 If \code{0.0}, then a single future is used to process all elements
@@ -84,7 +84,7 @@ logical < integer < double < complex, but not demoted.
 See \code{\link[base:vapply]{base::vapply()}} for details.}
 
 \item{\ldots}{(optional) Additional arguments passed to \code{FUN()}.
-For \code{future_*apply()} functions and \code{replicate(), any}future.*\code{arguments part of \ldots are passed on to}future_lapply()` used internally.}
+For \code{future_*apply()} functions and \code{replicate(), any }future.*\code{arguments part of \ldots are passed on to}future_lapply()` used internally.}
 }
 \value{
 A named (unless \code{USE.NAMES = FALSE}) list.

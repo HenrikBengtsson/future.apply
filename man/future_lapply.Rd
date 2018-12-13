@@ -163,8 +163,10 @@ In addition to the above, it is possible to specify a pre-generated
 sequence of RNG seeds as a list such that
 \code{length(future.seed) == length(X)} and where each element is an
 integer seed vector that can be assigned to
-\code{\link[base:Random]{.Random.seed}}.
-Use this alternative with caution.
+\code{\link[base:Random]{.Random.seed}}.  One approach to generate a
+set of valid RNG seeds is:\preformatted{seeds <- future_lapply(seq_along(X), FUN = function(x) .Random.seed, future.seed = 42L)
+}
+
 \strong{Note that \code{as.list(seq_along(X))} is \emph{not} a valid set of such
 \code{.Random.seed} values.}
 

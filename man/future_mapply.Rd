@@ -35,7 +35,8 @@ it is outputted).
 If NA (not recommended), output is \emph{not} intercepted.}
 
 \item{future.globals}{A logical, a character vector, or a named list for
-controlling how globals are handled. For details, see below section.}
+controlling how globals are handled.
+For details, see \code{\link[=future_lapply]{future_lapply()}}.}
 
 \item{future.packages}{(optional) a character vector specifying packages
 to be attached in the R environment evaluating the future.}
@@ -45,7 +46,7 @@ lazily or eagerly (default).}
 
 \item{future.seed}{A logical or an integer (of length one or seven),
 or a list of \code{length(X)} with pre-generated random seeds.
-For details, see below section.}
+For details, see \code{\link[=future_lapply]{future_lapply()}}.}
 
 \item{future.scheduling}{Average number of futures ("chunks") per worker.
 If \code{0.0}, then a single future is used to process all elements

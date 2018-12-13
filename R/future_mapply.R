@@ -25,6 +25,14 @@
 #' names, or if it is a character vector, use that character vector as the
 #' names.
 #'
+#' @param future.globals A logical, a character vector, or a named list for
+#'        controlling how globals are handled.
+#'        For details, see [future_lapply()].
+#'
+#' @param future.seed A logical or an integer (of length one or seven),
+#'        or a list of `length(X)` with pre-generated random seeds.
+#'        For details, see [future_lapply()].
+#'
 #' @return
 #' `future_mapply() returns a list, or for `SIMPLIFY = TRUE`, a vector,
 #' array or list.  See [base::mapply()] for details.

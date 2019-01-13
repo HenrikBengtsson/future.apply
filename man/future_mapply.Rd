@@ -44,8 +44,8 @@ to be attached in the R environment evaluating the future.}
 \item{future.lazy}{Specifies whether the futures should be resolved
 lazily or eagerly (default).}
 
-\item{future.seed}{A logical or an integer (of length one or seven),
-or a list of \code{length(X)} with pre-generated random seeds.
+\item{future.seed}{A logical or an integer (of length one or seven), or
+a list of \code{max(lengths(list(...)))} with pre-generated random seeds.
 For details, see \code{\link[=future_lapply]{future_lapply()}}.}
 
 \item{future.scheduling}{Average number of futures ("chunks") per worker.

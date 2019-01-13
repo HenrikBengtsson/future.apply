@@ -102,6 +102,19 @@
 #' script calling `future_lapply()` multiple times should be numerically
 #' reproducible given the same initial seed.
 #'
+#' @section Control processing order of elements:
+#' Attribute `ordering` of `future.chunk.size` or `future.scheduling` can
+#' be used to control the ordering the elements are iterated over, which
+#' only affects the processing order _not_ the order values are returned.
+#' This attribute can take the following values:
+#' * index vector - an numeric vector of length `length(X)`
+#' * function     - an function taking one argument which is called as
+#'                  `ordering(length(X))` and which much return an
+#'                  index vector of length `length(X)`, e.g.
+#'                  `function(n) rev(seq_len(n))` for reverse ordering.
+#' * `"random"`   - this will randomize the ordering via random index
+#'                  vector `sample.int(length(X))`.
+#'
 #' @example incl/future_lapply.R
 #'
 #' @keywords manip programming iteration
@@ -172,11 +185,19 @@ future_lapply <- function(X, FUN, ..., future.stdout = TRUE, future.globals = TR
   ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   ## 4. Load balancing ("chunking")
   ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  chunks <- makeChunks(nX, nbrOfWorkers = nbrOfWorkers(),
+  chunks <- makeChunks(nX,
+                       nbrOfWorkers = nbrOfWorkers(),
                        future.scheduling = future.scheduling,
                        future.chunk.size = future.chunk.size)
-  if (debug) mdebug("Number of chunks: %d", length(chunks))   
+  if (debug) mdebug("Number of chunks: %d", length(chunks))
 
+  ## Process elements in a custom order?
+  ordering <- attr(chunks, "ordering")
+  if (!is.null(ordering)) {
+    if (debug) mdebug("Index remapping (attribute 'ordering'): [n = %d] %s", length(ordering), hpaste(ordering))
+    chunks <- lapply(chunks, FUN = function(idxs) .subset(ordering, idxs))
+  }
+  
   
   ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   ## 5. Create futures
@@ -279,7 +300,7 @@ future_lapply <- function(X, FUN, ..., future.stdout = TRUE, future.globals = TR
         })
       }, envir = envir,
          stdout = future.stdout,
-	 globals = globals_ii, packages = packages_ii,
+         globals = globals_ii, packages = packages_ii,
          lazy = future.lazy)
     } else {
       if (debug) mdebug(" - seeds: [%d] <seeds>", length(chunk))
@@ -311,6 +332,7 @@ future_lapply <- function(X, FUN, ..., future.stdout = TRUE, future.globals = TR
   ## Not needed anymore
   rm(list = c("chunks", "globals", "envir"))
 
+
   ## 4. Resolving futures
   if (debug) mdebug("Resolving %d futures (chunks) ...", nchunks)
   
@@ -327,6 +349,7 @@ future_lapply <- function(X, FUN, ..., future.stdout = TRUE, future.globals = TR
   stop_if_not(length(values) == nchunks)
   
   if (debug) mdebug("Reducing values from %d chunks ...", nchunks)
+   
   values2 <- do.call(c, args = values)
   
   if (debug) {
@@ -342,7 +365,18 @@ future_lapply <- function(X, FUN, ..., future.stdout = TRUE, future.globals = TR
   ## Sanity check (this may happen if the future backend is broken)
   stop_if_not(length(values) == nX)
   names(values) <- names(X)
-  
+
+  ## Were elements processed in a custom order?
+  if (length(values) > 1L && !is.null(ordering)) {
+    invOrdering <- vector(mode(ordering), length = nX)
+    idx <- 1:nX
+    invOrdering[.subset(ordering, idx)] <- idx
+    rm(list = c("ordering", "idx"))
+    if (debug) mdebug("Reverse index remapping (attribute 'ordering'): [n = %d] %s", length(invOrdering), hpaste(invOrdering))
+    values <- .subset(values, invOrdering)
+    rm(list = c("invOrdering"))
+  }
+
   if (debug) mdebug("Reducing values from %d chunks ... DONE", nchunks)
   
   if (debug) mdebug("future_lapply() ... DONE")

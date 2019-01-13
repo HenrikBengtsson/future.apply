@@ -29,8 +29,8 @@
 #'        controlling how globals are handled.
 #'        For details, see [future_lapply()].
 #'
-#' @param future.seed A logical or an integer (of length one or seven),
-#'        or a list of `length(X)` with pre-generated random seeds.
+#' @param future.seed A logical or an integer (of length one or seven), or
+#'        a list of `max(lengths(list(...)))` with pre-generated random seeds.
 #'        For details, see [future_lapply()].
 #'
 #' @return
@@ -124,12 +124,20 @@ future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES 
   ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   ## 4. Load balancing ("chunking")
   ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  chunks <- makeChunks(nX, nbrOfWorkers = nbrOfWorkers(),
+  chunks <- makeChunks(nX,
+                       nbrOfWorkers = nbrOfWorkers(),
                        future.scheduling = future.scheduling,
                        future.chunk.size = future.chunk.size)
   if (debug) mdebug("Number of chunks: %d", length(chunks))
   
-  
+  ## Process elements in a custom order?
+  ordering <- attr(chunks, "ordering")
+  if (!is.null(ordering)) {
+    if (debug) mdebug("Index remapping (attribute 'ordering'): [n = %d] %s", length(ordering), hpaste(ordering))
+    chunks <- lapply(chunks, FUN = function(idxs) .subset(ordering, idxs))
+  }
+
+
   ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   ## 5. Create futures
   ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -228,8 +236,8 @@ future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES 
         res
       }, envir = envir,
          stdout = future.stdout,
-	 globals = globals_ii, packages = packages_ii,
-	 lazy = future.lazy)
+         globals = globals_ii, packages = packages_ii,
+         lazy = future.lazy)
     } else {
       if (debug) mdebug(" - seeds: [%d] <seeds>", length(chunk))
       globals_ii[["...future.seeds_ii"]] <- seeds[chunk]
@@ -247,7 +255,7 @@ future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES 
         do.call(mapply, args = args)
       }, envir = envir,
          stdout = future.stdout,
-	 globals = globals_ii, packages = packages_ii,
+         globals = globals_ii, packages = packages_ii,
          lazy = future.lazy)
     }
     
@@ -299,6 +307,17 @@ future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES 
     } else if (!is.null(names1)) {
       names(values) <- names1
     }
+  }
+
+  ## Were elements processed in a custom order?
+  if (length(values) > 1L && !is.null(ordering)) {
+    invOrdering <- vector(mode(ordering), length = nX)
+    idx <- 1:nX
+    invOrdering[.subset(ordering, idx)] <- idx
+    rm(list = c("ordering", "idx"))
+    if (debug) mdebug("Reverse index remapping (attribute 'ordering'): [n = %d] %s", length(invOrdering), hpaste(invOrdering))
+    values <- .subset(values, invOrdering)
+    rm(list = c("invOrdering"))
   }
 
   if (!isFALSE(SIMPLIFY) && length(values) > 0L) {

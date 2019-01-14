@@ -5,7 +5,7 @@ Version: 1.0.1-9000 [2019-01-13]
 
 SIGNIFICANT CHANGES:
 
- * Added argument 'future.stdout' for controlling wether standard output
+ * Added argument 'future.stdout' for controlling whether standard output
    produced when evaluating futures should be captured and relayed or not.
    Output is guaranteed to be relayed in the same order as it would when using
    sequential processing.

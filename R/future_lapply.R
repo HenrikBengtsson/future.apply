@@ -114,6 +114,7 @@
 #'                  `function(n) rev(seq_len(n))` for reverse ordering.
 #' * `"random"`   - this will randomize the ordering via random index
 #'                  vector `sample.int(length(X))`.
+#' For example, `future.scheduling = structure(TRUE, ordering = "random")`.
 #'
 #' @example incl/future_lapply.R
 #'
@@ -364,7 +365,6 @@ future_lapply <- function(X, FUN, ..., future.stdout = TRUE, future.globals = TR
   
   ## Sanity check (this may happen if the future backend is broken)
   stop_if_not(length(values) == nX)
-  names(values) <- names(X)
 
   ## Were elements processed in a custom order?
   if (length(values) > 1L && !is.null(ordering)) {
@@ -376,6 +376,8 @@ future_lapply <- function(X, FUN, ..., future.stdout = TRUE, future.globals = TR
     values <- .subset(values, invOrdering)
     rm(list = c("invOrdering"))
   }
+
+  names(values) <- names(X)
 
   if (debug) mdebug("Reducing values from %d chunks ... DONE", nchunks)
   

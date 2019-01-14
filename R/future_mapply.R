@@ -299,15 +299,6 @@ future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES 
   
   ## Sanity check (this may happen if the future backend is broken)
   stop_if_not(length(values) == nX)
-#  names(values) <- names(X)
-
-  if (USE.NAMES && length(dots) > 0L) {
-    if (is.null(names1 <- names(dots[[1L]])) && is.character(dots[[1L]])) {
-      names(values) <- dots[[1L]]
-    } else if (!is.null(names1)) {
-      names(values) <- names1
-    }
-  }
 
   ## Were elements processed in a custom order?
   if (length(values) > 1L && !is.null(ordering)) {
@@ -318,6 +309,14 @@ future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES 
     if (debug) mdebug("Reverse index remapping (attribute 'ordering'): [n = %d] %s", length(invOrdering), hpaste(invOrdering))
     values <- .subset(values, invOrdering)
     rm(list = c("invOrdering"))
+  }
+
+  if (USE.NAMES && length(dots) > 0L) {
+    if (is.null(names1 <- names(dots[[1L]])) && is.character(dots[[1L]])) {
+      names(values) <- dots[[1L]]
+    } else if (!is.null(names1)) {
+      names(values) <- names1
+    }
   }
 
   if (!isFALSE(SIMPLIFY) && length(values) > 0L) {

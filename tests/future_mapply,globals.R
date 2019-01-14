@@ -177,7 +177,7 @@ message("- approximately invariant to chunk size ...")
 maxSize <- sizes[["FUN"]] + sizes[["X"]] / length(X)
 options(future.globals.maxSize = maxSize)
 
-for (chunk.size in c(1L, 2L, 5L, 10L)) {
+for (chunk.size in c(1L, 2L, 5L, structure(10L, ordering = "random"))) {
   y <- future_mapply(FUN = FUN, X, future.chunk.size = chunk.size)
   str(y)
   stopifnot(all(unlist(y) == maxSize))

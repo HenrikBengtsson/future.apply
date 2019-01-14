@@ -193,6 +193,7 @@ index vector of length \code{length(X)}, e.g.
 \code{function(n) rev(seq_len(n))} for reverse ordering.
 \item \code{"random"}   - this will randomize the ordering via random index
 vector \code{sample.int(length(X))}.
+For example, \code{future.scheduling = structure(TRUE, ordering = "random")}.
 }
 }
 

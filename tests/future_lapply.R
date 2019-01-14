@@ -34,7 +34,7 @@ for (cores in 1:availCores) {
     message(sprintf("- plan('%s') ...", strategy))
     plan(strategy)
 
-    for (scheduling in list(FALSE, TRUE)) {
+    for (scheduling in list(FALSE, TRUE, structure(TRUE, ordering = "random"))) {
       message("- future_lapply(x, FUN = vector, ...) ...")
       y <- future_lapply(x_a, FUN = vector, length = 2L, future.scheduling = scheduling)
       str(list(y = y))

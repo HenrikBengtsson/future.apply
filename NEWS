@@ -14,7 +14,10 @@ NEW FEATURES:
 
  * Elements can be processed in random order by setting attribute 'ordering'
    to "random" of argument 'future.chunk.size' or 'future.scheduling', e.g.
-   future.chunk.size = structure(TRUE, ordering = "random").
+   future.chunk.size = structure(TRUE, ordering = "random").  This can help
+   improve load balancing in cases where there is a correlation between
+   processing time and ordering of the elements.  Note that the order of the
+   returned values is not affected when randomizing the processing order.
  
  * Swapped order of arguments 'future.lazy' and 'future.seed' to be consistent
    with ditto arguments of future::future().

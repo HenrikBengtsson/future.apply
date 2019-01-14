@@ -79,7 +79,7 @@ makeChunks <- function(nbrOfElements, nbrOfWorkers,
   ## Customized ordering?
   if (nbrOfElements > 1L && !is.null(ordering)) {
     if (is.character(ordering)) {
-      map <- sample.int(nbrOfElements, size = nbrOfElements, replace = FALSE)
+      map <- stealth_sample.int(nbrOfElements)
     } else if (is.numeric(ordering)) {
       map <- ordering
     } else if (is.function(ordering)) {

@@ -34,7 +34,7 @@ for (strategy in supportedStrategies()) {
   stopifnot(identical(y1, y0))
   
   word <- function(C, k) paste(rep.int(C, k), collapse = "")
-  for (chunk.size in c(1L, structure(2L, ordering = "random"), structure(3L, ordering = 5:1))) {
+  for (chunk.size in list(1L, structure(2L, ordering = "random"), structure(3L, ordering = 5:1))) {
     y0 <- mapply(word, LETTERS[1:5], 5:1, SIMPLIFY = FALSE)
     y1 <- future_mapply(word, LETTERS[1:5], 5:1, SIMPLIFY = FALSE, future.chunk.size = chunk.size)
     stopifnot(identical(y1, y0))

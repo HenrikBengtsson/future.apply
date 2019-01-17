@@ -13,7 +13,8 @@
 \usage{
 future_eapply(env, FUN, ..., all.names = FALSE, USE.NAMES = TRUE)
 
-future_lapply(X, FUN, ..., future.stdout = TRUE, future.globals = TRUE,
+future_lapply(X, FUN, ..., future.stdout = TRUE,
+  future.conditions = c("message", "warning"), future.globals = TRUE,
   future.packages = NULL, future.lazy = FALSE, future.seed = FALSE,
   future.scheduling = 1, future.chunk.size = NULL)
 
@@ -39,11 +40,16 @@ See \code{\link[base:eapply]{base::eapply()}} for details.}
 
 \item{X}{A vector-like object to iterate over.}
 
-\item{future.stdout}{If TRUE (default), then the standard output of the
+\item{future.stdout}{If \code{TRUE} (default), then the standard output of the
 underlying futures is captured, and re-outputted as soon as possible.
-If FALSE, any output is silenced (by sinking it to the null device as
-it is outputted).
-If NA (not recommended), output is \emph{not} intercepted.}
+If \code{FALSE}, any output is silenced (by sinking it to the null device
+as it is outputted).
+If \code{NA} (not recommended), output is \emph{not} intercepted.}
+
+\item{future.conditions}{A character string of conditions classes to be
+captured and relayed.  The default is to relay messages and warnings.
+To not intercept conditions, use \code{conditions = character(0L)}.
+Errors are always relayed.}
 
 \item{future.globals}{A logical, a character vector, or a named list for
 controlling how globals are handled. For details, see below section.}

@@ -8,7 +8,8 @@
 future_Map(f, ...)
 
 future_mapply(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE,
-  USE.NAMES = TRUE, future.stdout = TRUE, future.globals = TRUE,
+  USE.NAMES = TRUE, future.stdout = TRUE,
+  future.conditions = c("message", "warning"), future.globals = TRUE,
   future.packages = NULL, future.lazy = FALSE, future.seed = FALSE,
   future.scheduling = 1, future.chunk.size = NULL)
 }
@@ -28,11 +29,16 @@ argument of \code{\link[base:sapply]{base::sapply()}}.}
 names, or if it is a character vector, use that character vector as the
 names.}
 
-\item{future.stdout}{If TRUE (default), then the standard output of the
+\item{future.stdout}{If \code{TRUE} (default), then the standard output of the
 underlying futures is captured, and re-outputted as soon as possible.
-If FALSE, any output is silenced (by sinking it to the null device as
-it is outputted).
-If NA (not recommended), output is \emph{not} intercepted.}
+If \code{FALSE}, any output is silenced (by sinking it to the null device
+as it is outputted).
+If \code{NA} (not recommended), output is \emph{not} intercepted.}
+
+\item{future.conditions}{A character string of conditions classes to be
+captured and relayed.  The default is to relay messages and warnings.
+To not intercept conditions, use \code{conditions = character(0L)}.
+Errors are always relayed.}
 
 \item{future.globals}{A logical, a character vector, or a named list for
 controlling how globals are handled.

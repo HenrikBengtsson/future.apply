@@ -1,6 +1,31 @@
 Package: future.apply
 =====================
 
+Version: 1.1.0 [2019-01-16]
+
+SIGNIFICANT CHANGES:
+
+ * Added argument 'future.stdout' and 'future.conditions' for controlling
+   whether standard output and conditions (e.g. messages and warnings) produced
+   during the evaluation of futures should be captured and relayed or not.
+   Standard output is guaranteed to be relayed in the same order as it would
+   when using sequential processing.  Analogously for conditions.  However,
+   standard output is always relayed before conditions.  Errors are always
+   relayed.  Relaying of non-error conditions requires future (>= 1.11.0).
+   
+NEW FEATURES:
+
+ * Elements can be processed in random order by setting attribute 'ordering'
+   to "random" of argument 'future.chunk.size' or 'future.scheduling', e.g.
+   future.chunk.size = structure(TRUE, ordering = "random").  This can help
+   improve load balancing in cases where there is a correlation between
+   processing time and ordering of the elements.  Note that the order of the
+   returned values is not affected when randomizing the processing order.
+ 
+ * Swapped order of arguments 'future.lazy' and 'future.seed' to be consistent
+   with ditto arguments of future::future().
+ 
+
 Version: 1.0.1 [2018-08-26]
 
 DOCUMENTATION / LICENCE:

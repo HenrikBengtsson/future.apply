@@ -34,10 +34,11 @@ for (strategy in supportedStrategies()) {
   stopifnot(identical(y1, y0))
   
   word <- function(C, k) paste(rep.int(C, k), collapse = "")
-  y0 <- mapply(word, LETTERS[1:6], 6:1, SIMPLIFY = FALSE)
-  y1 <- future_mapply(word, LETTERS[1:6], 6:1, SIMPLIFY = FALSE)
-  stopifnot(identical(y1, y0))
-
+  for (chunk.size in list(1L, structure(2L, ordering = "random"), structure(3L, ordering = 5:1))) {
+    y0 <- mapply(word, LETTERS[1:5], 5:1, SIMPLIFY = FALSE)
+    y1 <- future_mapply(word, LETTERS[1:5], 5:1, SIMPLIFY = FALSE, future.chunk.size = chunk.size)
+    stopifnot(identical(y1, y0))
+  }
 
   message("- Subsetting (Issue #17) ...")
   X <- as.Date("2018-06-01")
@@ -57,7 +58,6 @@ for (strategy in supportedStrategies()) {
   print(y_rng_1)
   stopifnot(all.equal(y_rng_1, y_rng_0))
 
-  
   message("- future_Map() ...")
   xs <- replicate(5, stats::runif(10), simplify = FALSE)
   ws <- replicate(5, stats::rpois(10, 5) + 1, simplify = FALSE)

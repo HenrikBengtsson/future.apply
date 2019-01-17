@@ -34,7 +34,7 @@ for (cores in 1:availCores) {
     message(sprintf("- plan('%s') ...", strategy))
     plan(strategy)
 
-    for (scheduling in list(FALSE, TRUE)) {
+    for (scheduling in list(FALSE, TRUE, structure(TRUE, ordering = "random"), structure(TRUE, ordering = function(n) rev(seq_len(n))))) {
       message("- future_lapply(x, FUN = vector, ...) ...")
       y <- future_lapply(x_a, FUN = vector, length = 2L, future.scheduling = scheduling)
       str(list(y = y))
@@ -80,6 +80,16 @@ for (cores in 1:availCores) {
 
   message(sprintf("Testing with %d cores ... DONE", cores))
 } ## for (cores ...)
+
+
+message("*** future_lapply() - exceptions ...")
+
+res <- tryCatch({
+  future_lapply(1:3, FUN = identity, future.chunk.size = structure(1L, ordering = "invalid"))
+}, error = identity)
+stopifnot(inherits(res, "error"))
+
+message("*** future_lapply() - exceptions ... DONE")
 
 message("*** future_lapply() ... DONE")
 

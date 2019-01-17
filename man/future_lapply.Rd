@@ -13,8 +13,9 @@
 \usage{
 future_eapply(env, FUN, ..., all.names = FALSE, USE.NAMES = TRUE)
 
-future_lapply(X, FUN, ..., future.globals = TRUE,
-  future.packages = NULL, future.seed = FALSE, future.lazy = FALSE,
+future_lapply(X, FUN, ..., future.stdout = TRUE,
+  future.conditions = c("message", "warning"), future.globals = TRUE,
+  future.packages = NULL, future.lazy = FALSE, future.seed = FALSE,
   future.scheduling = 1, future.chunk.size = NULL)
 
 future_replicate(n, expr, simplify = "array", future.seed = TRUE, ...)
@@ -39,18 +40,29 @@ See \code{\link[base:eapply]{base::eapply()}} for details.}
 
 \item{X}{A vector-like object to iterate over.}
 
+\item{future.stdout}{If \code{TRUE} (default), then the standard output of the
+underlying futures is captured, and re-outputted as soon as possible.
+If \code{FALSE}, any output is silenced (by sinking it to the null device
+as it is outputted).
+If \code{NA} (not recommended), output is \emph{not} intercepted.}
+
+\item{future.conditions}{A character string of conditions classes to be
+captured and relayed.  The default is to relay messages and warnings.
+To not intercept conditions, use \code{conditions = character(0L)}.
+Errors are always relayed.}
+
 \item{future.globals}{A logical, a character vector, or a named list for
 controlling how globals are handled. For details, see below section.}
 
 \item{future.packages}{(optional) a character vector specifying packages
 to be attached in the R environment evaluating the future.}
 
+\item{future.lazy}{Specifies whether the futures should be resolved
+lazily or eagerly (default).}
+
 \item{future.seed}{A logical or an integer (of length one or seven),
 or a list of \code{length(X)} with pre-generated random seeds.
 For details, see below section.}
-
-\item{future.lazy}{Specifies whether the futures should be resolved
-lazily or eagerly (default).}
 
 \item{future.scheduling}{Average number of futures ("chunks") per worker.
 If \code{0.0}, then a single future is used to process all elements
@@ -63,6 +75,7 @@ If \code{Inf} or \code{FALSE}, then one future per element of
 Only used if \code{future.chunk.size} is \code{NULL}.}
 
 \item{future.chunk.size}{The average number of elements per future ("chunk").
+If \code{Inf}, then all elements are processed in a single future.
 If \code{NULL}, then argument \code{future.scheduling} is used.}
 
 \item{n}{The number of replicates.}
@@ -84,7 +97,8 @@ logical < integer < double < complex, but not demoted.
 See \code{\link[base:vapply]{base::vapply()}} for details.}
 
 \item{\ldots}{(optional) Additional arguments passed to \code{FUN()}.
-For \code{future_*apply()} functions and \code{replicate(), any}future.*\code{arguments part of \ldots are passed on to}future_lapply()` used internally.}
+For \code{future_*apply()} functions and \code{replicate()}, any \code{future.*} arguments
+part of \code{\ldots} are passed on to \code{future_lapply()} used internally.}
 }
 \value{
 A named (unless \code{USE.NAMES = FALSE}) list.
@@ -128,7 +142,7 @@ If \code{TRUE}, \code{NULL} or not is specified (default), then globals
 are automatically identified and gathered.
 If a character vector of names is specified, then those globals are gathered.
 If a named list, then those globals are used as is.
-In all cases, \code{FUN} and any \code{...} arguments are automatically
+In all cases, \code{FUN} and any \code{\ldots} arguments are automatically
 passed as globals to each future created as they are always needed.
 }
 
@@ -157,8 +171,11 @@ In addition to the above, it is possible to specify a pre-generated
 sequence of RNG seeds as a list such that
 \code{length(future.seed) == length(X)} and where each element is an
 integer seed vector that can be assigned to
-\code{\link[base:Random]{.Random.seed}}.
-Use this alternative with caution.
+\code{\link[base:Random]{.Random.seed}}.  One approach to generate a
+set of valid RNG seeds based on fixed initial seed (here \code{42L}) is:\preformatted{seeds <- future_lapply(seq_along(X), FUN = function(x) .Random.seed,
+                       future.chunk.size = Inf, future.seed = 42L)
+}
+
 \strong{Note that \code{as.list(seq_along(X))} is \emph{not} a valid set of such
 \code{.Random.seed} values.}
 
@@ -169,6 +186,24 @@ in the same way regardless of \code{future.seed}, \code{future.scheduling}
 and future strategy used.  This is done in order to guarantee that an \R
 script calling \code{future_lapply()} multiple times should be numerically
 reproducible given the same initial seed.
+}
+
+\section{Control processing order of elements}{
+
+Attribute \code{ordering} of \code{future.chunk.size} or \code{future.scheduling} can
+be used to control the ordering the elements are iterated over, which
+only affects the processing order and \emph{not} the order values are returned.
+This attribute can take the following values:
+\itemize{
+\item index vector - an numeric vector of length \code{length(X)}
+\item function     - an function taking one argument which is called as
+\code{ordering(length(X))} and which much return an
+index vector of length \code{length(X)}, e.g.
+\code{function(n) rev(seq_len(n))} for reverse ordering.
+\item \code{"random"}   - this will randomize the ordering via random index
+vector \code{sample.int(length(X))}.
+For example, \code{future.scheduling = structure(TRUE, ordering = "random")}.
+}
 }
 
 \examples{

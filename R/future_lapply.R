@@ -9,22 +9,33 @@
 #' @param FUN  A function taking at least one argument.
 #' 
 #' @param \ldots  (optional) Additional arguments passed to `FUN()`.
-#' For `future_*apply()` functions and `replicate(), any `future.*` arguments
-#' part of \ldots are passed on to `future_lapply()` used internally.
+#' For `future_*apply()` functions and `replicate()`, any `future.*` arguments
+#' part of `\ldots` are passed on to `future_lapply()` used internally.
 #' 
+#' @param future.stdout If `TRUE` (default), then the standard output of the
+#'        underlying futures is captured, and re-outputted as soon as possible.
+#'        If `FALSE`, any output is silenced (by sinking it to the null device
+#'        as it is outputted).
+#'        If `NA` (not recommended), output is _not_ intercepted.
+#'
+#' @param future.conditions A character string of conditions classes to be
+#'        captured and relayed.  The default is to relay messages and warnings.
+#'        To not intercept conditions, use `conditions = character(0L)`.
+#'        Errors are always relayed.
+#'
 #' @param future.globals A logical, a character vector, or a named list for
 #'        controlling how globals are handled. For details, see below section.
 #'
 #' @param future.packages (optional) a character vector specifying packages
 #'        to be attached in the R environment evaluating the future.
 #' 
+#' @param future.lazy Specifies whether the futures should be resolved
+#'        lazily or eagerly (default).
+#' 
 #' @param future.seed A logical or an integer (of length one or seven),
 #'        or a list of `length(X)` with pre-generated random seeds.
 #'        For details, see below section.
 #'  
-#' @param future.lazy Specifies whether the futures should be resolved
-#'        lazily or eagerly (default).
-#' 
 #' @param future.scheduling Average number of futures ("chunks") per worker.
 #'        If `0.0`, then a single future is used to process all elements
 #'        of `X`.
@@ -36,6 +47,7 @@
 #'        Only used if `future.chunk.size` is `NULL`.
 #'
 #' @param future.chunk.size The average number of elements per future ("chunk").
+#'        If `Inf`, then all elements are processed in a single future.
 #'        If `NULL`, then argument `future.scheduling` is used.
 #' 
 #' @return
@@ -53,7 +65,7 @@
 #' are automatically identified and gathered.
 #' If a character vector of names is specified, then those globals are gathered.
 #' If a named list, then those globals are used as is.
-#' In all cases, `FUN` and any `...` arguments are automatically
+#' In all cases, `FUN` and any `\ldots` arguments are automatically
 #' passed as globals to each future created as they are always needed.
 #'
 #' @section Reproducible random number generation (RNG):
@@ -64,7 +76,7 @@
 #' 
 #' RNG reproducibility is achieved by pregenerating the random seeds for all
 #' iterations (over `X`) by using L'Ecuyer-CMRG RNG streams.  In each
-#' iteration, these seeds are set before calling \code{FUN(X[[ii]], ...)}.
+#' iteration, these seeds are set before calling `FUN(X[[ii]], ...)`.
 #' _Note, for large `length(X)` this may introduce a large overhead._
 #' As input (`future.seed`), a fixed seed (integer) may be given, either
 #' as a full L'Ecuyer-CMRG RNG seed (vector of 1+6 integers) or as a seed
@@ -73,15 +85,19 @@
 #' is returned if it holds a L'Ecuyer-CMRG RNG seed, otherwise one is created
 #' randomly.
 #' If `future.seed = NA`, a L'Ecuyer-CMRG RNG seed is randomly created.
-#' If none of the function calls \code{FUN(X[[ii]], ...)} uses random number
+#' If none of the function calls `FUN(X[[ii]], ...)` uses random number
 #' generation, then `future.seed = FALSE` may be used.
 #'
 #' In addition to the above, it is possible to specify a pre-generated
 #' sequence of RNG seeds as a list such that
 #' `length(future.seed) == length(X)` and where each element is an
 #' integer seed vector that can be assigned to
-#' \code{\link[base:Random]{.Random.seed}}.
-#' Use this alternative with caution.
+#' \code{\link[base:Random]{.Random.seed}}.  One approach to generate a
+#' set of valid RNG seeds based on fixed initial seed (here `42L`) is:
+#' ```r
+#' seeds <- future_lapply(seq_along(X), FUN = function(x) .Random.seed,
+#'                        future.chunk.size = Inf, future.seed = 42L)
+#' ```
 #' **Note that `as.list(seq_along(X))` is _not_ a valid set of such
 #' `.Random.seed` values.**
 #' 
@@ -93,6 +109,20 @@
 #' script calling `future_lapply()` multiple times should be numerically
 #' reproducible given the same initial seed.
 #'
+#' @section Control processing order of elements:
+#' Attribute `ordering` of `future.chunk.size` or `future.scheduling` can
+#' be used to control the ordering the elements are iterated over, which
+#' only affects the processing order and _not_ the order values are returned.
+#' This attribute can take the following values:
+#' * index vector - an numeric vector of length `length(X)`
+#' * function     - an function taking one argument which is called as
+#'                  `ordering(length(X))` and which much return an
+#'                  index vector of length `length(X)`, e.g.
+#'                  `function(n) rev(seq_len(n))` for reverse ordering.
+#' * `"random"`   - this will randomize the ordering via random index
+#'                  vector `sample.int(length(X))`.
+#' For example, `future.scheduling = structure(TRUE, ordering = "random")`.
+#'
 #' @example incl/future_lapply.R
 #'
 #' @keywords manip programming iteration
@@ -101,10 +131,12 @@
 #' @importFrom future future resolve values as.FutureGlobals nbrOfWorkers getGlobalsAndPackages FutureError
 #' @importFrom utils capture.output head str
 #' @export
-future_lapply <- function(X, FUN, ..., future.globals = TRUE, future.packages = NULL, future.seed = FALSE, future.lazy = FALSE, future.scheduling = 1.0, future.chunk.size = NULL) {
+future_lapply <- function(X, FUN, ..., future.stdout = TRUE, future.conditions = c("message", "warning"), future.globals = TRUE, future.packages = NULL, future.lazy = FALSE, future.seed = FALSE, future.scheduling = 1.0, future.chunk.size = NULL) {
   stop_if_not(is.function(FUN))
   
-  stop_if_not(is.logical(future.lazy))
+  stop_if_not(is.logical(future.stdout), length(future.stdout) == 1L)
+
+  stop_if_not(is.logical(future.lazy), length(future.lazy) == 1L)
 
   stop_if_not(!is.null(future.seed))
   
@@ -161,11 +193,19 @@ future_lapply <- function(X, FUN, ..., future.globals = TRUE, future.packages = 
   ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   ## 4. Load balancing ("chunking")
   ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  chunks <- makeChunks(nX, nbrOfWorkers = nbrOfWorkers(),
+  chunks <- makeChunks(nX,
+                       nbrOfWorkers = nbrOfWorkers(),
                        future.scheduling = future.scheduling,
                        future.chunk.size = future.chunk.size)
-  if (debug) mdebug("Number of chunks: %d", length(chunks))   
+  if (debug) mdebug("Number of chunks: %d", length(chunks))
 
+  ## Process elements in a custom order?
+  ordering <- attr(chunks, "ordering")
+  if (!is.null(ordering)) {
+    if (debug) mdebug("Index remapping (attribute 'ordering'): [n = %d] %s", length(ordering), hpaste(ordering))
+    chunks <- lapply(chunks, FUN = function(idxs) .subset(ordering, idxs))
+  }
+  
   
   ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   ## 5. Create futures
@@ -266,7 +306,11 @@ future_lapply <- function(X, FUN, ..., future.globals = TRUE, future.packages = 
            ...future.X_jj <- ...future.elements_ii[[jj]]
            ...future.FUN(...future.X_jj, ...)
         })
-      }, envir = envir, lazy = future.lazy, globals = globals_ii, packages = packages_ii)
+      }, envir = envir,
+         stdout = future.stdout,
+         conditions = future.conditions,
+         globals = globals_ii, packages = packages_ii,
+         lazy = future.lazy)
     } else {
       if (debug) mdebug(" - seeds: [%d] <seeds>", length(chunk))
       globals_ii[["...future.seeds_ii"]] <- seeds[chunk]
@@ -281,7 +325,11 @@ future_lapply <- function(X, FUN, ..., future.globals = TRUE, future.packages = 
            assign(".Random.seed", ...future.seeds_ii[[jj]], envir = globalenv(), inherits = FALSE)
            ...future.FUN(...future.X_jj, ...)
         })
-      }, envir = envir, lazy = future.lazy, globals = globals_ii, packages = packages_ii)
+      }, envir = envir,
+         stdout = future.stdout,
+         conditions = future.conditions,
+         globals = globals_ii, packages = packages_ii,
+         lazy = future.lazy)
     }
     
     ## Not needed anymore
@@ -293,6 +341,7 @@ future_lapply <- function(X, FUN, ..., future.globals = TRUE, future.packages = 
 
   ## Not needed anymore
   rm(list = c("chunks", "globals", "envir"))
+
 
   ## 4. Resolving futures
   if (debug) mdebug("Resolving %d futures (chunks) ...", nchunks)
@@ -310,6 +359,7 @@ future_lapply <- function(X, FUN, ..., future.globals = TRUE, future.packages = 
   stop_if_not(length(values) == nchunks)
   
   if (debug) mdebug("Reducing values from %d chunks ...", nchunks)
+   
   values2 <- do.call(c, args = values)
   
   if (debug) {
@@ -324,8 +374,20 @@ future_lapply <- function(X, FUN, ..., future.globals = TRUE, future.packages = 
   
   ## Sanity check (this may happen if the future backend is broken)
   stop_if_not(length(values) == nX)
+
+  ## Were elements processed in a custom order?
+  if (length(values) > 1L && !is.null(ordering)) {
+    invOrdering <- vector(mode(ordering), length = nX)
+    idx <- 1:nX
+    invOrdering[.subset(ordering, idx)] <- idx
+    rm(list = c("ordering", "idx"))
+    if (debug) mdebug("Reverse index remapping (attribute 'ordering'): [n = %d] %s", length(invOrdering), hpaste(invOrdering))
+    values <- .subset(values, invOrdering)
+    rm(list = c("invOrdering"))
+  }
+
   names(values) <- names(X)
-  
+
   if (debug) mdebug("Reducing values from %d chunks ... DONE", nchunks)
   
   if (debug) mdebug("future_lapply() ... DONE")

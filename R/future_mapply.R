@@ -4,7 +4,7 @@
 #' replication of results, regardless of future backend used.
 #' Analogously to `mapply()`, `future_mapply()` is a multivariate version of
 #' `future_sapply()`.
-#' It applies `FUN` to the first elements of each \ldots argument,
+#' It applies `FUN` to the first elements of each `\ldots` argument,
 #' the second elements, the third elements, and so on.
 #' Arguments are recycled if necessary.
 #' 
@@ -21,9 +21,17 @@
 #' result to a vector, matrix or higher dimensional array; see the simplify
 #' argument of [base::sapply()].
 #' 
-#' @param USE.NAMES A logical; use names if the first \ldots argument has
+#' @param USE.NAMES A logical; use names if the first `\ldots` argument has
 #' names, or if it is a character vector, use that character vector as the
 #' names.
+#'
+#' @param future.globals A logical, a character vector, or a named list for
+#'        controlling how globals are handled.
+#'        For details, see [future_lapply()].
+#'
+#' @param future.seed A logical or an integer (of length one or seven), or
+#'        a list of `max(lengths(list(...)))` with pre-generated random seeds.
+#'        For details, see [future_lapply()].
 #'
 #' @return
 #' `future_mapply() returns a list, or for `SIMPLIFY = TRUE`, a vector,
@@ -37,7 +45,7 @@
 #' @importFrom future future resolve values as.FutureGlobals nbrOfWorkers getGlobalsAndPackages FutureError
 #' @importFrom utils capture.output head str
 #' @export
-future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES = TRUE, future.globals = TRUE, future.packages = NULL, future.seed = FALSE, future.lazy = FALSE, future.scheduling = 1.0, future.chunk.size = NULL) {
+future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES = TRUE, future.stdout = TRUE, future.conditions = c("message", "warning"), future.globals = TRUE, future.packages = NULL, future.lazy = FALSE, future.seed = FALSE, future.scheduling = 1.0, future.chunk.size = NULL) {
   FUN <- match.fun(FUN)
   stop_if_not(is.function(FUN))
 
@@ -64,7 +72,9 @@ future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES 
   
   stop_if_not(is.null(MoreArgs) || is.list(MoreArgs))
 
-  stop_if_not(is.logical(future.lazy))
+  stop_if_not(is.logical(future.stdout), length(future.stdout) == 1L)
+
+  stop_if_not(is.logical(future.lazy), length(future.lazy) == 1L)
 
   stop_if_not(!is.null(future.seed))
   
@@ -114,12 +124,20 @@ future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES 
   ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   ## 4. Load balancing ("chunking")
   ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  chunks <- makeChunks(nX, nbrOfWorkers = nbrOfWorkers(),
+  chunks <- makeChunks(nX,
+                       nbrOfWorkers = nbrOfWorkers(),
                        future.scheduling = future.scheduling,
                        future.chunk.size = future.chunk.size)
   if (debug) mdebug("Number of chunks: %d", length(chunks))
   
-  
+  ## Process elements in a custom order?
+  ordering <- attr(chunks, "ordering")
+  if (!is.null(ordering)) {
+    if (debug) mdebug("Index remapping (attribute 'ordering'): [n = %d] %s", length(ordering), hpaste(ordering))
+    chunks <- lapply(chunks, FUN = function(idxs) .subset(ordering, idxs))
+  }
+
+
   ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   ## 5. Create futures
   ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -216,7 +234,11 @@ future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES 
         args <- c(list(FUN = ...future.FUN), ...future.elements_ii, MoreArgs = list(MoreArgs), SIMPLIFY = FALSE, USE.NAMES = FALSE)
         res <- do.call(mapply, args = args)
         res
-      }, envir = envir, lazy = future.lazy, globals = globals_ii, packages = packages_ii)
+      }, envir = envir,
+         stdout = future.stdout,
+         conditions = future.conditions,
+         globals = globals_ii, packages = packages_ii,
+         lazy = future.lazy)
     } else {
       if (debug) mdebug(" - seeds: [%d] <seeds>", length(chunk))
       globals_ii[["...future.seeds_ii"]] <- seeds[chunk]
@@ -232,7 +254,11 @@ future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES 
         }
         args <- c(list(FUN = ...future.FUN2), ...future.elements_ii, list(...future.seeds_ii_jj = ...future.seeds_ii), MoreArgs, SIMPLIFY = FALSE, USE.NAMES = FALSE)
         do.call(mapply, args = args)
-      }, envir = envir, lazy = future.lazy, globals = globals_ii, packages = packages_ii)
+      }, envir = envir,
+         stdout = future.stdout,
+         conditions = future.conditions,
+         globals = globals_ii, packages = packages_ii,
+         lazy = future.lazy)
     }
     
     ## Not needed anymore
@@ -275,7 +301,17 @@ future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES 
   
   ## Sanity check (this may happen if the future backend is broken)
   stop_if_not(length(values) == nX)
-#  names(values) <- names(X)
+
+  ## Were elements processed in a custom order?
+  if (length(values) > 1L && !is.null(ordering)) {
+    invOrdering <- vector(mode(ordering), length = nX)
+    idx <- 1:nX
+    invOrdering[.subset(ordering, idx)] <- idx
+    rm(list = c("ordering", "idx"))
+    if (debug) mdebug("Reverse index remapping (attribute 'ordering'): [n = %d] %s", length(invOrdering), hpaste(invOrdering))
+    values <- .subset(values, invOrdering)
+    rm(list = c("invOrdering"))
+  }
 
   if (USE.NAMES && length(dots) > 0L) {
     if (is.null(names1 <- names(dots[[1L]])) && is.character(dots[[1L]])) {

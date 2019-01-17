@@ -192,7 +192,7 @@ reproducible given the same initial seed.
 
 Attribute \code{ordering} of \code{future.chunk.size} or \code{future.scheduling} can
 be used to control the ordering the elements are iterated over, which
-only affects the processing order \emph{not} the order values are returned.
+only affects the processing order and \emph{not} the order values are returned.
 This attribute can take the following values:
 \itemize{
 \item index vector - an numeric vector of length \code{length(X)}

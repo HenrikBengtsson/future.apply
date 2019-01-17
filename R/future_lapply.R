@@ -112,7 +112,7 @@
 #' @section Control processing order of elements:
 #' Attribute `ordering` of `future.chunk.size` or `future.scheduling` can
 #' be used to control the ordering the elements are iterated over, which
-#' only affects the processing order _not_ the order values are returned.
+#' only affects the processing order and _not_ the order values are returned.
 #' This attribute can take the following values:
 #' * index vector - an numeric vector of length `length(X)`
 #' * function     - an function taking one argument which is called as

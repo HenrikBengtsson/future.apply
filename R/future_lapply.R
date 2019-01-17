@@ -9,8 +9,8 @@
 #' @param FUN  A function taking at least one argument.
 #' 
 #' @param \ldots  (optional) Additional arguments passed to `FUN()`.
-#' For `future_*apply()` functions and `replicate(), any `future.*` arguments
-#' part of \ldots are passed on to `future_lapply()` used internally.
+#' For `future_*apply()` functions and `replicate()`, any `future.*` arguments
+#' part of `\ldots` are passed on to `future_lapply()` used internally.
 #' 
 #' @param future.stdout If `TRUE` (default), then the standard output of the
 #'        underlying futures is captured, and re-outputted as soon as possible.
@@ -20,7 +20,7 @@
 #'
 #' @param future.conditions A character string of conditions classes to be
 #'        captured and relayed.  The default is to relay messages and warnings.
-#'        To not intercept conditions, use \code{conditions = character(0L)}.
+#'        To not intercept conditions, use `conditions = character(0L)`.
 #'        Errors are always relayed.
 #'
 #' @param future.globals A logical, a character vector, or a named list for
@@ -65,7 +65,7 @@
 #' are automatically identified and gathered.
 #' If a character vector of names is specified, then those globals are gathered.
 #' If a named list, then those globals are used as is.
-#' In all cases, `FUN` and any `...` arguments are automatically
+#' In all cases, `FUN` and any `\ldots` arguments are automatically
 #' passed as globals to each future created as they are always needed.
 #'
 #' @section Reproducible random number generation (RNG):
@@ -76,7 +76,7 @@
 #' 
 #' RNG reproducibility is achieved by pregenerating the random seeds for all
 #' iterations (over `X`) by using L'Ecuyer-CMRG RNG streams.  In each
-#' iteration, these seeds are set before calling \code{FUN(X[[ii]], ...)}.
+#' iteration, these seeds are set before calling `FUN(X[[ii]], ...)`.
 #' _Note, for large `length(X)` this may introduce a large overhead._
 #' As input (`future.seed`), a fixed seed (integer) may be given, either
 #' as a full L'Ecuyer-CMRG RNG seed (vector of 1+6 integers) or as a seed
@@ -85,7 +85,7 @@
 #' is returned if it holds a L'Ecuyer-CMRG RNG seed, otherwise one is created
 #' randomly.
 #' If `future.seed = NA`, a L'Ecuyer-CMRG RNG seed is randomly created.
-#' If none of the function calls \code{FUN(X[[ii]], ...)} uses random number
+#' If none of the function calls `FUN(X[[ii]], ...)` uses random number
 #' generation, then `future.seed = FALSE` may be used.
 #'
 #' In addition to the above, it is possible to specify a pre-generated
@@ -95,7 +95,8 @@
 #' \code{\link[base:Random]{.Random.seed}}.  One approach to generate a
 #' set of valid RNG seeds based on fixed initial seed (here `42L`) is:
 #' ```r
-#' seeds <- future_lapply(seq_along(X), FUN = function(x) .Random.seed, future.seed = 42L)
+#' seeds <- future_lapply(seq_along(X), FUN = function(x) .Random.seed,
+#'                        future.chunk.size = Inf, future.seed = 42L)
 #' ```
 #' **Note that `as.list(seq_along(X))` is _not_ a valid set of such
 #' `.Random.seed` values.**

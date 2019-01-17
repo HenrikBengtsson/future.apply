@@ -25,7 +25,7 @@ future_mapply(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE,
 result to a vector, matrix or higher dimensional array; see the simplify
 argument of \code{\link[base:sapply]{base::sapply()}}.}
 
-\item{USE.NAMES}{A logical; use names if the first \ldots argument has
+\item{USE.NAMES}{A logical; use names if the first \code{\ldots} argument has
 names, or if it is a character vector, use that character vector as the
 names.}
 
@@ -84,7 +84,7 @@ array or list.  See \code{\link[base:mapply]{base::mapply()}} for details.
 replication of results, regardless of future backend used.
 Analogously to \code{mapply()}, \code{future_mapply()} is a multivariate version of
 \code{future_sapply()}.
-It applies \code{FUN} to the first elements of each \ldots argument,
+It applies \code{FUN} to the first elements of each \code{\ldots} argument,
 the second elements, the third elements, and so on.
 Arguments are recycled if necessary.
 }

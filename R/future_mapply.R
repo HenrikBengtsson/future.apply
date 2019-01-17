@@ -4,7 +4,7 @@
 #' replication of results, regardless of future backend used.
 #' Analogously to `mapply()`, `future_mapply()` is a multivariate version of
 #' `future_sapply()`.
-#' It applies `FUN` to the first elements of each \ldots argument,
+#' It applies `FUN` to the first elements of each `\ldots` argument,
 #' the second elements, the third elements, and so on.
 #' Arguments are recycled if necessary.
 #' 
@@ -21,7 +21,7 @@
 #' result to a vector, matrix or higher dimensional array; see the simplify
 #' argument of [base::sapply()].
 #' 
-#' @param USE.NAMES A logical; use names if the first \ldots argument has
+#' @param USE.NAMES A logical; use names if the first `\ldots` argument has
 #' names, or if it is a character vector, use that character vector as the
 #' names.
 #'

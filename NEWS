@@ -6,12 +6,12 @@ Version: 1.0.1-9000 [2019-01-16]
 SIGNIFICANT CHANGES:
 
  * Added argument 'future.stdout' and 'future.conditions' for controlling
-   whether standard output and conditions (e.g. messages and warnings)
-   produced during the evaluation of futures should be captured and relayed.
-   or not.  Standard output is guaranteed to be relayed in the same order as
-   it would when using sequential processing.  Analogously for conditions.
-   However, standard output is always relayed before conditions.  Errors are
-   always relayed.
+   whether standard output and conditions (e.g. messages and warnings) produced
+   during the evaluation of futures should be captured and relayed or not.
+   Standard output is guaranteed to be relayed in the same order as it would
+   when using sequential processing.  Analogously for conditions.  However,
+   standard output is always relayed before conditions.  Errors are always
+   relayed.  Relaying of non-error conditions requires future (>= 1.11.0).
    
 NEW FEATURES:
 

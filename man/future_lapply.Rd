@@ -75,6 +75,7 @@ If \code{Inf} or \code{FALSE}, then one future per element of
 Only used if \code{future.chunk.size} is \code{NULL}.}
 
 \item{future.chunk.size}{The average number of elements per future ("chunk").
+If \code{Inf}, then all elements are processed in a single future.
 If \code{NULL}, then argument \code{future.scheduling} is used.}
 
 \item{n}{The number of replicates.}

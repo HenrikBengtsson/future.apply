@@ -47,6 +47,7 @@
 #'        Only used if `future.chunk.size` is `NULL`.
 #'
 #' @param future.chunk.size The average number of elements per future ("chunk").
+#'        If `Inf`, then all elements are processed in a single future.
 #'        If `NULL`, then argument `future.scheduling` is used.
 #' 
 #' @return

@@ -1,9 +1,12 @@
 Package: future.apply
 =====================
 
-Version: 1.1.0-9000 [2019-01-16]
+Version: 1.1.0-9000 [2019-02-06]
 
- * ...
+BUG FIXES:
+
+ * Attributes 'add' and 'ignore' of argument 'future.globals' were ignored
+   although support for them was added in future (>= 1.10.0).
  
 
 Version: 1.1.0 [2019-01-16]

@@ -36,6 +36,23 @@ for (name in names(globals_set)) {
 message("*** future_lapply() - globals ... DONE")
 
 
+message("*** future_lapply() - manual globals ...")
+
+d <- 42
+y <- future_lapply(1:2, FUN = function(x) { x * d },
+                   future.globals = structure(FALSE, add = "d"))
+stopifnot(identical(y, list(42, 84)))
+
+e <- 42
+res <- tryCatch({
+  future_lapply(1:2, FUN = function(x) { 2 * e },
+                future.globals = structure(TRUE, ignore = "e"))
+}, error = identity)
+stopifnot(inherits(res, "error"))
+
+message("*** future_lapply() - manual globals ... DONE")
+
+
 
 ## Test adopted from http://stackoverflow.com/questions/42561088/nested-do-call-within-a-foreach-dopar-environment-cant-find-function-passed-w
 

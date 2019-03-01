@@ -27,6 +27,14 @@ See also \code{\link[base:by]{base::by()}} for details.
 \description{
 Apply a Function to a Data Frame Split by Factors via Futures
 }
+\details{
+Internally, \code{data} is grouped by \code{INDICES} into a list of \code{data}
+subset elements which is then processed by \code{\link[=future_lapply]{future_lapply()}}.
+When the groups differ significantly in size, the processing time
+may differ significantly between the groups.
+To correct for processing-time imbalances, adjust the amount of chunking
+via arguments \code{future.scheduling} and \code{future.chunk.size}.
+}
 \examples{
 ## ---------------------------------------------------------
 ## by()

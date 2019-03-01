@@ -19,6 +19,14 @@
 #'
 #' @example incl/future_by.R
 #'
+#' @details
+#' Internally, `data` is grouped by `INDICES` into a list of `data`
+#' subset elements which is then processed by [future_lapply()].
+#' When the groups differ significantly in size, the processing time
+#' may differ significantly between the groups.
+#' To correct for processing-time imbalances, adjust the amount of chunking
+#' via arguments `future.scheduling` and `future.chunk.size`.
+#'
 #' @rdname future_by
 #' @export
 future_by <- function(data, INDICES, FUN, ..., simplify = TRUE) {

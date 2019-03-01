@@ -159,9 +159,9 @@ install.packages("future.apply")
 
 ### Pre-release version
 
-To install the pre-release version that is available in Git branch `feature/by` on GitHub, use:
+To install the pre-release version that is available in Git branch `develop` on GitHub, use:
 ```r
-remotes::install_github("HenrikBengtsson/future.apply@feature/by")
+remotes::install_github("HenrikBengtsson/future.apply@develop")
 ```
 This will install the package from source.  
 

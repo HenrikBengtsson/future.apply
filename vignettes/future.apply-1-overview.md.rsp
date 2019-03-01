@@ -58,6 +58,7 @@ Where does the [future.apply] package fit in the software stack?  You can think 
 <td>
 Future-versions of common goto <code>*apply()</code> functions available in base R (of the 'base' package):<br>
 <code>future_apply()</code>, 
+<code>future_by()</code>, 
 <code>future_eapply()</code>, 
 <code>future_lapply()</code>, 
 <code>future_Map()</code>, 
@@ -168,4 +169,4 @@ The API and identity of the future.apply package will be kept close to the `*app
 [plyr]: https://cran.r-project.org/package=plyr
 
 ---
-Copyright Henrik Bengtsson, 2017-2018
+Copyright Henrik Bengtsson, 2017-2019

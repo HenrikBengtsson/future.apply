@@ -3,6 +3,10 @@ Package: future.apply
 
 Version: 1.1.0-9000 [2019-03-01]
 
+NEW FEATURES:
+
+ * Added future_by().
+
 BUG FIXES:
 
  * Attributes 'add' and 'ignore' of argument 'future.globals' were ignored

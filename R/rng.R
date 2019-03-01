@@ -31,8 +31,10 @@ is_valid_random_seed <- function(seed) {
 }
 
 is_lecyer_cmrg_seed <- function(seed) {
-  is.numeric(seed) && length(seed) == 7L &&
-    all(is.finite(seed)) && seed[1] == 407L
+  is.numeric(seed) &&
+    length(seed) == 7L &&
+    all(is.finite(seed)) &&
+    (seed[1] %% 10000L == 407L)
 }
 
 # @importFrom utils capture.output
@@ -61,13 +63,10 @@ as_lecyer_cmrg_seed <- function(seed) {
   seed <- as.integer(seed)
 
   ## Already a L'Ecuyer-CMRG seed?
-  if (length(seed) == 7L) {
-    if (seed[1] != 407L) {
-      stop("Argument 'seed' must be L'Ecuyer-CMRG RNG seed as returned by parallel::nextRNGStream() or an single integer: ", capture.output(str(seed)))
-    }
+  if (is_lecyer_cmrg_seed(seed)) {
     return(seed)
   }
-  
+
   ## Generate a new L'Ecuyer-CMRG seed?
   if (length(seed) == 1L) {
     oseed <- get_random_seed()
@@ -77,7 +76,7 @@ as_lecyer_cmrg_seed <- function(seed) {
     return(get_random_seed())
   }
   
-  stop("Argument 'seed' must be of length 1 or 7 (= 1+6):", capture.output(str(seed)))
+  stop("Argument 'seed' must be L'Ecuyer-CMRG RNG seed as returned by parallel::nextRNGStream() or an single integer: ", capture.output(str(seed)))
 }
 
 #' Produce Reproducible Seeds for Parallel Random Number Generation

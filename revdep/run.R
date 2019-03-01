@@ -1,5 +1,4 @@
-#! /usr/bin/env Rscript
-
+#!/usr/bin/env Rscript
 library("revdepcheck")
 options(warn = 1L)
 
@@ -43,7 +42,7 @@ check <- function() {
 
 todo <- function() {
   pkgs <- tryCatch(revdep_todo(), error = function(ex) NA)
-  if (length(pkgs) == 1L && is.na(pkgs)) {
+  if (identical(pkgs, NA)) {
     cat("Revdepcheck has not been initiated\n")
   } else if (length(pkgs) == 0) {
     cat("There are no packages on the revdepcheck todo list\n")

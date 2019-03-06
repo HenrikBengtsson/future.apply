@@ -1,6 +1,8 @@
-# CRAN submission future.apply 1.1.0
+# CRAN submission future.apply 1.2.0
 
-on 2019-01-16
+on 2019-03-06
+
+This submission addresses 'R CMD check' test errors appearing due to the recent RNG changes in R-devel.
 
 Thanks in advance.
 
@@ -12,16 +14,16 @@ Thanks in advance.
 The package has been verified using `R CMD check --as-cran` on:
 
 * Platform x86_64-apple-darwin15.6.0 (64-bit) [Travis CI]:
+  - R version 3.4.4 (2018-03-15)
   - R version 3.5.2 (2018-12-20)
 
 * Platform x86_64-unknown-linux-gnu (64-bit) [Travis CI]:
   - R version 3.4.4 (2017-01-27)
   - R version 3.5.2 (2018-12-20)
-  - R Under development (unstable) (2019-01-14 r75992)
+  - R Under development (unstable) (2019-03-06 r76205)
 
 * Platform x86_64-pc-linux-gnu (64-bit) [r-hub]:
   - R version 3.4.4 (2018-03-15)
-  - R Under development (unstable) (2019-01-13 r75983)
   
 * Platform x86_64-pc-linux-gnu (64-bit):
   - R version 3.2.0 (2015-04-16)
@@ -33,27 +35,19 @@ The package has been verified using `R CMD check --as-cran` on:
 * Platform i686-pc-linux-gnu (32-bit):
   - R version 3.4.4 (2018-03-15)
 
+* Platform i386-pc-solaris2.10 (32-bit) [r-hub]:
+  - R version 3.5.0 Patched (2018-04-30 r74674)
+
 * Platform i386-w64-mingw32 (32-bit) [Appveyor CI]:
-  - R Under development (unstable) (2019-01-14 r75992)
+  - R Under development (unstable) (2019-03-05 r76200)
 
 * Platform x86_64-w64-mingw32 (64-bit) [r-hub]:
-  - R Under development (unstable) (2018-12-26 r75909)
+  - R Under development (unstable) (2019-02-24 r76155)
 
 * Platform x86_64-w64-mingw32/x64 (64-bit) [Appveyor CI]:
   - R version 3.5.2 (2018-12-20)
-  - R Under development (unstable) (2019-01-14 r75992)
+  - R Under development (unstable) (2019-03-05 r76200)
 
 * Platform x86_64-w64-mingw32/x64 (64-bit) [win-builder]:
   - R version 3.5.2 (2018-12-20)
-  - R Under development (unstable) (2019-01-09 r75961)
-
-
-Failed to be checked:
-
-* Platform x86_64-apple-darwin15.6.0 (64-bit) [Travis CI]:
-  - R version 3.4.4 (2017-01-27)
-  REASON: devtools fails to install because git2r fails.
-
-* Platform i386-pc-solaris2.10 (32-bit):
-  - R version 3.5.0 Patched (2018-04-30 r74674)
-  REASON: R-hub tests on Solaris never starts.
+  - R Under development (unstable) (2019-03-05 r76200)

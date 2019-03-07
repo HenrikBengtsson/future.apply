@@ -49,11 +49,7 @@ for (cores in 1:availCores) {
           stopifnot(identical(out, truth[[fun]]$stdout))
         } else if (is.na(stdout)) {
         } else {
-          ## Due to https://github.com/HenrikBengtsson/future/issues/271
-          ## stdout = TRUE for workers = 1L and multicore/multisession
-          if (!strategy %in% c("multicore", "multisession") || packageVersion("future") > "1.10.0") {
-            stopifnot(nchar(out) == 0)
-          }
+          stopifnot(nchar(out) == 0)
         }
       
         message(sprintf("* future_%s(x, ..., future.stdout = %s) ... DONE", fun, stdout))

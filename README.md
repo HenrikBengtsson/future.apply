@@ -40,6 +40,7 @@ Where does the [future.apply] package fit in the software stack?  You can think 
 <td>
 Future-versions of common goto <code>*apply()</code> functions available in base R (of the 'base' package):<br>
 <code>future_apply()</code>, 
+<code>future_by()</code>, 
 <code>future_eapply()</code>, 
 <code>future_lapply()</code>, 
 <code>future_Map()</code>, 

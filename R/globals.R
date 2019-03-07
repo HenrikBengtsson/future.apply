@@ -1,9 +1,5 @@
 getGlobalsAndPackagesXApply <- function(FUN, args = NULL, MoreArgs = NULL, envir, future.globals = TRUE, future.packages = NULL, debug = getOption("future.debug", FALSE)) {
-  if (is.null(args)) {
-    use_args <- FALSE
-  } else {
-    use_args <- TRUE
-  }
+  use_args <- !is.null(args)
   
   packages <- NULL
   globals <- future.globals
@@ -15,20 +11,20 @@ getGlobalsAndPackagesXApply <- function(FUN, args = NULL, MoreArgs = NULL, envir
       scanForGlobals <- TRUE
       expr <- do.call(call, args = c(list("FUN"),
                                      if (use_args) args else MoreArgs))
-      gp <- getGlobalsAndPackages(expr, envir = envir, globals = TRUE)
-      globals <- gp$globals
-      packages <- gp$packages
-      gp <- NULL
-      
-      if (debug) {
-        mdebug(" - globals found: [%d] %s", length(globals), hpaste(sQuote(names(globals))))
-        mdebug(" - needed namespaces: [%d] %s", length(packages), hpaste(sQuote(packages)))
-        mdebug("Finding globals ... DONE")
-      }
     } else {
-      ## globals = FALSE
-      globals <- c("FUN", if (use_args) "..." else "MoreArgs")
-      globals <- globalsByName(globals, envir = envir, mustExist = FALSE)
+      expr <- NULL
+      attr(globals, "add") <- c(attr(globals, "add"),
+                                c("FUN", if (use_args) "..." else "MoreArgs"))
+    }
+    gp <- getGlobalsAndPackages(expr, envir = envir, globals = globals)
+    globals <- gp$globals
+    packages <- gp$packages
+    gp <- NULL
+      
+    if (debug) {
+      mdebug(" - globals found/used: [%d] %s", length(globals), hpaste(sQuote(names(globals))))
+      mdebug(" - needed namespaces: [%d] %s", length(packages), hpaste(sQuote(packages)))
+      mdebug("Finding globals ... DONE")
     }
   } else if (is.character(globals)) {
     globals <- unique(c(globals, "FUN", if (use_args) "..." else "MoreArgs"))

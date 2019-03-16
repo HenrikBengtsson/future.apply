@@ -75,7 +75,7 @@ getGlobalsAndPackagesXApply <- function(FUN, args = NULL, MoreArgs = NULL, envir
   
   if (debug) {
     mdebug("Globals to be used in all futures:")
-    mdebug(paste(capture.output(str(globals)), collapse = "\n"))
+    mstr(globals)
   }
 
   if (!is.null(future.packages)) {
@@ -87,7 +87,7 @@ getGlobalsAndPackagesXApply <- function(FUN, args = NULL, MoreArgs = NULL, envir
   
   if (debug) {
     mdebug("Packages to be attached in all futures:")
-    mdebug(paste(capture.output(str(packages)), collapse = "\n"))
+    mstr(packages)
   }
 
   list(globals = globals, packages = packages, scanForGlobals = scanForGlobals)

@@ -1,9 +1,12 @@
 Package: future.apply
 =====================
 
-Version: 1.2.0 [2019-03-07]
+Version: 1.2.0 [2019-03-15]
 
- * ...
+BUG FIXES:
+
+ * The error "sprintf(...) : 'fmt' length exceeds maximal format length 8192"
+   could be produced when debugging tried to report on too many globals.
  
 
 Version: 1.2.0 [2019-03-06]

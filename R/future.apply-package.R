@@ -9,6 +9,7 @@
 #' Currently implemented functions are:
 #'
 #' * [future_apply()]: a parallel version of [apply()][base::apply]
+#' * [future_by()]: a parallel version of [by()][base::by]
 #' * [future_eapply()]: a parallel version of [eapply()][base::lapply]
 #' * [future_lapply()]: a parallel version of [lapply()][base::lapply]
 #' * [future_mapply()]: a parallel version of [mapply()][base::mapply]

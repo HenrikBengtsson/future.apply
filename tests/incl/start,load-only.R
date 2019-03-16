@@ -40,6 +40,7 @@ future::plan("sequential")
 fold <- future.apply:::fold
 hpaste <- future.apply:::hpaste
 mdebug <- future.apply:::mdebug
+mdebugf <- future.apply:::mdebugf
 import_from <- future.apply:::import_from
 get_random_seed <- future.apply:::get_random_seed
 set_random_seed <- future.apply:::set_random_seed

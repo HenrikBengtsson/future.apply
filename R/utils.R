@@ -52,8 +52,13 @@ hpaste <- function(..., sep = "", collapse = ", ", lastCollapse = NULL, maxHead 
 
 mdebug <- function(...) {
   if (!getOption("future.debug", FALSE)) return()
-  message(sprintf(...))
-} ## mdebug()
+  message(...)
+}
+
+mdebugf <- function(..., appendLF = TRUE) {
+  if (!getOption("future.debug", FALSE)) return()
+  message(sprintf(...), appendLF = appendLF)
+}
 
 ## When 'default' is specified, this is 30x faster than
 ## base::getOption().  The difference is that here we use
@@ -90,11 +95,11 @@ assert_values2 <- function(nX, values, values2, fcn, debug = FALSE) {
     chunk_summary <- paste(chunk_summary, collapse = ", ")
     msg <- sprintf("Unexpected error in %s(): After gathering and merging the values from %d chunks in to a list, the total number of elements (= %d) does not match the number of input elements in 'X' (= %d). There were in total %d chunks and %d elements (%s)", fcn, length(values), length(values2), nX, length(values), sum(chunk_sizes), chunk_summary)
     if (debug) {
-      mdebug(msg)
+      message(msg)
       message(capture.output(print(chunk_sizes)))
-      mdebug("Results before merge chunks:")
+      message("Results before merge chunks:")
       message(capture.output(str(values)))
-      mdebug("Results after merge chunks:")
+      message("Results after merge chunks:")
       message(capture.output(str(values2)))
     }
     msg <- sprintf("%s. Example of the first few values: %s", msg,

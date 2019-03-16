@@ -56,11 +56,16 @@ message("*** hpaste() ...")
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 message("*** mdebug() ...")
 
-mdebug("Hello #1")
+mdebug("Hello #", 1)
+mdebugf("Hello #%d", 1)
 options(future.debug = TRUE)
-mdebug("Hello #2")
+
+mdebug("Hello #", 2)
+mdebugf("Hello #%d", 2)
 options(future.debug = FALSE)
-mdebug("Hello #3")
+
+mdebug("Hello #", 3)
+mdebugf("Hello #%d", 3)
 
 message("*** mdebug() ... DONE")
 

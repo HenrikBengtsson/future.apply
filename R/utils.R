@@ -50,14 +50,20 @@ hpaste <- function(..., sep = "", collapse = ", ", lastCollapse = NULL, maxHead 
   x
 } # hpaste()
 
-mdebug <- function(...) {
-  if (!getOption("future.debug", FALSE)) return()
-  message(...)
+now <- function(x = Sys.time(), format = "[%H:%M:%OS3] ") {
+  ## format(x, format = format) ## slower
+  format(as.POSIXlt(x, tz = ""), format = format)
 }
 
-mdebugf <- function(..., appendLF = TRUE) {
-  if (!getOption("future.debug", FALSE)) return()
-  message(sprintf(...), appendLF = appendLF)
+mdebug <- function(..., debug = getOption("future.debug", FALSE)) {
+  if (!debug) return()
+  message(now(), ...)
+}
+
+mdebugf <- function(..., appendLF = TRUE,
+                    debug = getOption("future.debug", FALSE)) {
+  if (!debug) return()
+  message(now(), sprintf(...), appendLF = appendLF)
 }
 
 ## When 'default' is specified, this is 30x faster than

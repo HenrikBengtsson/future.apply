@@ -3,6 +3,10 @@ Package: future.apply
 
 Version: 1.2.0 [2019-03-15]
 
+NEW FEATURES:
+
+ * Debug messages are now prepended with a timestamp.
+
 BUG FIXES:
 
  * The error "sprintf(...) : 'fmt' length exceeds maximal format length 8192"

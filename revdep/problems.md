@@ -1,14 +1,14 @@
 # BAMBI
 
-Version: 2.0.1
+Version: 2.1.0
 
 ## In both
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  5.2Mb
+      installed size is  5.4Mb
       sub-directories of 1Mb or more:
-        libs   4.7Mb
+        libs   4.9Mb
     ```
 
 # fxtract
@@ -24,16 +24,35 @@ Version: 0.9.1
       All declared Imports should be used.
     ```
 
-# lgr
+# grattan
 
-Version: 0.1.1
+Version: 1.7.1.0
 
 ## In both
 
-*   checking dependencies in R code ... NOTE
+*   checking package dependencies ... NOTE
     ```
-    Namespace in Imports field not imported from: ‘R6’
-      All declared Imports should be used.
+    Packages suggested but not available for checking:
+      ‘taxstats’ ‘taxstats1516’
+    ```
+
+*   checking installed package size ... NOTE
+    ```
+      installed size is  7.2Mb
+      sub-directories of 1Mb or more:
+        doc    3.5Mb
+        libs   2.5Mb
+    ```
+
+# lgr
+
+Version: 0.2.1
+
+## In both
+
+*   checking Rd cross-references ... NOTE
+    ```
+    Package unavailable to check Rd xrefs: ‘RPushbullet’
     ```
 
 # phylolm

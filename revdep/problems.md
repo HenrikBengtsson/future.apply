@@ -78,3 +78,16 @@ Version: 0.6.2
       All declared Imports should be used.
     ```
 
+# sctransform
+
+Version: 0.2.0
+
+## In both
+
+*   checking dependencies in R code ... NOTE
+    ```
+    Namespaces in Imports field not imported from:
+      ‘Rcpp’ ‘future’
+      All declared Imports should be used.
+    ```
+

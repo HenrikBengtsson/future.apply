@@ -10,7 +10,7 @@
 |collate  |en_US.UTF-8                  |
 |ctype    |en_US.UTF-8                  |
 |tz       |America/Los_Angeles          |
-|date     |2019-04-09                   |
+|date     |2019-04-12                   |
 
 # Dependencies
 
@@ -24,28 +24,29 @@
 
 # Revdeps
 
-## All (20)
+## All (21)
 
-|package                            |version    |error |warning |note |
-|:----------------------------------|:----------|:-----|:-------|:----|
-|[BAMBI](problems.md#bambi)         |2.1.0      |      |        |1    |
-|DeclareDesign                      |0.16.0     |      |        |     |
-|drtmle                             |1.0.4      |      |        |     |
-|future.BatchJobs                   |0.16.1     |      |        |     |
-|future.batchtools                  |0.7.2      |      |        |     |
-|future.callr                       |0.4.0      |      |        |     |
-|[fxtract](problems.md#fxtract)     |0.9.1      |      |        |1    |
-|[grattan](problems.md#grattan)     |1.7.1.0    |      |        |2    |
-|GSODR                              |1.3.2      |      |        |     |
-|kernelboot                         |0.1.5      |      |        |     |
-|[lgr](problems.md#lgr)             |0.2.1      |      |        |1    |
-|origami                            |1.0.0      |      |        |     |
-|penaltyLearning                    |2018.09.04 |      |        |     |
-|[phylolm](problems.md#phylolm)     |2.6        |      |        |1    |
-|R.filesets                         |2.12.1     |      |        |     |
-|rangeMapper                        |0.3-5      |      |        |     |
-|[robotstxt](problems.md#robotstxt) |0.6.2      |      |        |1    |
-|RTransferEntropy                   |0.2.8      |      |        |     |
-|sperrorest                         |2.1.5      |      |        |     |
-|steps                              |0.2.1      |      |        |     |
+|package                                |version    |error |warning |note |
+|:--------------------------------------|:----------|:-----|:-------|:----|
+|[BAMBI](problems.md#bambi)             |2.1.0      |      |        |1    |
+|DeclareDesign                          |0.16.0     |      |        |     |
+|drtmle                                 |1.0.4      |      |        |     |
+|future.BatchJobs                       |0.16.1     |      |        |     |
+|future.batchtools                      |0.7.2      |      |        |     |
+|future.callr                           |0.4.0      |      |        |     |
+|[fxtract](problems.md#fxtract)         |0.9.1      |      |        |1    |
+|[grattan](problems.md#grattan)         |1.7.1.0    |      |        |2    |
+|GSODR                                  |1.3.2      |      |        |     |
+|kernelboot                             |0.1.5      |      |        |     |
+|[lgr](problems.md#lgr)                 |0.2.1      |      |        |1    |
+|origami                                |1.0.0      |      |        |     |
+|penaltyLearning                        |2018.09.04 |      |        |     |
+|[phylolm](problems.md#phylolm)         |2.6        |      |        |1    |
+|R.filesets                             |2.12.1     |      |        |     |
+|rangeMapper                            |0.3-5      |      |        |     |
+|[robotstxt](problems.md#robotstxt)     |0.6.2      |      |        |1    |
+|RTransferEntropy                       |0.2.8      |      |        |     |
+|[sctransform](problems.md#sctransform) |0.2.0      |      |        |1    |
+|sperrorest                             |2.1.5      |      |        |     |
+|steps                                  |0.2.1      |      |        |     |
 

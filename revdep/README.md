@@ -10,7 +10,7 @@
 |collate  |en_US.UTF-8                  |
 |ctype    |en_US.UTF-8                  |
 |tz       |America/Los_Angeles          |
-|date     |2019-04-12                   |
+|date     |2019-04-16                   |
 
 # Dependencies
 
@@ -24,7 +24,7 @@
 
 # Revdeps
 
-## All (21)
+## All (23)
 
 |package                                |version    |error |warning |note |
 |:--------------------------------------|:----------|:-----|:-------|:----|
@@ -47,6 +47,8 @@
 |[robotstxt](problems.md#robotstxt)     |0.6.2      |      |        |1    |
 |RTransferEntropy                       |0.2.8      |      |        |     |
 |[sctransform](problems.md#sctransform) |0.2.0      |      |        |1    |
+|[Seurat](problems.md#seurat)           |3.0.0      |      |        |3    |
 |sperrorest                             |2.1.5      |      |        |     |
 |steps                                  |0.2.1      |      |        |     |
+|[TSstudio](problems.md#tsstudio)       |0.1.4      |      |        |1    |
 

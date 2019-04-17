@@ -91,3 +91,38 @@ Version: 0.2.0
       All declared Imports should be used.
     ```
 
+# Seurat
+
+Version: 3.0.0
+
+## In both
+
+*   checking package dependencies ... NOTE
+    ```
+    Package suggested but not available for checking: ‘loomR’
+    ```
+
+*   checking installed package size ... NOTE
+    ```
+      installed size is 10.4Mb
+      sub-directories of 1Mb or more:
+        libs   9.0Mb
+    ```
+
+*   checking Rd cross-references ... NOTE
+    ```
+    Package unavailable to check Rd xrefs: ‘loomR’
+    ```
+
+# TSstudio
+
+Version: 0.1.4
+
+## In both
+
+*   checking dependencies in R code ... NOTE
+    ```
+    Namespace in Imports field not imported from: ‘purrr’
+      All declared Imports should be used.
+    ```
+

@@ -14,7 +14,7 @@
 future_eapply(env, FUN, ..., all.names = FALSE, USE.NAMES = TRUE)
 
 future_lapply(X, FUN, ..., future.stdout = TRUE,
-  future.conditions = c("message", "warning"), future.globals = TRUE,
+  future.conditions = NULL, future.globals = TRUE,
   future.packages = NULL, future.lazy = FALSE, future.seed = FALSE,
   future.scheduling = 1, future.chunk.size = NULL)
 
@@ -47,7 +47,8 @@ as it is outputted).
 If \code{NA} (not recommended), output is \emph{not} intercepted.}
 
 \item{future.conditions}{A character string of conditions classes to be
-captured and relayed.  The default is to relay messages and warnings.
+captured and relayed.  The default is the same as the \code{condition}
+argument of \code{\link[future:Future]{future::Future()}}.
 To not intercept conditions, use \code{conditions = character(0L)}.
 Errors are always relayed.}
 

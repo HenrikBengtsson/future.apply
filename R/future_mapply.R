@@ -42,10 +42,10 @@
 #' @keywords manip programming iteration
 #'
 #' @importFrom globals globalsByName
-#' @importFrom future future resolve values as.FutureGlobals nbrOfWorkers getGlobalsAndPackages FutureError
+#' @importFrom future Future future resolve values as.FutureGlobals nbrOfWorkers getGlobalsAndPackages FutureError
 #' @importFrom utils head str
 #' @export
-future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES = TRUE, future.stdout = TRUE, future.conditions = c("message", "warning"), future.globals = TRUE, future.packages = NULL, future.lazy = FALSE, future.seed = FALSE, future.scheduling = 1.0, future.chunk.size = NULL) {
+future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES = TRUE, future.stdout = TRUE, future.conditions = NULL, future.globals = TRUE, future.packages = NULL, future.lazy = FALSE, future.seed = FALSE, future.scheduling = 1.0, future.chunk.size = NULL) {
   FUN <- match.fun(FUN)
   stop_if_not(is.function(FUN))
 
@@ -74,6 +74,11 @@ future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES 
 
   stop_if_not(is.logical(future.stdout), length(future.stdout) == 1L)
 
+  ## FIXME: Memoize the result
+  if (is.null(future.conditions)) {
+    future.conditions <- eval(formals(Future)[["conditions"]])
+  }
+  
   stop_if_not(is.logical(future.lazy), length(future.lazy) == 1L)
 
   stop_if_not(!is.null(future.seed))

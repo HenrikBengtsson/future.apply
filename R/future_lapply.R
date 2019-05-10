@@ -19,7 +19,8 @@
 #'        If `NA` (not recommended), output is _not_ intercepted.
 #'
 #' @param future.conditions A character string of conditions classes to be
-#'        captured and relayed.  The default is to relay messages and warnings.
+#'        captured and relayed.  The default is the same as the `condition`
+#'        argument of [future::Future()].
 #'        To not intercept conditions, use `conditions = character(0L)`.
 #'        Errors are always relayed.
 #'
@@ -131,11 +132,16 @@
 #' @importFrom future future resolve values as.FutureGlobals nbrOfWorkers getGlobalsAndPackages FutureError
 #' @importFrom utils head str
 #' @export
-future_lapply <- function(X, FUN, ..., future.stdout = TRUE, future.conditions = c("message", "warning"), future.globals = TRUE, future.packages = NULL, future.lazy = FALSE, future.seed = FALSE, future.scheduling = 1.0, future.chunk.size = NULL) {
+future_lapply <- function(X, FUN, ..., future.stdout = TRUE, future.conditions = NULL, future.globals = TRUE, future.packages = NULL, future.lazy = FALSE, future.seed = FALSE, future.scheduling = 1.0, future.chunk.size = NULL) {
   stop_if_not(is.function(FUN))
   
   stop_if_not(is.logical(future.stdout), length(future.stdout) == 1L)
 
+  ## FIXME: Memoize the result
+  if (is.null(future.conditions)) {
+    future.conditions <- eval(formals(Future)[["conditions"]])
+  }
+  
   stop_if_not(is.logical(future.lazy), length(future.lazy) == 1L)
 
   stop_if_not(!is.null(future.seed))

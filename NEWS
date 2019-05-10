@@ -1,10 +1,13 @@
 Package: future.apply
 =====================
 
-Version: 1.2.0-9000 [2019-03-15]
+Version: 1.2.0-9000 [2019-05-09]
 
 NEW FEATURES:
 
+ * Now 'future.conditions' defaults to the same as argument 'conditions'
+   of future::future().  If the latter changes, this package will follow.
+ 
  * Debug messages are now prepended with a timestamp.
 
 BUG FIXES:

@@ -46,3 +46,8 @@ print(y2)
 
 stopifnot(all.equal(y1, y2))
 }
+
+\dontshow{
+## R CMD check: make sure any open connections are closed afterward
+if (!inherits(plan(), "sequential")) plan(sequential)
+}

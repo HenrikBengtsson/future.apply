@@ -204,6 +204,8 @@ index vector of length \code{length(X)}, e.g.
 \item \code{"random"}   - this will randomize the ordering via random index
 vector \code{sample.int(length(X))}.
 For example, \code{future.scheduling = structure(TRUE, ordering = "random")}.
+\emph{Note}, when elements are processed out of order, then captured standard
+output and conditions are also relayed in that order, that is out of order.
 }
 }
 

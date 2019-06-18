@@ -1,6 +1,21 @@
 Package: future.apply
 =====================
 
+Version: 1.3.0 [2019-06-17]
+
+NEW FEATURES:
+
+ * Now 'future.conditions' defaults to the same as argument 'conditions'
+   of future::future().  If the latter changes, this package will follow.
+ 
+ * Debug messages are now prepended with a timestamp.
+
+BUG FIXES:
+
+ * The error "sprintf(...) : 'fmt' length exceeds maximal format length 8192"
+   could be produced when debugging tried to report on too many globals.
+ 
+
 Version: 1.2.0 [2019-03-06]
 
 NEW FEATURES:

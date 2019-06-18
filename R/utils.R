@@ -50,10 +50,33 @@ hpaste <- function(..., sep = "", collapse = ", ", lastCollapse = NULL, maxHead 
   x
 } # hpaste()
 
-mdebug <- function(...) {
-  if (!getOption("future.debug", FALSE)) return()
-  message(sprintf(...))
-} ## mdebug()
+now <- function(x = Sys.time(), format = "[%H:%M:%OS3] ") {
+  ## format(x, format = format) ## slower
+  format(as.POSIXlt(x, tz = ""), format = format)
+}
+
+mdebug <- function(..., debug = getOption("future.debug", FALSE)) {
+  if (!debug) return()
+  message(now(), ...)
+}
+
+mdebugf <- function(..., appendLF = TRUE,
+                    debug = getOption("future.debug", FALSE)) {
+  if (!debug) return()
+  message(now(), sprintf(...), appendLF = appendLF)
+}
+
+#' @importFrom utils capture.output
+mprint <- function(..., appendLF = TRUE, debug = getOption("future.debug", FALSE)) {
+  if (!debug) return()
+  message(paste(now(), capture.output(print(...)), sep = "", collapse = "\n"), appendLF = appendLF)
+}
+
+#' @importFrom utils capture.output
+mstr <- function(..., appendLF = TRUE, debug = getOption("future.debug", FALSE)) {
+  if (!debug) return()
+  message(paste(now(), capture.output(str(...)), sep = "", collapse = "\n"), appendLF = appendLF)
+}
 
 ## When 'default' is specified, this is 30x faster than
 ## base::getOption().  The difference is that here we use
@@ -91,11 +114,11 @@ assert_values2 <- function(nX, values, values2, fcn, debug = FALSE) {
     msg <- sprintf("Unexpected error in %s(): After gathering and merging the values from %d chunks in to a list, the total number of elements (= %d) does not match the number of input elements in 'X' (= %d). There were in total %d chunks and %d elements (%s)", fcn, length(values), length(values2), nX, length(values), sum(chunk_sizes), chunk_summary)
     if (debug) {
       mdebug(msg)
-      message(capture.output(print(chunk_sizes)))
+      mprint(chunk_sizes)
       mdebug("Results before merge chunks:")
-      message(capture.output(str(values)))
+      mstr(values)
       mdebug("Results after merge chunks:")
-      message(capture.output(str(values2)))
+      mstr(values2)
     }
     msg <- sprintf("%s. Example of the first few values: %s", msg,
                    paste(capture.output(str(head(values2, 3L))),

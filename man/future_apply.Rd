@@ -68,6 +68,11 @@ print(Y2)
 
 stopifnot(all.equal(Y1, Y2))
 }
+
+\dontshow{
+## R CMD check: make sure any open connections are closed afterward
+if (!inherits(plan(), "sequential")) plan(sequential)
+}
 }
 \author{
 The implementations of \code{future_apply()} is adopted from the source code

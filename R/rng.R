@@ -114,7 +114,7 @@ make_rng_seeds <- function(count, seed = FALSE,
 
   ## A pregenerated sequence of random seeds?
   if (is.list(seed)) {
-    if (debug) mdebug("Using a pre-define stream of random seeds ...", count)
+    if (debug) mdebugf("Using a pre-define stream of %d random seeds ...", count)
 
     seeds <- seed
     nseeds <- length(seeds)
@@ -145,7 +145,7 @@ make_rng_seeds <- function(count, seed = FALSE,
     }
 
     if (debug) {
-      mdebug("Using a pre-define stream of random seeds ... DONE", count)
+      mdebugf("Using a pre-define stream of %d random seeds ... DONE", count)
       mdebug("Generating random seeds ... DONE")
     }
     
@@ -153,7 +153,7 @@ make_rng_seeds <- function(count, seed = FALSE,
   }
 
   
-  if (debug) mdebug("Generating random seed streams for %d elements ...", count)
+  if (debug) mdebugf("Generating random seed streams for %d elements ...", count)
     
   ## Generate sequence of _all_ RNG seeds starting with an initial seed
   ## '.seed' that is based on argument 'seed'.
@@ -182,7 +182,7 @@ make_rng_seeds <- function(count, seed = FALSE,
   }
   
   if (debug) {
-    mdebug("Generating random seed streams for %d elements ... DONE", count)
+    mdebugf("Generating random seed streams for %d elements ... DONE", count)
     mdebug("Generating random seeds ... DONE")
   }
 

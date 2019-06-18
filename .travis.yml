@@ -1,6 +1,11 @@
 #----------------------------------------------------------------
-# Travis-CI Configuration for R Packages
-# https://docs.travis-ci.com/user/languages/r
+# Travis-CI configuration for R packages
+#
+# REFERENCES:
+# * Travis CI: https://docs.travis-ci.com/user/languages/r
+# * covr: https://github.com/jimhester/covr
+#
+# YAML validated using http://www.yamllint.com/
 #----------------------------------------------------------------
 language: r
 sudo: false
@@ -16,16 +21,24 @@ matrix:
     - os: linux
       r: release
     - os: linux
+      r: release
+      env:
+        - R_FUTURE_FORKS_ENABLED=false
+    - os: linux
+      r: release
+      env:
+        - R_FUTURE_PLAN=multisession
+    - os: linux
       r: devel
       env:
-      - R_KEEP_PKG_SOURCE=yes
-      - _R_S3_METHOD_LOOKUP_BASEENV_AFTER_GLOBALENV_=true
-      - _R_S3_METHOD_LOOKUP_USE_TOPENV_AS_DEFENV_=true
+        - R_KEEP_PKG_SOURCE=yes
+        - _R_S3_METHOD_LOOKUP_BASEENV_AFTER_GLOBALENV_=true
+        - _R_S3_METHOD_LOOKUP_USE_TOPENV_AS_DEFENV_=true
+        - _R_CHECK_CONNECTIONS_LEFT_OPEN_=true
+        - _R_CHECK_LENGTH_1_CONDITION_=true
+        - _R_CHECK_LENGTH_1_LOGIC2_=true
     - os: osx
       r: oldrel
-      before_install:
-        - Rscript -e 'c(physical = parallel::detectCores(logical = FALSE), logical = parallel::detectCores())'
-        - Rscript -e 'install.packages("future", type = "source")'
     - os: osx
       r: release
     - os: linux

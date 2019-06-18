@@ -22,8 +22,8 @@ getGlobalsAndPackagesXApply <- function(FUN, args = NULL, MoreArgs = NULL, envir
     gp <- NULL
       
     if (debug) {
-      mdebug(" - globals found/used: [%d] %s", length(globals), hpaste(sQuote(names(globals))))
-      mdebug(" - needed namespaces: [%d] %s", length(packages), hpaste(sQuote(packages)))
+      mdebugf(" - globals found/used: [%d] %s", length(globals), hpaste(sQuote(names(globals))))
+      mdebugf(" - needed namespaces: [%d] %s", length(packages), hpaste(sQuote(packages)))
       mdebug("Finding globals ... DONE")
     }
   } else if (is.character(globals)) {
@@ -75,7 +75,7 @@ getGlobalsAndPackagesXApply <- function(FUN, args = NULL, MoreArgs = NULL, envir
   
   if (debug) {
     mdebug("Globals to be used in all futures:")
-    mdebug(paste(capture.output(str(globals)), collapse = "\n"))
+    mstr(globals)
   }
 
   if (!is.null(future.packages)) {
@@ -87,7 +87,7 @@ getGlobalsAndPackagesXApply <- function(FUN, args = NULL, MoreArgs = NULL, envir
   
   if (debug) {
     mdebug("Packages to be attached in all futures:")
-    mdebug(paste(capture.output(str(packages)), collapse = "\n"))
+    mstr(packages)
   }
 
   list(globals = globals, packages = packages, scanForGlobals = scanForGlobals)

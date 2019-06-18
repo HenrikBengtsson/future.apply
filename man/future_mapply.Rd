@@ -8,10 +8,10 @@
 future_Map(f, ...)
 
 future_mapply(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE,
-  USE.NAMES = TRUE, future.stdout = TRUE,
-  future.conditions = c("message", "warning"), future.globals = TRUE,
-  future.packages = NULL, future.lazy = FALSE, future.seed = FALSE,
-  future.scheduling = 1, future.chunk.size = NULL)
+  USE.NAMES = TRUE, future.stdout = TRUE, future.conditions = NULL,
+  future.globals = TRUE, future.packages = NULL, future.lazy = FALSE,
+  future.seed = FALSE, future.scheduling = 1,
+  future.chunk.size = NULL)
 }
 \arguments{
 \item{f}{A function of the arity \eqn{k} if \code{future_Map()} is called with
@@ -36,7 +36,8 @@ as it is outputted).
 If \code{NA} (not recommended), output is \emph{not} intercepted.}
 
 \item{future.conditions}{A character string of conditions classes to be
-captured and relayed.  The default is to relay messages and warnings.
+captured and relayed.  The default is the same as the \code{condition}
+argument of \code{\link[future:Future]{future::Future()}}.
 To not intercept conditions, use \code{conditions = character(0L)}.
 Errors are always relayed.}
 
@@ -136,6 +137,11 @@ y2 <- future_mapply(stats::runif, n = 1:4, max = 2:5,
 print(y2)
 
 stopifnot(all.equal(y1, y2))
+}
+
+\dontshow{
+## R CMD check: make sure any open connections are closed afterward
+if (!inherits(plan(), "sequential")) plan(sequential)
 }
 }
 \author{

@@ -42,10 +42,10 @@
 #' @keywords manip programming iteration
 #'
 #' @importFrom globals globalsByName
-#' @importFrom future future resolve values as.FutureGlobals nbrOfWorkers getGlobalsAndPackages FutureError
-#' @importFrom utils capture.output head str
+#' @importFrom future Future future resolve values as.FutureGlobals nbrOfWorkers getGlobalsAndPackages FutureError
+#' @importFrom utils head str
 #' @export
-future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES = TRUE, future.stdout = TRUE, future.conditions = c("message", "warning"), future.globals = TRUE, future.packages = NULL, future.lazy = FALSE, future.seed = FALSE, future.scheduling = 1.0, future.chunk.size = NULL) {
+future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES = TRUE, future.stdout = TRUE, future.conditions = NULL, future.globals = TRUE, future.packages = NULL, future.lazy = FALSE, future.seed = FALSE, future.scheduling = 1.0, future.chunk.size = NULL) {
   FUN <- match.fun(FUN)
   stop_if_not(is.function(FUN))
 
@@ -74,6 +74,11 @@ future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES 
 
   stop_if_not(is.logical(future.stdout), length(future.stdout) == 1L)
 
+  ## FIXME: Memoize the result
+  if (is.null(future.conditions)) {
+    future.conditions <- eval(formals(Future)[["conditions"]])
+  }
+  
   stop_if_not(is.logical(future.lazy), length(future.lazy) == 1L)
 
   stop_if_not(!is.null(future.seed))
@@ -128,12 +133,12 @@ future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES 
                        nbrOfWorkers = nbrOfWorkers(),
                        future.scheduling = future.scheduling,
                        future.chunk.size = future.chunk.size)
-  if (debug) mdebug("Number of chunks: %d", length(chunks))
+  if (debug) mdebugf("Number of chunks: %d", length(chunks))
   
   ## Process elements in a custom order?
   ordering <- attr(chunks, "ordering")
   if (!is.null(ordering)) {
-    if (debug) mdebug("Index remapping (attribute 'ordering'): [n = %d] %s", length(ordering), hpaste(ordering))
+    if (debug) mdebugf("Index remapping (attribute 'ordering'): [n = %d] %s", length(ordering), hpaste(ordering))
     chunks <- lapply(chunks, FUN = function(idxs) .subset(ordering, idxs))
   }
 
@@ -164,12 +169,12 @@ future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES 
   
   nchunks <- length(chunks)
   fs <- vector("list", length = nchunks)
-  if (debug) mdebug("Number of futures (= number of chunks): %d", nchunks)
+  if (debug) mdebugf("Number of futures (= number of chunks): %d", nchunks)
   
-  if (debug) mdebug("Launching %d futures (chunks) ...", nchunks)
+  if (debug) mdebugf("Launching %d futures (chunks) ...", nchunks)
   for (ii in seq_along(chunks)) {
     chunk <- chunks[[ii]]
-    if (debug) mdebug("Chunk #%d of %d ...", ii, length(chunks))
+    if (debug) mdebugf("Chunk #%d of %d ...", ii, length(chunks))
     ## Subsetting outside future is more efficient
     
     dots_ii <- lapply(dots, FUN = `[`, chunk)
@@ -186,8 +191,8 @@ future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES 
       gp <- NULL
 
       if (debug) {
-        mdebug(" - globals found in '...' for chunk #%d: [%d] %s", chunk, length(globals_dots), hpaste(sQuote(names(globals_dots))))
-        mdebug(" - needed namespaces for '...' for chunk #%d: [%d] %s", chunk, length(packages_dots), hpaste(sQuote(packages_dots)))
+        mdebugf(" - globals found in '...' for chunk #%d: [%d] %s", chunk, length(globals_dots), hpaste(sQuote(names(globals_dots))))
+        mdebugf(" - needed namespaces for '...' for chunk #%d: [%d] %s", chunk, length(packages_dots), hpaste(sQuote(packages_dots)))
       }
     
       ## Export also globals found in 'dots_ii'
@@ -218,7 +223,7 @@ future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES 
     if (length(chunk) > 1L) {
       globals_ii["...future.globals.maxSize"] <- list(globals.maxSize)
       options(future.globals.maxSize = length(chunk) * globals.maxSize.default)
-      if (debug) mdebug(" - Adjusted option 'future.globals.maxSize': %g -> %d * %g = %g (bytes)", globals.maxSize.default, length(chunk), globals.maxSize.default, getOption("future.globals.maxSize"))
+      if (debug) mdebugf(" - Adjusted option 'future.globals.maxSize': %g -> %d * %g = %g (bytes)", globals.maxSize.default, length(chunk), globals.maxSize.default, getOption("future.globals.maxSize"))
       on.exit(options(future.globals.maxSize = globals.maxSize), add = TRUE)
     }
     
@@ -240,7 +245,7 @@ future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES 
          globals = globals_ii, packages = packages_ii,
          lazy = future.lazy)
     } else {
-      if (debug) mdebug(" - seeds: [%d] <seeds>", length(chunk))
+      if (debug) mdebugf(" - seeds: [%d] <seeds>", length(chunk))
       globals_ii[["...future.seeds_ii"]] <- seeds[chunk]
       fs[[ii]] <- future({
         ...future.globals.maxSize.org <- getOption("future.globals.maxSize")
@@ -264,35 +269,35 @@ future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES 
     ## Not needed anymore
     rm(list = c("chunk", "globals_ii"))
 
-    if (debug) mdebug("Chunk #%d of %d ... DONE", ii, nchunks)
+    if (debug) mdebugf("Chunk #%d of %d ... DONE", ii, nchunks)
   } ## for (ii ...)
-  if (debug) mdebug("Launching %d futures (chunks) ... DONE", nchunks)
+  if (debug) mdebugf("Launching %d futures (chunks) ... DONE", nchunks)
 
   ## Not needed anymore
   rm(list = c("chunks", "globals", "envir"))
 
   ## 4. Resolving futures
-  if (debug) mdebug("Resolving %d futures (chunks) ...", nchunks)
+  if (debug) mdebugf("Resolving %d futures (chunks) ...", nchunks)
   
   values <- values(fs)
   ## Not needed anymore
   rm(list = "fs")
 
   if (debug) {
-    mdebug(" - Number of value chunks collected: %d", length(values))
-    mdebug("Resolving %d futures (chunks) ... DONE", nchunks)
+    mdebugf(" - Number of value chunks collected: %d", length(values))
+    mdebugf("Resolving %d futures (chunks) ... DONE", nchunks)
   }
 
   ## Sanity check
   stop_if_not(length(values) == nchunks)
   
-  if (debug) mdebug("Reducing values from %d chunks ...", nchunks)
+  if (debug) mdebugf("Reducing values from %d chunks ...", nchunks)
   values2 <- do.call(c, args = values)
   
   if (debug) {
-    mdebug(" - Number of values collected after concatenation: %d",
+    mdebugf(" - Number of values collected after concatenation: %d",
            length(values2))
-    mdebug(" - Number of values expected: %d", nX)
+    mdebugf(" - Number of values expected: %d", nX)
   }
 
   assert_values2(nX, values, values2, fcn = "future_mapply()", debug = debug)
@@ -308,7 +313,7 @@ future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES 
     idx <- 1:nX
     invOrdering[.subset(ordering, idx)] <- idx
     rm(list = c("ordering", "idx"))
-    if (debug) mdebug("Reverse index remapping (attribute 'ordering'): [n = %d] %s", length(invOrdering), hpaste(invOrdering))
+    if (debug) mdebugf("Reverse index remapping (attribute 'ordering'): [n = %d] %s", length(invOrdering), hpaste(invOrdering))
     values <- .subset(values, invOrdering)
     rm(list = c("invOrdering"))
   }
@@ -325,7 +330,7 @@ future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES 
     values <- simplify2array(values, higher = (SIMPLIFY == "array"))
   } 
   
-  if (debug) mdebug("Reducing values from %d chunks ... DONE", nchunks)
+  if (debug) mdebugf("Reducing values from %d chunks ... DONE", nchunks)
   
   if (debug) mdebug("future_mapply() ... DONE")
   

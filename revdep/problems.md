@@ -66,51 +66,7 @@ Run `revdep_details(,"grattan")` for more info
 *   checking package dependencies ... NOTE
     ```
     Packages suggested but not available for checking:
-      'survey', 'taxstats', 'taxstats1516'
-    ```
-
-# kernelboot
-
-<details>
-
-* Version: 0.1.5
-* Source code: https://github.com/cran/kernelboot
-* URL: https://github.com/twolodzko/kernelboot
-* BugReports: https://github.com/twolodzko/kernelboot/issues
-* Date/Publication: 2018-07-04 11:30:02 UTC
-* Number of recursive dependencies: 39
-
-Run `revdep_details(,"kernelboot")` for more info
-
-</details>
-
-## In both
-
-*   checking package dependencies ... NOTE
-    ```
-    Package suggested but not available for checking: ‘cramer’
-    ```
-
-# lgr
-
-<details>
-
-* Version: 0.3.0
-* Source code: https://github.com/cran/lgr
-* URL: https://s-fleck.github.io/lgr
-* BugReports: https://github.com/s-fleck/lgr/issues
-* Date/Publication: 2019-05-30 11:50:03 UTC
-* Number of recursive dependencies: 67
-
-Run `revdep_details(,"lgr")` for more info
-
-</details>
-
-## In both
-
-*   checking Rd cross-references ... NOTE
-    ```
-    Package unavailable to check Rd xrefs: ‘RPushbullet’
+      'taxstats', 'taxstats1516'
     ```
 
 # phylolm
@@ -185,12 +141,12 @@ Run `revdep_details(,"sctransform")` for more info
 
 <details>
 
-* Version: 3.0.1
+* Version: 3.0.2
 * Source code: https://github.com/cran/Seurat
 * URL: http://www.satijalab.org/seurat, https://github.com/satijalab/seurat
 * BugReports: https://github.com/satijalab/seurat/issues
-* Date/Publication: 2019-05-16 16:20:57 UTC
-* Number of recursive dependencies: 177
+* Date/Publication: 2019-06-14 22:22:02 UTC
+* Number of recursive dependencies: 197
 
 Run `revdep_details(,"Seurat")` for more info
 
@@ -200,7 +156,7 @@ Run `revdep_details(,"Seurat")` for more info
 
 *   checking package dependencies ... NOTE
     ```
-    Packages suggested but not available for checking: 'loomR', 'MAST'
+    Package suggested but not available for checking: ‘loomR’
     ```
 
 *   checking installed package size ... NOTE
@@ -263,7 +219,7 @@ Run `revdep_details(,"stars")` for more info
 
 *   checking package dependencies ... NOTE
     ```
-    Packages suggested but not available for checking: 'plm', 'starsdata'
+    Package suggested but not available for checking: ‘starsdata’
     ```
 
 *   checking installed package size ... NOTE

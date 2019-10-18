@@ -131,6 +131,12 @@ assert_values2 <- function(nX, values, values2, fcn, debug = FALSE) {
 
 stealth_sample.int <- function(n, size = n, replace = FALSE, ...) {
   oseed <- .GlobalEnv$.Random.seed
-  on.exit(.GlobalEnv$.Random.seed <- oseed)
+  on.exit({
+    if (is.null(oseed)) {
+      rm(list = ".Random.seed", envir = .GlobalEnv, inherits = FALSE)
+    } else {
+      .GlobalEnv$.Random.seed <- oseed
+    }
+  })
   sample.int(n = n, size = size, replace = replace, ...)
 }

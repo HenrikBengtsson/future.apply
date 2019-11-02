@@ -131,7 +131,32 @@ for (strategy in supportedStrategies()) {
   z1 <- future_lapply(X, FUN = function(f) f())
   str(z1)
   stopifnot(identical(z1, z0))
-}
+
+  ## https://github.com/HenrikBengtsson/future.apply/issues/47
+  message("- future_lapply(X, ...) - '{ a <- a + 1; a }' ...")
+  a <- 1
+  z0 <- lapply(1, function(ii) {
+    a <- a + 1
+    a
+  })
+  z1 <- future_lapply(1, function(ii) {
+    a <- a + 1
+    a
+  })
+  stopifnot(identical(z1, z0))
+
+  ## https://github.com/HenrikBengtsson/future.apply/issues/47
+  message("- future_lapply(X, ...) - '{ a; a <- a + 1 }' ...")
+  z2 <- tryCatch(future_lapply(1, function(ii) {
+    a
+    a <- a + 1
+  }), error = identity)
+  if (packageVersion("globals") <= "0.12.4" && strategy %in% c("multisession")) {
+    stopifnot(inherits(z2, "error"))
+  } else {
+    stopifnot(identical(z2, z0))
+  }
+} ## for (strategy ...)
 
 message("*** future_lapply() - tricky globals ... DONE")
 

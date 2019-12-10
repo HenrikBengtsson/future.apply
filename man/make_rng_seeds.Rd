@@ -4,8 +4,7 @@
 \alias{make_rng_seeds}
 \title{Produce Reproducible Seeds for Parallel Random Number Generation}
 \usage{
-make_rng_seeds(count, seed = FALSE, debug = getOption("future.debug",
-  FALSE))
+make_rng_seeds(count, seed = FALSE, debug = getOption("future.debug", FALSE))
 }
 \arguments{
 \item{count}{The number of RNG seeds to produce.}

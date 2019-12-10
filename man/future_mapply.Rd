@@ -7,11 +7,21 @@
 \usage{
 future_Map(f, ...)
 
-future_mapply(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE,
-  USE.NAMES = TRUE, future.stdout = TRUE, future.conditions = NULL,
-  future.globals = TRUE, future.packages = NULL, future.lazy = FALSE,
-  future.seed = FALSE, future.scheduling = 1,
-  future.chunk.size = NULL)
+future_mapply(
+  FUN,
+  ...,
+  MoreArgs = NULL,
+  SIMPLIFY = TRUE,
+  USE.NAMES = TRUE,
+  future.stdout = TRUE,
+  future.conditions = NULL,
+  future.globals = TRUE,
+  future.packages = NULL,
+  future.lazy = FALSE,
+  future.seed = FALSE,
+  future.scheduling = 1,
+  future.chunk.size = NULL
+)
 }
 \arguments{
 \item{f}{A function of the arity \eqn{k} if \code{future_Map()} is called with
@@ -25,7 +35,7 @@ future_mapply(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE,
 result to a vector, matrix or higher dimensional array; see the simplify
 argument of \code{\link[base:sapply]{base::sapply()}}.}
 
-\item{USE.NAMES}{A logical; use names if the first \code{\ldots} argument has
+\item{USE.NAMES}{A logical; use names if the first \verb{\\ldots} argument has
 names, or if it is a character vector, use that character vector as the
 names.}
 
@@ -77,7 +87,7 @@ positive length, or all of zero length).}
 attempt to simplify the result.
 See \code{\link[base:Map]{base::Map()}} for details.
 
-\code{future_mapply() returns a list, or for }SIMPLIFY = TRUE`, a vector,
+\verb{future_mapply() returns a list, or for }SIMPLIFY = TRUE`, a vector,
 array or list.  See \code{\link[base:mapply]{base::mapply()}} for details.
 }
 \description{
@@ -85,7 +95,7 @@ array or list.  See \code{\link[base:mapply]{base::mapply()}} for details.
 replication of results, regardless of future backend used.
 Analogously to \code{mapply()}, \code{future_mapply()} is a multivariate version of
 \code{future_sapply()}.
-It applies \code{FUN} to the first elements of each \code{\ldots} argument,
+It applies \code{FUN} to the first elements of each \verb{\\ldots} argument,
 the second elements, the third elements, and so on.
 Arguments are recycled if necessary.
 }

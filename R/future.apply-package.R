@@ -88,5 +88,6 @@
 #' @keywords manip programming iteration
 #'
 #' @docType package
+#' @aliases future.apply-package
 #' @name future.apply
 NULL

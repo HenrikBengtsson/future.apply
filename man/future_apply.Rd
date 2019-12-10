@@ -18,7 +18,7 @@ dimension names.}
 \item{FUN}{A function taking at least one argument.}
 
 \item{\ldots}{(optional) Additional arguments passed to \code{FUN()}, except
-\code{future.*} arguments, which are passed on to \code{future_lapply()} used
+\verb{future.*} arguments, which are passed on to \code{future_lapply()} used
 internally.}
 }
 \value{

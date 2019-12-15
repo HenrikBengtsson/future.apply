@@ -1,9 +1,12 @@
 Package: future.apply
 =====================
 
-Version: 1.3.0-9000 [2019-10-17]
+Version: 1.3.0-9000 [2019-12-15]
 
 BUG FIXES:
+
+ * future_lapply(X) and future_mapply(FUN, X) would drop 'names' argument of
+   the returned empty list when length(X) == 0.
 
  * Package could set '.Random.seed' to NULL, instead of removing it, which in
    turn would produce a warning on "'.Random.seed' is not an integer vector but

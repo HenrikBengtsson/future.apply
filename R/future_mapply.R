@@ -57,7 +57,15 @@ future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES 
   ns <- lengths(dots)
   
   ## Nothing to do?
-  if (all(ns == 0L)) return(list())
+  if (all(ns == 0L)) {
+    if (!USE.NAMES) return(list())
+    values <- list()
+    first <- dots[[1]]
+    names <- names(first)
+    if (is.null(names) && is.character(first)) names <- first
+    names(values) <- names
+    return(values)
+  }
 
   stop_if_not(all(ns > 0L))
   
@@ -83,7 +91,7 @@ future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES 
 
   stop_if_not(!is.null(future.seed))
   
-  stop_if_not(length(future.scheduling) == 1, !is.na(future.scheduling),
+  stop_if_not(length(future.scheduling) == 1L, !is.na(future.scheduling),
             is.numeric(future.scheduling) || is.logical(future.scheduling))
 
   debug <- getOption("future.debug", FALSE)

@@ -148,7 +148,7 @@ future_lapply <- function(X, FUN, ..., future.stdout = TRUE, future.conditions =
 
   stop_if_not(!is.null(future.seed))
   
-  stop_if_not(length(future.scheduling) == 1, !is.na(future.scheduling),
+  stop_if_not(length(future.scheduling) == 1L, !is.na(future.scheduling),
             is.numeric(future.scheduling) || is.logical(future.scheduling))
 
   ## Coerce to as.list()?
@@ -156,7 +156,7 @@ future_lapply <- function(X, FUN, ..., future.stdout = TRUE, future.conditions =
   
   ## Nothing to do?
   nX <- length(X)
-  if (nX == 0) return(list())
+  if (nX == 0L) return(X)
 
   debug <- getOption("future.debug", FALSE)
   

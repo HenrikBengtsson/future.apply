@@ -43,9 +43,17 @@
 #'
 #' @importFrom globals globalsByName
 #' @importFrom future Future future resolve values as.FutureGlobals nbrOfWorkers getGlobalsAndPackages FutureError
-#' @importFrom utils head str
+#' @importFrom utils head str packageVersion
 #' @export
-future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES = TRUE, future.stdout = TRUE, future.conditions = NULL, future.globals = TRUE, future.packages = NULL, future.lazy = FALSE, future.seed = FALSE, future.scheduling = 1.0, future.chunk.size = NULL) {
+future_mapply <- local({
+  if (packageVersion("future") > "1.14.0") {
+    seed_NA <- NA
+    seed_FALSE <- FALSE
+  } else {
+    seed_NA <- seed_FALSE <- NULL
+  }
+
+function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES = TRUE, future.stdout = TRUE, future.conditions = NULL, future.globals = TRUE, future.packages = NULL, future.lazy = FALSE, future.seed = FALSE, future.scheduling = 1.0, future.chunk.size = NULL) {
   FUN <- match.fun(FUN)
   stop_if_not(is.function(FUN))
 
@@ -251,6 +259,7 @@ future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES 
          stdout = future.stdout,
          conditions = future.conditions,
          globals = globals_ii, packages = packages_ii,
+         seed = seed_FALSE,
          lazy = future.lazy)
     } else {
       if (debug) mdebugf(" - seeds: [%d] <seeds>", length(chunk))
@@ -271,6 +280,7 @@ future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES 
          stdout = future.stdout,
          conditions = future.conditions,
          globals = globals_ii, packages = packages_ii,
+         seed = seed_NA,
          lazy = future.lazy)
     }
     
@@ -344,3 +354,5 @@ future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES 
   
   values
 }
+
+})

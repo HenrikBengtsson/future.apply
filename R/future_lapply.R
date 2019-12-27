@@ -132,9 +132,17 @@
 #'
 #' @importFrom globals globalsByName
 #' @importFrom future future resolve values as.FutureGlobals nbrOfWorkers getGlobalsAndPackages FutureError
-#' @importFrom utils head str
+#' @importFrom utils head str packageVersion
 #' @export
-future_lapply <- function(X, FUN, ..., future.stdout = TRUE, future.conditions = NULL, future.globals = TRUE, future.packages = NULL, future.lazy = FALSE, future.seed = FALSE, future.scheduling = 1.0, future.chunk.size = NULL) {
+future_lapply <- local({
+  if (packageVersion("future") > "1.14.0") {
+    seed_NA <- NA
+    seed_FALSE <- FALSE
+  } else {
+    seed_NA <- seed_FALSE <- NULL
+  }
+
+function(X, FUN, ..., future.stdout = TRUE, future.conditions = NULL, future.globals = TRUE, future.packages = NULL, future.lazy = FALSE, future.seed = FALSE, future.scheduling = 1.0, future.chunk.size = NULL) {
   stop_if_not(is.function(FUN))
   
   stop_if_not(is.logical(future.stdout), length(future.stdout) == 1L)
@@ -190,11 +198,14 @@ future_lapply <- function(X, FUN, ..., future.stdout = TRUE, future.conditions =
   ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   seeds <- make_rng_seeds(nX, seed = future.seed, debug = debug)
 
-  ## If RNG seeds are used (given or generated), make sure to reset
-  ## the RNG state afterward
   if (!is.null(seeds)) {
-    oseed <- next_random_seed()
+    ## If RNG seeds are used (given or generated), make sure to reset
+    ## the RNG state afterward
+    oseed <- next_random_seed()    
     on.exit(set_random_seed(oseed))
+    seed <- if (packageVersion("future") > "1.14.0") NA else NULL
+  } else {
+    seed <- if (packageVersion("future") > "1.14.0") FALSE else NULL
   }
   
   
@@ -318,6 +329,7 @@ future_lapply <- function(X, FUN, ..., future.stdout = TRUE, future.conditions =
          stdout = future.stdout,
          conditions = future.conditions,
          globals = globals_ii, packages = packages_ii,
+         seed = seed,
          lazy = future.lazy)
     } else {
       if (debug) mdebugf(" - seeds: [%d] <seeds>", length(chunk))
@@ -337,6 +349,7 @@ future_lapply <- function(X, FUN, ..., future.stdout = TRUE, future.conditions =
          stdout = future.stdout,
          conditions = future.conditions,
          globals = globals_ii, packages = packages_ii,
+         seed = seed,
          lazy = future.lazy)
     }
     
@@ -355,6 +368,7 @@ future_lapply <- function(X, FUN, ..., future.stdout = TRUE, future.conditions =
   if (debug) mdebugf("Resolving %d futures (chunks) ...", nchunks)
   
   values <- values(fs)
+
   ## Not needed anymore
   rm(list = "fs")
 
@@ -402,3 +416,4 @@ future_lapply <- function(X, FUN, ..., future.stdout = TRUE, future.conditions =
   
   values
 }
+})

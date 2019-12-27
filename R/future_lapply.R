@@ -135,12 +135,7 @@
 #' @importFrom utils head str packageVersion
 #' @export
 future_lapply <- local({
-  if (packageVersion("future") > "1.14.0") {
-    seed_NA <- NA
-    seed_FALSE <- FALSE
-  } else {
-    seed_NA <- seed_FALSE <- NULL
-  }
+  seed_FALSE <- if (packageVersion("future") > "1.15.1") FALSE else NULL
 
 function(X, FUN, ..., future.stdout = TRUE, future.conditions = NULL, future.globals = TRUE, future.packages = NULL, future.lazy = FALSE, future.seed = FALSE, future.scheduling = 1.0, future.chunk.size = NULL) {
   stop_if_not(is.function(FUN))
@@ -203,9 +198,6 @@ function(X, FUN, ..., future.stdout = TRUE, future.conditions = NULL, future.glo
     ## the RNG state afterward
     oseed <- next_random_seed()    
     on.exit(set_random_seed(oseed))
-    seed <- if (packageVersion("future") > "1.14.0") NA else NULL
-  } else {
-    seed <- if (packageVersion("future") > "1.14.0") FALSE else NULL
   }
   
   
@@ -329,7 +321,7 @@ function(X, FUN, ..., future.stdout = TRUE, future.conditions = NULL, future.glo
          stdout = future.stdout,
          conditions = future.conditions,
          globals = globals_ii, packages = packages_ii,
-         seed = seed,
+         seed = seed_FALSE,
          lazy = future.lazy)
     } else {
       if (debug) mdebugf(" - seeds: [%d] <seeds>", length(chunk))
@@ -349,7 +341,7 @@ function(X, FUN, ..., future.stdout = TRUE, future.conditions = NULL, future.glo
          stdout = future.stdout,
          conditions = future.conditions,
          globals = globals_ii, packages = packages_ii,
-         seed = seed,
+         seed = NULL,  ## As seed=FALSE but without the RNG check
          lazy = future.lazy)
     }
     

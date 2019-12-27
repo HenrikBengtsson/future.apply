@@ -46,12 +46,7 @@
 #' @importFrom utils head str packageVersion
 #' @export
 future_mapply <- local({
-  if (packageVersion("future") > "1.14.0") {
-    seed_NA <- NA
-    seed_FALSE <- FALSE
-  } else {
-    seed_NA <- seed_FALSE <- NULL
-  }
+  seed_FALSE <- if (packageVersion("future") > "1.15.1") FALSE else NULL
 
 function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES = TRUE, future.stdout = TRUE, future.conditions = NULL, future.globals = TRUE, future.packages = NULL, future.lazy = FALSE, future.seed = FALSE, future.scheduling = 1.0, future.chunk.size = NULL) {
   FUN <- match.fun(FUN)
@@ -280,7 +275,7 @@ function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES = TRUE, future.st
          stdout = future.stdout,
          conditions = future.conditions,
          globals = globals_ii, packages = packages_ii,
-         seed = seed_NA,
+         seed = NULL,  ## As seed=FALSE but without the RNG check
          lazy = future.lazy)
     }
     

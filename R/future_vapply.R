@@ -13,7 +13,7 @@
 #' @export
 #'
 #' @rdname future_lapply
-future_vapply <- function(X, FUN, FUN.VALUE, ..., USE.NAMES = TRUE) {
+future_vapply <- function(X, FUN, FUN.VALUE, ..., USE.NAMES = TRUE, future.label = "future_vapply-%d") {
   ## Coerce to as.list()?
   if (!is.vector(X) || is.object(X)) X <- as.list(X)
   
@@ -44,7 +44,7 @@ future_vapply <- function(X, FUN, FUN.VALUE, ..., USE.NAMES = TRUE) {
     }
     stop_if_not(all(dim(value) == dim), typeof(value) %in% valid_types)
     value
-  }, ...)
+  }, ..., future.label = future.label)
 
   if (!is.null(dim)) {
     dim_res <- c(dim, n)

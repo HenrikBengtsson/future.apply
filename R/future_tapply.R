@@ -15,7 +15,8 @@
 #' @rdname future_lapply
 #' @export
 future_tapply <- function(X, INDEX, FUN = NULL, ...,
-                          default = NA, simplify = TRUE) {
+                          default = NA, simplify = TRUE,
+			  future.label = "future_tapply-%d") {
   FUN <- if (!is.null(FUN)) 
     match.fun(FUN)
   if (!is.list(INDEX)) 
@@ -49,7 +50,7 @@ future_tapply <- function(X, INDEX, FUN = NULL, ...,
   ans <- split(X, f = group)
   names(ans) <- NULL
   index <- as.logical(lengths(ans))
-  ans <- future_lapply(X = ans[index], FUN = FUN, ...)
+  ans <- future_lapply(X = ans[index], FUN = FUN, ..., future.label = future.label)
   
   ansmat <- array({
     if (simplify && all(lengths(ans) == 1L)) {

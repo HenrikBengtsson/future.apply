@@ -16,7 +16,7 @@
 #' GPL (>= 2) with 'The R Core Team' as the copyright holder.
 #' 
 #' @rdname future_mapply
-future_Map <- function(f, ...) {
+future_Map <- function(f, ..., future.label = "future_Map-%d") {
   f <- match.fun(f)
-  future_mapply(FUN = f, ..., SIMPLIFY = FALSE)
+  future_mapply(FUN = f, ..., SIMPLIFY = FALSE, future.label = future.label)
 }

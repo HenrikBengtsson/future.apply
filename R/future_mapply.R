@@ -45,7 +45,7 @@
 #' @importFrom future Future future resolve values as.FutureGlobals nbrOfWorkers getGlobalsAndPackages FutureError
 #' @importFrom utils head str
 #' @export
-future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES = TRUE, future.stdout = TRUE, future.conditions = NULL, future.globals = TRUE, future.packages = NULL, future.lazy = FALSE, future.seed = FALSE, future.scheduling = 1.0, future.chunk.size = NULL) {
+future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES = TRUE, future.stdout = TRUE, future.conditions = NULL, future.globals = TRUE, future.packages = NULL, future.lazy = FALSE, future.seed = FALSE, future.scheduling = 1.0, future.chunk.size = NULL, future.label = "future_mapply-%d") {
   FUN <- match.fun(FUN)
   stop_if_not(is.function(FUN))
 
@@ -91,6 +91,9 @@ future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES 
 
   stop_if_not(length(future.scheduling) == 1L, !is.na(future.scheduling),
             is.numeric(future.scheduling) || is.logical(future.scheduling))
+
+  stop_if_not(length(future.label) == 1L, !is.na(future.label),
+              is.logical(future.label) || is.character(future.label))
 
   debug <- getOption("future.debug", FALSE)
   
@@ -182,7 +185,18 @@ future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES 
   nchunks <- length(chunks)
   fs <- vector("list", length = nchunks)
   if (debug) mdebugf("Number of futures (= number of chunks): %d", nchunks)
-  
+
+  ## Create labels?
+  if (isTRUE(future.label)) {
+    future.label <- "future_mapply-%d"
+  }
+  if (is.character(future.label)) {
+    labels <- sprintf(future.label, seq_len(nchunks))
+    stopifnot(length(labels) == nchunks)
+  } else {
+    labels <- NULL
+  }
+
   if (debug) mdebugf("Launching %d futures (chunks) ...", nchunks)
   for (ii in seq_along(chunks)) {
     chunk <- chunks[[ii]]
@@ -256,7 +270,8 @@ future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES 
          conditions = future.conditions,
          globals = globals_ii, packages = packages_ii,
          seed = future.seed,
-         lazy = future.lazy)
+         lazy = future.lazy,
+	 label = labels[ii])
     } else {
       if (debug) mdebugf(" - seeds: [%d] <seeds>", length(chunk))
       globals_ii[["...future.seeds_ii"]] <- seeds[chunk]
@@ -277,7 +292,8 @@ future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES 
          conditions = future.conditions,
          globals = globals_ii, packages = packages_ii,
          seed = NULL,  ## As seed=FALSE but without the RNG check
-         lazy = future.lazy)
+         lazy = future.lazy,
+	 label = labels[ii])
     }
     
     ## Not needed anymore

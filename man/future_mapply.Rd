@@ -5,7 +5,7 @@
 \alias{future_mapply}
 \title{Apply a Function to Multiple List or Vector Arguments}
 \usage{
-future_Map(f, ...)
+future_Map(f, ..., future.label = "future_Map-\%d")
 
 future_mapply(
   FUN,
@@ -20,12 +20,18 @@ future_mapply(
   future.lazy = FALSE,
   future.seed = FALSE,
   future.scheduling = 1,
-  future.chunk.size = NULL
+  future.chunk.size = NULL,
+  future.label = "future_mapply-\%d"
 )
 }
 \arguments{
 \item{f}{A function of the arity \eqn{k} if \code{future_Map()} is called with
 \eqn{k} arguments.}
+
+\item{future.label}{If a character string, then each future is assigned
+a label \code{sprintf(future.label, chunk_idx)}.  If TRUE, then the
+same as \code{future.label = "future_lapply-\%d"}.  If FALSE, no labels
+are assigned.}
 
 \item{FUN}{A function to apply, found via \code{\link[base:match.fun]{base::match.fun()}}.}
 

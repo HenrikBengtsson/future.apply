@@ -51,6 +51,11 @@
 #'        If `Inf`, then all elements are processed in a single future.
 #'        If `NULL`, then argument `future.scheduling` is used.
 #' 
+#' @param future.label If a character string, then each future is assigned
+#'        a label `sprintf(future.label, chunk_idx)`.  If TRUE, then the
+#'        same as `future.label = "future_lapply-%d"`.  If FALSE, no labels
+#'        are assigned.
+#'
 #' @return
 #' For `future_lapply()`, a list with same length and names as `X`.
 #' See [base::lapply()] for details.
@@ -134,7 +139,7 @@
 #' @importFrom future future resolve values as.FutureGlobals nbrOfWorkers getGlobalsAndPackages FutureError
 #' @importFrom utils head str
 #' @export
-future_lapply <- function(X, FUN, ..., future.stdout = TRUE, future.conditions = NULL, future.globals = TRUE, future.packages = NULL, future.lazy = FALSE, future.seed = FALSE, future.scheduling = 1.0, future.chunk.size = NULL) {
+future_lapply <- function(X, FUN, ..., future.stdout = TRUE, future.conditions = NULL, future.globals = TRUE, future.packages = NULL, future.lazy = FALSE, future.seed = FALSE, future.scheduling = 1.0, future.chunk.size = NULL, future.label = "future_lapply-%d") {
   stop_if_not(is.function(FUN))
   
   stop_if_not(is.logical(future.stdout), length(future.stdout) == 1L)
@@ -148,6 +153,9 @@ future_lapply <- function(X, FUN, ..., future.stdout = TRUE, future.conditions =
 
   stop_if_not(length(future.scheduling) == 1L, !is.na(future.scheduling),
             is.numeric(future.scheduling) || is.logical(future.scheduling))
+
+  stop_if_not(length(future.label) == 1L, !is.na(future.label),
+              is.logical(future.label) || is.character(future.label))
 
   ## Coerce to as.list()?
   if (!is.vector(X) || is.object(X)) X <- as.list(X)
@@ -247,6 +255,17 @@ future_lapply <- function(X, FUN, ..., future.stdout = TRUE, future.conditions =
   nchunks <- length(chunks)
   fs <- vector("list", length = nchunks)
   if (debug) mdebugf("Number of futures (= number of chunks): %d", nchunks)
+
+  ## Create labels?
+  if (isTRUE(future.label)) {
+    future.label <- "future_lapply-%d"
+  }
+  if (is.character(future.label)) {
+    labels <- sprintf(future.label, seq_len(nchunks))
+    stopifnot(length(labels) == nchunks)
+  } else {
+    labels <- NULL
+  }
   
   if (debug) mdebugf("Launching %d futures (chunks) ...", nchunks)
   for (ii in seq_along(chunks)) {
@@ -304,7 +323,7 @@ future_lapply <- function(X, FUN, ..., future.stdout = TRUE, future.conditions =
       if (debug) mdebugf(" - Adjusted option 'future.globals.maxSize': %g -> %d * %g = %g (bytes)", globals.maxSize.default, length(chunk), globals.maxSize.default, getOption("future.globals.maxSize"))
       on.exit(options(future.globals.maxSize = globals.maxSize), add = TRUE)
     }
-    
+        
     ## Using RNG seeds or not?
     if (is.null(seeds)) {
       if (debug) mdebug(" - seeds: <none>")
@@ -323,7 +342,8 @@ future_lapply <- function(X, FUN, ..., future.stdout = TRUE, future.conditions =
          conditions = future.conditions,
          globals = globals_ii, packages = packages_ii,
          seed = future.seed,
-         lazy = future.lazy)
+         lazy = future.lazy,
+	 label = labels[[ii]])
     } else {
       if (debug) mdebugf(" - seeds: [%d] <seeds>", length(chunk))
       globals_ii[["...future.seeds_ii"]] <- seeds[chunk]
@@ -343,7 +363,8 @@ future_lapply <- function(X, FUN, ..., future.stdout = TRUE, future.conditions =
          conditions = future.conditions,
          globals = globals_ii, packages = packages_ii,
          seed = NULL,  ## As seed=FALSE but without the RNG check
-         lazy = future.lazy)
+         lazy = future.lazy,
+	 label = labels[[ii]])
     }
     
     ## Not needed anymore

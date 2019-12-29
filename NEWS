@@ -3,6 +3,12 @@ Package: future.apply
 
 Version: 1.3.0-9000 [2019-12-28]
 
+NEW FEATURES:
+
+ * Now all future_nnn() functions set a label on each future that reflects the
+   name of the future_nnn() function and the index of the chunk. The format
+   can be controlled by argument 'future.label'.
+
 BUG FIXES:
 
  * future_lapply(X) and future_mapply(FUN, X) would drop 'names' argument of

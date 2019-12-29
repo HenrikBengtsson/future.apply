@@ -32,8 +32,7 @@
 #' @example incl/future_apply.R
 #' 
 #' @export
-future_apply <- function(X, MARGIN, FUN, ...)
-{
+future_apply <- function(X, MARGIN, FUN, ..., future.label = "future_apply-%d") {
     FUN <- match.fun(FUN)
 
     ## Ensure that X is an array object
@@ -86,7 +85,7 @@ future_apply <- function(X, MARGIN, FUN, ...)
     } else
         newX <- lapply(1L:d2, FUN = function(i)
                        array(newX[,i], dim = d.call, dimnames = dn.call))
-    ans <- future_lapply(newX, FUN = FUN, ...)
+    ans <- future_lapply(newX, FUN = FUN, ..., future.label = future.label)
     
     ## answer dims and dimnames
 

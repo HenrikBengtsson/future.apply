@@ -11,7 +11,14 @@
 \alias{future_vapply}
 \title{Apply a Function over a List or Vector via Futures}
 \usage{
-future_eapply(env, FUN, ..., all.names = FALSE, USE.NAMES = TRUE)
+future_eapply(
+  env,
+  FUN,
+  ...,
+  all.names = FALSE,
+  USE.NAMES = TRUE,
+  future.label = "future_eapply-\%d"
+)
 
 future_lapply(
   X,
@@ -24,16 +31,46 @@ future_lapply(
   future.lazy = FALSE,
   future.seed = FALSE,
   future.scheduling = 1,
-  future.chunk.size = NULL
+  future.chunk.size = NULL,
+  future.label = "future_lapply-\%d"
 )
 
-future_replicate(n, expr, simplify = "array", future.seed = TRUE, ...)
+future_replicate(
+  n,
+  expr,
+  simplify = "array",
+  future.seed = TRUE,
+  ...,
+  future.label = "future_replicate-\%d"
+)
 
-future_sapply(X, FUN, ..., simplify = TRUE, USE.NAMES = TRUE)
+future_sapply(
+  X,
+  FUN,
+  ...,
+  simplify = TRUE,
+  USE.NAMES = TRUE,
+  future.label = "future_sapply-\%d"
+)
 
-future_tapply(X, INDEX, FUN = NULL, ..., default = NA, simplify = TRUE)
+future_tapply(
+  X,
+  INDEX,
+  FUN = NULL,
+  ...,
+  default = NA,
+  simplify = TRUE,
+  future.label = "future_tapply-\%d"
+)
 
-future_vapply(X, FUN, FUN.VALUE, ..., USE.NAMES = TRUE)
+future_vapply(
+  X,
+  FUN,
+  FUN.VALUE,
+  ...,
+  USE.NAMES = TRUE,
+  future.label = "future_vapply-\%d"
+)
 }
 \arguments{
 \item{env}{An \R environment.}
@@ -45,6 +82,11 @@ that start with a period (\code{.}), otherwise not.
 See \code{\link[base:eapply]{base::eapply()}} for details.}
 
 \item{USE.NAMES}{See \code{\link[base:sapply]{base::sapply()}}.}
+
+\item{future.label}{If a character string, then each future is assigned
+a label \code{sprintf(future.label, chunk_idx)}.  If TRUE, then the
+same as \code{future.label = "future_lapply-\%d"}.  If FALSE, no labels
+are assigned.}
 
 \item{X}{A vector-like object to iterate over.}
 

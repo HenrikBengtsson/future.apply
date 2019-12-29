@@ -92,8 +92,6 @@ function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES = TRUE, future.st
   
   stop_if_not(is.logical(future.lazy), length(future.lazy) == 1L)
 
-  stop_if_not(!is.null(future.seed))
-  
   stop_if_not(length(future.scheduling) == 1L, !is.na(future.scheduling),
             is.numeric(future.scheduling) || is.logical(future.scheduling))
 
@@ -129,10 +127,14 @@ function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES = TRUE, future.st
   ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   seeds <- make_rng_seeds(nX, seed = future.seed, debug = debug)
   
-  ## If RNG seeds are used (given or generated), make sure to reset
-  ## the RNG state afterward
-  if (!is.null(seeds)) {
-    oseed <- next_random_seed()
+  if (is.null(seeds)) {
+    ## Pass down 'future.seed' to future()
+    stop_if_not(is.null(future.seed) || isFALSE(future.seed))
+    if (isFALSE(future.seed)) future.seed <- seed_FALSE
+  } else {
+    ## If RNG seeds are used (given or generated), make sure to reset
+    ## the RNG state afterward
+    oseed <- next_random_seed()    
     on.exit(set_random_seed(oseed))
   }
 
@@ -254,7 +256,7 @@ function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES = TRUE, future.st
          stdout = future.stdout,
          conditions = future.conditions,
          globals = globals_ii, packages = packages_ii,
-         seed = seed_FALSE,
+         seed = future.seed,
          lazy = future.lazy)
     } else {
       if (debug) mdebugf(" - seeds: [%d] <seeds>", length(chunk))

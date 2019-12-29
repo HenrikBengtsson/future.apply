@@ -100,9 +100,9 @@ as_lecyer_cmrg_seed <- function(seed) {
 make_rng_seeds <- function(count, seed = FALSE,
                            debug = getOption("future.debug", FALSE)) {
   ## Don't use RNGs? (seed = {FALSE, NA})
+  if (is.null(seed)) return(NULL)
   if (is.logical(seed) && (is.na(seed) || !seed)) return(NULL)
 
-  stop_if_not(!is.null(seed))
   stop_if_not(is.numeric(count), length(count) == 1L, !is.na(count),
               count >= 0L)
   

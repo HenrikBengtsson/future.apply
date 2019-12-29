@@ -140,3 +140,13 @@ stealth_sample.int <- function(n, size = n, replace = FALSE, ...) {
   })
   sample.int(n = n, size = size, replace = replace, ...)
 }
+
+
+#' @importFrom utils packageVersion
+future_version <- local({
+  ver <- NULL
+  function() {
+    if (is.null(ver)) ver <<- packageVersion("future")
+    ver
+  }
+})

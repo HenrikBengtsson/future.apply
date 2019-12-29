@@ -132,12 +132,9 @@
 #'
 #' @importFrom globals globalsByName
 #' @importFrom future future resolve values as.FutureGlobals nbrOfWorkers getGlobalsAndPackages FutureError
-#' @importFrom utils head str packageVersion
+#' @importFrom utils head str
 #' @export
-future_lapply <- local({
-  seed_FALSE <- if (packageVersion("future") > "1.15.1") FALSE else NULL
-
-function(X, FUN, ..., future.stdout = TRUE, future.conditions = NULL, future.globals = TRUE, future.packages = NULL, future.lazy = FALSE, future.seed = FALSE, future.scheduling = 1.0, future.chunk.size = NULL) {
+future_lapply <- function(X, FUN, ..., future.stdout = TRUE, future.conditions = NULL, future.globals = TRUE, future.packages = NULL, future.lazy = FALSE, future.seed = FALSE, future.scheduling = 1.0, future.chunk.size = NULL) {
   stop_if_not(is.function(FUN))
   
   stop_if_not(is.logical(future.stdout), length(future.stdout) == 1L)
@@ -194,7 +191,9 @@ function(X, FUN, ..., future.stdout = TRUE, future.conditions = NULL, future.glo
   if (is.null(seeds)) {
     ## Pass down 'future.seed' to future()
     stop_if_not(is.null(future.seed) || isFALSE(future.seed))
-    if (isFALSE(future.seed)) future.seed <- seed_FALSE
+    if (isFALSE(future.seed) && future_version() <= "1.15.1") {
+      future.seed <- NULL
+    }
   } else {
     ## If RNG seeds are used (given or generated), make sure to reset
     ## the RNG state afterward
@@ -410,4 +409,3 @@ function(X, FUN, ..., future.stdout = TRUE, future.conditions = NULL, future.glo
   
   values
 }
-})

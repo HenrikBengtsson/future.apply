@@ -148,7 +148,7 @@ future_lapply <- function(X, FUN, ..., future.stdout = TRUE, future.conditions =
   
   ## Nothing to do?
   nX <- length(X)
-  if (nX == 0L) return(X)
+  if (nX == 0L) return(as.list(X))
 
   debug <- getOption("future.debug", FALSE)
   

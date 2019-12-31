@@ -94,45 +94,6 @@ Run `revdep_details(,"disk.frame")` for more info
       could not find function "globalVariables"
     ```
 
-# fxtract
-
-<details>
-
-* Version: 0.9.2
-* Source code: https://github.com/cran/fxtract
-* URL: https://github.com/QuayAu/fxtract
-* BugReports: https://github.com/QuayAu/fxtract/issues
-* Date/Publication: 2019-07-03 15:50:06 UTC
-* Number of recursive dependencies: 72
-
-Run `revdep_details(,"fxtract")` for more info
-
-</details>
-
-## Newly broken
-
-*   checking tests ...
-    ```
-     ERROR
-    Running the tests in ‘tests/testthat.R’ failed.
-    Last 13 lines of output:
-        |                                                                            
-        |======================================================================| 100%
-      ── 2. Error: extract single features from single IDs (@test_xtractor.R#551)  ───
-      Input is character but should be a plain list of items to be stacked
-      Backtrace:
-       1. testthat::expect_equal(data.frame(x$results)$x, c(1, NA, NA))
-       9. data.table::rbindlist(results_feat, fill = TRUE)
-      
-      ══ testthat results  ═══════════════════════════════════════════════════════════
-      [ OK: 135 | SKIPPED: 0 | WARNINGS: 530 | FAILED: 2 ]
-      1. Error: calculate features (@test_xtractor.R#267) 
-      2. Error: extract single features from single IDs (@test_xtractor.R#551) 
-      
-      Error: testthat unit tests failed
-      Execution halted
-    ```
-
 # genBaRcode
 
 <details>
@@ -176,45 +137,6 @@ Run `revdep_details(,"grattan")` for more info
     ```
     Packages suggested but not available for checking:
       'taxstats', 'taxstats1516'
-    ```
-
-# GSODR
-
-<details>
-
-* Version: 2.0.0
-* Source code: https://github.com/cran/GSODR
-* URL: https://docs.ropensci.org/GSODR/
-* BugReports: https://github.com/ropensci/GSODR/issues
-* Date/Publication: 2019-09-04 20:50:10 UTC
-* Number of recursive dependencies: 122
-
-Run `revdep_details(,"GSODR")` for more info
-
-</details>
-
-## Newly broken
-
-*   checking tests ...
-    ```
-     ERROR
-    Running the tests in ‘tests/testthat.R’ failed.
-    Last 13 lines of output:
-      > test_check("GSODR")
-      ── 1. Error: when year is selected for a station not providing it, error (@test-
-      Input is character but should be a plain list of items to be stacked
-      Backtrace:
-       1. testthat::expect_message(...)
-       6. GSODR::get_GSOD(years = 1950, station = "959360-99999")
-       7. GSODR:::.apply_process_csv(file_list, isd_history)
-       8. data.table::rbindlist(x)
-      
-      ══ testthat results  ═══════════════════════════════════════════════════════════
-      [ OK: 31 | SKIPPED: 9 | WARNINGS: 0 | FAILED: 1 ]
-      1. Error: when year is selected for a station not providing it, error (@test-get_GSOD.R#249) 
-      
-      Error: testthat unit tests failed
-      Execution halted
     ```
 
 # gWQS

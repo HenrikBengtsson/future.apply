@@ -46,6 +46,9 @@
 #' @importFrom utils head str
 #' @export
 future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES = TRUE, future.stdout = TRUE, future.conditions = NULL, future.globals = TRUE, future.packages = NULL, future.lazy = FALSE, future.seed = FALSE, future.scheduling = 1.0, future.chunk.size = NULL, future.label = "future_mapply-%d") {
+  fcn_name <- "future_mapply"
+  args_name <- "..."
+  
   FUN <- match.fun(FUN)
   stop_if_not(is.function(FUN))
 
@@ -97,10 +100,10 @@ future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES 
 
   debug <- getOption("future.debug", FALSE)
   
-  if (debug) mdebug("future_mapply() ...")
+  if (debug) mdebugf("%s() ...", fcn_name)
 
   ## NOTE TO SELF: We'd ideally have a 'future.envir' argument also for
-  ## future_mapply(), cf. future().  However, it's not yet clear to me how
+  ## this function, cf. future().  However, it's not yet clear to me how
   ## to do this, because we need to have globalsOf() to search for globals
   ## from the current environment in order to identify the globals of 
   ## arguments 'FUN' and '...'. /HB 2017-03-10
@@ -127,19 +130,6 @@ future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES 
   ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   seeds <- make_rng_seeds(nX, seed = future.seed, debug = debug)
   
-  if (is.null(seeds)) {
-    ## Pass down 'future.seed' to future()
-    stop_if_not(is.null(future.seed) || isFALSE(future.seed))
-    if (isFALSE(future.seed) && future_version() <= "1.15.1") {
-      future.seed <- NULL
-    }
-  } else {
-    ## If RNG seeds are used (given or generated), make sure to reset
-    ## the RNG state afterward
-    oseed <- next_random_seed()    
-    on.exit(set_random_seed(oseed))
-  }
-
   
   ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   ## 4. Load balancing ("chunking")
@@ -171,6 +161,51 @@ future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES 
   attr(globals_extra, "total_size") <- 0
   globals <- c(globals, globals_extra)
 
+  ## Future expression (with or without setting the RNG state) and
+  ## pass possibly tweaked 'future.seed' to future()
+  if (is.null(seeds)) {
+    stop_if_not(is.null(future.seed) || isFALSE(future.seed))
+    if (isFALSE(future.seed) && future_version() <= "1.15.1") {
+      future.seed <- NULL
+    }
+  } else {
+    ## If RNG seeds are used (given or generated), make sure to reset
+    ## the RNG state afterward
+    oseed <- next_random_seed()    
+    on.exit(set_random_seed(oseed))
+    ## As seed=FALSE but without the RNG check
+    future.seed <- NULL
+  }
+  
+  if (is.null(seeds)) {
+     expr <- bquote({
+       ...future.globals.maxSize.org <- getOption("future.globals.maxSize")
+       if (!identical(...future.globals.maxSize.org, ...future.globals.maxSize)) {
+         oopts <- options(future.globals.maxSize = ...future.globals.maxSize)
+         on.exit(options(oopts), add = TRUE)
+       }
+       args <- c(list(FUN = ...future.FUN), ...future.elements_ii, MoreArgs = list(MoreArgs), SIMPLIFY = FALSE, USE.NAMES = FALSE)
+       do.call(mapply, args = args)
+     })
+  } else {
+    expr <- bquote({
+      ...future.globals.maxSize.org <- getOption("future.globals.maxSize")
+      if (!identical(...future.globals.maxSize.org, ...future.globals.maxSize)) {
+        oopts <- options(future.globals.maxSize = ...future.globals.maxSize)
+        on.exit(options(oopts), add = TRUE)
+      }
+      ...future.FUN2 <- function(..., ...future.seeds_ii_jj) {
+        assign(".Random.seed", ...future.seeds_ii_jj, envir = globalenv(), inherits = FALSE)
+        ...future.FUN(...)
+      }
+      args <- c(list(FUN = ...future.FUN2), ...future.elements_ii, list(...future.seeds_ii_jj = ...future.seeds_ii), MoreArgs, SIMPLIFY = FALSE, USE.NAMES = FALSE)
+      do.call(mapply, args = args)
+    })
+  }
+
+  args <- dots
+  get_chunk <- function(X, chunk) lapply(X, FUN = `[`, chunk)
+
   ## At this point a globals should be resolved and we should know their total size
 ##  stop_if_not(attr(globals, "resolved"), !is.na(attr(globals, "total_size")))
 
@@ -188,7 +223,7 @@ future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES 
 
   ## Create labels?
   if (isTRUE(future.label)) {
-    future.label <- "future_mapply-%d"
+    future.label <- sprintf("%s-%%d", fcn_name)
   }
   if (is.character(future.label)) {
     labels <- sprintf(future.label, seq_len(nchunks))
@@ -201,44 +236,46 @@ future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES 
   for (ii in seq_along(chunks)) {
     chunk <- chunks[[ii]]
     if (debug) mdebugf("Chunk #%d of %d ...", ii, length(chunks))
-    ## Subsetting outside future is more efficient
-    
-    dots_ii <- lapply(dots, FUN = `[`, chunk)
+
+    args_ii <- get_chunk(args, chunk)
     globals_ii <- globals
     ## Subsetting outside future is more efficient
-    globals_ii[["...future.elements_ii"]] <- dots_ii
+    globals_ii[["...future.elements_ii"]] <- args_ii
     packages_ii <- packages
 
     if (scanForGlobals) {
-      ## Search for globals in 'dots_ii':
-      gp <- getGlobalsAndPackages(dots_ii, envir = envir, globals = TRUE)
-      globals_dots <- gp$globals
-      packages_dots <- gp$packages
+      mdebugf(" - Finding globals in '%s' for chunk #%d ...", args_name, ii)
+      gp <- getGlobalsAndPackages(args_ii, envir = envir, globals = TRUE)
+      globals_args <- gp$globals
+      packages_args <- gp$packages
       gp <- NULL
 
       if (debug) {
-        mdebugf(" - globals found in '...' for chunk #%d: [%d] %s", chunk, length(globals_dots), hpaste(sQuote(names(globals_dots))))
-        mdebugf(" - needed namespaces for '...' for chunk #%d: [%d] %s", chunk, length(packages_dots), hpaste(sQuote(packages_dots)))
+        mdebugf("   + globals found in '%s' for chunk #%d: [%d] %s",
+	        args_name, chunk, length(globals_args), hpaste(sQuote(names(globals_args))))
+        mdebugf("   + needed namespaces for '%s' for chunk #%d: [%d] %s",
+	        args_name, chunk, length(packages_args), hpaste(sQuote(packages_args)))
       }
     
-      ## Export also globals found in 'dots_ii'
-      if (length(globals_dots) > 0L) {
+      ## Export also globals found in arguments?
+      if (length(globals_args) > 0L) {
         reserved <- intersect(c("...future.FUN", "...future.elements_ii",
-                                "...future.seeds_ii"), names(globals_dots))
+                                "...future.seeds_ii"), names(globals_args))
         if (length(reserved) > 0) {
-          stop("Detected globals in '...' using reserved variables names: ",
-               paste(sQuote(reserved), collapse = ", "))
+          stop("Detected globals in '%s' using reserved variables names: ",
+               args_name, paste(sQuote(reserved), collapse = ", "))
         }
-        globals_dots <- as.FutureGlobals(globals_dots)
-        globals_ii <- unique(c(globals_ii, globals_dots))
+        globals_args <- as.FutureGlobals(globals_args)
+        globals_ii <- unique(c(globals_ii, globals_args))
 
-        ## Packages needed due to globals in 'dots_ii'?
-        if (length(packages_dots) > 0L)
-          packages_ii <- unique(c(packages_ii, packages_dots))
+        ## Packages needed due to globals in arguments?
+        if (length(packages_args) > 0L)
+          packages_ii <- unique(c(packages_ii, packages_args))
       }
+      mdebugf(" - Finding globals in '%s' for chunk #%d ... DONE", args_name, ii)
     }
     
-
+    args_ii <- NULL    
 ##    stop_if_not(attr(globals_ii, "resolved"))
 
     ## Adjust option 'future.globals.maxSize' to account for the fact that more
@@ -256,46 +293,22 @@ future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES 
     ## Using RNG seeds or not?
     if (is.null(seeds)) {
       if (debug) mdebug(" - seeds: <none>")
-      fs[[ii]] <- future({
-        ...future.globals.maxSize.org <- getOption("future.globals.maxSize")
-        if (!identical(...future.globals.maxSize.org, ...future.globals.maxSize)) {
-          oopts <- options(future.globals.maxSize = ...future.globals.maxSize)
-          on.exit(options(oopts), add = TRUE)
-        }
-        args <- c(list(FUN = ...future.FUN), ...future.elements_ii, MoreArgs = list(MoreArgs), SIMPLIFY = FALSE, USE.NAMES = FALSE)
-        res <- do.call(mapply, args = args)
-        res
-      }, envir = envir,
-         stdout = future.stdout,
-         conditions = future.conditions,
-         globals = globals_ii, packages = packages_ii,
-         seed = future.seed,
-         lazy = future.lazy,
-         label = labels[ii])
     } else {
       if (debug) mdebugf(" - seeds: [%d] <seeds>", length(chunk))
       globals_ii[["...future.seeds_ii"]] <- seeds[chunk]
-      fs[[ii]] <- future({
-        ...future.globals.maxSize.org <- getOption("future.globals.maxSize")
-        if (!identical(...future.globals.maxSize.org, ...future.globals.maxSize)) {
-          oopts <- options(future.globals.maxSize = ...future.globals.maxSize)
-          on.exit(options(oopts), add = TRUE)
-        }
-        ...future.FUN2 <- function(..., ...future.seeds_ii_jj) {
-          assign(".Random.seed", ...future.seeds_ii_jj, envir = globalenv(), inherits = FALSE)
-          ...future.FUN(...)
-        }
-        args <- c(list(FUN = ...future.FUN2), ...future.elements_ii, list(...future.seeds_ii_jj = ...future.seeds_ii), MoreArgs, SIMPLIFY = FALSE, USE.NAMES = FALSE)
-        do.call(mapply, args = args)
-      }, envir = envir,
-         stdout = future.stdout,
-         conditions = future.conditions,
-         globals = globals_ii, packages = packages_ii,
-         seed = NULL,  ## As seed=FALSE but without the RNG check
-         lazy = future.lazy,
-         label = labels[ii])
     }
-    
+
+    fs[[ii]] <- future(
+      expr, substitute = FALSE,
+      envir = envir,
+      stdout = future.stdout,
+      conditions = future.conditions,
+      globals = globals_ii, packages = packages_ii,
+      seed = future.seed,
+      lazy = future.lazy,
+      label = labels[ii]
+    )
+
     ## Not needed anymore
     rm(list = c("chunk", "globals_ii"))
 
@@ -308,8 +321,9 @@ future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES 
 
   ## 4. Resolving futures
   if (debug) mdebugf("Resolving %d futures (chunks) ...", nchunks)
-  
+
   values <- values(fs)
+
   ## Not needed anymore
   rm(list = "fs")
 
@@ -322,6 +336,7 @@ future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES 
   stop_if_not(length(values) == nchunks)
   
   if (debug) mdebugf("Reducing values from %d chunks ...", nchunks)
+
   values2 <- do.call(c, args = values)
   
   if (debug) {
@@ -330,7 +345,7 @@ future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES 
     mdebugf(" - Number of values expected: %d", nX)
   }
 
-  assert_values2(nX, values, values2, fcn = "future_mapply()", debug = debug)
+  assert_values2(nX, values, values2, fcn_name = fcn_name, debug = debug)
   values <- values2
   rm(list = "values2")
   
@@ -362,7 +377,7 @@ future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES 
   
   if (debug) mdebugf("Reducing values from %d chunks ... DONE", nchunks)
   
-  if (debug) mdebug("future_mapply() ... DONE")
+  if (debug) mdebugf("%s() ... DONE", fcn_name)
   
   values
 }

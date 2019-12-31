@@ -49,71 +49,6 @@ Run `revdep_details(,"blavaan")` for more info
     GNU make is a SystemRequirements.
     ```
 
-# DeclareDesign
-
-<details>
-
-* Version: 0.20.0
-* Source code: https://github.com/cran/DeclareDesign
-* URL: https://declaredesign.org, https://github.com/DeclareDesign/DeclareDesign
-* BugReports: https://github.com/DeclareDesign/DeclareDesign/issues
-* Date/Publication: 2019-09-10 15:10:02 UTC
-* Number of recursive dependencies: 133
-
-Run `revdep_details(,"DeclareDesign")` for more info
-
-</details>
-
-## Newly broken
-
-*   checking examples ... ERROR
-    ```
-    ...
-    
-    > ### Name: compare_diagnoses
-    > ### Title: Compare Diagnoses
-    > ### Aliases: compare_diagnoses
-    > 
-    > ### ** Examples
-    > 
-    > design_a <- declare_population(N = 100, u = rnorm(N)) +
-    + declare_potential_outcomes(
-    +   Y_Z_0 = u,
-    +   Y_Z_1 = u + rnorm(N, mean = 2, sd = 2)) +
-    + declare_assignment(prob = 0.5) +
-    + declare_estimand(ATE = mean(Y_Z_1 - Y_Z_0)) +
-    + declare_reveal() +
-    + declare_estimator(Y ~ Z, estimand = "ATE")
-    > 
-    > design_b <- replace_step(design_a, step = "assignment", declare_assignment(prob = 0.3) )
-    > 
-    > comparison <- compare_diagnoses(design_a, design_b, sims = 40)
-    Error: ‘is.null(future.seed) || isFALSE(future.seed)’ is not TRUE
-    Execution halted
-    ```
-
-*   checking tests ...
-    ```
-     ERROR
-    Running the tests in ‘tests/testthat.R’ failed.
-    Last 13 lines of output:
-      ══ testthat results  ═══════════════════════════════════════════════════════════
-      [ OK: 369 | SKIPPED: 5 | WARNINGS: 20 | FAILED: 47 ]
-      1. Error: test diagnosands (@test-bootstrap-diagnosands.R#32) 
-      2. Error: compare_designs works (@test-compare-designs.R#35) 
-      3. Error: (unknown) (@test-compare-diagnoses.R#14) 
-      4. Error: s3 dispatch works (@test-diagnosands.R#33) 
-      5. Error: Diagnosis prints ok (@test-diagnosands.R#74) 
-      6. Error: test diagnosands without estimands (@test-diagnosands.R#90) 
-      7. Error: custom diagnosand function (@test-diagnosands.R#103) 
-      8. Error: single diagnosand function (@test-diagnosands.R#115) 
-      9. Error: diagnosis, list of designs (@test-diagnosands.R#142) 
-      1. ...
-      
-      Error: testthat unit tests failed
-      Execution halted
-    ```
-
 # dipsaus
 
 <details>
@@ -190,7 +125,7 @@ Run `revdep_details(,"fxtract")` for more info
        9. data.table::rbindlist(results_feat, fill = TRUE)
       
       ══ testthat results  ═══════════════════════════════════════════════════════════
-      [ OK: 135 | SKIPPED: 0 | WARNINGS: 0 | FAILED: 2 ]
+      [ OK: 135 | SKIPPED: 0 | WARNINGS: 530 | FAILED: 2 ]
       1. Error: calculate features (@test_xtractor.R#267) 
       2. Error: extract single features from single IDs (@test_xtractor.R#551) 
       

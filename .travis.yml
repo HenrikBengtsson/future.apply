@@ -30,6 +30,8 @@ matrix:
         - R_FUTURE_PLAN=multisession
     - os: linux
       r: release
+      r_github_packages:
+        - HenrikBengtsson/future@develop
       env:
         - R_FUTURE_GLOBALS_ONREFERENCE=warning
         - R_FUTURE_RNG_ONMISUSE=error

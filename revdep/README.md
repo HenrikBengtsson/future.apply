@@ -10,17 +10,17 @@
 |collate  |en_US.UTF-8                  |
 |ctype    |en_US.UTF-8                  |
 |tz       |America/Los_Angeles          |
-|date     |2019-12-31                   |
+|date     |2020-01-06                   |
 
 # Dependencies
 
-|package      |old    |new        |Δ  |
-|:------------|:------|:----------|:--|
-|future.apply |1.3.0  |1.3.0-9000 |*  |
-|digest       |0.6.23 |0.6.23     |   |
-|future       |1.15.1 |1.15.1     |   |
-|globals      |0.12.5 |0.12.5     |   |
-|listenv      |0.8.0  |0.8.0      |   |
+|package      |old    |new    |Δ  |
+|:------------|:------|:------|:--|
+|future.apply |1.3.0  |1.4.0  |*  |
+|digest       |0.6.23 |0.6.23 |   |
+|future       |1.15.1 |1.15.1 |   |
+|globals      |0.12.5 |0.12.5 |   |
+|listenv      |0.8.0  |0.8.0  |   |
 
 # Revdeps
 

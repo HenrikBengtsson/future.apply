@@ -4,7 +4,15 @@
 \alias{future_apply}
 \title{Apply Functions Over Array Margins via Futures}
 \usage{
-future_apply(X, MARGIN, FUN, ...)
+future_apply(
+  X,
+  MARGIN,
+  FUN,
+  ...,
+  future.globals = TRUE,
+  future.packages = NULL,
+  future.label = "future_apply-\%d"
+)
 }
 \arguments{
 \item{X}{an array, including a matrix.}
@@ -17,8 +25,19 @@ dimension names.}
 
 \item{FUN}{A function taking at least one argument.}
 
+\item{future.globals}{A logical, a character vector, or a named list for
+controlling how globals are handled. For details, see below section.}
+
+\item{future.packages}{(optional) a character vector specifying packages
+to be attached in the R environment evaluating the future.}
+
+\item{future.label}{If a character string, then each future is assigned
+a label \code{sprintf(future.label, chunk_idx)}.  If TRUE, then the
+same as \code{future.label = "future_lapply-\%d"}.  If FALSE, no labels
+are assigned.}
+
 \item{\ldots}{(optional) Additional arguments passed to \code{FUN()}, except
-\code{future.*} arguments, which are passed on to \code{future_lapply()} used
+\verb{future.*} arguments, which are passed on to \code{future_lapply()} used
 internally.}
 }
 \value{

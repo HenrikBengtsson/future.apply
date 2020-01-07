@@ -82,6 +82,27 @@ for (cores in 1:availCores) {
 } ## for (cores ...)
 
 
+message("*** future_lapply() - special cases ...")
+
+X <- list()
+names(X) <- character(0L)
+y <- future_lapply(X, FUN = identity)
+stopifnot(length(y) == 0L, !is.null(names(y)), identical(y, X))
+
+X <- character(0L)
+y0 <- lapply(X, FUN = identity)
+y <- future_lapply(X, FUN = identity)
+stopifnot(identical(y, y0))
+
+X <- character(0L)
+names(X) <- character(0L)
+y0 <- lapply(X, FUN = identity)
+y <- future_lapply(X, FUN = identity)
+stopifnot(identical(y, y0))
+
+message("*** future_lapply() - special cases ... DONE")
+
+
 message("*** future_lapply() - exceptions ...")
 
 res <- tryCatch({

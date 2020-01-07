@@ -51,6 +51,11 @@
 #'        If `Inf`, then all elements are processed in a single future.
 #'        If `NULL`, then argument `future.scheduling` is used.
 #' 
+#' @param future.label If a character string, then each future is assigned
+#'        a label `sprintf(future.label, chunk_idx)`.  If TRUE, then the
+#'        same as `future.label = "future_lapply-%d"`.  If FALSE, no labels
+#'        are assigned.
+#'
 #' @return
 #' For `future_lapply()`, a list with same length and names as `X`.
 #' See [base::lapply()] for details.
@@ -134,36 +139,23 @@
 #' @importFrom future future resolve values as.FutureGlobals nbrOfWorkers getGlobalsAndPackages FutureError
 #' @importFrom utils head str
 #' @export
-future_lapply <- function(X, FUN, ..., future.stdout = TRUE, future.conditions = NULL, future.globals = TRUE, future.packages = NULL, future.lazy = FALSE, future.seed = FALSE, future.scheduling = 1.0, future.chunk.size = NULL) {
-  stop_if_not(is.function(FUN))
-  
-  stop_if_not(is.logical(future.stdout), length(future.stdout) == 1L)
-
-  ## FIXME: Memoize the result
-  if (is.null(future.conditions)) {
-    future.conditions <- eval(formals(Future)[["conditions"]])
-  }
-  
-  stop_if_not(is.logical(future.lazy), length(future.lazy) == 1L)
-
-  stop_if_not(!is.null(future.seed))
-  
-  stop_if_not(length(future.scheduling) == 1, !is.na(future.scheduling),
-            is.numeric(future.scheduling) || is.logical(future.scheduling))
+future_lapply <- function(X, FUN, ..., future.stdout = TRUE, future.conditions = NULL, future.globals = TRUE, future.packages = NULL, future.lazy = FALSE, future.seed = FALSE, future.scheduling = 1.0, future.chunk.size = NULL, future.label = "future_lapply-%d") {
+  fcn_name <- "future_lapply"
+  args_name <- "X"
 
   ## Coerce to as.list()?
   if (!is.vector(X) || is.object(X)) X <- as.list(X)
   
   ## Nothing to do?
   nX <- length(X)
-  if (nX == 0) return(list())
+  if (nX == 0L) return(as.list(X))
 
   debug <- getOption("future.debug", FALSE)
   
-  if (debug) mdebug("future_lapply() ...")
+  if (debug) mdebugf("%s() ...", fcn_name)
 
   ## NOTE TO SELF: We'd ideally have a 'future.envir' argument also for
-  ## future_lapply(), cf. future().  However, it's not yet clear to me how
+  ## this function, cf. future().  However, it's not yet clear to me how
   ## to do this, because we need to have globalsOf() to search for globals
   ## from the current environment in order to identify the globals of 
   ## arguments 'FUN' and '...'. /HB 2017-03-10
@@ -172,233 +164,56 @@ future_lapply <- function(X, FUN, ..., future.stdout = TRUE, future.conditions =
   envir <- future.envir
   
   ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  ## 1. Globals and Packages
+  ## Future expression
   ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  gp <- getGlobalsAndPackagesXApply(FUN = FUN,
-                                    args = list(...),
-                                    envir = envir,
-                                    future.globals = future.globals,
-                                    future.packages = future.packages,
-                                    debug = debug)
-  packages <- gp$packages
-  globals <- gp$globals
-  scanForGlobals <- gp$scanForGlobals
-  gp <- NULL
-
-  ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  ## 3. Reproducible RNG (for sequential and parallel processing)
-  ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  seeds <- make_rng_seeds(nX, seed = future.seed, debug = debug)
-
-  ## If RNG seeds are used (given or generated), make sure to reset
-  ## the RNG state afterward
-  if (!is.null(seeds)) {
-    oseed <- next_random_seed()
-    on.exit(set_random_seed(oseed))
+  if (is.null(future.seed) || isFALSE(future.seed) || isNA(future.seed)) {
+    ## Don't set .Random.seed
+    seedExpr <- NULL
+  } else {
+    ## Set .Random.seed
+    seedExpr <- quote(assign(".Random.seed", ...future.seeds_ii[[jj]], envir = globalenv(), inherits = FALSE))
   }
   
-  
+  expr <- bquote({
+    lapply(seq_along(...future.elements_ii), FUN = function(jj) {
+       ...future.X_jj <- ...future.elements_ii[[jj]]
+       .(seedExpr)
+       ...future.FUN(...future.X_jj, ...)
+    })
+  })
+
+
   ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  ## 4. Load balancing ("chunking")
+  ## Process
   ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  chunks <- makeChunks(nX,
-                       nbrOfWorkers = nbrOfWorkers(),
-                       future.scheduling = future.scheduling,
-                       future.chunk.size = future.chunk.size)
-  if (debug) mdebugf("Number of chunks: %d", length(chunks))
+  values <- future_xapply(
+    FUN = FUN,
+    nX = nX,
+    chunk_args = X,
+    args = list(...),
+    get_chunk = `[`,
+    expr = expr,
+    envir = envir,
+    future.globals = future.globals,
+    future.packages = future.packages,
+    future.scheduling = future.scheduling,
+    future.chunk.size = future.chunk.size,
+    future.stdout = future.stdout,
+    future.conditions = future.conditions,
+    future.seed = future.seed,
+    future.lazy = future.lazy,
+    future.label = future.label,
+    fcn_name = fcn_name,
+    args_name = args_name,
+    debug = debug
+  )
 
-  ## Process elements in a custom order?
-  ordering <- attr(chunks, "ordering")
-  if (!is.null(ordering)) {
-    if (debug) mdebugf("Index remapping (attribute 'ordering'): [n = %d] %s", length(ordering), hpaste(ordering))
-    chunks <- lapply(chunks, FUN = function(idxs) .subset(ordering, idxs))
-  }
-  
-  
   ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  ## 5. Create futures
+  ## Reduce
   ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  ## Add argument placeholders
-  globals_extra <- as.FutureGlobals(list(
-    ...future.elements_ii = NULL,
-    ...future.seeds_ii = NULL,
-    ...future.globals.maxSize = NULL
-  ))
-  attr(globals_extra, "resolved") <- TRUE
-  attr(globals_extra, "total_size") <- 0
-  globals <- c(globals, globals_extra)
-
-  
-  ## At this point a globals should be resolved and we should know their total size
-##  stop_if_not(attr(globals, "resolved"), !is.na(attr(globals, "total_size")))
-
-  ## To please R CMD check
-  ...future.FUN <- ...future.elements_ii <- ...future.seeds_ii <-
-                   ...future.globals.maxSize <- NULL
-
-  globals.maxSize <- getOption("future.globals.maxSize")
-  globals.maxSize.default <- globals.maxSize
-  if (is.null(globals.maxSize.default)) globals.maxSize.default <- 500 * 1024^2
-  
-  nchunks <- length(chunks)
-  fs <- vector("list", length = nchunks)
-  if (debug) mdebugf("Number of futures (= number of chunks): %d", nchunks)
-  
-  if (debug) mdebugf("Launching %d futures (chunks) ...", nchunks)
-  for (ii in seq_along(chunks)) {
-    chunk <- chunks[[ii]]
-    if (debug) mdebugf("Chunk #%d of %d ...", ii, length(chunks))
-
-    X_ii <- X[chunk]
-    globals_ii <- globals
-    ## Subsetting outside future is more efficient
-    globals_ii[["...future.elements_ii"]] <- X_ii
-    packages_ii <- packages
-
-    if (scanForGlobals) {
-      mdebugf(" - Finding globals in 'X' for chunk #%d ...", ii)
-      ## Search for globals in 'X_ii':
-      gp <- getGlobalsAndPackages(X_ii, envir = envir, globals = TRUE)
-      globals_X <- gp$globals
-      packages_X <- gp$packages
-      gp <- NULL
-
-      if (debug) {
-        mdebugf("   + globals found in 'X' for chunk #%d: [%d] %s", chunk, length(globals_X), hpaste(sQuote(names(globals_X))))
-        mdebugf("   + needed namespaces for 'X' for chunk #%d: [%d] %s", chunk, length(packages_X), hpaste(sQuote(packages_X)))
-      }
-    
-      ## Export also globals found in 'X_ii'
-      if (length(globals_X) > 0L) {
-        reserved <- intersect(c("...future.FUN", "...future.elements_ii",
-                                "...future.seeds_ii"), names(globals_X))
-        if (length(reserved) > 0) {
-          stop("Detected globals in 'X' using reserved variables names: ",
-               paste(sQuote(reserved), collapse = ", "))
-        }
-        globals_X <- as.FutureGlobals(globals_X)
-        globals_ii <- unique(c(globals_ii, globals_X))
-
-        ## Packages needed due to globals in 'X_ii'?
-        if (length(packages_X) > 0L)
-          packages_ii <- unique(c(packages_ii, packages_X))
-      }
-      mdebugf(" - Finding globals in 'X' for chunk #%d ... DONE", ii)
-    }
-    
-    X_ii <- NULL
-##    stop_if_not(attr(globals_ii, "resolved"))
-
-    ## Adjust option 'future.globals.maxSize' to account for the fact that more
-    ## than one element is processed per future.  The adjustment is done by
-    ## scaling up the limit by the number of elements in the chunk.  This is
-    ## a "good enough" approach.
-    ## (https://github.com/HenrikBengtsson/future.apply/issues/8).
-    if (length(chunk) > 1L) {
-      globals_ii["...future.globals.maxSize"] <- list(globals.maxSize)
-      options(future.globals.maxSize = length(chunk) * globals.maxSize.default)
-      if (debug) mdebugf(" - Adjusted option 'future.globals.maxSize': %g -> %d * %g = %g (bytes)", globals.maxSize.default, length(chunk), globals.maxSize.default, getOption("future.globals.maxSize"))
-      on.exit(options(future.globals.maxSize = globals.maxSize), add = TRUE)
-    }
-    
-    ## Using RNG seeds or not?
-    if (is.null(seeds)) {
-      if (debug) mdebug(" - seeds: <none>")
-      fs[[ii]] <- future({
-        ...future.globals.maxSize.org <- getOption("future.globals.maxSize")
-        if (!identical(...future.globals.maxSize.org, ...future.globals.maxSize)) {
-          oopts <- options(future.globals.maxSize = ...future.globals.maxSize)
-          on.exit(options(oopts), add = TRUE)
-        }
-        lapply(seq_along(...future.elements_ii), FUN = function(jj) {
-           ...future.X_jj <- ...future.elements_ii[[jj]]
-           ...future.FUN(...future.X_jj, ...)
-        })
-      }, envir = envir,
-         stdout = future.stdout,
-         conditions = future.conditions,
-         globals = globals_ii, packages = packages_ii,
-         lazy = future.lazy)
-    } else {
-      if (debug) mdebugf(" - seeds: [%d] <seeds>", length(chunk))
-      globals_ii[["...future.seeds_ii"]] <- seeds[chunk]
-      fs[[ii]] <- future({
-        ...future.globals.maxSize.org <- getOption("future.globals.maxSize")
-        if (!identical(...future.globals.maxSize.org, ...future.globals.maxSize)) {
-          oopts <- options(future.globals.maxSize = ...future.globals.maxSize)
-          on.exit(options(oopts), add = TRUE)
-        }
-        lapply(seq_along(...future.elements_ii), FUN = function(jj) {
-           ...future.X_jj <- ...future.elements_ii[[jj]]
-           assign(".Random.seed", ...future.seeds_ii[[jj]], envir = globalenv(), inherits = FALSE)
-           ...future.FUN(...future.X_jj, ...)
-        })
-      }, envir = envir,
-         stdout = future.stdout,
-         conditions = future.conditions,
-         globals = globals_ii, packages = packages_ii,
-         lazy = future.lazy)
-    }
-    
-    ## Not needed anymore
-    rm(list = c("chunk", "globals_ii"))
-
-    if (debug) mdebugf("Chunk #%d of %d ... DONE", ii, nchunks)
-  } ## for (ii ...)
-  if (debug) mdebugf("Launching %d futures (chunks) ... DONE", nchunks)
-
-  ## Not needed anymore
-  rm(list = c("chunks", "globals", "envir"))
-
-
-  ## 4. Resolving futures
-  if (debug) mdebugf("Resolving %d futures (chunks) ...", nchunks)
-  
-  values <- values(fs)
-  ## Not needed anymore
-  rm(list = "fs")
-
-  if (debug) {
-    mdebugf(" - Number of value chunks collected: %d", length(values))
-    mdebugf("Resolving %d futures (chunks) ... DONE", nchunks)
-  }
-
-  ## Sanity check
-  stop_if_not(length(values) == nchunks)
-  
-  if (debug) mdebugf("Reducing values from %d chunks ...", nchunks)
-   
-  values2 <- do.call(c, args = values)
-  
-  if (debug) {
-    mdebugf(" - Number of values collected after concatenation: %d",
-           length(values2))
-    mdebugf(" - Number of values expected: %d", nX)
-  }
-
-  assert_values2(nX, values, values2, fcn = "future_lapply()", debug = debug)
-  values <- values2
-  rm(list = "values2")
-  
-  ## Sanity check (this may happen if the future backend is broken)
-  stop_if_not(length(values) == nX)
-
-  ## Were elements processed in a custom order?
-  if (length(values) > 1L && !is.null(ordering)) {
-    invOrdering <- vector(mode(ordering), length = nX)
-    idx <- 1:nX
-    invOrdering[.subset(ordering, idx)] <- idx
-    rm(list = c("ordering", "idx"))
-    if (debug) mdebugf("Reverse index remapping (attribute 'ordering'): [n = %d] %s", length(invOrdering), hpaste(invOrdering))
-    values <- .subset(values, invOrdering)
-    rm(list = c("invOrdering"))
-  }
-
   names(values) <- names(X)
 
-  if (debug) mdebugf("Reducing values from %d chunks ... DONE", nchunks)
-  
-  if (debug) mdebug("future_lapply() ... DONE")
+  if (debug) mdebugf("%s() ... DONE", fcn_name)
   
   values
 }

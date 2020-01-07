@@ -79,7 +79,7 @@ message("* future_lapply(x, ..., future.seed = FALSE) ... DONE")
 
 seed_sets <- list(
   A = TRUE,
-  B = NA,
+##  B = NA,
   C = 42L,
   D = as_lecyer_cmrg_seed(42L),
   E = list(),

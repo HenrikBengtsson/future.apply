@@ -4,8 +4,12 @@
 \alias{makeChunks}
 \title{Create Chunks of Index Vectors}
 \usage{
-makeChunks(nbrOfElements, nbrOfWorkers, future.scheduling = 1,
-  future.chunk.size = NULL)
+makeChunks(
+  nbrOfElements,
+  nbrOfWorkers,
+  future.scheduling = 1,
+  future.chunk.size = NULL
+)
 }
 \arguments{
 \item{nbrOfElements}{(integer) Total number of elements to iterate over.}

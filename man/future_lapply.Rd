@@ -11,21 +11,66 @@
 \alias{future_vapply}
 \title{Apply a Function over a List or Vector via Futures}
 \usage{
-future_eapply(env, FUN, ..., all.names = FALSE, USE.NAMES = TRUE)
+future_eapply(
+  env,
+  FUN,
+  ...,
+  all.names = FALSE,
+  USE.NAMES = TRUE,
+  future.label = "future_eapply-\%d"
+)
 
-future_lapply(X, FUN, ..., future.stdout = TRUE,
-  future.conditions = NULL, future.globals = TRUE,
-  future.packages = NULL, future.lazy = FALSE, future.seed = FALSE,
-  future.scheduling = 1, future.chunk.size = NULL)
+future_lapply(
+  X,
+  FUN,
+  ...,
+  future.stdout = TRUE,
+  future.conditions = NULL,
+  future.globals = TRUE,
+  future.packages = NULL,
+  future.lazy = FALSE,
+  future.seed = FALSE,
+  future.scheduling = 1,
+  future.chunk.size = NULL,
+  future.label = "future_lapply-\%d"
+)
 
-future_replicate(n, expr, simplify = "array", future.seed = TRUE, ...)
+future_replicate(
+  n,
+  expr,
+  simplify = "array",
+  future.seed = TRUE,
+  ...,
+  future.label = "future_replicate-\%d"
+)
 
-future_sapply(X, FUN, ..., simplify = TRUE, USE.NAMES = TRUE)
+future_sapply(
+  X,
+  FUN,
+  ...,
+  simplify = TRUE,
+  USE.NAMES = TRUE,
+  future.label = "future_sapply-\%d"
+)
 
-future_tapply(X, INDEX, FUN = NULL, ..., default = NA,
-  simplify = TRUE)
+future_tapply(
+  X,
+  INDEX,
+  FUN = NULL,
+  ...,
+  default = NA,
+  simplify = TRUE,
+  future.label = "future_tapply-\%d"
+)
 
-future_vapply(X, FUN, FUN.VALUE, ..., USE.NAMES = TRUE)
+future_vapply(
+  X,
+  FUN,
+  FUN.VALUE,
+  ...,
+  USE.NAMES = TRUE,
+  future.label = "future_vapply-\%d"
+)
 }
 \arguments{
 \item{env}{An \R environment.}
@@ -37,6 +82,11 @@ that start with a period (\code{.}), otherwise not.
 See \code{\link[base:eapply]{base::eapply()}} for details.}
 
 \item{USE.NAMES}{See \code{\link[base:sapply]{base::sapply()}}.}
+
+\item{future.label}{If a character string, then each future is assigned
+a label \code{sprintf(future.label, chunk_idx)}.  If TRUE, then the
+same as \code{future.label = "future_lapply-\%d"}.  If FALSE, no labels
+are assigned.}
 
 \item{X}{A vector-like object to iterate over.}
 
@@ -98,8 +148,8 @@ logical < integer < double < complex, but not demoted.
 See \code{\link[base:vapply]{base::vapply()}} for details.}
 
 \item{\ldots}{(optional) Additional arguments passed to \code{FUN()}.
-For \code{future_*apply()} functions and \code{replicate()}, any \code{future.*} arguments
-part of \code{\ldots} are passed on to \code{future_lapply()} used internally.}
+For \code{future_*apply()} functions and \code{replicate()}, any \verb{future.*} arguments
+part of \verb{\\ldots} are passed on to \code{future_lapply()} used internally.}
 }
 \value{
 A named (unless \code{USE.NAMES = FALSE}) list.
@@ -143,7 +193,7 @@ If \code{TRUE}, \code{NULL} or not is specified (default), then globals
 are automatically identified and gathered.
 If a character vector of names is specified, then those globals are gathered.
 If a named list, then those globals are used as is.
-In all cases, \code{FUN} and any \code{\ldots} arguments are automatically
+In all cases, \code{FUN} and any \verb{\\ldots} arguments are automatically
 passed as globals to each future created as they are always needed.
 }
 
@@ -173,9 +223,9 @@ sequence of RNG seeds as a list such that
 \code{length(future.seed) == length(X)} and where each element is an
 integer seed vector that can be assigned to
 \code{\link[base:Random]{.Random.seed}}.  One approach to generate a
-set of valid RNG seeds based on fixed initial seed (here \code{42L}) is:\preformatted{seeds <- future_lapply(seq_along(X), FUN = function(x) .Random.seed,
+set of valid RNG seeds based on fixed initial seed (here \code{42L}) is:\if{html}{\out{<div class="r">}}\preformatted{seeds <- future_lapply(seq_along(X), FUN = function(x) .Random.seed,
                        future.chunk.size = Inf, future.seed = 42L)
-}
+}\if{html}{\out{</div>}}
 
 \strong{Note that \code{as.list(seq_along(X))} is \emph{not} a valid set of such
 \code{.Random.seed} values.}
@@ -247,6 +297,20 @@ str(y2)
 
 stopifnot(all.equal(y1, y2))
 }
+
+
+## ---------------------------------------------------------
+## Process chunks of data.frame rows in parallel
+## ---------------------------------------------------------
+iris <- datasets::iris
+chunks <- split(iris, seq(1, nrow(iris), length.out = 3L))
+y0 <- lapply(chunks, FUN = function(iris) sum(iris$Sepal.Length))
+y0 <- do.call(sum, y0)
+y1 <- future_lapply(chunks, FUN = function(iris) sum(iris$Sepal.Length))
+y1 <- do.call(sum, y1)
+print(y1)
+stopifnot(all.equal(y1, y0))
+
 
 \dontshow{
 ## R CMD check: make sure any open connections are closed afterward

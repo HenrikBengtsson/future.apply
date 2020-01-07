@@ -36,6 +36,20 @@ str(y2)
 stopifnot(all.equal(y1, y2))
 }
 
+
+## ---------------------------------------------------------
+## Process chunks of data.frame rows in parallel
+## ---------------------------------------------------------
+iris <- datasets::iris
+chunks <- split(iris, seq(1, nrow(iris), length.out = 3L))
+y0 <- lapply(chunks, FUN = function(iris) sum(iris$Sepal.Length))
+y0 <- do.call(sum, y0)
+y1 <- future_lapply(chunks, FUN = function(iris) sum(iris$Sepal.Length))
+y1 <- do.call(sum, y1)
+print(y1)
+stopifnot(all.equal(y1, y0))
+
+
 \dontshow{
 ## R CMD check: make sure any open connections are closed afterward
 if (!inherits(plan(), "sequential")) plan(sequential)

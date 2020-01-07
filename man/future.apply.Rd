@@ -31,32 +31,32 @@ Reproducibility is part of the core design, which means that perfect,
 parallel random number generation (RNG) is supported regardless of the
 amount of chunking, type of load balancing, and future backend being used.
 
-Since these \code{future_*()} functions have the same arguments as the
+Since these \verb{future_*()} functions have the same arguments as the
 corresponding base \R function, start using them is often as simple as
-renaming the function in the code.  For example, after attaching the package:\preformatted{library(future.apply)
-}
+renaming the function in the code.  For example, after attaching the package:\if{html}{\out{<div class="r">}}\preformatted{library(future.apply)
+}\if{html}{\out{</div>}}
 
-code such as:\preformatted{x <- list(a = 1:10, beta = exp(-3:3), logic = c(TRUE,FALSE,FALSE,TRUE))
+code such as:\if{html}{\out{<div class="r">}}\preformatted{x <- list(a = 1:10, beta = exp(-3:3), logic = c(TRUE,FALSE,FALSE,TRUE))
 y <- lapply(x, quantile, probs = 1:3/4)
-}
+}\if{html}{\out{</div>}}
 
-can be updated to:\preformatted{y <- future_lapply(x, quantile, probs = 1:3/4)
-}
+can be updated to:\if{html}{\out{<div class="r">}}\preformatted{y <- future_lapply(x, quantile, probs = 1:3/4)
+}\if{html}{\out{</div>}}
 
 The default settings in the \pkg{future} framework is to process code
 \emph{sequentially}.  To run the above in parallel on the local machine
-(on any operating system), use:\preformatted{plan(multiprocess)
-}
+(on any operating system), use:\if{html}{\out{<div class="r">}}\preformatted{plan(multiprocess)
+}\if{html}{\out{</div>}}
 
 first.  That's it!
 
 To go back to sequential processing, use \code{plan(sequential)}.
-If you have access to multiple machines on your local network, use:\preformatted{plan(cluster, workers = c("n1", "n2", "n2", "n3"))
-}
+If you have access to multiple machines on your local network, use:\if{html}{\out{<div class="r">}}\preformatted{plan(cluster, workers = c("n1", "n2", "n2", "n3"))
+}\if{html}{\out{</div>}}
 
 This will set up four workers, one on \code{n1} and \code{n3}, and two on \code{n2}.
-If you have SSH access to some remote machines, use:\preformatted{plan(cluster, workers = c("m1.myserver.org", "m2.myserver.org))
-}
+If you have SSH access to some remote machines, use:\if{html}{\out{<div class="r">}}\preformatted{plan(cluster, workers = c("m1.myserver.org", "m2.myserver.org))
+}\if{html}{\out{</div>}}
 
 See the \pkg{future} package and \code{\link[future:plan]{future::plan()}} for more examples.
 

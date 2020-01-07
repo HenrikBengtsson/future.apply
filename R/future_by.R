@@ -63,7 +63,7 @@ future_by.data.frame <- function(data, INDICES, FUN, ..., simplify = TRUE) {
 
 
 
-future_by_internal <- function(data, INDICES, FUN, ..., simplify = TRUE, .SUBSETTER, .CALL, .INDICES.NAME) {
+future_by_internal <- function(data, INDICES, FUN, ..., simplify = TRUE, .SUBSETTER, .CALL, .INDICES.NAME, future.label = "future_by-%d") {
   FUN <- if (!is.null(FUN)) match.fun(FUN)
   stop_if_not(is.function(.SUBSETTER))
 
@@ -108,7 +108,7 @@ future_by_internal <- function(data, INDICES, FUN, ..., simplify = TRUE, .SUBSET
   group <- NULL ## Not needed anymore
 
   grouped_data <- lapply(X = ans[index], FUN = .SUBSETTER)
-  ans <- future_lapply(X = grouped_data, FUN = FUN, ...)
+  ans <- future_lapply(X = grouped_data, FUN = FUN, ..., future.label = future.label)
   grouped_data <- NULL  ## Not needed anymore
 
   ansmat <- array({

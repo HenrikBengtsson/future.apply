@@ -30,10 +30,12 @@
 #' with 'The R Core Team' as the copyright holder.
 #'
 #' @example incl/future_apply.R
-#' 
+#'
+#' @importFrom future nbrOfWorkers
 #' @export
-future_apply <- function(X, MARGIN, FUN, ...)
-{
+future_apply <- function(X, MARGIN, FUN, ..., future.globals = TRUE, future.packages = NULL, future.label = "future_apply-%d") {
+    debug <- getOption("future.debug", FALSE)
+
     FUN <- match.fun(FUN)
 
     ## Ensure that X is an array object
@@ -77,16 +79,64 @@ future_apply <- function(X, MARGIN, FUN, ...)
         return(if(is.null(ans)) ans else if(length(d.ans) < 2L) ans[1L][-1L]
                else array(ans, d.ans, dn.ans))
     }
-    ## else
+
+
+    ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    ## Globals and Packages
+    ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    gp <- getGlobalsAndPackagesXApply(
+      FUN,
+      args = list(X = X, ...),
+      envir = environment(),
+      future.globals = future.globals,
+      future.packages = future.packages,
+      debug = debug
+    )
+    globals <- gp$globals
+    packages <- gp$packages
+    gp <- NULL
+
+    ## Check size of global variables?
+    ## Doing it here, on the matrix object, is much faster than doing it for
+    ## the list elements passed to future_lapply()
+    oldMaxSize <- maxSize <- getOption("future.globals.maxSize")
+    if (is.null(maxSize) || is.finite(maxSize)) {
+      if (is.null(maxSize)) maxSize <- 500 * 1024^2
+      objectSize <- import_future("objectSize")
+      size <- objectSize(X)
+      nWorkers <- nbrOfWorkers()
+      chunk_size <- size / nWorkers
+      other_size <- attr(globals, "total_size")
+      if (is.numeric(other_size)) chunk_size <- chunk_size + other_size
+      if (chunk_size > maxSize) {
+        asIEC <- import_future("asIEC")
+        msg <- sprintf("The total size of %s (of class %s and type %s) is %s and the total size of the other argument is %s. With %d workers, this translates to %s per worker needed for future_apply(), which exceeds the maximum allowed size of %s (option 'future.globals.maxSize').", sQuote("X"), sQuote(class(X)[1]), sQuote(typeof(X)), asIEC(size), asIEC(other_size), nWorkers, asIEC(chunk_size), asIEC(maxSize))
+        if (debug) mdebug(msg)
+        stop(msg)
+      }
+      on.exit(options(future.globals.maxSize = oldMaxSize), add = TRUE)
+      options(future.globals.maxSize = +Inf)
+    }
+
     newX <- aperm(X, c(s.call, s.ans))
     dim(newX) <- c(prod(d.call), d2)
+
     if(length(d.call) < 2L) {# vector
         if (length(dn.call)) dimnames(newX) <- c(dn.call, list(NULL))
         newX <- lapply(1L:d2, FUN = function(i) newX[,i])
     } else
         newX <- lapply(1L:d2, FUN = function(i)
                        array(newX[,i], dim = d.call, dimnames = dn.call))
-    ans <- future_lapply(newX, FUN = FUN, ...)
+
+    globals$...future.FUN <- NULL
+    ans <- future_lapply(
+      X = newX,
+      FUN = FUN,
+      ...,
+      future.globals = globals,
+      future.packages = packages,
+      future.label = future.label
+    )
     
     ## answer dims and dimnames
 

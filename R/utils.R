@@ -2,6 +2,10 @@ isFALSE <- function(x) {
   is.logical(x) && length(x) == 1L && !is.na(x) && !x
 }
 
+isNA <- function(x) {
+  is.logical(x) && length(x) == 1L && is.na(x)
+}
+
 stop_if_not <- function(...) {
   res <- list(...)
   for (ii in 1L:length(res)) {
@@ -104,14 +108,14 @@ import_future <- function(name, default = NULL) {
   import_from(name, default = default, package = "future")
 }
 
-assert_values2 <- function(nX, values, values2, fcn, debug = FALSE) {
+assert_values2 <- function(nX, values, values2, fcn_name, debug = FALSE) {
   if (length(values2) != nX) {
     chunk_sizes <- sapply(values, FUN = length)
     chunk_sizes <- table(chunk_sizes)
     chunk_summary <- sprintf("%d chunks with %s elements",
                              chunk_sizes, names(chunk_sizes))
     chunk_summary <- paste(chunk_summary, collapse = ", ")
-    msg <- sprintf("Unexpected error in %s(): After gathering and merging the values from %d chunks in to a list, the total number of elements (= %d) does not match the number of input elements in 'X' (= %d). There were in total %d chunks and %d elements (%s)", fcn, length(values), length(values2), nX, length(values), sum(chunk_sizes), chunk_summary)
+    msg <- sprintf("Unexpected error in %s(): After gathering and merging the values from %d chunks in to a list, the total number of elements (= %d) does not match the number of input elements in 'X' (= %d). There were in total %d chunks and %d elements (%s)", fcn_name, length(values), length(values2), nX, length(values), sum(chunk_sizes), chunk_summary)
     if (debug) {
       mdebug(msg)
       mprint(chunk_sizes)
@@ -131,6 +135,22 @@ assert_values2 <- function(nX, values, values2, fcn, debug = FALSE) {
 
 stealth_sample.int <- function(n, size = n, replace = FALSE, ...) {
   oseed <- .GlobalEnv$.Random.seed
-  on.exit(.GlobalEnv$.Random.seed <- oseed)
+  on.exit({
+    if (is.null(oseed)) {
+      rm(list = ".Random.seed", envir = .GlobalEnv, inherits = FALSE)
+    } else {
+      .GlobalEnv$.Random.seed <- oseed
+    }
+  })
   sample.int(n = n, size = size, replace = replace, ...)
 }
+
+
+#' @importFrom utils packageVersion
+future_version <- local({
+  ver <- NULL
+  function() {
+    if (is.null(ver)) ver <<- packageVersion("future")
+    ver
+  }
+})

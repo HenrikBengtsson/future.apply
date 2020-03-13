@@ -3,7 +3,7 @@ Version: 1.4.0-9000
 Title: Apply Function to Elements in Parallel using Futures
 Depends:
     R (>= 3.2.0),
-    future (>= 1.15.1)
+    future (>= 1.16.0)
 Imports:
     globals (>= 0.12.5)
 Suggests:
@@ -22,5 +22,5 @@ License: GPL (>= 2)
 LazyLoad: TRUE
 URL: https://github.com/HenrikBengtsson/future.apply
 BugReports: https://github.com/HenrikBengtsson/future.apply/issues
-RoxygenNote: 7.0.2
+RoxygenNote: 7.1.0
 Roxygen: list(markdown = TRUE)

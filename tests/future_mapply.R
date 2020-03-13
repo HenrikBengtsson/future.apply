@@ -45,7 +45,25 @@ for (strategy in supportedStrategies()) {
   y0 <- mapply(FUN = identity, X, SIMPLIFY = FALSE)
   y1 <- future_mapply(FUN = identity, X, SIMPLIFY = FALSE)
   stopifnot(identical(y1, y0))
-  
+
+  message("- Non-recycling of MoreArgs (Issue #51) ...")
+  y0 <- base::mapply(
+    function(x, y) y,
+    x = 1:2, MoreArgs = list(y = 3:4)
+  )
+  y1 <- future.apply::future_mapply(
+    function(x, y) y,
+    x = 1:2, MoreArgs = list(y = 3:4),
+    future.seed = FALSE
+  )
+  stopifnot(identical(y1, y0))
+  y2 <- future.apply::future_mapply(
+    function(x, y) y,
+    x = 1:2, MoreArgs = list(y = 3:4),
+    future.seed = TRUE
+  )
+  stopifnot(identical(y2, y0))
+
   message("- Recycle arguments to same length ...")
   y0 <- mapply(rep, 1:4, 2:1)
   y1 <- future_mapply(rep, 1:4, 2:1)

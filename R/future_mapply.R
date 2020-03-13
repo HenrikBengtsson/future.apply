@@ -109,7 +109,7 @@ future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES 
         assign(".Random.seed", ...future.seeds_ii_jj, envir = globalenv(), inherits = FALSE)
         ...future.FUN(...)
       }
-      args <- c(list(FUN = ...future.FUN2), ...future.elements_ii, list(...future.seeds_ii_jj = ...future.seeds_ii), MoreArgs, SIMPLIFY = FALSE, USE.NAMES = FALSE)
+      args <- c(list(FUN = ...future.FUN2), ...future.elements_ii, list(...future.seeds_ii_jj = ...future.seeds_ii), MoreArgs = list(MoreArgs), SIMPLIFY = FALSE, USE.NAMES = FALSE)
       do.call(mapply, args = args)
     })
   }

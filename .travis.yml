@@ -8,13 +8,12 @@
 # YAML validated using http://www.yamllint.com/
 #----------------------------------------------------------------
 language: r
-sudo: false
 cache: packages
 warnings_are_errors: false
 r_check_args: --as-cran
 latex: false
 
-matrix:
+jobs:
   include:
     - os: linux
       r: oldrel

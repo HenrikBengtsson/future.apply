@@ -1,7 +1,11 @@
 Package: future.apply
 =====================
 
-Version: 1.4.0-9000 [2020-03-12]
+Version: 1.4.0-9000 [2020-04-01]
+
+NEW FEATURES:
+
+ * Add future_.mapply() corresponding to .mapply() in the 'base' package.
 
 BUG FIXES:
 

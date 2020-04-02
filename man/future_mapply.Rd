@@ -3,6 +3,7 @@
 \name{future_Map}
 \alias{future_Map}
 \alias{future_mapply}
+\alias{future_.mapply}
 \title{Apply a Function to Multiple List or Vector Arguments}
 \usage{
 future_Map(f, ..., future.label = "future_Map-\%d")
@@ -23,6 +24,8 @@ future_mapply(
   future.chunk.size = NULL,
   future.label = "future_mapply-\%d"
 )
+
+future_.mapply(FUN, dots, MoreArgs)
 }
 \arguments{
 \item{f}{A function of the arity \eqn{k} if \code{future_Map()} is called with
@@ -84,6 +87,9 @@ Only used if \code{future.chunk.size} is \code{NULL}.}
 \item{future.chunk.size}{The average number of elements per future ("chunk").
 If \code{Inf}, then all elements are processed in a single future.
 If \code{NULL}, then argument \code{future.scheduling} is used.}
+
+\item{dots}{A list of arguments to vectorize over (vectors or lists of
+strictly positive length, or all of zero length).}
 
 \item{\ldots}{Arguments to vectorize over (vectors or lists of strictly
 positive length, or all of zero length).}

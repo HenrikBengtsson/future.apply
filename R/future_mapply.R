@@ -165,10 +165,22 @@ future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES 
 #' @param dots A list of arguments to vectorize over (vectors or lists of
 #' strictly positive length, or all of zero length).
 #'
+#' @return
+#' `future_.mapply()` returns a list. See [base::.mapply()] for details.
+#'
 #' @rdname future_mapply
 #' @export
-future_.mapply <- function(FUN, dots, MoreArgs) {
-  args <- c(list(FUN = FUN), dots,
-            list(MoreArgs = MoreArgs, SIMPLIFY = FALSE, USE.NAMES = TRUE))
+future_.mapply <- function(FUN, dots, MoreArgs, ..., future.label = "future_.mapply-%d") {
+  args <- c(
+    list(FUN = FUN),
+    dots,
+    list(
+      MoreArgs = MoreArgs,
+      SIMPLIFY = FALSE,
+      USE.NAMES = TRUE,
+      ...,
+      future.label = future.label
+    )
+  )
   do.call(future_mapply, args = args, envir = parent.frame())
 }

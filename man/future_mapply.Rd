@@ -25,7 +25,7 @@ future_mapply(
   future.label = "future_mapply-\%d"
 )
 
-future_.mapply(FUN, dots, MoreArgs)
+future_.mapply(FUN, dots, MoreArgs, ..., future.label = "future_.mapply-\%d")
 }
 \arguments{
 \item{f}{A function of the arity \eqn{k} if \code{future_Map()} is called with
@@ -101,6 +101,8 @@ See \code{\link[base:Map]{base::Map()}} for details.
 
 \code{future_mapply()} returns a list, or for \code{SIMPLIFY = TRUE}, a vector,
 array or list.  See \code{\link[base:mapply]{base::mapply()}} for details.
+
+\code{future_.mapply()} returns a list. See \code{\link[base:.mapply]{base::.mapply()}} for details.
 }
 \description{
 \code{future_mapply()} implements \code{\link[base:mapply]{base::mapply()}} using futures with perfect

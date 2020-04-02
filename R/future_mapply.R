@@ -34,7 +34,7 @@
 #'        For details, see [future_lapply()].
 #'
 #' @return
-#' `future_mapply() returns a list, or for `SIMPLIFY = TRUE`, a vector,
+#' `future_mapply()` returns a list, or for `SIMPLIFY = TRUE`, a vector,
 #' array or list.  See [base::mapply()] for details.
 #'
 #' @example incl/future_mapply.R

@@ -99,7 +99,7 @@ positive length, or all of zero length).}
 attempt to simplify the result.
 See \code{\link[base:Map]{base::Map()}} for details.
 
-\verb{future_mapply() returns a list, or for }SIMPLIFY = TRUE`, a vector,
+\code{future_mapply()} returns a list, or for \code{SIMPLIFY = TRUE}, a vector,
 array or list.  See \code{\link[base:mapply]{base::mapply()}} for details.
 }
 \description{

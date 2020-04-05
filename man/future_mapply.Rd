@@ -113,6 +113,10 @@ It applies \code{FUN} to the first elements of each \verb{\\ldots} argument,
 the second elements, the third elements, and so on.
 Arguments are recycled if necessary.
 }
+\details{
+Note that \code{\link[base:.mapply]{base::.mapply()}}, which \code{future_.mapply()} is modelled after
+is listed as an "internal" function in \R despite being exported.
+}
 \examples{
 ## ---------------------------------------------------------
 ## mapply()

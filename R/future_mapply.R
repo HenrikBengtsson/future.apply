@@ -177,7 +177,7 @@ future_.mapply <- function(FUN, dots, MoreArgs, ..., future.label = "future_.map
     list(
       MoreArgs = MoreArgs,
       SIMPLIFY = FALSE,
-      USE.NAMES = TRUE,
+      USE.NAMES = FALSE,
       ...,
       future.label = future.label
     )

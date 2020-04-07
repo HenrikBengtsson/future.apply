@@ -289,35 +289,9 @@ Run `revdep_details(,"blockCV")` for more info
 
 ## In both
 
-*   checking tests ...
-    ```
-    ...
-       12. layout$setup_panel_params()
-       13. ggplot2:::f(..., self = self)
-       14. base::Map(setup_panel_params, scales_x, scales_y)
-       15. base::mapply(FUN = f, ..., SIMPLIFY = FALSE)
-       17. self$coord$setup_panel_params(scale_x, scale_y, params = self$coord_params)
-       18. ggplot2:::f(..., self = self)
-       19. sf::st_graticule(...)
-       21. sf:::st_transform.sfc(box, datum, partial = TRUE)
-       23. sf:::CPL_transform(x, crs, aoi, pipeline, reverse)
-      
-      ══ testthat results  ═══════════════════════════════════════════════════════════
-      [ OK: 127 | SKIPPED: 8 | WARNINGS: 7 | FAILED: 6 ]
-      1. Error: test spatialAutoRange function with multi-layer raster in parallel (@testSpatialAutoRange.R#19) 
-      2. Error: test spatialAutoRange for low-resolution rasters (@testSpatialAutoRange.R#71) 
-      3. Error: test spatiaBlock function with systematic assingment and no raster file (@testSpatialBlock.R#65) 
-      4. Error: test spatiaBlock function with non-numeric iteration (@testSpatialBlock.R#98) 
-      5. Error: test spatiaBlock with checkerboard assingment and only row blocks (@testSpatialBlock.R#132) 
-      6. Error: test spatialBlock with no speceis column match (@testSpatialBlock.R#269) 
-      
-      Error: testthat unit tests failed
-      Execution halted
-    ```
-
 *   checking Rd cross-references ... NOTE
     ```
-    Unknown package ‘biomod2’ in Rd xrefs
+    Package unavailable to check Rd xrefs: ‘biomod2’
     ```
 
 # cSEM
@@ -382,77 +356,9 @@ Run `revdep_details(,"fabletools")` for more info
 
 ## In both
 
-*   checking S3 generic/method consistency ... WARNING
-    ```
-    Failed to query server: Connection timed out
-    See section ‘Generic functions and methods’ in the ‘Writing R
-    Extensions’ manual.
-    ```
-
-*   checking replacement functions ... WARNING
-    ```
-    Failed to query server: Connection timed out
-    The argument of a replacement function which corresponds to the right
-    hand side must be named ‘value’.
-    ```
-
-*   checking Rd files ... WARNING
-    ```
-    Failed to query server: Connection timed out
-    prepare_Rd: running command 'timedatectl' had status 1
-    ```
-
-*   checking for missing documentation entries ... WARNING
-    ```
-    Failed to query server: Connection timed out
-    All user-level objects in a package should have documentation entries.
-    See chapter ‘Writing R documentation files’ in the ‘Writing R
-    Extensions’ manual.
-    ```
-
-*   checking for code/documentation mismatches ... WARNING
-    ```
-    Failed to query server: Connection timed out
-    Failed to query server: Connection timed out
-    Failed to query server: Connection timed out
-    ```
-
-*   checking for unstated dependencies in examples ... WARNING
-    ```
-    Failed to query server: Connection timed out
-    Warning in system("timedatectl", intern = TRUE) :
-      running command 'timedatectl' had status 1
-    ```
-
 *   checking package dependencies ... NOTE
     ```
     Package suggested but not available for checking: ‘feasts’
-    ```
-
-*   checking dependencies in R code ... NOTE
-    ```
-    Failed to query server: Connection timed out
-    ```
-
-*   checking foreign function calls ... NOTE
-    ```
-    Failed to query server: Connection timed out
-    See chapter ‘System and foreign language interfaces’ in the ‘Writing R
-    Extensions’ manual.
-    ```
-
-*   checking R code for possible problems ... NOTE
-    ```
-    Failed to query server: Connection timed out
-    ```
-
-*   checking Rd \usage sections ... NOTE
-    ```
-    Failed to query server: Connection timed out
-    The \usage entries for S3 methods should use the \method markup and not
-    their full name.
-    See chapter ‘Writing R documentation files’ in the ‘Writing R
-    Extensions’ manual.
     ```
 
 # forecastML
@@ -463,7 +369,7 @@ Run `revdep_details(,"fabletools")` for more info
 * Source code: https://github.com/cran/forecastML
 * URL: https://github.com/nredell/forecastML/
 * Date/Publication: 2020-02-28 22:40:12 UTC
-* Number of recursive dependencies: 92
+* Number of recursive dependencies: 93
 
 Run `revdep_details(,"forecastML")` for more info
 
@@ -517,49 +423,6 @@ Run `revdep_details(,"grattan")` for more info
     ```
     Packages suggested but not available for checking:
       'taxstats', 'taxstats1516'
-    ```
-
-# GSODR
-
-<details>
-
-* Version: 2.0.1
-* Source code: https://github.com/cran/GSODR
-* URL: https://docs.ropensci.org/GSODR/
-* BugReports: https://github.com/ropensci/GSODR/issues
-* Date/Publication: 2020-01-24 07:50:02 UTC
-* Number of recursive dependencies: 122
-
-Run `revdep_details(,"GSODR")` for more info
-
-</details>
-
-## In both
-
-*   checking tests ...
-    ```
-    ...
-       11. value[[3L]](cond)
-      
-      ── 2. Error: when year is selected for a station not providing it, error (@test-
-      
-      The file downloads have failed. Please restart.
-      Backtrace:
-        1. testthat::expect_message(...)
-        6. GSODR::get_GSOD(years = 1950, station = "959360-99999")
-        7. GSODR:::.download_files(station, years)
-        8. base::tryCatch(...)
-        9. base:::tryCatchList(expr, classes, parentenv, handlers)
-       10. base:::tryCatchOne(expr, names, parentenv, handlers[[1L]])
-       11. value[[3L]](cond)
-      
-      ══ testthat results  ═══════════════════════════════════════════════════════════
-      [ OK: 31 | SKIPPED: 9 | WARNINGS: 0 | FAILED: 2 ]
-      1. Failure: The 'max_missing' parameter filters out improper stations (@test-get_GSOD.R#128) 
-      2. Error: when year is selected for a station not providing it, error (@test-get_GSOD.R#249) 
-      
-      Error: testthat unit tests failed
-      Execution halted
     ```
 
 # gstat
@@ -646,42 +509,6 @@ Run `revdep_details(,"gWQSRS")` for more info
     Namespaces in Imports field not imported from:
       ‘broom’ ‘dplyr’ ‘ggrepel’ ‘kableExtra’ ‘knitr’ ‘nnet’ ‘plotROC’
       All declared Imports should be used.
-    ```
-
-# hackeRnews
-
-<details>
-
-* Version: 0.1.0
-* Source code: https://github.com/cran/hackeRnews
-* URL: https://github.com/szymanskir/hackeRnews
-* BugReports: https://github.com/szymanskir/hackeRnews/issues
-* Date/Publication: 2019-12-13 13:20:05 UTC
-* Number of recursive dependencies: 62
-
-Run `revdep_details(,"hackeRnews")` for more info
-
-</details>
-
-## In both
-
-*   checking examples ... ERROR
-    ```
-    Running examples in ‘hackeRnews-Ex.R’ failed
-    The error most likely occurred in:
-    
-    > ### Name: get_best_stories
-    > ### Title: Hacker News best stories
-    > ### Aliases: get_best_stories
-    > 
-    > ### ** Examples
-    > 
-    > # get the best story on Hacker News
-    > best_story <- get_best_stories(max_items = 1)
-    Error in curl::curl_fetch_memory(url, handle = handle) : 
-      Could not resolve host: hacker-news.firebaseio.com; Name or service not known
-    Calls: get_best_stories ... request_fetch -> request_fetch.write_memory -> <Anonymous>
-    Execution halted
     ```
 
 # iml
@@ -1223,7 +1050,7 @@ Run `revdep_details(,"stars")` for more info
 * URL: https://github.com/RamiKrispin/TSstudio
 * BugReports: https://github.com/RamiKrispin/TSstudio/issues
 * Date/Publication: 2020-01-21 05:30:02 UTC
-* Number of recursive dependencies: 135
+* Number of recursive dependencies: 136
 
 Run `revdep_details(,"TSstudio")` for more info
 

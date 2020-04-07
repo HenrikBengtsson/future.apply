@@ -37,14 +37,14 @@
 |:-------------------------------------------------|:---------|:-----|:-------|:----|
 |BAMBI                                             |2.2.0     |      |        |     |
 |[blavaan](failures.md#blavaan)                    |0.3-9     |1     |        |     |
-|[blockCV](problems.md#blockcv)                    |2.1.1     |1     |        |1    |
+|[blockCV](problems.md#blockcv)                    |2.1.1     |      |        |1    |
 |[cSEM](problems.md#csem)                          |0.2.0     |      |        |1    |
 |[DeclareDesign](problems.md#declaredesign)        |0.22.0    |      |        |1    |
 |dhReg                                             |0.1.0     |      |        |     |
 |dipsaus                                           |0.0.6     |      |        |     |
 |disk.frame                                        |0.3.4     |      |        |     |
 |drtmle                                            |1.0.5     |      |        |     |
-|[fabletools](problems.md#fabletools)              |0.1.3     |      |6       |5    |
+|[fabletools](problems.md#fabletools)              |0.1.3     |      |        |1    |
 |[forecastML](problems.md#forecastml)              |0.8.0     |      |        |1    |
 |future.BatchJobs                                  |0.16.2    |      |        |     |
 |[future.batchtools](failures.md#futurebatchtools) |0.8.1     |1     |        |     |
@@ -53,11 +53,11 @@
 |genBaRcode                                        |1.2.2     |      |        |     |
 |glmmboot                                          |0.5.1     |      |        |     |
 |[grattan](problems.md#grattan)                    |1.8.0.1   |      |        |1    |
-|[GSODR](problems.md#gsodr)                        |2.0.1     |1     |        |     |
+|GSODR                                             |2.0.1     |      |        |     |
 |[gstat](problems.md#gstat)                        |2.0-5     |1     |        |     |
 |[gWQS](problems.md#gwqs)                          |2.0.1     |      |        |1    |
 |[gWQSRS](problems.md#gwqsrs)                      |1.1.1     |      |        |1    |
-|[hackeRnews](problems.md#hackernews)              |0.1.0     |1     |        |     |
+|hackeRnews                                        |0.1.0     |      |        |     |
 |haldensify                                        |0.0.5     |      |        |     |
 |[iml](problems.md#iml)                            |0.10.0    |      |        |1    |
 |[inlinedocs](problems.md#inlinedocs)              |2019.12.5 |      |        |1    |

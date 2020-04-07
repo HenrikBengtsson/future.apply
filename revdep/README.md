@@ -10,7 +10,7 @@
 |collate  |en_US.UTF-8                  |
 |ctype    |en_US.UTF-8                  |
 |tz       |America/Los_Angeles          |
-|date     |2020-04-06                   |
+|date     |2020-04-07                   |
 
 # Dependencies
 
@@ -24,11 +24,10 @@
 
 # Revdeps
 
-## Failed to check (2)
+## Failed to check (1)
 
 |package                                           |version |error |warning |note |
 |:-------------------------------------------------|:-------|:-----|:-------|:----|
-|[blavaan](failures.md#blavaan)                    |0.3-9   |1     |        |     |
 |[future.batchtools](failures.md#futurebatchtools) |0.8.1   |1     |        |     |
 
 ## All (56)
@@ -36,7 +35,7 @@
 |package                                           |version   |error |warning |note |
 |:-------------------------------------------------|:---------|:-----|:-------|:----|
 |BAMBI                                             |2.2.0     |      |        |     |
-|[blavaan](failures.md#blavaan)                    |0.3-9     |1     |        |     |
+|[blavaan](problems.md#blavaan)                    |0.3-9     |      |        |2    |
 |[blockCV](problems.md#blockcv)                    |2.1.1     |      |        |1    |
 |[cSEM](problems.md#csem)                          |0.2.0     |      |        |1    |
 |[DeclareDesign](problems.md#declaredesign)        |0.22.0    |      |        |1    |

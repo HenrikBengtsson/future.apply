@@ -13,266 +13,18 @@ Run `revdep_details(,"blavaan")` for more info
 
 ## In both
 
-*   checking whether package ‘blavaan’ can be installed ... ERROR
+*   checking installed package size ... NOTE
     ```
-    Installation failed.
-    See ‘/wynton/home/cbi/hb/repositories/future.apply/revdep/checks/blavaan/new/blavaan.Rcheck/00install.out’ for details.
+      installed size is  5.5Mb
+      sub-directories of 1Mb or more:
+        libs   4.7Mb
     ```
 
-## Installation
+*   checking for GNU extensions in Makefiles ... NOTE
+    ```
+    GNU make is a SystemRequirements.
+    ```
 
-### Devel
-
-```
-* installing *source* package ‘blavaan’ ...
-** package ‘blavaan’ successfully unpacked and MD5 sums checked
-** using staged installation
-** libs
-"/wynton/home/cbi/shared/software/CBI/R-3.6.3/lib64/R/bin/Rscript" -e "source(file.path('..', 'tools', 'make_cc.R')); make_cc(commandArgs(TRUE))" stan_files/stanmarg.stan
-.Rprofile error [/wynton/home/cbi/hb/repositories/future.apply/revdep/checks/blavaan/new/blavaan.Rcheck/00_pkg_src/blavaan/src: /wynton/home/cbi/shared/software/CBI/R-3.6.3/lib64/R/bin/exec/R --slave --no-restore -e source(file.path('..',~+~'tools',~+~'make_cc.R'));~+~make_cc(commandArgs(TRUE)) --args stan_files/stanmarg.stan]: there is no package called ‘startup’
-Wrote C++ file "stan_files/stanmarg.cc"
-g++ -std=c++1y -fPIC  -I"/wynton/home/cbi/shared/software/CBI/R-3.6.3/lib64/R/include" -DNDEBUG -I"../inst/include" -I"`"/wynton/home/cbi/shared/software/CBI/R-3.6.3/lib64/R/bin/Rscript" --vanilla -e "cat(system.file('include', 'src', package = 'StanHeaders'))"`" -DBOOST_RESULT_OF_USE_TR1 -DBOOST_NO_DECLTYPE -DBOOST_DISABLE_ASSERTS -DEIGEN_NO_DEBUG -DBOOST_MATH_OVERFLOW_ERROR_POLICY=errno_on_error -I"/wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/StanHeaders/include" -I"/wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/rstan/include" -I"/wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/BH/include" -I"/wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/Rcpp/include" -I"/wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/RcppEigen/include" -I/usr/local/include    -Wno-unused-variable -Wno-unused-function -c stan_files/stanmarg.cc -o stan_files/stanmarg.o
-In file included from /wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/StanHeaders/include/stan/math/rev/mat/fun/ordered_constrain.hpp:6:0,
-                 from /wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/StanHeaders/include/stan/math/rev/mat.hpp:41,
-                 from /wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/StanHeaders/include/src/stan/model/log_prob_grad.hpp:4,
-                 from /wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/StanHeaders/include/src/stan/model/test_gradients.hpp:7,
-                 from /wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/StanHeaders/include/src/stan/services/diagnose/diagnose.hpp:10,
-                 from /wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/rstan/include/rstan/stan_fit.hpp:35,
-                 from /wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/rstan/include/rstan/rstaninc.hpp:3,
-                 from stan_files/stanmarg.hpp:18,
-                 from stan_files/stanmarg.cc:3:
-/wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/StanHeaders/include/stan/math/rev/mat/functor/adj_jac_apply.hpp:31:32: error: ‘std::index_sequence’ has not been declared
-                           std::index_sequence<I...> i) {
-                                ^
-/wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/StanHeaders/include/stan/math/rev/mat/functor/adj_jac_apply.hpp:31:46: error: expected ‘,’ or ‘...’ before ‘<’ token
-                           std::index_sequence<I...> i) {
-                                              ^
-/wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/StanHeaders/include/stan/math/rev/mat/functor/adj_jac_apply.hpp: In function ‘constexpr auto stan::math::internal::apply(const F&, const Tuple&)’:
-/wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/StanHeaders/include/stan/math/rev/mat/functor/adj_jac_apply.hpp:49:27: error: ‘make_index_sequence’ is not a member of ‘std’
-   return apply_impl(f, t, std::make_index_sequence<std::tuple_size<Tuple>{}>{});
-                           ^
-/wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/StanHeaders/include/stan/math/rev/mat/functor/adj_jac_apply.hpp:49:27: note: suggested alternative:
-In file included from /wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/BH/include/boost/fusion/container/vector/vector.hpp:28:0,
-                 from /wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/BH/include/boost/fusion/container/vector/vector10.hpp:25,
-                 from /wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/BH/include/boost/fusion/view/transform_view/transform_view.hpp:22,
-                 from /wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/BH/include/boost/fusion/algorithm/transformation/transform.hpp:11,
-                 from /wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/BH/include/boost/fusion/view/zip_view/detail/begin_impl.hpp:14,
-                 from /wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/BH/include/boost/fusion/view/zip_view/zip_view.hpp:16,
-                 from /wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/BH/include/boost/fusion/view/zip_view.hpp:12,
-                 from /wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/BH/include/boost/fusion/include/zip_view.hpp:11,
-                 from /wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/BH/include/boost/numeric/odeint/util/resize.hpp:26,
-                 from /wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/BH/include/boost/numeric/odeint/util/state_wrapper.hpp:26,
-                 from /wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/BH/include/boost/numeric/odeint/util/ublas_wrapper.hpp:33,
-                 from /wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/BH/include/boost/numeric/odeint.hpp:25,
-                 from /wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/StanHeaders/include/stan/math/prim/arr/functor/integrate_ode_rk45.hpp:17,
-                 from /wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/StanHeaders/include/stan/math/prim/arr.hpp:46,
-                 from /wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/StanHeaders/include/stan/math/prim/mat.hpp:344,
-                 from /wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/StanHeaders/include/stan/math/rev/mat.hpp:12,
-                 from /wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/StanHeaders/include/src/stan/model/log_prob_grad.hpp:4,
-                 from /wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/StanHeaders/include/src/stan/model/test_gradients.hpp:7,
-                 from /wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/StanHeaders/include/src/stan/services/diagnose/diagnose.hpp:10,
-                 from /wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/rstan/include/rstan/stan_fit.hpp:35,
-                 from /wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/rstan/include/rstan/rstaninc.hpp:3,
-                 from stan_files/stanmarg.hpp:18,
-                 from stan_files/stanmarg.cc:3:
-/wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/BH/include/boost/fusion/support/detail/index_sequence.hpp:59:12: note:   ‘boost::fusion::detail::make_index_sequence’
-     struct make_index_sequence
-            ^
-In file included from /wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/StanHeaders/include/stan/math/rev/mat/fun/ordered_constrain.hpp:6:0,
-                 from /wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/StanHeaders/include/stan/math/rev/mat.hpp:41,
-                 from /wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/StanHeaders/include/src/stan/model/log_prob_grad.hpp:4,
-                 from /wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/StanHeaders/include/src/stan/model/test_gradients.hpp:7,
-                 from /wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/StanHeaders/include/src/stan/services/diagnose/diagnose.hpp:10,
-                 from /wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/rstan/include/rstan/stan_fit.hpp:35,
-                 from /wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/rstan/include/rstan/rstaninc.hpp:3,
-                 from stan_files/stanmarg.hpp:18,
-                 from stan_files/stanmarg.cc:3:
-/wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/StanHeaders/include/stan/math/rev/mat/functor/adj_jac_apply.hpp:49:77: error: expected primary-expression before ‘{’ token
-   return apply_impl(f, t, std::make_index_sequence<std::tuple_size<Tuple>{}>{});
-                                                                             ^
-/wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/StanHeaders/include/stan/math/rev/mat/functor/adj_jac_apply.hpp:49:77: error: expected ‘)’ before ‘{’ token
-/wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/StanHeaders/include/stan/math/rev/mat/functor/adj_jac_apply.hpp: At global scope:
-/wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/StanHeaders/include/stan/math/rev/mat/functor/adj_jac_apply.hpp:151:9: error: expected type-specifier
-       = std::result_of_t<F(decltype(is_var_), decltype(value_of(Targs()))...)>;
-         ^
-/wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/StanHeaders/include/stan/math/rev/mat/functor/adj_jac_apply.hpp:156:42: error: ‘FReturnType’ was not declared in this scope
-   std::array<int, internal::compute_dims<FReturnType>::value> M_;
-                                          ^
-/wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/StanHeaders/include/stan/math/rev/mat/functor/adj_jac_apply.hpp:156:53: error: template argument 1 is invalid
-   std::array<int, internal::compute_dims<FReturnType>::value> M_;
-                                                     ^
-/wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/StanHeaders/include/stan/math/rev/mat/functor/adj_jac_apply.hpp:156:61: error: template argument 2 is invalid
-   std::array<int, internal::compute_dims<FReturnType>::value> M_;
-                                                             ^
-/wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/StanHeaders/include/stan/math/rev/mat/functor/adj_jac_apply.hpp: In member function ‘std::vector<stan::math::var> stan::math::adj_jac_vari<F, Targs>::build_return_varis_and_vars(const std::vector<double>&)’:
-/wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/StanHeaders/include/stan/math/rev/mat/functor/adj_jac_apply.hpp:349:9: error: invalid types ‘int[int]’ for array subscript
-     M_[0] = val_y.size();
-         ^
-/wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/StanHeaders/include/stan/math/rev/mat/functor/adj_jac_apply.hpp:350:32: error: invalid types ‘int[int]’ for array subscript
-     std::vector<var> var_y(M_[0]);
-                                ^
-/wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/StanHeaders/include/stan/math/rev/mat/functor/adj_jac_apply.hpp: In member function ‘Eigen::Matrix<stan::math::var, R, C> stan::math::adj_jac_vari<F, Targs>::build_return_varis_and_vars(const Eigen::Matrix<double, R, C>&)’:
-/wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/StanHeaders/include/stan/math/rev/mat/functor/adj_jac_apply.hpp:375:9: error: invalid types ‘int[int]’ for array subscript
-     M_[0] = val_y.rows();
-         ^
-/wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/StanHeaders/include/stan/math/rev/mat/functor/adj_jac_apply.hpp:376:9: error: invalid types ‘int[int]’ for array subscript
-     M_[1] = val_y.cols();
-         ^
-/wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/StanHeaders/include/stan/math/rev/mat/functor/adj_jac_apply.hpp:377:40: error: invalid types ‘int[int]’ for array subscript
-     Eigen::Matrix<var, R, C> var_y(M_[0], M_[1]);
-                                        ^
-/wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/StanHeaders/include/stan/math/rev/mat/functor/adj_jac_apply.hpp:377:47: error: invalid types ‘int[int]’ for array subscript
-     Eigen::Matrix<var, R, C> var_y(M_[0], M_[1]);
-                                               ^
-/wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/StanHeaders/include/stan/math/rev/mat/functor/adj_jac_apply.hpp: In member function ‘void stan::math::adj_jac_vari<F, Targs>::chain()’:
-/wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/StanHeaders/include/stan/math/rev/mat/functor/adj_jac_apply.hpp:530:5: error: ‘FReturnType’ was not declared in this scope
-     FReturnType y_adj;
-     ^
-/wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/StanHeaders/include/stan/math/rev/mat/functor/adj_jac_apply.hpp:530:17: error: expected ‘;’ before ‘y_adj’
-     FReturnType y_adj;
-                 ^
-/wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/StanHeaders/include/stan/math/rev/mat/functor/adj_jac_apply.hpp:532:38: error: ‘y_adj’ was not declared in this scope
-     internal::build_y_adj(y_vi_, M_, y_adj);
-                                      ^
-/wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/StanHeaders/include/stan/math/rev/mat/functor/adj_jac_apply.hpp:536:26: error: expansion pattern ‘auto&&’ contains no argument packs
-         [this](auto&&... args) { this->accumulate_adjoints(args...); },
-                          ^
-/wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/StanHeaders/include/stan/math/rev/mat/functor/adj_jac_apply.hpp: In lambda function:
-/wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/StanHeaders/include/stan/math/rev/mat/functor/adj_jac_apply.hpp:536:60: error: ‘args’ was not declared in this scope
-         [this](auto&&... args) { this->accumulate_adjoints(args...); },
-                                                            ^
-make: *** [stan_files/stanmarg.o] Error 1
-rm stan_files/stanmarg.cc
-ERROR: compilation failed for package ‘blavaan’
-* removing ‘/wynton/home/cbi/hb/repositories/future.apply/revdep/checks/blavaan/new/blavaan.Rcheck/blavaan’
-
-```
-### CRAN
-
-```
-* installing *source* package ‘blavaan’ ...
-** package ‘blavaan’ successfully unpacked and MD5 sums checked
-** using staged installation
-** libs
-"/wynton/home/cbi/shared/software/CBI/R-3.6.3/lib64/R/bin/Rscript" -e "source(file.path('..', 'tools', 'make_cc.R')); make_cc(commandArgs(TRUE))" stan_files/stanmarg.stan
-.Rprofile error [/wynton/home/cbi/hb/repositories/future.apply/revdep/checks/blavaan/old/blavaan.Rcheck/00_pkg_src/blavaan/src: /wynton/home/cbi/shared/software/CBI/R-3.6.3/lib64/R/bin/exec/R --slave --no-restore -e source(file.path('..',~+~'tools',~+~'make_cc.R'));~+~make_cc(commandArgs(TRUE)) --args stan_files/stanmarg.stan]: there is no package called ‘startup’
-Wrote C++ file "stan_files/stanmarg.cc"
-g++ -std=c++1y -fPIC  -I"/wynton/home/cbi/shared/software/CBI/R-3.6.3/lib64/R/include" -DNDEBUG -I"../inst/include" -I"`"/wynton/home/cbi/shared/software/CBI/R-3.6.3/lib64/R/bin/Rscript" --vanilla -e "cat(system.file('include', 'src', package = 'StanHeaders'))"`" -DBOOST_RESULT_OF_USE_TR1 -DBOOST_NO_DECLTYPE -DBOOST_DISABLE_ASSERTS -DEIGEN_NO_DEBUG -DBOOST_MATH_OVERFLOW_ERROR_POLICY=errno_on_error -I"/wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/StanHeaders/include" -I"/wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/rstan/include" -I"/wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/BH/include" -I"/wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/Rcpp/include" -I"/wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/RcppEigen/include" -I/usr/local/include    -Wno-unused-variable -Wno-unused-function -c stan_files/stanmarg.cc -o stan_files/stanmarg.o
-In file included from /wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/StanHeaders/include/stan/math/rev/mat/fun/ordered_constrain.hpp:6:0,
-                 from /wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/StanHeaders/include/stan/math/rev/mat.hpp:41,
-                 from /wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/StanHeaders/include/src/stan/model/log_prob_grad.hpp:4,
-                 from /wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/StanHeaders/include/src/stan/model/test_gradients.hpp:7,
-                 from /wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/StanHeaders/include/src/stan/services/diagnose/diagnose.hpp:10,
-                 from /wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/rstan/include/rstan/stan_fit.hpp:35,
-                 from /wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/rstan/include/rstan/rstaninc.hpp:3,
-                 from stan_files/stanmarg.hpp:18,
-                 from stan_files/stanmarg.cc:3:
-/wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/StanHeaders/include/stan/math/rev/mat/functor/adj_jac_apply.hpp:31:32: error: ‘std::index_sequence’ has not been declared
-                           std::index_sequence<I...> i) {
-                                ^
-/wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/StanHeaders/include/stan/math/rev/mat/functor/adj_jac_apply.hpp:31:46: error: expected ‘,’ or ‘...’ before ‘<’ token
-                           std::index_sequence<I...> i) {
-                                              ^
-/wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/StanHeaders/include/stan/math/rev/mat/functor/adj_jac_apply.hpp: In function ‘constexpr auto stan::math::internal::apply(const F&, const Tuple&)’:
-/wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/StanHeaders/include/stan/math/rev/mat/functor/adj_jac_apply.hpp:49:27: error: ‘make_index_sequence’ is not a member of ‘std’
-   return apply_impl(f, t, std::make_index_sequence<std::tuple_size<Tuple>{}>{});
-                           ^
-/wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/StanHeaders/include/stan/math/rev/mat/functor/adj_jac_apply.hpp:49:27: note: suggested alternative:
-In file included from /wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/BH/include/boost/fusion/container/vector/vector.hpp:28:0,
-                 from /wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/BH/include/boost/fusion/container/vector/vector10.hpp:25,
-                 from /wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/BH/include/boost/fusion/view/transform_view/transform_view.hpp:22,
-                 from /wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/BH/include/boost/fusion/algorithm/transformation/transform.hpp:11,
-                 from /wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/BH/include/boost/fusion/view/zip_view/detail/begin_impl.hpp:14,
-                 from /wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/BH/include/boost/fusion/view/zip_view/zip_view.hpp:16,
-                 from /wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/BH/include/boost/fusion/view/zip_view.hpp:12,
-                 from /wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/BH/include/boost/fusion/include/zip_view.hpp:11,
-                 from /wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/BH/include/boost/numeric/odeint/util/resize.hpp:26,
-                 from /wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/BH/include/boost/numeric/odeint/util/state_wrapper.hpp:26,
-                 from /wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/BH/include/boost/numeric/odeint/util/ublas_wrapper.hpp:33,
-                 from /wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/BH/include/boost/numeric/odeint.hpp:25,
-                 from /wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/StanHeaders/include/stan/math/prim/arr/functor/integrate_ode_rk45.hpp:17,
-                 from /wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/StanHeaders/include/stan/math/prim/arr.hpp:46,
-                 from /wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/StanHeaders/include/stan/math/prim/mat.hpp:344,
-                 from /wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/StanHeaders/include/stan/math/rev/mat.hpp:12,
-                 from /wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/StanHeaders/include/src/stan/model/log_prob_grad.hpp:4,
-                 from /wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/StanHeaders/include/src/stan/model/test_gradients.hpp:7,
-                 from /wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/StanHeaders/include/src/stan/services/diagnose/diagnose.hpp:10,
-                 from /wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/rstan/include/rstan/stan_fit.hpp:35,
-                 from /wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/rstan/include/rstan/rstaninc.hpp:3,
-                 from stan_files/stanmarg.hpp:18,
-                 from stan_files/stanmarg.cc:3:
-/wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/BH/include/boost/fusion/support/detail/index_sequence.hpp:59:12: note:   ‘boost::fusion::detail::make_index_sequence’
-     struct make_index_sequence
-            ^
-In file included from /wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/StanHeaders/include/stan/math/rev/mat/fun/ordered_constrain.hpp:6:0,
-                 from /wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/StanHeaders/include/stan/math/rev/mat.hpp:41,
-                 from /wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/StanHeaders/include/src/stan/model/log_prob_grad.hpp:4,
-                 from /wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/StanHeaders/include/src/stan/model/test_gradients.hpp:7,
-                 from /wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/StanHeaders/include/src/stan/services/diagnose/diagnose.hpp:10,
-                 from /wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/rstan/include/rstan/stan_fit.hpp:35,
-                 from /wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/rstan/include/rstan/rstaninc.hpp:3,
-                 from stan_files/stanmarg.hpp:18,
-                 from stan_files/stanmarg.cc:3:
-/wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/StanHeaders/include/stan/math/rev/mat/functor/adj_jac_apply.hpp:49:77: error: expected primary-expression before ‘{’ token
-   return apply_impl(f, t, std::make_index_sequence<std::tuple_size<Tuple>{}>{});
-                                                                             ^
-/wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/StanHeaders/include/stan/math/rev/mat/functor/adj_jac_apply.hpp:49:77: error: expected ‘)’ before ‘{’ token
-/wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/StanHeaders/include/stan/math/rev/mat/functor/adj_jac_apply.hpp: At global scope:
-/wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/StanHeaders/include/stan/math/rev/mat/functor/adj_jac_apply.hpp:151:9: error: expected type-specifier
-       = std::result_of_t<F(decltype(is_var_), decltype(value_of(Targs()))...)>;
-         ^
-/wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/StanHeaders/include/stan/math/rev/mat/functor/adj_jac_apply.hpp:156:42: error: ‘FReturnType’ was not declared in this scope
-   std::array<int, internal::compute_dims<FReturnType>::value> M_;
-                                          ^
-/wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/StanHeaders/include/stan/math/rev/mat/functor/adj_jac_apply.hpp:156:53: error: template argument 1 is invalid
-   std::array<int, internal::compute_dims<FReturnType>::value> M_;
-                                                     ^
-/wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/StanHeaders/include/stan/math/rev/mat/functor/adj_jac_apply.hpp:156:61: error: template argument 2 is invalid
-   std::array<int, internal::compute_dims<FReturnType>::value> M_;
-                                                             ^
-/wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/StanHeaders/include/stan/math/rev/mat/functor/adj_jac_apply.hpp: In member function ‘std::vector<stan::math::var> stan::math::adj_jac_vari<F, Targs>::build_return_varis_and_vars(const std::vector<double>&)’:
-/wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/StanHeaders/include/stan/math/rev/mat/functor/adj_jac_apply.hpp:349:9: error: invalid types ‘int[int]’ for array subscript
-     M_[0] = val_y.size();
-         ^
-/wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/StanHeaders/include/stan/math/rev/mat/functor/adj_jac_apply.hpp:350:32: error: invalid types ‘int[int]’ for array subscript
-     std::vector<var> var_y(M_[0]);
-                                ^
-/wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/StanHeaders/include/stan/math/rev/mat/functor/adj_jac_apply.hpp: In member function ‘Eigen::Matrix<stan::math::var, R, C> stan::math::adj_jac_vari<F, Targs>::build_return_varis_and_vars(const Eigen::Matrix<double, R, C>&)’:
-/wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/StanHeaders/include/stan/math/rev/mat/functor/adj_jac_apply.hpp:375:9: error: invalid types ‘int[int]’ for array subscript
-     M_[0] = val_y.rows();
-         ^
-/wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/StanHeaders/include/stan/math/rev/mat/functor/adj_jac_apply.hpp:376:9: error: invalid types ‘int[int]’ for array subscript
-     M_[1] = val_y.cols();
-         ^
-/wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/StanHeaders/include/stan/math/rev/mat/functor/adj_jac_apply.hpp:377:40: error: invalid types ‘int[int]’ for array subscript
-     Eigen::Matrix<var, R, C> var_y(M_[0], M_[1]);
-                                        ^
-/wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/StanHeaders/include/stan/math/rev/mat/functor/adj_jac_apply.hpp:377:47: error: invalid types ‘int[int]’ for array subscript
-     Eigen::Matrix<var, R, C> var_y(M_[0], M_[1]);
-                                               ^
-/wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/StanHeaders/include/stan/math/rev/mat/functor/adj_jac_apply.hpp: In member function ‘void stan::math::adj_jac_vari<F, Targs>::chain()’:
-/wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/StanHeaders/include/stan/math/rev/mat/functor/adj_jac_apply.hpp:530:5: error: ‘FReturnType’ was not declared in this scope
-     FReturnType y_adj;
-     ^
-/wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/StanHeaders/include/stan/math/rev/mat/functor/adj_jac_apply.hpp:530:17: error: expected ‘;’ before ‘y_adj’
-     FReturnType y_adj;
-                 ^
-/wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/StanHeaders/include/stan/math/rev/mat/functor/adj_jac_apply.hpp:532:38: error: ‘y_adj’ was not declared in this scope
-     internal::build_y_adj(y_vi_, M_, y_adj);
-                                      ^
-/wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/StanHeaders/include/stan/math/rev/mat/functor/adj_jac_apply.hpp:536:26: error: expansion pattern ‘auto&&’ contains no argument packs
-         [this](auto&&... args) { this->accumulate_adjoints(args...); },
-                          ^
-/wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/StanHeaders/include/stan/math/rev/mat/functor/adj_jac_apply.hpp: In lambda function:
-/wynton/home/cbi/hb/repositories/future.apply/revdep/library/blavaan/StanHeaders/include/stan/math/rev/mat/functor/adj_jac_apply.hpp:536:60: error: ‘args’ was not declared in this scope
-         [this](auto&&... args) { this->accumulate_adjoints(args...); },
-                                                            ^
-make: *** [stan_files/stanmarg.o] Error 1
-rm stan_files/stanmarg.cc
-ERROR: compilation failed for package ‘blavaan’
-* removing ‘/wynton/home/cbi/hb/repositories/future.apply/revdep/checks/blavaan/old/blavaan.Rcheck/blavaan’
-
-```
 # blockCV
 
 <details>
@@ -326,7 +78,7 @@ Run `revdep_details(,"cSEM")` for more info
 * URL: https://declaredesign.org, https://github.com/DeclareDesign/DeclareDesign
 * BugReports: https://github.com/DeclareDesign/DeclareDesign/issues
 * Date/Publication: 2020-03-24 07:40:10 UTC
-* Number of recursive dependencies: 132
+* Number of recursive dependencies: 133
 
 Run `revdep_details(,"DeclareDesign")` for more info
 
@@ -475,7 +227,7 @@ Run `revdep_details(,"gstat")` for more info
 * Version: 2.0.1
 * Source code: https://github.com/cran/gWQS
 * Date/Publication: 2020-03-03 12:20:02 UTC
-* Number of recursive dependencies: 159
+* Number of recursive dependencies: 160
 
 Run `revdep_details(,"gWQS")` for more info
 
@@ -496,7 +248,7 @@ Run `revdep_details(,"gWQS")` for more info
 * Version: 1.1.1
 * Source code: https://github.com/cran/gWQSRS
 * Date/Publication: 2020-03-03 11:40:02 UTC
-* Number of recursive dependencies: 111
+* Number of recursive dependencies: 112
 
 Run `revdep_details(,"gWQSRS")` for more info
 
@@ -588,7 +340,7 @@ Run `revdep_details(,"mcp")` for more info
 * Source code: https://github.com/cran/merTools
 * BugReports: https://www.github.com/jknowles/merTools
 * Date/Publication: 2019-05-13 12:30:06 UTC
-* Number of recursive dependencies: 130
+* Number of recursive dependencies: 131
 
 Run `revdep_details(,"merTools")` for more info
 
@@ -719,7 +471,7 @@ Run `revdep_details(,"QDNAseq")` for more info
 * Version: 2.2.2
 * Source code: https://github.com/cran/qgcomp
 * Date/Publication: 2020-03-01 23:00:02 UTC
-* Number of recursive dependencies: 81
+* Number of recursive dependencies: 82
 
 Run `revdep_details(,"qgcomp")` for more info
 
@@ -1023,7 +775,7 @@ Run `revdep_details(,"solitude")` for more info
 * URL: https://r-spatial.github.io/stars/, https://github.com/r-spatial/stars/
 * BugReports: https://github.com/r-spatial/stars/issues/
 * Date/Publication: 2019-10-10 13:00:02 UTC
-* Number of recursive dependencies: 122
+* Number of recursive dependencies: 127
 
 Run `revdep_details(,"stars")` for more info
 

@@ -114,7 +114,7 @@ the second elements, the third elements, and so on.
 Arguments are recycled if necessary.
 }
 \details{
-Note that \code{\link[base:.mapply]{base::.mapply()}}, which \code{future_.mapply()} is modelled after
+Note that \code{\link[base:.mapply]{base::.mapply()}}, which \code{future_.mapply()} is modeled after
 is listed as an "internal" function in \R despite being exported.
 }
 \examples{

@@ -169,7 +169,7 @@ future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES 
 #' `future_.mapply()` returns a list. See [base::.mapply()] for details.
 #'
 #' @details
-#' Note that [base::.mapply()], which `future_.mapply()` is modelled after
+#' Note that [base::.mapply()], which `future_.mapply()` is modeled after
 #' is listed as an "internal" function in \R despite being exported.
 #'
 #' @rdname future_mapply

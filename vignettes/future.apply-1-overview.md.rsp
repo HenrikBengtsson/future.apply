@@ -12,9 +12,6 @@
 %\VignetteKeyword{cluster}
 %\VignetteEngine{R.rsp::rsp}
 %\VignetteTangle{FALSE}
-
-Do not edit the *.md.rsp file.  Instead edit the *.md.rsp.rsp (sic!)
-file found under inst/vignettes-static/ of the source package.
 --------------------------------------------------------------------"%>
 # A Future for R: Apply Function to Elements in Parallel
 
@@ -157,7 +154,7 @@ The API and identity of the future.apply package will be kept close to the `*app
 
 [BatchJobs]: https://cran.r-project.org/package=BatchJobs
 [batchtools]: https://cran.r-project.org/package=batchtools
-[BiocParallel]: https://bioconductor.org/packages/release/bioc/html/BiocParallel.html
+[BiocParallel]: https://bioconductor.org/packages/BiocParallel/
 [doFuture]: https://cran.r-project.org/package=doFuture
 [doMC]: https://cran.r-project.org/package=doMC
 [doParallel]: https://cran.r-project.org/package=doParallel

@@ -1,4 +1,4 @@
-# CRAN submission future.apply 1.15.0
+# CRAN submission future.apply 1.5.0
 
 on 2020-04-16
 

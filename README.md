@@ -45,6 +45,7 @@ Future-versions of common goto <code>*apply()</code> functions available in base
 <code>future_lapply()</code>, 
 <code>future_Map()</code>, 
 <code>future_mapply()</code>, 
+<code>future_.mapply()</code>, 
 <code>future_replicate()</code>,
 <code>future_sapply()</code>,
 <code>future_tapply()</code>, and 
@@ -138,7 +139,7 @@ The API and identity of the future.apply package will be kept close to the `*app
 
 [BatchJobs]: https://cran.r-project.org/package=BatchJobs
 [batchtools]: https://cran.r-project.org/package=batchtools
-[BiocParallel]: https://bioconductor.org/packages/release/bioc/html/BiocParallel.html
+[BiocParallel]: https://bioconductor.org/packages/BiocParallel/
 [doFuture]: https://cran.r-project.org/package=doFuture
 [doMC]: https://cran.r-project.org/package=doMC
 [doParallel]: https://cran.r-project.org/package=doParallel
@@ -157,13 +158,6 @@ R package future.apply is available on [CRAN](https://cran.r-project.org/package
 install.packages("future.apply")
 ```
 
-### Pre-release version
-
-To install the pre-release version that is available in Git branch `develop` on GitHub, use:
-```r
-remotes::install_github("HenrikBengtsson/future.apply@develop")
-```
-This will install the package from source.  
 
 
 

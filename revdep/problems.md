@@ -69,28 +69,6 @@ Run `revdep_details(,"cSEM")` for more info
       All declared Imports should be used.
     ```
 
-# DeclareDesign
-
-<details>
-
-* Version: 0.22.0
-* Source code: https://github.com/cran/DeclareDesign
-* URL: https://declaredesign.org, https://github.com/DeclareDesign/DeclareDesign
-* BugReports: https://github.com/DeclareDesign/DeclareDesign/issues
-* Date/Publication: 2020-03-24 07:40:10 UTC
-* Number of recursive dependencies: 133
-
-Run `revdep_details(,"DeclareDesign")` for more info
-
-</details>
-
-## In both
-
-*   checking package dependencies ... NOTE
-    ```
-    Package suggested but not available for checking: ‘sf’
-    ```
-
 # fabletools
 
 <details>
@@ -108,9 +86,77 @@ Run `revdep_details(,"fabletools")` for more info
 
 ## In both
 
+*   checking S3 generic/method consistency ... WARNING
+    ```
+    Failed to query server: Connection timed out
+    See section ‘Generic functions and methods’ in the ‘Writing R
+    Extensions’ manual.
+    ```
+
+*   checking replacement functions ... WARNING
+    ```
+    Failed to query server: Connection timed out
+    The argument of a replacement function which corresponds to the right
+    hand side must be named ‘value’.
+    ```
+
+*   checking Rd files ... WARNING
+    ```
+    Failed to query server: Connection timed out
+    prepare_Rd: running command 'timedatectl' had status 1
+    ```
+
+*   checking for missing documentation entries ... WARNING
+    ```
+    Failed to query server: Connection timed out
+    All user-level objects in a package should have documentation entries.
+    See chapter ‘Writing R documentation files’ in the ‘Writing R
+    Extensions’ manual.
+    ```
+
+*   checking for code/documentation mismatches ... WARNING
+    ```
+    Failed to query server: Connection timed out
+    Failed to query server: Connection timed out
+    Failed to query server: Connection timed out
+    ```
+
+*   checking for unstated dependencies in examples ... WARNING
+    ```
+    Failed to query server: Connection timed out
+    Warning in system("timedatectl", intern = TRUE) :
+      running command 'timedatectl' had status 1
+    ```
+
 *   checking package dependencies ... NOTE
     ```
     Package suggested but not available for checking: ‘feasts’
+    ```
+
+*   checking dependencies in R code ... NOTE
+    ```
+    Failed to query server: Connection timed out
+    ```
+
+*   checking foreign function calls ... NOTE
+    ```
+    Failed to query server: Connection timed out
+    See chapter ‘System and foreign language interfaces’ in the ‘Writing R
+    Extensions’ manual.
+    ```
+
+*   checking R code for possible problems ... NOTE
+    ```
+    Failed to query server: Connection timed out
+    ```
+
+*   checking Rd \usage sections ... NOTE
+    ```
+    Failed to query server: Connection timed out
+    The \usage entries for S3 methods should use the \method markup and not
+    their full name.
+    See chapter ‘Writing R documentation files’ in the ‘Writing R
+    Extensions’ manual.
     ```
 
 # forecastML
@@ -133,26 +179,6 @@ Run `revdep_details(,"forecastML")` for more info
     ```
     Package suggested but not available for checking: ‘xgboost’
     ```
-
-# future.batchtools
-
-<details>
-
-* Version: 0.8.1
-* Source code: https://github.com/cran/future.batchtools
-* URL: https://github.com/HenrikBengtsson/future.batchtools
-* BugReports: https://github.com/HenrikBengtsson/future.batchtools/issues
-* Date/Publication: 2019-10-01 05:10:05 UTC
-* Number of recursive dependencies: 34
-
-Run `revdep_details(,"future.batchtools")` for more info
-
-</details>
-
-## In both
-
-*   R CMD check timed out
-    
 
 # grattan
 
@@ -282,6 +308,9 @@ Run `revdep_details(,"iml")` for more info
 
 *   checking dependencies in R code ... NOTE
     ```
+    Performing one-time download of h2o.jar from
+         http://s3.amazonaws.com/h2o-release/h2o/rel-zahradnik/1/Rjar/h2o.jar 
+    (This could take a few minutes, please be patient...)
     Namespace in Imports field not imported from: ‘future’
       All declared Imports should be used.
     ```
@@ -360,11 +389,6 @@ Run `revdep_details(,"merTools")` for more info
     session will be unable to start.
     
     Probably some imports need to be declared in the NAMESPACE file.
-    ```
-
-*   checking package dependencies ... NOTE
-    ```
-    Package suggested but not available for checking: ‘rstanarm’
     ```
 
 *   checking R code for possible problems ... NOTE
@@ -468,10 +492,10 @@ Run `revdep_details(,"QDNAseq")` for more info
 
 <details>
 
-* Version: 2.2.2
+* Version: 2.3.0
 * Source code: https://github.com/cran/qgcomp
-* Date/Publication: 2020-03-01 23:00:02 UTC
-* Number of recursive dependencies: 82
+* Date/Publication: 2020-04-08 05:50:02 UTC
+* Number of recursive dependencies: 116
 
 Run `revdep_details(,"qgcomp")` for more info
 
@@ -719,11 +743,11 @@ Run `revdep_details(,"robotstxt")` for more info
 
 <details>
 
-* Version: 3.1.4
+* Version: 3.1.5
 * Source code: https://github.com/cran/Seurat
 * URL: http://www.satijalab.org/seurat, https://github.com/satijalab/seurat
 * BugReports: https://github.com/satijalab/seurat/issues
-* Date/Publication: 2020-02-26 19:00:06 UTC
+* Date/Publication: 2020-04-16 11:50:08 UTC
 * Number of recursive dependencies: 219
 
 Run `revdep_details(,"Seurat")` for more info
@@ -734,8 +758,7 @@ Run `revdep_details(,"Seurat")` for more info
 
 *   checking package dependencies ... NOTE
     ```
-    Packages suggested but not available for checking:
-      'loomR', 'SDMTools', 'hdf5r'
+    Packages suggested but not available for checking: 'loomR', 'SDMTools'
     ```
 
 *   checking Rd cross-references ... NOTE
@@ -766,15 +789,38 @@ Run `revdep_details(,"solitude")` for more info
       All declared Imports should be used.
     ```
 
+# sperrorest
+
+<details>
+
+* Version: 3.0.0
+* Source code: https://github.com/cran/sperrorest
+* URL: https://giscience-fsu.github.io/sperrorest, https://github.com/giscience-fsu/sperrorest
+* BugReports: https://github.com/giscience-fsu/sperrorest/issues
+* Date/Publication: 2020-04-13 08:10:02 UTC
+* Number of recursive dependencies: 57
+
+Run `revdep_details(,"sperrorest")` for more info
+
+</details>
+
+## In both
+
+*   checking dependencies in R code ... NOTE
+    ```
+    Namespace in Imports field not imported from: ‘future’
+      All declared Imports should be used.
+    ```
+
 # stars
 
 <details>
 
-* Version: 0.4-0
+* Version: 0.4-1
 * Source code: https://github.com/cran/stars
 * URL: https://r-spatial.github.io/stars/, https://github.com/r-spatial/stars/
 * BugReports: https://github.com/r-spatial/stars/issues/
-* Date/Publication: 2019-10-10 13:00:02 UTC
+* Date/Publication: 2020-04-07 10:00:02 UTC
 * Number of recursive dependencies: 127
 
 Run `revdep_details(,"stars")` for more info

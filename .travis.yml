@@ -8,13 +8,12 @@
 # YAML validated using http://www.yamllint.com/
 #----------------------------------------------------------------
 language: r
-sudo: false
 cache: packages
 warnings_are_errors: false
 r_check_args: --as-cran
 latex: false
 
-matrix:
+jobs:
   include:
     - os: linux
       r: oldrel
@@ -30,6 +29,8 @@ matrix:
         - R_FUTURE_PLAN=multisession
     - os: linux
       r: release
+      r_github_packages:
+        - HenrikBengtsson/future@develop
       env:
         - R_FUTURE_GLOBALS_ONREFERENCE=warning
         - R_FUTURE_RNG_ONMISUSE=error

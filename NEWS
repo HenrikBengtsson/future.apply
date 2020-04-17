@@ -1,6 +1,17 @@
 Package: future.apply
 =====================
 
+Version: 1.5.0 [2020-04-16]
+
+NEW FEATURES:
+
+ * Add future_.mapply() corresponding to .mapply() in the 'base' package.
+
+BUG FIXES:
+
+ * future_mapply() would chunk up 'MoreArgs' when future.seed = TRUE.
+ 
+
 Version: 1.4.0 [2020-01-06]
 
 NEW FEATURES:

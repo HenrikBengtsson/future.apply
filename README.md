@@ -45,6 +45,7 @@ Future-versions of common goto <code>*apply()</code> functions available in base
 <code>future_lapply()</code>, 
 <code>future_Map()</code>, 
 <code>future_mapply()</code>, 
+<code>future_.mapply()</code>, 
 <code>future_replicate()</code>,
 <code>future_sapply()</code>,
 <code>future_tapply()</code>, and 
@@ -138,7 +139,7 @@ The API and identity of the future.apply package will be kept close to the `*app
 
 [BatchJobs]: https://cran.r-project.org/package=BatchJobs
 [batchtools]: https://cran.r-project.org/package=batchtools
-[BiocParallel]: https://bioconductor.org/packages/release/bioc/html/BiocParallel.html
+[BiocParallel]: https://bioconductor.org/packages/BiocParallel/
 [doFuture]: https://cran.r-project.org/package=doFuture
 [doMC]: https://cran.r-project.org/package=doMC
 [doParallel]: https://cran.r-project.org/package=doParallel
@@ -157,13 +158,6 @@ R package future.apply is available on [CRAN](https://cran.r-project.org/package
 install.packages("future.apply")
 ```
 
-### Pre-release version
-
-To install the pre-release version that is available in Git branch `develop` on GitHub, use:
-```r
-remotes::install_github("HenrikBengtsson/future.apply@develop")
-```
-This will install the package from source.  
 
 
 
@@ -176,8 +170,8 @@ Contributing to this package is easy.  Just send a [pull request](https://help.g
 
 ## Software status
 
-| Resource:     | CRAN        | Travis CI       | AppVeyor         |
-| ------------- | ------------------- | --------------- | ---------------- |
-| _Platforms:_  | _Multiple_          | _Linux & macOS_ | _Windows_        |
-| R CMD check   | <a href="https://cran.r-project.org/web/checks/check_results_future.apply.html"><img border="0" src="http://www.r-pkg.org/badges/version/future.apply" alt="CRAN version"></a> | <a href="https://travis-ci.org/HenrikBengtsson/future.apply"><img src="https://travis-ci.org/HenrikBengtsson/future.apply.svg" alt="Build status"></a>   | <a href="https://ci.appveyor.com/project/HenrikBengtsson/future-apply"><img src="https://ci.appveyor.com/api/projects/status/github/HenrikBengtsson/future.apply?svg=true" alt="Build status"></a> |
-| Test coverage |                     | <a href="https://codecov.io/gh/HenrikBengtsson/future.apply"><img src="https://codecov.io/gh/HenrikBengtsson/future.apply/branch/develop/graph/badge.svg" alt="Coverage Status"/></a>     |                  |
+| Resource      | CRAN        | GitHub Actions      | Travis CI       | AppVeyor CI      |
+| ------------- | ------------------- | ------------------- | --------------- | ---------------- |
+| _Platforms:_  | _Multiple_          | _Multiple_          | _Linux & macOS_ | _Windows_        |
+| R CMD check   | <a href="https://cran.r-project.org/web/checks/check_results_future.apply.html"><img border="0" src="http://www.r-pkg.org/badges/version/future.apply" alt="CRAN version"></a> | <a href="https://github.com/HenrikBengtsson/future.apply/actions?query=workflow%3AR-CMD-check"><img src="https://github.com/HenrikBengtsson/future.apply/workflows/R-CMD-check/badge.svg?branch=develop" alt="Build status"></a>       | <a href="https://travis-ci.org/HenrikBengtsson/future.apply"><img src="https://travis-ci.org/HenrikBengtsson/future.apply.svg" alt="Build status"></a>   | <a href="https://ci.appveyor.com/project/HenrikBengtsson/future-apply"><img src="https://ci.appveyor.com/api/projects/status/github/HenrikBengtsson/future.apply?svg=true" alt="Build status"></a> |
+| Test coverage |                     |                     | <a href="https://codecov.io/gh/HenrikBengtsson/future.apply"><img src="https://codecov.io/gh/HenrikBengtsson/future.apply/branch/develop/graph/badge.svg" alt="Coverage Status"/></a>     |                  |

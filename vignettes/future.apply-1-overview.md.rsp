@@ -12,9 +12,6 @@
 %\VignetteKeyword{cluster}
 %\VignetteEngine{R.rsp::rsp}
 %\VignetteTangle{FALSE}
-
-Do not edit the *.md.rsp file.  Instead edit the *.md.rsp.rsp (sic!)
-file found under inst/vignettes-static/ of the source package.
 --------------------------------------------------------------------"%>
 # A Future for R: Apply Function to Elements in Parallel
 
@@ -63,6 +60,7 @@ Future-versions of common goto <code>*apply()</code> functions available in base
 <code>future_lapply()</code>, 
 <code>future_Map()</code>, 
 <code>future_mapply()</code>, 
+<code>future_.mapply()</code>, 
 <code>future_replicate()</code>,
 <code>future_sapply()</code>,
 <code>future_tapply()</code>, and 
@@ -156,7 +154,7 @@ The API and identity of the future.apply package will be kept close to the `*app
 
 [BatchJobs]: https://cran.r-project.org/package=BatchJobs
 [batchtools]: https://cran.r-project.org/package=batchtools
-[BiocParallel]: https://bioconductor.org/packages/release/bioc/html/BiocParallel.html
+[BiocParallel]: https://bioconductor.org/packages/BiocParallel/
 [doFuture]: https://cran.r-project.org/package=doFuture
 [doMC]: https://cran.r-project.org/package=doMC
 [doParallel]: https://cran.r-project.org/package=doParallel
@@ -169,4 +167,4 @@ The API and identity of the future.apply package will be kept close to the `*app
 [plyr]: https://cran.r-project.org/package=plyr
 
 ---
-Copyright Henrik Bengtsson, 2017-2019
+Copyright Henrik Bengtsson, 2017-2020

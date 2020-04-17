@@ -34,7 +34,7 @@
 #'        For details, see [future_lapply()].
 #'
 #' @return
-#' `future_mapply() returns a list, or for `SIMPLIFY = TRUE`, a vector,
+#' `future_mapply()` returns a list, or for `SIMPLIFY = TRUE`, a vector,
 #' array or list.  See [base::mapply()] for details.
 #'
 #' @example incl/future_mapply.R
@@ -109,7 +109,7 @@ future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES 
         assign(".Random.seed", ...future.seeds_ii_jj, envir = globalenv(), inherits = FALSE)
         ...future.FUN(...)
       }
-      args <- c(list(FUN = ...future.FUN2), ...future.elements_ii, list(...future.seeds_ii_jj = ...future.seeds_ii), MoreArgs, SIMPLIFY = FALSE, USE.NAMES = FALSE)
+      args <- c(list(FUN = ...future.FUN2), ...future.elements_ii, list(...future.seeds_ii_jj = ...future.seeds_ii), MoreArgs = list(MoreArgs), SIMPLIFY = FALSE, USE.NAMES = FALSE)
       do.call(mapply, args = args)
     })
   }
@@ -159,4 +159,32 @@ future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES 
   if (debug) mdebugf("%s() ... DONE", fcn_name)
   
   values
+}
+
+
+#' @param dots A list of arguments to vectorize over (vectors or lists of
+#' strictly positive length, or all of zero length).
+#'
+#' @return
+#' `future_.mapply()` returns a list. See [base::.mapply()] for details.
+#'
+#' @details
+#' Note that [base::.mapply()], which `future_.mapply()` is modeled after
+#' is listed as an "internal" function in \R despite being exported.
+#'
+#' @rdname future_mapply
+#' @export
+future_.mapply <- function(FUN, dots, MoreArgs, ..., future.label = "future_.mapply-%d") {
+  args <- c(
+    list(FUN = FUN),
+    dots,
+    list(
+      MoreArgs = MoreArgs,
+      SIMPLIFY = FALSE,
+      USE.NAMES = FALSE,
+      ...,
+      future.label = future.label
+    )
+  )
+  do.call(future_mapply, args = args, envir = parent.frame())
 }

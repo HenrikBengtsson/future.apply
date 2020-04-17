@@ -3,6 +3,7 @@
 \name{future_Map}
 \alias{future_Map}
 \alias{future_mapply}
+\alias{future_.mapply}
 \title{Apply a Function to Multiple List or Vector Arguments}
 \usage{
 future_Map(f, ..., future.label = "future_Map-\%d")
@@ -23,6 +24,8 @@ future_mapply(
   future.chunk.size = NULL,
   future.label = "future_mapply-\%d"
 )
+
+future_.mapply(FUN, dots, MoreArgs, ..., future.label = "future_.mapply-\%d")
 }
 \arguments{
 \item{f}{A function of the arity \eqn{k} if \code{future_Map()} is called with
@@ -85,6 +88,9 @@ Only used if \code{future.chunk.size} is \code{NULL}.}
 If \code{Inf}, then all elements are processed in a single future.
 If \code{NULL}, then argument \code{future.scheduling} is used.}
 
+\item{dots}{A list of arguments to vectorize over (vectors or lists of
+strictly positive length, or all of zero length).}
+
 \item{\ldots}{Arguments to vectorize over (vectors or lists of strictly
 positive length, or all of zero length).}
 }
@@ -93,8 +99,10 @@ positive length, or all of zero length).}
 attempt to simplify the result.
 See \code{\link[base:Map]{base::Map()}} for details.
 
-\verb{future_mapply() returns a list, or for }SIMPLIFY = TRUE`, a vector,
+\code{future_mapply()} returns a list, or for \code{SIMPLIFY = TRUE}, a vector,
 array or list.  See \code{\link[base:mapply]{base::mapply()}} for details.
+
+\code{future_.mapply()} returns a list. See \code{\link[base:.mapply]{base::.mapply()}} for details.
 }
 \description{
 \code{future_mapply()} implements \code{\link[base:mapply]{base::mapply()}} using futures with perfect
@@ -104,6 +112,10 @@ Analogously to \code{mapply()}, \code{future_mapply()} is a multivariate version
 It applies \code{FUN} to the first elements of each \verb{\\ldots} argument,
 the second elements, the third elements, and so on.
 Arguments are recycled if necessary.
+}
+\details{
+Note that \code{\link[base:.mapply]{base::.mapply()}}, which \code{future_.mapply()} is modeled after
+is listed as an "internal" function in \R despite being exported.
 }
 \examples{
 ## ---------------------------------------------------------

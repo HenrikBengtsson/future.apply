@@ -32,12 +32,29 @@ for (strategy in supportedStrategies()) {
                       c(a =  1, b = 2, c = 3),  # names from first
                       c(A = 10, B = 0, C = -10))
   stopifnot(identical(y1, y0))
-  
+
+  message("- future_.mapply()")
+  dots <- list(c(a =  1, b = 2, c = 3),  # names from first
+               c(A = 10, B = 0, C = -10))
+  y2 <- .mapply(function(x, y) seq_len(x) + y, dots = dots, MoreArgs = list())
+  names(y0) <- NULL  ## .mapply() don't set names
+  stopifnot(all.equal(y2, y0))
+  y3 <- future_.mapply(function(x, y) seq_len(x) + y, dots = dots, MoreArgs = list())
+  stopifnot(all.equal(y3, y2))
+
   word <- function(C, k) paste(rep.int(C, k), collapse = "")
   for (chunk.size in list(1L, structure(2L, ordering = "random"), structure(3L, ordering = 5:1))) {
     y0 <- mapply(word, LETTERS[1:5], 5:1, SIMPLIFY = FALSE)
     y1 <- future_mapply(word, LETTERS[1:5], 5:1, SIMPLIFY = FALSE, future.chunk.size = chunk.size)
     stopifnot(identical(y1, y0))
+
+    dots <- list(LETTERS[1:5], 5:1)
+    MoreArgs <- list()
+    y2 <- .mapply(word, dots = dots, MoreArgs = list())
+    names(y0) <- NULL  ## .mapply() don't set names
+    stopifnot(all.equal(y2, y0))
+    y3 <- future_.mapply(word, dots = dots, MoreArgs = list())
+    stopifnot(all.equal(y3, y2))
   }
 
   message("- Subsetting (Issue #17) ...")
@@ -45,7 +62,37 @@ for (strategy in supportedStrategies()) {
   y0 <- mapply(FUN = identity, X, SIMPLIFY = FALSE)
   y1 <- future_mapply(FUN = identity, X, SIMPLIFY = FALSE)
   stopifnot(identical(y1, y0))
-  
+
+  dots <- list(X)
+  y2 <- .mapply(FUN = identity, dots = dots, MoreArgs = MoreArgs)
+  stopifnot(identical(y2, y0))
+  y3 <- future_.mapply(FUN = identity, dots = dots, MoreArgs = MoreArgs)
+  stopifnot(identical(y3, y2))
+
+  message("- Non-recycling of MoreArgs (Issue #51) ...")
+  y0 <- base::mapply(
+    function(x, y) y,
+    x = 1:2, MoreArgs = list(y = 3:4)
+  )
+  y1 <- future.apply::future_mapply(
+    function(x, y) y,
+    x = 1:2, MoreArgs = list(y = 3:4),
+    future.seed = FALSE
+  )
+  stopifnot(identical(y1, y0))
+  y2 <- future.apply::future_mapply(
+    function(x, y) y,
+    x = 1:2, MoreArgs = list(y = 3:4),
+    future.seed = TRUE
+  )
+  stopifnot(identical(y2, y0))
+
+  dots <- list(x = 1:2)
+  MoreArgs <- list(y = 3:4)
+  y3 <- .mapply(function(x, y) y, dots = dots, MoreArgs = MoreArgs)
+  y4 <- future_.mapply(function(x, y) y, dots = dots, MoreArgs = MoreArgs)
+  stopifnot(identical(y4, y3))
+
   message("- Recycle arguments to same length ...")
   y0 <- mapply(rep, 1:4, 2:1)
   y1 <- future_mapply(rep, 1:4, 2:1)

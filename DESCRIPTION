@@ -3,7 +3,7 @@ Version: 1.5.0-9000
 Title: Apply Function to Elements in Parallel using Futures
 Depends:
     R (>= 3.2.0),
-    future (>= 1.16.0)
+    future (>= 1.17.0)
 Imports:
     globals (>= 0.12.5)
 Suggests:

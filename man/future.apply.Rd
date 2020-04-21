@@ -25,6 +25,7 @@ Currently implemented functions are:
 \item \code{\link[=future_vapply]{future_vapply()}}: a parallel version of \link[base:vapply]{vapply()}
 \item \code{\link[=future_Map]{future_Map()}}: a parallel version of \link[base:Map]{Map()}
 \item \code{\link[=future_replicate]{future_replicate()}}: a parallel version of \link[base:replicate]{replicate()}
+\item \code{\link[=future_.mapply]{future_.mapply()}}: a parallel version of \link[base:.mapply]{.mapply()}
 }
 
 Reproducibility is part of the core design, which means that perfect,

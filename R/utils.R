@@ -108,6 +108,8 @@ import_future <- function(name, default = NULL) {
   import_from(name, default = default, package = "future")
 }
 
+#' @importFrom future FutureError
+#' @importFrom utils capture.output head str
 assert_values2 <- function(nX, values, values2, fcn_name, debug = FALSE) {
   if (length(values2) != nX) {
     chunk_sizes <- sapply(values, FUN = length)

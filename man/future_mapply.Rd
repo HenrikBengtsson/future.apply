@@ -154,7 +154,7 @@ stopifnot(identical(y1, y0))
 ## Regardless of the future plan, the number of workers, and
 ## where they are, the random numbers produced are identical
 
-plan(multiprocess)
+plan(multisession)
 y1 <- future_mapply(stats::runif, n = 1:4, max = 2:5,
                     MoreArgs = list(min = 1), future.seed = 0xBEEF)
 print(y1)

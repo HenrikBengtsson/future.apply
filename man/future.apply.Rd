@@ -46,7 +46,7 @@ can be updated to:\if{html}{\out{<div class="r">}}\preformatted{y <- future_lapp
 
 The default settings in the \pkg{future} framework is to process code
 \emph{sequentially}.  To run the above in parallel on the local machine
-(on any operating system), use:\if{html}{\out{<div class="r">}}\preformatted{plan(multiprocess)
+(on any operating system), use:\if{html}{\out{<div class="r">}}\preformatted{plan(multisession)
 }\if{html}{\out{</div>}}
 
 first.  That's it!

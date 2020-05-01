@@ -44,7 +44,7 @@
 #' _sequentially_.  To run the above in parallel on the local machine
 #' (on any operating system), use:
 #' ```r
-#' plan(multiprocess)
+#' plan(multisession)
 #' ```
 #' first.  That's it!
 #'

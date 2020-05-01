@@ -116,7 +116,7 @@ stopifnot(all.equal(Y1, Y0))
 
 X <- matrix(c(1:4, 1, 6:8), nrow = 2L)
 
-plan(multiprocess)
+plan(multisession)
 Y1 <- future_apply(X, MARGIN = 1L, FUN = sample, future.seed = 0xBEEF)
 print(Y1)
 

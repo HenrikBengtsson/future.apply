@@ -1,10 +1,18 @@
 Package: future.apply
 =====================
 
-Version: 1.5.0-9000 [2020-04-17]
+Version: 1.5.0-9000 [2020-05-01]
 
- * ...
+BUG FIXES:
 
+ * future_apply(X, FUN, ...) would pass all 'future.*' arguments except
+   'future.globals', 'future.packages', and 'future.labels' to the 'FUN'
+   function instead of processing them locally.  This would often result in
+   the 'FUN' producing an error on "unused argument".  It also affected
+   'future.seed' not being applied, which means for some 'FUN' functions
+   that did not produce this error, non-reproducible results could have
+   been produced.
+   
 
 Version: 1.5.0 [2020-04-16]
 

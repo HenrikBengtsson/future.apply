@@ -33,7 +33,7 @@
 #'
 #' @importFrom future nbrOfWorkers
 #' @export
-future_apply <- function(X, MARGIN, FUN, ..., future.globals = TRUE, future.packages = NULL, future.label = "future_apply-%d") {
+future_apply <- function(X, MARGIN, FUN, ..., future.stdout = TRUE, future.conditions = NULL, future.globals = TRUE, future.packages = NULL, future.lazy = FALSE, future.seed = FALSE, future.scheduling = 1.0, future.chunk.size = NULL, future.label = "future_apply-%d") {
     debug <- getOption("future.debug", FALSE)
 
     FUN <- match.fun(FUN)
@@ -133,6 +133,12 @@ future_apply <- function(X, MARGIN, FUN, ..., future.globals = TRUE, future.pack
       X = newX,
       FUN = FUN,
       ...,
+      future.stdout = future.stdout,
+      future.conditions = future.conditions,
+      future.lazy = future.lazy,
+      future.seed = future.seed,
+      future.scheduling = future.scheduling,
+      future.chunk.size = future.chunk.size,
       future.globals = globals,
       future.packages = packages,
       future.label = future.label

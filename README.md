@@ -11,7 +11,7 @@ y <- lapply(x, FUN = quantile, probs = 1:3/4)
 one can do:
 ```r
 library("future.apply")
-plan(multiprocess) ## Run in parallel on local computer
+plan(multisession) ## Run in parallel on local computer
 
 library("stats")
 x <- 1:10
@@ -158,6 +158,13 @@ R package future.apply is available on [CRAN](https://cran.r-project.org/package
 install.packages("future.apply")
 ```
 
+### Pre-release version
+
+To install the pre-release version that is available in Git branch `develop` on GitHub, use:
+```r
+remotes::install_github("HenrikBengtsson/future.apply@develop")
+```
+This will install the package from source.  
 
 
 

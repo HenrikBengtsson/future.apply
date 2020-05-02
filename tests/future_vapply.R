@@ -35,7 +35,7 @@ for (strategy in supportedStrategies()) {
   stopifnot(all.equal(y1, y0))
   
   
-  df <- data.frame(x = 1:10, y = letters[1:10])
+  df <- data.frame(x = 1:10, y = letters[1:10], stringsAsFactors=FALSE)
   fun <- class
   fun_value <- character(1L)
   y0 <- vapply(df, FUN = fun, FUN.VALUE = fun_value)

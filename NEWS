@@ -1,7 +1,12 @@
 Package: future.apply
 =====================
 
-Version: 1.5.0-9000 [2020-05-01]
+Version: 1.5.0-9000 [2020-05-12]
+
+SIGNIFICANT CHANGES:
+
+ * future_apply() gained argument 'simplify', which is added to R-devel
+   (to become R 4.1.0).
 
 BUG FIXES:
 

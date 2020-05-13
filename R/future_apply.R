@@ -19,6 +19,9 @@
 #' `future.*` arguments, which are passed on to `future_lapply()` used
 #' internally.
 #' 
+#' @param simplify a logical indicating whether results should be simplified
+#' if possible.
+#'
 #' @return
 #' Returns a vector or array or list of values obtained by applying a
 #' function to margins of an array or matrix.
@@ -33,10 +36,11 @@
 #'
 #' @importFrom future nbrOfWorkers
 #' @export
-future_apply <- function(X, MARGIN, FUN, ..., future.stdout = TRUE, future.conditions = NULL, future.globals = TRUE, future.packages = NULL, future.lazy = FALSE, future.seed = FALSE, future.scheduling = 1.0, future.chunk.size = NULL, future.label = "future_apply-%d") {
+future_apply <- function(X, MARGIN, FUN, ..., simplify = TRUE, future.stdout = TRUE, future.conditions = NULL, future.globals = TRUE, future.packages = NULL, future.lazy = FALSE, future.seed = FALSE, future.scheduling = 1.0, future.chunk.size = NULL, future.label = "future_apply-%d") {
     debug <- getOption("future.debug", FALSE)
 
     FUN <- match.fun(FUN)
+    simplify <- isTRUE(simplify)
 
     ## Ensure that X is an array object
     dl <- length(dim(X))
@@ -146,7 +150,7 @@ future_apply <- function(X, MARGIN, FUN, ..., future.stdout = TRUE, future.condi
     
     ## answer dims and dimnames
 
-    ans.list <- is.recursive(ans[[1L]])
+    ans.list <- !simplify || is.recursive(ans[[1L]])
     l.ans <- length(ans[[1L]])
 
     ans.names <- names(ans[[1L]])

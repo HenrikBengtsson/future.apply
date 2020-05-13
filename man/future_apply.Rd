@@ -9,6 +9,7 @@ future_apply(
   MARGIN,
   FUN,
   ...,
+  simplify = TRUE,
   future.stdout = TRUE,
   future.conditions = NULL,
   future.globals = TRUE,
@@ -30,6 +31,9 @@ Where \code{X} has named dimnames, it can be a character vector selecting
 dimension names.}
 
 \item{FUN}{A function taking at least one argument.}
+
+\item{simplify}{a logical indicating whether results should be simplified
+if possible.}
 
 \item{future.stdout}{If \code{TRUE} (default), then the standard output of the
 underlying futures is captured, and re-outputted as soon as possible.

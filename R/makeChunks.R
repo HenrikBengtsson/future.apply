@@ -4,7 +4,7 @@
 #' 
 #' @param nbrOfElements (integer) Total number of elements to iterate over.
 #' 
-#' @param nbrOfWorker (integer) Number of workers available.
+#' @param nbrOfWorkers (integer) Number of workers available.
 #' 
 #' @param future.scheduling (numeric) A strictly positive scalar.
 #' Only used if argument `future.chunk.size` is `NULL`.

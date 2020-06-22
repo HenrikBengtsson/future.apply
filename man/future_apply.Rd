@@ -43,7 +43,7 @@ If \code{NA} (not recommended), output is \emph{not} intercepted.}
 
 \item{future.conditions}{A character string of conditions classes to be
 captured and relayed.  The default is the same as the \code{condition}
-argument of \code{\link[future:Future]{future::Future()}}.
+argument of \code{\link[future:Future-class]{future::Future()}}.
 To not intercept conditions, use \code{conditions = character(0L)}.
 Errors are always relayed.}
 

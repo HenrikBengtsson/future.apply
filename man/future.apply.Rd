@@ -20,12 +20,12 @@ Currently implemented functions are:
 \item \code{\link[=future_eapply]{future_eapply()}}: a parallel version of \link[base:lapply]{eapply()}
 \item \code{\link[=future_lapply]{future_lapply()}}: a parallel version of \link[base:lapply]{lapply()}
 \item \code{\link[=future_mapply]{future_mapply()}}: a parallel version of \link[base:mapply]{mapply()}
-\item \code{\link[=future_sapply]{future_sapply()}}: a parallel version of \link[base:sapply]{sapply()}
+\item \code{\link[=future_sapply]{future_sapply()}}: a parallel version of \link[base:lapply]{sapply()}
 \item \code{\link[=future_tapply]{future_tapply()}}: a parallel version of \link[base:tapply]{tapply()}
-\item \code{\link[=future_vapply]{future_vapply()}}: a parallel version of \link[base:vapply]{vapply()}
-\item \code{\link[=future_Map]{future_Map()}}: a parallel version of \link[base:Map]{Map()}
-\item \code{\link[=future_replicate]{future_replicate()}}: a parallel version of \link[base:replicate]{replicate()}
-\item \code{\link[=future_.mapply]{future_.mapply()}}: a parallel version of \link[base:.mapply]{.mapply()}
+\item \code{\link[=future_vapply]{future_vapply()}}: a parallel version of \link[base:lapply]{vapply()}
+\item \code{\link[=future_Map]{future_Map()}}: a parallel version of \link[base:funprog]{Map()}
+\item \code{\link[=future_replicate]{future_replicate()}}: a parallel version of \link[base:lapply]{replicate()}
+\item \code{\link[=future_.mapply]{future_.mapply()}}: a parallel version of \link[base:base-internal]{.mapply()}
 }
 
 Reproducibility is part of the core design, which means that perfect,

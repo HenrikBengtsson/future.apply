@@ -38,36 +38,9 @@ Run `revdep_details(,"bcmaps")` for more info
 
 ## In both
 
-*   checking tests ...
-    ```
-    ...
-      sf built with old GEOS, lwgeom package required.
-      Backtrace:
-       1. testthat::expect_message(...)
-       7. bcmaps:::fix_geo_problems.sf(st_as_sf(p4))
-       8. bcmaps:::make_valid(obj)
-      
-      Failed with error:  'there is no package called 'lwgeom''
-      ── 2. Error: works with other problems: sf (@test-fix_geo_problems.R#106)  ─────
-      sf built with old GEOS, lwgeom package required.
-      Backtrace:
-       1. testthat::expect_message(...)
-       7. bcmaps:::fix_geo_problems.sf(st_as_sf(p7))
-       8. bcmaps:::make_valid(obj)
-      
-      ══ testthat results  ═══════════════════════════════════════════════════════════
-      [ OK: 71 | SKIPPED: 11 | WARNINGS: 0 | FAILED: 2 ]
-      1. Error: works with self-intersections: sf (@test-fix_geo_problems.R#94) 
-      2. Error: works with other problems: sf (@test-fix_geo_problems.R#106) 
-      
-      Error: testthat unit tests failed
-      Execution halted
-    ```
-
 *   checking package dependencies ... NOTE
     ```
-    Packages suggested but not available for checking:
-      'bcmapsdata', 'rgdal', 'lwgeom'
+    Package suggested but not available for checking: ‘bcmapsdata’
     ```
 
 # blavaan
@@ -116,24 +89,24 @@ Run `revdep_details(,"blockCV")` for more info
 *   checking tests ...
     ```
     ...
-       12. layout$setup_panel_params()
-       13. ggplot2:::f(..., self = self)
-       14. base::Map(setup_panel_params, scales_x, scales_y)
-       15. base::mapply(FUN = f, ..., SIMPLIFY = FALSE)
-       17. self$coord$setup_panel_params(scale_x, scale_y, params = self$coord_params)
-       18. ggplot2:::f(..., self = self)
-       19. sf::st_graticule(...)
-       21. sf:::st_transform.sfc(box, datum, partial = TRUE)
-       23. sf:::CPL_transform(x, crs, aoi, pipeline, reverse)
-      
+      1     107     101     31     15
+      2     106      77     32     39
+      3     113     108     25      8
+      4     120     108     18      8
+      5     106      70     32     46
+      The best folds was in iteration 1:
+        train test
+      1   211   43
+      2   207   47
+      3   173   81
+      4   209   45
+      5   216   38
       ══ testthat results  ═══════════════════════════════════════════════════════════
-      [ OK: 127 | SKIPPED: 8 | WARNINGS: 7 | FAILED: 6 ]
-      1. Error: test spatialAutoRange function with multi-layer raster in parallel (@testSpatialAutoRange.R#19) 
-      2. Error: test spatialAutoRange for low-resolution rasters (@testSpatialAutoRange.R#71) 
-      3. Error: test spatiaBlock function with systematic assingment and no raster file (@testSpatialBlock.R#65) 
-      4. Error: test spatiaBlock function with non-numeric iteration (@testSpatialBlock.R#98) 
-      5. Error: test spatiaBlock with checkerboard assingment and only row blocks (@testSpatialBlock.R#132) 
-      6. Error: test spatialBlock with no speceis column match (@testSpatialBlock.R#269) 
+      [ OK: 179 | SKIPPED: 8 | WARNINGS: 0 | FAILED: 4 ]
+      1. Error: helper function with no species data (@testHelper_function.R#26) 
+      2. Error: test spatialAutoRange function with multi-layer raster in parallel (@testSpatialAutoRange.R#19) 
+      3. Error: test spatialAutoRange function with multi-layer raster without parallel processing (@testSpatialAutoRange.R#55) 
+      4. Error: test spatialAutoRange for low-resolution rasters (@testSpatialAutoRange.R#71) 
       
       Error: testthat unit tests failed
       Execution halted
@@ -141,7 +114,7 @@ Run `revdep_details(,"blockCV")` for more info
 
 *   checking Rd cross-references ... NOTE
     ```
-    Unknown package ‘biomod2’ in Rd xrefs
+    Package unavailable to check Rd xrefs: ‘biomod2’
     ```
 
 # cSEM
@@ -207,105 +180,10 @@ Run `revdep_details(,"fabletools")` for more info
 
 ## In both
 
-*   checking examples ... ERROR
-    ```
-    ...
-     1 Adelaide       South Australia    Business 156.   35.6 
-     2 Adelaide       South Australia    Holiday  157.   27.1 
-     3 Adelaide       South Australia    Other     56.6  17.3 
-     4 Adelaide       South Australia    Visiting 205.   32.5 
-     5 Adelaide Hills South Australia    Business   2.66  4.30
-     6 Adelaide Hills South Australia    Holiday   10.5   6.37
-     7 Adelaide Hills South Australia    Other      1.40  1.65
-     8 Adelaide Hills South Australia    Visiting  14.2  10.7 
-     9 Alice Springs  Northern Territory Business  14.6   7.20
-    10 Alice Springs  Northern Territory Holiday   31.9  18.1 
-    # … with 294 more rows
-    > 
-    > # Search and use useful features with `feature_set()`. 
-    > if(requireNamespace("feasts")) library(feasts)
-    Loading required namespace: feasts
-    Failed with error:  ‘there is no package called ‘feasts’’
-    > tourism %>% 
-    +   features(Trips, features = feature_set(tags = "autocorrelation"))
-    Error in .l[[1]] : subscript out of bounds
-    Calls: %>% ... features.tbl_ts -> features_impl -> map -> lapply -> FUN -> transpose
-    Execution halted
-    ```
-
-*   checking S3 generic/method consistency ... WARNING
-    ```
-    Failed to query server: Connection timed out
-    See section ‘Generic functions and methods’ in the ‘Writing R
-    Extensions’ manual.
-    ```
-
-*   checking replacement functions ... WARNING
-    ```
-    Failed to query server: Connection timed out
-    The argument of a replacement function which corresponds to the right
-    hand side must be named ‘value’.
-    ```
-
-*   checking Rd files ... WARNING
-    ```
-    Failed to query server: Connection timed out
-    prepare_Rd: running command 'timedatectl' had status 1
-    ```
-
-*   checking for missing documentation entries ... WARNING
-    ```
-    Failed to query server: Connection timed out
-    All user-level objects in a package should have documentation entries.
-    See chapter ‘Writing R documentation files’ in the ‘Writing R
-    Extensions’ manual.
-    ```
-
-*   checking for code/documentation mismatches ... WARNING
-    ```
-    Failed to query server: Connection timed out
-    Failed to query server: Connection timed out
-    Failed to query server: Connection timed out
-    ```
-
-*   checking for unstated dependencies in examples ... WARNING
-    ```
-    Failed to query server: Connection timed out
-    Warning in system("timedatectl", intern = TRUE) :
-      running command 'timedatectl' had status 1
-    ```
-
-*   checking package dependencies ... NOTE
-    ```
-    Package suggested but not available for checking: ‘feasts’
-    ```
-
 *   checking dependencies in R code ... NOTE
     ```
-    Failed to query server: Connection timed out
     Namespace in Imports field not imported from: ‘lifecycle’
       All declared Imports should be used.
-    ```
-
-*   checking foreign function calls ... NOTE
-    ```
-    Failed to query server: Connection timed out
-    See chapter ‘System and foreign language interfaces’ in the ‘Writing R
-    Extensions’ manual.
-    ```
-
-*   checking R code for possible problems ... NOTE
-    ```
-    Failed to query server: Connection timed out
-    ```
-
-*   checking Rd \usage sections ... NOTE
-    ```
-    Failed to query server: Connection timed out
-    The \usage entries for S3 methods should use the \method markup and not
-    their full name.
-    See chapter ‘Writing R documentation files’ in the ‘Writing R
-    Extensions’ manual.
     ```
 
 # forecastML
@@ -353,97 +231,6 @@ Run `revdep_details(,"grattan")` for more info
       'taxstats', 'taxstats1516'
     ```
 
-# GSODR
-
-<details>
-
-* Version: 2.1.1
-* Source code: https://github.com/cran/GSODR
-* URL: https://docs.ropensci.org/GSODR/
-* BugReports: https://github.com/ropensci/GSODR/issues
-* Date/Publication: 2020-06-13 04:10:03 UTC
-* Number of recursive dependencies: 87
-
-Run `revdep_details(,"GSODR")` for more info
-
-</details>
-
-## In both
-
-*   checking tests ...
-    ```
-    ...
-       11. value[[3L]](cond)
-      
-      ── 2. Error: when year is selected for a station not providing it, error (@test-
-      
-      The file downloads have failed. Please restart.
-      Backtrace:
-        1. testthat::expect_message(...)
-        6. GSODR::get_GSOD(years = 1950, station = "959360-99999")
-        7. GSODR:::.download_files(station, years)
-        8. base::tryCatch(...)
-        9. base:::tryCatchList(expr, classes, parentenv, handlers)
-       10. base:::tryCatchOne(expr, names, parentenv, handlers[[1L]])
-       11. value[[3L]](cond)
-      
-      ══ testthat results  ═══════════════════════════════════════════════════════════
-      [ OK: 31 | SKIPPED: 9 | WARNINGS: 0 | FAILED: 2 ]
-      1. Failure: The 'max_missing' parameter filters out improper stations (@test-get_GSOD.R#126) 
-      2. Error: when year is selected for a station not providing it, error (@test-get_GSOD.R#244) 
-      
-      Error: testthat unit tests failed
-      Execution halted
-    ```
-
-# gstat
-
-<details>
-
-* Version: 2.0-6
-* Source code: https://github.com/cran/gstat
-* URL: https://github.com/r-spatial/gstat/
-* BugReports: https://github.com/r-spatial/gstat/issues/
-* Date/Publication: 2020-05-18 12:30:02 UTC
-* Number of recursive dependencies: 37
-
-Run `revdep_details(,"gstat")` for more info
-
-</details>
-
-## In both
-
-*   checking tests ...
-    ```
-    ...
-      
-      > meuse.riv <- SpatialPolygons(list(Polygons(list(Polygon(meuse.riv)),"meuse.riv")))
-      
-      > proj4string(meuse.riv) <- crs
-      
-      > data("meuse.area")
-      
-      > meuse.area = SpatialPolygons(list(Polygons(list(Polygon(meuse.area)), "area")))
-      
-      > proj4string(meuse.area) <- crs
-      > 
-      > v = variogram(log(zinc)~1, meuse_sf)
-      > (v.fit = fit.variogram(v, vgm(1, "Sph", 900, 1)))
-        model      psill    range
-      1   Nug 0.05066243   0.0000
-      2   Sph 0.59060780 897.0209
-      > k_sf = krige(log(zinc)~1, meuse_sf[-(1:5),], meuse_sf[1:5,], v.fit)
-      Error in .local(formula, locations, ...) : 
-        stars required: install that first
-      Calls: krige -> krige -> .local
-      Execution halted
-    ```
-
-*   checking package dependencies ... NOTE
-    ```
-    Package suggested but not available for checking: ‘rgdal’
-    ```
-
 # gWQS
 
 <details>
@@ -463,42 +250,6 @@ Run `revdep_details(,"gWQS")` for more info
     ```
     Namespace in Imports field not imported from: ‘dplyr’
       All declared Imports should be used.
-    ```
-
-# hackeRnews
-
-<details>
-
-* Version: 0.1.0
-* Source code: https://github.com/cran/hackeRnews
-* URL: https://github.com/szymanskir/hackeRnews
-* BugReports: https://github.com/szymanskir/hackeRnews/issues
-* Date/Publication: 2019-12-13 13:20:05 UTC
-* Number of recursive dependencies: 62
-
-Run `revdep_details(,"hackeRnews")` for more info
-
-</details>
-
-## In both
-
-*   checking examples ... ERROR
-    ```
-    Running examples in ‘hackeRnews-Ex.R’ failed
-    The error most likely occurred in:
-    
-    > ### Name: get_best_stories
-    > ### Title: Hacker News best stories
-    > ### Aliases: get_best_stories
-    > 
-    > ### ** Examples
-    > 
-    > # get the best story on Hacker News
-    > best_story <- get_best_stories(max_items = 1)
-    Error in curl::curl_fetch_memory(url, handle = handle) : 
-      Could not resolve host: hacker-news.firebaseio.com; Name or service not known
-    Calls: get_best_stories ... request_fetch -> request_fetch.write_memory -> <Anonymous>
-    Execution halted
     ```
 
 # iml
@@ -582,51 +333,6 @@ Run `revdep_details(,"MineICA")` for more info
 </details>
 
 ## In both
-
-*   checking examples ... ERROR
-    ```
-    ...
-    > ###   witGenes<-,IcaSet,character-method refSamples refSamples<-
-    > ###   refSamples,IcaSet-method setRefSamples,IcaSet-method
-    > ###   getRefSamples,IcaSet-method refSamples<-,IcaSet-method
-    > ###   refSamples<-,IcaSet,character-method typeID typeID<-
-    > ###   typeID,IcaSet-method typeID<-,IcaSet-method setTypeID,IcaSet-method
-    > ###   getTypeID,IcaSet-method typeID<-,IcaSet,list-method chipManu
-    > ###   chipManu<- chipManu<-,IcaSet-method
-    > ###   chipManu<-,IcaSet,character-method chipManu,IcaSet-method
-    > ###   setChipManu,IcaSet-method getChipManu,IcaSet-method
-    > ###   Slist,IcaSet-method SlistByGene,IcaSet-method Alist,IcaSet-method
-    > ### Keywords: classes
-    > 
-    > ### ** Examples
-    > 
-    > # create an instance of IcaSet
-    > new("IcaSet")
-    Ensembl site unresponsive, trying uswest mirror
-    Error in curl::curl_fetch_memory(url, handle = handle) : 
-      Could not resolve host: uswest.ensembl.org; Name or service not known
-    Calls: new ... request_fetch -> request_fetch.write_memory -> <Anonymous>
-    Execution halted
-    ```
-
-*   checking running R code from vignettes ...
-    ```
-      ‘MineICA.Rnw’... failed
-     ERROR
-    Errors in running code in vignettes:
-    when running code in ‘MineICA.Rnw’
-      ...
-    [28] "hgu133aPROSITE"       "hgu133aREFSEQ"        "hgu133aSYMBOL"       
-    [31] "hgu133aUNIGENE"       "hgu133aUNIPROT"       "hgu133a_dbInfo"      
-    [34] "hgu133a_dbconn"       "hgu133a_dbfile"       "hgu133a_dbschema"    
-    
-    > mart <- useMart(biomart = "ensembl", dataset = "hsapiens_gene_ensembl")
-    Ensembl site unresponsive, trying uswest mirror
-    
-      When sourcing ‘MineICA.R’:
-    Error: Could not resolve host: uswest.ensembl.org; Name or service not known
-    Execution halted
-    ```
 
 *   checking whether the namespace can be loaded with stated dependencies ... WARNING
     ```
@@ -843,30 +549,6 @@ Run `revdep_details(,"QDNAseq")` for more info
       All declared Imports should be used.
     ```
 
-# rangeMapper
-
-<details>
-
-* Version: 0.3-7
-* Source code: https://github.com/cran/rangeMapper
-* URL: https://github.com/valcu/rangeMapper
-* Date/Publication: 2019-10-25 18:20:02 UTC
-* Number of recursive dependencies: 96
-
-Run `revdep_details(,"rangeMapper")` for more info
-
-</details>
-
-## In both
-
-*   checking package dependencies ... ERROR
-    ```
-    Package required but not available: ‘rgdal’
-    
-    See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
-    manual.
-    ```
-
 # robotstxt
 
 <details>
@@ -958,10 +640,9 @@ Run `revdep_details(,"stars")` for more info
 
 *   checking package dependencies ... ERROR
     ```
-    Packages required but not available: 'lwgeom', 'units'
+    Package required but not available: ‘lwgeom’
     
-    Packages suggested but not available for checking:
-      'RNetCDF', 'ncdfgeom', 'ncmeta', 'starsdata'
+    Package suggested but not available for checking: ‘starsdata’
     
     See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
     manual.

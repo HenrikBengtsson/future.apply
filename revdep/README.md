@@ -29,7 +29,7 @@
 |package                                        |version   |error |warning |note |
 |:----------------------------------------------|:---------|:-----|:-------|:----|
 |[BAMBI](problems.md#bambi)                     |2.3.0     |      |        |1    |
-|[bcmaps](problems.md#bcmaps)                   |0.18.1    |1     |        |1    |
+|[bcmaps](problems.md#bcmaps)                   |0.18.1    |      |        |1    |
 |[blavaan](problems.md#blavaan)                 |0.3-9     |      |        |2    |
 |[blockCV](problems.md#blockcv)                 |2.1.1     |1     |        |1    |
 |codalm                                         |0.1.0     |      |        |     |
@@ -39,7 +39,7 @@
 |[dipsaus](problems.md#dipsaus)                 |0.0.8     |      |        |1    |
 |disk.frame                                     |0.3.6     |      |        |     |
 |drtmle                                         |1.0.5     |      |        |     |
-|[fabletools](problems.md#fabletools)           |0.2.0     |1     |6       |5    |
+|[fabletools](problems.md#fabletools)           |0.2.0     |      |        |1    |
 |[forecastML](problems.md#forecastml)           |0.9.0     |      |        |1    |
 |future.BatchJobs                               |0.16.2    |      |        |     |
 |future.batchtools                              |0.9.0     |      |        |     |
@@ -48,10 +48,10 @@
 |genBaRcode                                     |1.2.3     |      |        |     |
 |glmmboot                                       |0.5.1     |      |        |     |
 |[grattan](problems.md#grattan)                 |1.8.0.1   |      |        |1    |
-|[GSODR](problems.md#gsodr)                     |2.1.1     |1     |        |     |
-|[gstat](problems.md#gstat)                     |2.0-6     |1     |        |1    |
+|GSODR                                          |2.1.1     |      |        |     |
+|gstat                                          |2.0-6     |      |        |     |
 |[gWQS](problems.md#gwqs)                       |3.0.0     |      |        |1    |
-|[hackeRnews](problems.md#hackernews)           |0.1.0     |1     |        |     |
+|hackeRnews                                     |0.1.0     |      |        |     |
 |haldensify                                     |0.0.5     |      |        |     |
 |[iml](problems.md#iml)                         |0.10.0    |      |        |1    |
 |[inlinedocs](problems.md#inlinedocs)           |2019.12.5 |      |        |1    |
@@ -59,7 +59,7 @@
 |[lgr](problems.md#lgr)                         |0.3.4     |      |        |1    |
 |lightr                                         |1.2       |      |        |     |
 |merTools                                       |0.5.2     |      |        |     |
-|[MineICA](problems.md#mineica)                 |1.28.0    |2     |3       |4    |
+|[MineICA](problems.md#mineica)                 |1.28.0    |      |3       |4    |
 |mlr3                                           |0.3.0     |      |        |     |
 |mlr3db                                         |0.1.5     |      |        |     |
 |[origami](problems.md#origami)                 |1.0.3     |      |        |1    |
@@ -72,7 +72,7 @@
 |[QDNAseq](problems.md#qdnaseq)                 |1.24.0    |      |        |1    |
 |qgcomp                                         |2.3.0     |      |        |     |
 |rainette                                       |0.1.1     |      |        |     |
-|[rangeMapper](problems.md#rangemapper)         |0.3-7     |1     |        |     |
+|rangeMapper                                    |0.3-7     |      |        |     |
 |[robotstxt](problems.md#robotstxt)             |0.7.7     |      |        |1    |
 |RTransferEntropy                               |0.2.12    |      |        |     |
 |sctransform                                    |0.2.1     |      |        |     |

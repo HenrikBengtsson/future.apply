@@ -23,7 +23,7 @@ Reproducibility is part of the core design, which means that perfect, parallel r
 
 ## Role
 
-Where does the [future.apply] package fit in the software stack?  You can think of it as a sibling to [foreach], [BiocParallel], [plyr], etc.  Just as parallel provides `parLapply()`, foreach provides `foreach()`, BiocParallel provides `bplapply()`, and plyr provides `llply()`, future.apply provides `future_lapply()`.  Below is a table summarizing this idea:
+Where does the [future.apply] package fit in the software stack?  You can think of it as a sibling to [foreach], [furrr], [BiocParallel], [plyr], etc.  Just as parallel provides `parLapply()`, foreach provides `foreach()`, BiocParallel provides `bplapply()`, and plyr provides `llply()`, future.apply provides `future_lapply()`.  Below is a table summarizing this idea:
 
 <table>
 <tr>
@@ -82,6 +82,22 @@ Built-in and conditional on operating system</a>
 </td>
 <td>
 All future backends via <a href="https://cran.r-project.org/package=doFuture">doFuture</a>
+</td>
+</tr>
+
+<tr style="vertical-align: top">
+<td>
+<a href="https://cran.r-project.org/package=furrr">furrr</a>
+</td>
+<td>
+<code>future_imap()</code>,
+<code>future_map()</code>,
+<code>future_pmap()</code>,
+<code>future_map2()</code>,
+...
+</td>
+<td>
+All future backends
 </td>
 </tr>
 
@@ -149,6 +165,7 @@ The API and identity of the future.apply package will be kept close to the `*app
 [future.BatchJobs]: https://cran.r-project.org/package=future.BatchJobs
 [future.batchtools]: https://cran.r-project.org/package=future.batchtools
 [future.callr]: https://cran.r-project.org/package=future.callr
+[furrr]: https://cran.r-project.org/package=furrr
 [plyr]: https://cran.r-project.org/package=plyr
 
 
@@ -162,7 +179,7 @@ install.packages("future.apply")
 
 To install the pre-release version that is available in Git branch `develop` on GitHub, use:
 ```r
-remotes::install_github("HenrikBengtsson/future.apply@develop")
+remotes::install_github("HenrikBengtsson/future.apply", ref="develop")
 ```
 This will install the package from source.  
 

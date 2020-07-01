@@ -11,6 +11,7 @@ doMC
 doParallel
 eapply
 foreach
+furrr
 futurized
 globals
 HPC
@@ -28,6 +29,7 @@ Roadmap
 sapply
 SGE
 Slurm
+stringsAsFactors
 tapply
 vapply
 vectorize

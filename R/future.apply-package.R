@@ -18,6 +18,7 @@
 #' * [future_vapply()]: a parallel version of [vapply()][base::vapply]
 #' * [future_Map()]: a parallel version of [Map()][base::Map]
 #' * [future_replicate()]: a parallel version of [replicate()][base::replicate]
+#' * [future_.mapply()]: a parallel version of [.mapply()][base::.mapply]
 #'
 #' Reproducibility is part of the core design, which means that perfect,
 #' parallel random number generation (RNG) is supported regardless of the
@@ -43,7 +44,7 @@
 #' _sequentially_.  To run the above in parallel on the local machine
 #' (on any operating system), use:
 #' ```r
-#' plan(multiprocess)
+#' plan(multisession)
 #' ```
 #' first.  That's it!
 #'

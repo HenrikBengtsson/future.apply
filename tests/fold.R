@@ -14,7 +14,7 @@ names(x2s) <- toupper(names(x1s))
 
 x3s <- list(
   E = data.frame(a = 1:3),
-  F = data.frame(a = 1:3, b = letters[1:3])
+  F = data.frame(a = 1:3, b = letters[1:3], stringsAsFactors=FALSE)
 )
 
 xs <- c(x1s, x2s, x3s)
@@ -56,7 +56,9 @@ for (kk in seq_along(xs)) {
 }
 
 
-make_table <- function(n) data.frame(key = sample(n), value = sample(n))
+make_table <- function(n) {
+  data.frame(key = sample(n), value = sample(n), stringsAsFactors=FALSE)
+}
 
 sizes <- rep(10, 20)
 

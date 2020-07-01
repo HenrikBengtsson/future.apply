@@ -2,6 +2,8 @@ source("incl/start.R")
 
 message("*** future_apply() ...")
 
+z0 <- NULL
+
 for (strategy in supportedStrategies()) {
   message(sprintf("*** strategy = %s ...", sQuote(strategy)))
   plan(strategy)
@@ -66,7 +68,27 @@ for (strategy in supportedStrategies()) {
   y1 <- future_apply(X, MARGIN = 1L, FUN = FUN)
   print(y1)
   stopifnot(identical(y1, y0))
-  
+
+  message("- example(future_apply) - reproducible RNG ...")
+  z1 <- future_apply(X, MARGIN = 1L, FUN = sample,
+          future.seed = 0xBEEF,
+          ## Test also all other 'future.*' arguments
+          future.stdout     = TRUE,
+          future.conditions = NULL,
+          future.globals    = TRUE,
+          future.packages   = NULL,
+          future.lazy       = FALSE,
+          future.scheduling = 1.0,
+          future.chunk.size = NULL,
+          future.label      = "future_apply-%d"
+        )
+  print(z1)
+  if (is.null(z0)) {
+    z0 <- z1
+  } else {
+    stopifnot(identical(z1, z0))
+  }
+
   plan(sequential)
   message(sprintf("*** strategy = %s ... done", sQuote(strategy)))
 } ## for (strategy in ...) 

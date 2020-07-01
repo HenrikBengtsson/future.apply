@@ -7,7 +7,7 @@ library(stats)    ## lm()
 y0 <- by(warpbreaks, warpbreaks[,"tension"],
          function(x) lm(breaks ~ wool, data = x))
 
-plan(multiprocess)
+plan(multisession)
 y1 <- future_by(warpbreaks, warpbreaks[,"tension"],
                 function(x) lm(breaks ~ wool, data = x))
 

@@ -42,7 +42,7 @@ are assigned.}
 
 \item{SIMPLIFY}{A logical or character string; attempt to reduce the
 result to a vector, matrix or higher dimensional array; see the simplify
-argument of \code{\link[base:sapply]{base::sapply()}}.}
+argument of \code{\link[base:lapply]{base::sapply()}}.}
 
 \item{USE.NAMES}{A logical; use names if the first \verb{\\ldots} argument has
 names, or if it is a character vector, use that character vector as the
@@ -56,7 +56,7 @@ If \code{NA} (not recommended), output is \emph{not} intercepted.}
 
 \item{future.conditions}{A character string of conditions classes to be
 captured and relayed.  The default is the same as the \code{condition}
-argument of \code{\link[future:Future]{future::Future()}}.
+argument of \code{\link[future:Future-class]{future::Future()}}.
 To not intercept conditions, use \code{conditions = character(0L)}.
 Errors are always relayed.}
 
@@ -97,12 +97,12 @@ positive length, or all of zero length).}
 \value{
 \code{future_Map()} is a simple wrapper to \code{future_mapply()} which does not
 attempt to simplify the result.
-See \code{\link[base:Map]{base::Map()}} for details.
+See \code{\link[base:funprog]{base::Map()}} for details.
 
 \code{future_mapply()} returns a list, or for \code{SIMPLIFY = TRUE}, a vector,
 array or list.  See \code{\link[base:mapply]{base::mapply()}} for details.
 
-\code{future_.mapply()} returns a list. See \code{\link[base:.mapply]{base::.mapply()}} for details.
+\code{future_.mapply()} returns a list. See \code{\link[base:base-internal]{base::.mapply()}} for details.
 }
 \description{
 \code{future_mapply()} implements \code{\link[base:mapply]{base::mapply()}} using futures with perfect
@@ -114,7 +114,7 @@ the second elements, the third elements, and so on.
 Arguments are recycled if necessary.
 }
 \details{
-Note that \code{\link[base:.mapply]{base::.mapply()}}, which \code{future_.mapply()} is modeled after
+Note that \code{\link[base:base-internal]{base::.mapply()}}, which \code{future_.mapply()} is modeled after
 is listed as an "internal" function in \R despite being exported.
 }
 \examples{
@@ -154,7 +154,7 @@ stopifnot(identical(y1, y0))
 ## Regardless of the future plan, the number of workers, and
 ## where they are, the random numbers produced are identical
 
-plan(multiprocess)
+plan(multisession)
 y1 <- future_mapply(stats::runif, n = 1:4, max = 2:5,
                     MoreArgs = list(min = 1), future.seed = 0xBEEF)
 print(y1)

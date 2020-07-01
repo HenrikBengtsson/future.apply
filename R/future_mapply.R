@@ -41,9 +41,6 @@
 #'
 #' @keywords manip programming iteration
 #'
-#' @importFrom globals globalsByName
-#' @importFrom future Future future resolve values as.FutureGlobals nbrOfWorkers getGlobalsAndPackages FutureError
-#' @importFrom utils head str
 #' @export
 future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES = TRUE, future.stdout = TRUE, future.conditions = NULL, future.globals = TRUE, future.packages = NULL, future.lazy = FALSE, future.seed = FALSE, future.scheduling = 1.0, future.chunk.size = NULL, future.label = "future_mapply-%d") {
   fcn_name <- "future_mapply"

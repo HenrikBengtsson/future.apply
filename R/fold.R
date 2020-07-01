@@ -25,7 +25,7 @@
 #' \code{f(x[[1]], f(x[[2]]), x[[3]])}.
 #'
 #' This function is a more efficient (memory and speed) of
-#' \code{\link[base:Reduce]{Reduce(f, x, right = !left, accumulate = FALSE)}},
+#' \code{\link[base:funprog]{Reduce(f, x, right = !left, accumulate = FALSE)}},
 #' especially when `x` is long.
 #' 
 #' @keywords internal

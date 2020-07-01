@@ -1,4 +1,4 @@
-#' @importFrom future nbrOfWorkers future resolve values as.FutureGlobals getGlobalsAndPackages
+#' @importFrom future Future nbrOfWorkers future resolve value as.FutureGlobals getGlobalsAndPackages
 future_xapply <- function(FUN, nX, chunk_args, args = NULL, MoreArgs = NULL, expr, envir, future.globals, future.packages, future.scheduling, future.chunk.size, future.stdout, future.conditions, future.seed, future.lazy, future.label, get_chunk, fcn_name, args_name, ..., debug) {
   stop_if_not(is.function(FUN))
   
@@ -209,7 +209,7 @@ future_xapply <- function(FUN, nX, chunk_args, args = NULL, MoreArgs = NULL, exp
   ## 4. Resolving futures
   if (debug) mdebugf("Resolving %d futures (chunks) ...", nchunks)
 
-  values <- values(fs)
+  values <- value(fs)
 
   ## Not needed anymore
   rm(list = "fs")

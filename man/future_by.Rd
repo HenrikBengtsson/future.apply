@@ -35,6 +35,19 @@ may differ significantly between the groups.
 To correct for processing-time imbalances, adjust the amount of chunking
 via arguments \code{future.scheduling} and \code{future.chunk.size}.
 }
+\section{Note on 'stringsAsFactors'}{
+
+The \code{future_by()} is modeled as closely as possible to the
+behavior of \code{base::by()}.  Both functions have "default" S3 methods that
+calls \code{data <- as.data.frame(data)} internally.  This call may in turn call
+an S3 method for \code{as.data.frame()} that coerces strings to factors or not
+depending on whether it has a \code{stringsAsFactors} argument and what its
+default is.
+For example, the S3 method of \code{as.data.frame()} for lists changed its
+(effective) default from \code{stringsAsFactors = TRUE} to
+\code{stringsAsFactors = TRUE} in R 4.0.0.
+}
+
 \examples{
 ## ---------------------------------------------------------
 ## by()
@@ -45,7 +58,7 @@ library(stats)    ## lm()
 y0 <- by(warpbreaks, warpbreaks[,"tension"],
          function(x) lm(breaks ~ wool, data = x))
 
-plan(multiprocess)
+plan(multisession)
 y1 <- future_by(warpbreaks, warpbreaks[,"tension"],
                 function(x) lm(breaks ~ wool, data = x))
 

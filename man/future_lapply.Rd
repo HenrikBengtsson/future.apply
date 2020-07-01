@@ -81,7 +81,7 @@ future_vapply(
 that start with a period (\code{.}), otherwise not.
 See \code{\link[base:eapply]{base::eapply()}} for details.}
 
-\item{USE.NAMES}{See \code{\link[base:sapply]{base::sapply()}}.}
+\item{USE.NAMES}{See \code{\link[base:lapply]{base::sapply()}}.}
 
 \item{future.label}{If a character string, then each future is assigned
 a label \code{sprintf(future.label, chunk_idx)}.  If TRUE, then the
@@ -98,7 +98,7 @@ If \code{NA} (not recommended), output is \emph{not} intercepted.}
 
 \item{future.conditions}{A character string of conditions classes to be
 captured and relayed.  The default is the same as the \code{condition}
-argument of \code{\link[future:Future]{future::Future()}}.
+argument of \code{\link[future:Future-class]{future::Future()}}.
 To not intercept conditions, use \code{conditions = character(0L)}.
 Errors are always relayed.}
 
@@ -133,7 +133,7 @@ If \code{NULL}, then argument \code{future.scheduling} is used.}
 
 \item{expr}{An \R expression to evaluate repeatedly.}
 
-\item{simplify}{See \code{\link[base:sapply]{base::sapply()}} and \code{\link[base:tapply]{base::tapply()}}, respectively.}
+\item{simplify}{See \code{\link[base:lapply]{base::sapply()}} and \code{\link[base:tapply]{base::tapply()}}, respectively.}
 
 \item{INDEX}{A list of one or more factors, each of same length as \code{X}.
 The elements are coerced to factors by \code{as.factor()}.
@@ -145,7 +145,7 @@ See also \code{\link[base:tapply]{base::tapply()}}.}
 each \code{FUN(X[ii], ...)}.
 Types may be promoted to a higher type within the ordering
 logical < integer < double < complex, but not demoted.
-See \code{\link[base:vapply]{base::vapply()}} for details.}
+See \code{\link[base:lapply]{base::vapply()}} for details.}
 
 \item{\ldots}{(optional) Additional arguments passed to \code{FUN()}.
 For \code{future_*apply()} functions and \code{replicate()}, any \verb{future.*} arguments
@@ -160,13 +160,13 @@ See \code{\link[base:lapply]{base::lapply()}} for details.
 
 \code{future_replicate()} is a wrapper around \code{future_sapply()} and return
 simplified object according to the \code{simplify} argument.
-See \code{\link[base:replicate]{base::replicate()}} for details.
+See \code{\link[base:lapply]{base::replicate()}} for details.
 Since \code{future_replicate()} usually involves random number generation (RNG),
 it uses \code{future.seed = TRUE} by default in order produce sound random
 numbers regardless of future backend and number of background workers used.
 
 For \code{future_sapply()}, a vector with same length and names as \code{X}.
-See \code{\link[base:sapply]{base::sapply()}} for details.
+See \code{\link[base:lapply]{base::sapply()}} for details.
 
 \code{future_tapply()} returns an array with mode \code{"list"}, unless
 \code{simplify = TRUE} (default) \emph{and} \code{FUN} returns a scalar, in which
@@ -174,7 +174,7 @@ case the mode of the array is the same as the returned scalars.
 See \code{\link[base:tapply]{base::tapply()}} for details.
 
 For \code{future_vapply()}, a vector with same length and names as \code{X}.
-See \code{\link[base:vapply]{base::vapply()}} for details.
+See \code{\link[base:lapply]{base::vapply()}} for details.
 }
 \description{
 \code{future_lapply()} implements \code{\link[base:lapply]{base::lapply()}} using futures with perfect
@@ -287,7 +287,7 @@ stopifnot(all.equal(y1, y0))
 ## Regardless of the future plan, the number of workers, and
 ## where they are, the random numbers produced are identical
 
-plan(multiprocess)
+plan(multisession)
 y1 <- future_lapply(1:5, FUN = rnorm, future.seed = 0xBEEF)
 str(y1)
 

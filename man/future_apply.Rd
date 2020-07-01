@@ -9,8 +9,15 @@ future_apply(
   MARGIN,
   FUN,
   ...,
+  simplify = TRUE,
+  future.stdout = TRUE,
+  future.conditions = NULL,
   future.globals = TRUE,
   future.packages = NULL,
+  future.lazy = FALSE,
+  future.seed = FALSE,
+  future.scheduling = 1,
+  future.chunk.size = NULL,
   future.label = "future_apply-\%d"
 )
 }
@@ -25,11 +32,47 @@ dimension names.}
 
 \item{FUN}{A function taking at least one argument.}
 
+\item{simplify}{a logical indicating whether results should be simplified
+if possible.}
+
+\item{future.stdout}{If \code{TRUE} (default), then the standard output of the
+underlying futures is captured, and re-outputted as soon as possible.
+If \code{FALSE}, any output is silenced (by sinking it to the null device
+as it is outputted).
+If \code{NA} (not recommended), output is \emph{not} intercepted.}
+
+\item{future.conditions}{A character string of conditions classes to be
+captured and relayed.  The default is the same as the \code{condition}
+argument of \code{\link[future:Future-class]{future::Future()}}.
+To not intercept conditions, use \code{conditions = character(0L)}.
+Errors are always relayed.}
+
 \item{future.globals}{A logical, a character vector, or a named list for
 controlling how globals are handled. For details, see below section.}
 
 \item{future.packages}{(optional) a character vector specifying packages
 to be attached in the R environment evaluating the future.}
+
+\item{future.lazy}{Specifies whether the futures should be resolved
+lazily or eagerly (default).}
+
+\item{future.seed}{A logical or an integer (of length one or seven),
+or a list of \code{length(X)} with pre-generated random seeds.
+For details, see below section.}
+
+\item{future.scheduling}{Average number of futures ("chunks") per worker.
+If \code{0.0}, then a single future is used to process all elements
+of \code{X}.
+If \code{1.0} or \code{TRUE}, then one future per worker is used.
+If \code{2.0}, then each worker will process two futures
+(if there are enough elements in \code{X}).
+If \code{Inf} or \code{FALSE}, then one future per element of
+\code{X} is used.
+Only used if \code{future.chunk.size} is \code{NULL}.}
+
+\item{future.chunk.size}{The average number of elements per future ("chunk").
+If \code{Inf}, then all elements are processed in a single future.
+If \code{NULL}, then argument \code{future.scheduling} is used.}
 
 \item{future.label}{If a character string, then each future is assigned
 a label \code{sprintf(future.label, chunk_idx)}.  If TRUE, then the
@@ -77,7 +120,7 @@ stopifnot(all.equal(Y1, Y0))
 
 X <- matrix(c(1:4, 1, 6:8), nrow = 2L)
 
-plan(multiprocess)
+plan(multisession)
 Y1 <- future_apply(X, MARGIN = 1L, FUN = sample, future.seed = 0xBEEF)
 print(Y1)
 

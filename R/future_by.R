@@ -27,6 +27,18 @@
 #' To correct for processing-time imbalances, adjust the amount of chunking
 #' via arguments `future.scheduling` and `future.chunk.size`.
 #'
+#' @section Note on 'stringsAsFactors':
+#' The `future_by()` is modeled as closely as possible to the
+#' behavior of `base::by()`.  Both functions have "default" S3 methods that
+#' calls `data <- as.data.frame(data)` internally.  This call may in turn call
+#' an S3 method for `as.data.frame()` that coerces strings to factors or not
+#' depending on whether it has a `stringsAsFactors` argument and what its
+#' default is.
+#' For example, the S3 method of `as.data.frame()` for lists changed its
+#' (effective) default from `stringsAsFactors = TRUE` to
+#' `stringsAsFactors = TRUE` in R 4.0.0.
+#' 
+#'
 #' @rdname future_by
 #' @export
 future_by <- function(data, INDICES, FUN, ..., simplify = TRUE) {

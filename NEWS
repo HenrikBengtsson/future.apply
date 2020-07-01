@@ -1,6 +1,24 @@
 Package: future.apply
 =====================
 
+Version: 1.6.0 [2020-06-30]
+
+SIGNIFICANT CHANGES:
+
+ * future_apply() gained argument 'simplify', which is added to R-devel
+   (to become R 4.1.0).
+
+BUG FIXES:
+
+ * future_apply(X, FUN, ...) would pass all 'future.*' arguments except
+   'future.globals', 'future.packages', and 'future.labels' to the 'FUN'
+   function instead of processing them locally.  This would often result in
+   the 'FUN' producing an error on "unused argument".  It also affected
+   'future.seed' not being applied, which means for some 'FUN' functions
+   that did not produce this error, non-reproducible results could have
+   been produced.
+   
+
 Version: 1.5.0 [2020-04-16]
 
 NEW FEATURES:

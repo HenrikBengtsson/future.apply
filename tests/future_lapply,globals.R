@@ -132,6 +132,16 @@ for (strategy in supportedStrategies()) {
   str(z1)
   stopifnot(identical(z1, z0))
 
+  message("- future_lapply(x, ...) - passing '...' as a global ...")
+  ## https://github.com/HenrikBengtsson/future/issues/417
+  fcn0 <- function(...) { lapply(1, FUN = function(x) list(...)) }
+  z0 <- fcn0(a = 1)
+  str(list(z0 = z0))
+  fcn <- function(...) { future_lapply(1, FUN = function(x) list(...)) }
+  z1 <- fcn(a = 1)
+  str(list(z1 = z1))
+  stopifnot(identical(z1, z0))
+  
   ## https://github.com/HenrikBengtsson/future.apply/issues/47
   message("- future_lapply(X, ...) - '{ a <- a + 1; a }' ...")
   a <- 1

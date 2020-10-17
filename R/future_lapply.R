@@ -170,6 +170,8 @@ future_lapply <- function(X, FUN, ..., future.stdout = TRUE, future.conditions =
     ## Set .Random.seed
     seedExpr <- quote(assign(".Random.seed", ...future.seeds_ii[[jj]], envir = globalenv(), inherits = FALSE))
   }
+
+  ...future.FUN <- NULL ## To please R CMD check
   
   expr <- bquote({
     lapply(seq_along(...future.elements_ii), FUN = function(jj) {

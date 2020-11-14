@@ -11,7 +11,7 @@ future_apply(
   ...,
   simplify = TRUE,
   future.stdout = TRUE,
-  future.conditions = NULL,
+  future.conditions = "condition",
   future.globals = TRUE,
   future.packages = NULL,
   future.lazy = FALSE,

@@ -3,11 +3,6 @@ future_xapply <- function(FUN, nX, chunk_args, args = NULL, MoreArgs = NULL, exp
   stop_if_not(is.function(FUN))
   
   stop_if_not(is.logical(future.stdout), length(future.stdout) == 1L)
-
-  ## FIXME: Memoize the result
-  if (is.null(future.conditions)) {
-    future.conditions <- eval(formals(Future)[["conditions"]])
-  }
   
   stop_if_not(is.logical(future.lazy), length(future.lazy) == 1L)
 

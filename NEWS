@@ -1,9 +1,12 @@
 Package: future.apply
 =====================
 
-Version: 1.6.0-9000 [2020-07-01]
+Version: 1.6.0-9000 [2020-11-13]
 
- * ...
+NEW FEATURES:
+
+ * The automatic capturing of conditions can be disabled by specifying
+   'future.conditions = NULL'.
  
 
 Version: 1.6.0 [2020-06-30]

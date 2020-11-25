@@ -1,13 +1,16 @@
 Package: future.apply
 =====================
 
-Version: 1.6.0-9000 [2020-11-13]
+Version: 1.6.0-9000 [2020-11-24]
 
 NEW FEATURES:
 
  * The automatic capturing of conditions can be disabled by specifying
    'future.conditions = NULL'.
- 
+
+ * Warnings and errors on using the RNG without specifying 'future.seed'
+   are now taylored to the 'future.apply' package.
+
 
 Version: 1.6.0 [2020-06-30]
 

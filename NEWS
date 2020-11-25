@@ -9,7 +9,7 @@ NEW FEATURES:
    'future.conditions = NULL'.
 
  * Warnings and errors on using the RNG without specifying 'future.seed'
-   are now taylored to the 'future.apply' package.
+   are now tailored to the 'future.apply' package.
 
 
 Version: 1.6.0 [2020-06-30]

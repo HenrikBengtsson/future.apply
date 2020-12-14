@@ -16,7 +16,7 @@
 #' dimension names.
 #' 
 #' @param \ldots  (optional) Additional arguments passed to `FUN()`, except
-#' `future.*` arguments, which are passed on to `future_lapply()` used
+#' `future.*` arguments, which are passed on to [future_lapply()] used
 #' internally.
 #' 
 #' @param simplify a logical indicating whether results should be simplified

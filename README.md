@@ -153,7 +153,6 @@ The API and identity of the future.apply package will be kept close to the `*app
 
 
 
-[BatchJobs]: https://cran.r-project.org/package=BatchJobs
 [batchtools]: https://cran.r-project.org/package=batchtools
 [BiocParallel]: https://bioconductor.org/packages/BiocParallel/
 [doFuture]: https://cran.r-project.org/package=doFuture
@@ -162,7 +161,6 @@ The API and identity of the future.apply package will be kept close to the `*app
 [foreach]: https://cran.r-project.org/package=foreach
 [future]: https://cran.r-project.org/package=future
 [future.apply]: https://cran.r-project.org/package=future.apply
-[future.BatchJobs]: https://cran.r-project.org/package=future.BatchJobs
 [future.batchtools]: https://cran.r-project.org/package=future.batchtools
 [future.callr]: https://cran.r-project.org/package=future.callr
 [furrr]: https://cran.r-project.org/package=furrr

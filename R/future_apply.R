@@ -16,7 +16,7 @@
 #' dimension names.
 #' 
 #' @param \ldots  (optional) Additional arguments passed to `FUN()`, except
-#' `future.*` arguments, which are passed on to `future_lapply()` used
+#' `future.*` arguments, which are passed on to [future_lapply()] used
 #' internally.
 #' 
 #' @param simplify a logical indicating whether results should be simplified
@@ -36,7 +36,7 @@
 #'
 #' @importFrom future nbrOfWorkers
 #' @export
-future_apply <- function(X, MARGIN, FUN, ..., simplify = TRUE, future.stdout = TRUE, future.conditions = NULL, future.globals = TRUE, future.packages = NULL, future.lazy = FALSE, future.seed = FALSE, future.scheduling = 1.0, future.chunk.size = NULL, future.label = "future_apply-%d") {
+future_apply <- function(X, MARGIN, FUN, ..., simplify = TRUE, future.stdout = TRUE, future.conditions = "condition", future.globals = TRUE, future.packages = NULL, future.lazy = FALSE, future.seed = FALSE, future.scheduling = 1.0, future.chunk.size = NULL, future.label = "future_apply-%d") {
     debug <- getOption("future.debug", FALSE)
 
     FUN <- match.fun(FUN)

@@ -11,7 +11,7 @@ future_apply(
   ...,
   simplify = TRUE,
   future.stdout = TRUE,
-  future.conditions = NULL,
+  future.conditions = "condition",
   future.globals = TRUE,
   future.packages = NULL,
   future.lazy = FALSE,
@@ -80,7 +80,7 @@ same as \code{future.label = "future_lapply-\%d"}.  If FALSE, no labels
 are assigned.}
 
 \item{\ldots}{(optional) Additional arguments passed to \code{FUN()}, except
-\verb{future.*} arguments, which are passed on to \code{future_lapply()} used
+\verb{future.*} arguments, which are passed on to \code{\link[=future_lapply]{future_lapply()}} used
 internally.}
 }
 \value{

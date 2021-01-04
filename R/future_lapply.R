@@ -136,7 +136,7 @@
 #' @keywords manip programming iteration
 #'
 #' @export
-future_lapply <- function(X, FUN, ..., future.stdout = TRUE, future.conditions = NULL, future.globals = TRUE, future.packages = NULL, future.lazy = FALSE, future.seed = FALSE, future.scheduling = 1.0, future.chunk.size = NULL, future.label = "future_lapply-%d") {
+future_lapply <- function(X, FUN, ..., future.stdout = TRUE, future.conditions = "condition", future.globals = TRUE, future.packages = NULL, future.lazy = FALSE, future.seed = FALSE, future.scheduling = 1.0, future.chunk.size = NULL, future.label = "future_lapply-%d") {
   fcn_name <- "future_lapply"
   args_name <- "X"
 
@@ -170,6 +170,8 @@ future_lapply <- function(X, FUN, ..., future.stdout = TRUE, future.conditions =
     ## Set .Random.seed
     seedExpr <- quote(assign(".Random.seed", ...future.seeds_ii[[jj]], envir = globalenv(), inherits = FALSE))
   }
+
+  ...future.FUN <- NULL ## To please R CMD check
   
   expr <- bquote({
     lapply(seq_along(...future.elements_ii), FUN = function(jj) {

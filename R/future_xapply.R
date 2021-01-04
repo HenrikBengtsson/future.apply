@@ -3,11 +3,6 @@ future_xapply <- function(FUN, nX, chunk_args, args = NULL, MoreArgs = NULL, exp
   stop_if_not(is.function(FUN))
   
   stop_if_not(is.logical(future.stdout), length(future.stdout) == 1L)
-
-  ## FIXME: Memoize the result
-  if (is.null(future.conditions)) {
-    future.conditions <- eval(formals(Future)[["conditions"]])
-  }
   
   stop_if_not(is.logical(future.lazy), length(future.lazy) == 1L)
 
@@ -209,7 +204,38 @@ future_xapply <- function(FUN, nX, chunk_args, args = NULL, MoreArgs = NULL, exp
   ## 4. Resolving futures
   if (debug) mdebugf("Resolving %d futures (chunks) ...", nchunks)
 
-  values <- value(fs)
+  ## Check for RngFutureCondition:s when resolving futures?
+  if (isFALSE(future.seed)) {
+    withCallingHandlers({
+      values <- value(fs)
+    }, RngFutureCondition = function(cond) {
+      f <- attr(cond, "future")
+  
+      ## Not one of our future?
+      if (!isFALSE(f$seed)) return()
+      
+      ## One of our futures?
+      for (kk in seq_along(fs)) {
+        if (identical(fs[[kk]], f)) {
+          ## Adjust message to give instructions relevant to this package
+          message <- conditionMessage(cond)
+          message <- gsub("[future].", "", message, fixed = TRUE)
+          message <- gsub("[future.]", "", message, fixed = TRUE)
+          message <- gsub("seed", "future.seed", message, fixed = TRUE)
+          cond$message <- message
+          if (inherits(cond, "warning")) {
+            warning(cond)
+            invokeRestart("muffleWarning")
+          } else if (inherits(cond, "error")) {
+            stop(cond)
+          }
+        }
+      }
+    })
+  } else {
+    values <- value(fs)
+  }
+  
 
   ## Not needed anymore
   rm(list = "fs")

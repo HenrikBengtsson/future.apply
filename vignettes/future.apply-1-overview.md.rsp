@@ -19,18 +19,18 @@
 
 The purpose of this package is to provide worry-free parallel alternatives to base-R "apply" functions, e.g. `apply()`, `lapply()`, and `vapply()`.  The goal is that one should be able to replace any of these in the core with its futurized equivalent and things will just work.  For example, instead of doing:
 ```r
+library("datasets")
 library("stats")
-x <- 1:10
-y <- lapply(x, FUN = quantile, probs = 1:3/4)
+y <- lapply(mtcars, FUN = mean, trim = 0.10)
 ```
 one can do:
 ```r
 library("future.apply")
 plan(multisession) ## Run in parallel on local computer
 
+library("datasets")
 library("stats")
-x <- 1:10
-y <- future_lapply(x, FUN = quantile, probs = 1:3/4)
+y <- future_lapply(mtcars, FUN = mean, trim = 0.10)
 ```
 
 Reproducibility is part of the core design, which means that perfect, parallel random number generation (RNG) is supported regardless of the amount of chunking, type of load balancing, and future backend being used.  _To enable parallel RNG, use argument `future.seed = TRUE`._
@@ -168,7 +168,6 @@ The API and identity of the future.apply package will be kept close to the `*app
 
 
 
-[BatchJobs]: https://cran.r-project.org/package=BatchJobs
 [batchtools]: https://cran.r-project.org/package=batchtools
 [BiocParallel]: https://bioconductor.org/packages/BiocParallel/
 [doFuture]: https://cran.r-project.org/package=doFuture
@@ -177,7 +176,6 @@ The API and identity of the future.apply package will be kept close to the `*app
 [foreach]: https://cran.r-project.org/package=foreach
 [future]: https://cran.r-project.org/package=future
 [future.apply]: https://cran.r-project.org/package=future.apply
-[future.BatchJobs]: https://cran.r-project.org/package=future.BatchJobs
 [future.batchtools]: https://cran.r-project.org/package=future.batchtools
 [future.callr]: https://cran.r-project.org/package=future.callr
 [furrr]: https://cran.r-project.org/package=furrr

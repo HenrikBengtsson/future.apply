@@ -25,7 +25,7 @@ future_lapply(
   FUN,
   ...,
   future.stdout = TRUE,
-  future.conditions = NULL,
+  future.conditions = "condition",
   future.globals = TRUE,
   future.packages = NULL,
   future.lazy = FALSE,

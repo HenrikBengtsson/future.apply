@@ -1,6 +1,6 @@
-# CRAN submission future.apply 1.6.0
+# CRAN submission future.apply 1.7.0
 
-on 2020-06-30
+on 2021-01-04
 
 I've verified that this submission does not cause issues for the 57 reverse package dependency available on CRAN and Bioconductor.
 

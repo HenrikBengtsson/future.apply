@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -37,12 +39,6 @@
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="reference/index.html">Reference</a>
 </li>
@@ -87,25 +83,25 @@
 <div id="introduction" class="section level2">
 <h2 class="hasAnchor">
 <a href="#introduction" class="anchor"></a>Introduction</h2>
-<p>The purpose of this package is to provide worry-free parallel alternatives to base-R “apply” functions, e.g. <code><a href="https://rdrr.io/r/base/apply.html">apply()</a></code>, <code><a href="https://rdrr.io/r/base/lapply.html">lapply()</a></code>, and <code><a href="https://rdrr.io/r/base/lapply.html">vapply()</a></code>. The goal is that one should be able to replace any of these in the core with its futurized equivalent and things will just work. For example, instead of doing:</p>
+<p>The purpose of this package is to provide worry-free parallel alternatives to base-R “apply” functions, e.g. <code><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply()</a></code>, <code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply()</a></code>, and <code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">vapply()</a></code>. The goal is that one should be able to replace any of these in the core with its futurized equivalent and things will just work. For example, instead of doing:</p>
 <div class="sourceCode"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st">"datasets"</span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st">"stats"</span><span class="op">)</span>
-<span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">mtcars</span>, FUN <span class="op">=</span> <span class="va">mean</span>, trim <span class="op">=</span> <span class="fl">0.10</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st">"datasets"</span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st">"stats"</span><span class="op">)</span>
+<span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">mtcars</span>, FUN <span class="op">=</span> <span class="va">mean</span>, trim <span class="op">=</span> <span class="fl">0.10</span><span class="op">)</span></code></pre></div>
 <p>one can do:</p>
 <div class="sourceCode"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/HenrikBengtsson/future.apply">"future.apply"</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/HenrikBengtsson/future.apply" class="external-link">"future.apply"</a></span><span class="op">)</span>
 <span class="fu">plan</span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span> <span class="co">## Run in parallel on local computer</span>
 
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st">"datasets"</span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st">"stats"</span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st">"datasets"</span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st">"stats"</span><span class="op">)</span>
 <span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/future_eapply.html">future_lapply</a></span><span class="op">(</span><span class="va">mtcars</span>, FUN <span class="op">=</span> <span class="va">mean</span>, trim <span class="op">=</span> <span class="fl">0.10</span><span class="op">)</span></code></pre></div>
 <p>Reproducibility is part of the core design, which means that perfect, parallel random number generation (RNG) is supported regardless of the amount of chunking, type of load balancing, and future backend being used. <em>To enable parallel RNG, use argument <code>future.seed = TRUE</code>.</em></p>
 </div>
 <div id="role" class="section level2">
 <h2 class="hasAnchor">
 <a href="#role" class="anchor"></a>Role</h2>
-<p>Where does the <a href="https://cran.r-project.org/package=future.apply">future.apply</a> package fit in the software stack? You can think of it as a sibling to <a href="https://cran.r-project.org/package=foreach">foreach</a>, <a href="https://cran.r-project.org/package=furrr">furrr</a>, <a href="https://bioconductor.org/packages/BiocParallel/">BiocParallel</a>, <a href="https://cran.r-project.org/package=plyr">plyr</a>, etc. Just as parallel provides <code>parLapply()</code>, foreach provides <code>foreach()</code>, BiocParallel provides <code>bplapply()</code>, and plyr provides <code>llply()</code>, future.apply provides <code><a href="reference/future_eapply.html">future_lapply()</a></code>. Below is a table summarizing this idea:</p>
+<p>Where does the <a href="https://cran.r-project.org/package=future.apply" class="external-link">future.apply</a> package fit in the software stack? You can think of it as a sibling to <a href="https://cran.r-project.org/package=foreach" class="external-link">foreach</a>, <a href="https://cran.r-project.org/package=furrr" class="external-link">furrr</a>, <a href="https://bioconductor.org/packages/BiocParallel/" class="external-link">BiocParallel</a>, <a href="https://cran.r-project.org/package=plyr" class="external-link">plyr</a>, etc. Just as parallel provides <code>parLapply()</code>, foreach provides <code>foreach()</code>, BiocParallel provides <code>bplapply()</code>, and plyr provides <code>llply()</code>, future.apply provides <code><a href="reference/future_eapply.html">future_lapply()</a></code>. Below is a table summarizing this idea:</p>
 <table class="table">
 <tr>
 <th>Package</th>
@@ -114,7 +110,7 @@
 </tr>
 <tr style="vertical-align: top">
 <td>
-<a href="https://cran.r-project.org/package=future.apply">future.apply</a><br><br>
+<a href="https://cran.r-project.org/package=future.apply" class="external-link">future.apply</a><br><br>
 </td>
 <td>
 Future-versions of common goto <code>*apply()</code> functions available in base R (of the 'base' package):<br><code><a href="reference/future_apply.html">future_apply()</a></code>, 
@@ -148,19 +144,19 @@ Built-in and conditional on operating system
 </tr>
 <tr style="vertical-align: top">
 <td>
-<a href="https://cran.r-project.org/package=foreach">foreach</a>
+<a href="https://cran.r-project.org/package=foreach" class="external-link">foreach</a>
 </td>
 <td>
 <code>foreach()</code>,
 <code>times()</code>
 </td>
 <td>
-All future backends via <a href="https://cran.r-project.org/package=doFuture">doFuture</a>
+All future backends via <a href="https://cran.r-project.org/package=doFuture" class="external-link">doFuture</a>
 </td>
 </tr>
 <tr style="vertical-align: top">
 <td>
-<a href="https://cran.r-project.org/package=furrr">furrr</a>
+<a href="https://cran.r-project.org/package=furrr" class="external-link">furrr</a>
 </td>
 <td>
 <code>future_imap()</code>,
@@ -175,7 +171,7 @@ All future backends
 </tr>
 <tr style="vertical-align: top">
 <td>
-<a href="https://bioconductor.org/packages/release/bioc/html/BiocParallel.html">BiocParallel</a>
+<a href="https://bioconductor.org/packages/release/bioc/html/BiocParallel.html" class="external-link">BiocParallel</a>
 </td>
 <td>
 Bioconductor's parallel mappers:<br><code>bpaggregate()</code>,
@@ -184,12 +180,12 @@ Bioconductor's parallel mappers:<br><code>bpaggregate()</code>,
 <code>bpvec()</code>
 </td>
 <td>
-All future backends via <a href="https://cran.r-project.org/package=doFuture">doFuture</a> (because it supports foreach) or via <a href="https://github.com/HenrikBengtsson/BiocParallel.FutureParam">BiocParallel.FutureParam</a> (direct BiocParallelParam support; prototype)
+All future backends via <a href="https://cran.r-project.org/package=doFuture" class="external-link">doFuture</a> (because it supports foreach) or via <a href="https://github.com/HenrikBengtsson/BiocParallel.FutureParam" class="external-link">BiocParallel.FutureParam</a> (direct BiocParallelParam support; prototype)
 </td>
 </tr>
 <tr style="vertical-align: top">
 <td>
-<a href="https://cran.r-project.org/package=plyr">plyr</a>
+<a href="https://cran.r-project.org/package=plyr" class="external-link">plyr</a>
 </td>
 <td>
 <code>**ply(..., .parallel = TRUE)</code> functions:<br><code>aaply()</code>,
@@ -198,12 +194,12 @@ All future backends via <a href="https://cran.r-project.org/package=doFuture">do
 <code>llply()</code>, ...
 </td>
 <td>
-All future backends via <a href="https://cran.r-project.org/package=doFuture">doFuture</a> (because it uses foreach internally)
+All future backends via <a href="https://cran.r-project.org/package=doFuture" class="external-link">doFuture</a> (because it uses foreach internally)
 </td>
 </tr>
 </table>
-<p>Note that, except for the built-in parallel package, none of these higher-level APIs implement their own parallel backends, but they rather enhance existing ones. The foreach framework leverages backends such as <a href="https://cran.r-project.org/package=doParallel">doParallel</a>, <a href="https://cran.r-project.org/package=doMC">doMC</a> and <a href="https://cran.r-project.org/package=doFuture">doFuture</a>, and the future.apply framework leverages the <a href="https://cran.r-project.org/package=future">future</a> ecosystem and therefore backends such as built-in parallel, <a href="https://cran.r-project.org/package=future.callr">future.callr</a>, and <a href="https://cran.r-project.org/package=future.batchtools">future.batchtools</a>.</p>
-<p>By separating <code><a href="reference/future_eapply.html">future_lapply()</a></code> and friends from the <a href="https://cran.r-project.org/package=future">future</a> package, it helps clarifying the purpose of the future package, which is to define and provide the core Future API, which higher-level parallel APIs can build on and for which any futurized parallel backends can be plugged into.</p>
+<p>Note that, except for the built-in parallel package, none of these higher-level APIs implement their own parallel backends, but they rather enhance existing ones. The foreach framework leverages backends such as <a href="https://cran.r-project.org/package=doParallel" class="external-link">doParallel</a>, <a href="https://cran.r-project.org/package=doMC" class="external-link">doMC</a> and <a href="https://cran.r-project.org/package=doFuture" class="external-link">doFuture</a>, and the future.apply framework leverages the <a href="https://cran.r-project.org/package=future" class="external-link">future</a> ecosystem and therefore backends such as built-in parallel, <a href="https://cran.r-project.org/package=future.callr" class="external-link">future.callr</a>, and <a href="https://cran.r-project.org/package=future.batchtools" class="external-link">future.batchtools</a>.</p>
+<p>By separating <code><a href="reference/future_eapply.html">future_lapply()</a></code> and friends from the <a href="https://cran.r-project.org/package=future" class="external-link">future</a> package, it helps clarifying the purpose of the future package, which is to define and provide the core Future API, which higher-level parallel APIs can build on and for which any futurized parallel backends can be plugged into.</p>
 </div>
 <div id="roadmap" class="section level2">
 <h2 class="hasAnchor">
@@ -218,15 +214,15 @@ All future backends via <a href="https://cran.r-project.org/package=doFuture">do
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
-<p>R package future.apply is available on <a href="https://cran.r-project.org/package=future.apply">CRAN</a> and can be installed in R as:</p>
+<p>R package future.apply is available on <a href="https://cran.r-project.org/package=future.apply" class="external-link">CRAN</a> and can be installed in R as:</p>
 <div class="sourceCode"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"future.apply"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"future.apply"</span><span class="op">)</span></code></pre></div>
 <div id="pre-release-version" class="section level3">
 <h3 class="hasAnchor">
 <a href="#pre-release-version" class="anchor"></a>Pre-release version</h3>
 <p>To install the pre-release version that is available in Git branch <code>develop</code> on GitHub, use:</p>
 <div class="sourceCode"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"HenrikBengtsson/future.apply"</span>, ref<span class="op">=</span><span class="st">"develop"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"HenrikBengtsson/future.apply"</span>, ref<span class="op">=</span><span class="st">"develop"</span><span class="op">)</span></code></pre></div>
 <p>This will install the package from source.</p>
 
 </div>
@@ -236,7 +232,7 @@ All future backends via <a href="https://cran.r-project.org/package=doFuture">do
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="links">
-<h2>Links</h2>
+<h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
 <li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=future.apply">https://​cloud.r-project.org/​package=future.apply</a>
 </li>
@@ -246,52 +242,59 @@ All future backends via <a href="https://cran.r-project.org/package=doFuture">do
 </li>
 </ul>
 </div>
+
 <div class="license">
-<h2>License</h2>
+<h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
 <li>GPL (&gt;= 2)</li>
 </ul>
 </div>
+
 <div class="community">
-<h2>Community</h2>
+<h2 data-toc-skip>Community</h2>
 <ul class="list-unstyled">
 <li><a href="CONTRIBUTING.html">Contributing guide</a></li>
 </ul>
 </div>
+
 <div class="citation">
-<h2>Citation</h2>
+<h2 data-toc-skip>Citation</h2>
 <ul class="list-unstyled">
 <li><a href="authors.html">Citing future.apply</a></li>
 </ul>
 </div>
+
 <div class="developers">
-<h2>Developers</h2>
+<h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
 <li>Henrik Bengtsson <br><small class="roles"> Author, maintainer, copyright holder </small>  </li>
-<li><a href="authors.html">All authors...</a></li>
+<li><a href="authors.html">More on authors...</a></li>
 </ul>
 </div>
 
-  <div class="dev-status">
-<h2>Dev status</h2>
+<div class="dev-status">
+<h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://cran.r-project.org/web/checks/check_results_future.apply.html"><img border="0" src="http://www.r-pkg.org/badges/version/future.apply" alt="CRAN version"></a></li>
-<li><a href="https://github.com/HenrikBengtsson/future.apply/actions?query=workflow%3AR-CMD-check"><img src="https://github.com/HenrikBengtsson/future.apply/workflows/R-CMD-check/badge.svg?branch=develop" alt="Build status"></a></li>
-<li><a href="https://travis-ci.org/HenrikBengtsson/future.apply"><img src="https://travis-ci.org/HenrikBengtsson/future.apply.svg" alt="Build status"></a></li>
-<li><a href="https://ci.appveyor.com/project/HenrikBengtsson/future-apply"><img src="https://ci.appveyor.com/api/projects/status/github/HenrikBengtsson/future.apply?svg=true" alt="Build status"></a></li>
-<li><a href="https://codecov.io/gh/HenrikBengtsson/future.apply"><img src="https://codecov.io/gh/HenrikBengtsson/future.apply/branch/develop/graph/badge.svg" alt="Coverage Status"></a></li>
+<li><a href="https://cran.r-project.org/web/checks/check_results_future.apply.html" class="external-link"><img border="0" src="http://www.r-pkg.org/badges/version/future.apply" alt="CRAN version"></a></li>
+<li><a href="https://github.com/HenrikBengtsson/future.apply/actions?query=workflow%3AR-CMD-check" class="external-link"><img src="https://github.com/HenrikBengtsson/future.apply/workflows/R-CMD-check/badge.svg?branch=develop" alt="Build status"></a></li>
+<li><a href="https://travis-ci.org/HenrikBengtsson/future.apply" class="external-link"><img src="https://travis-ci.org/HenrikBengtsson/future.apply.svg" alt="Build status"></a></li>
+<li><a href="https://ci.appveyor.com/project/HenrikBengtsson/future-apply" class="external-link"><img src="https://ci.appveyor.com/api/projects/status/github/HenrikBengtsson/future.apply?svg=true" alt="Build status"></a></li>
+<li><a href="https://codecov.io/gh/HenrikBengtsson/future.apply" class="external-link"><img src="https://codecov.io/gh/HenrikBengtsson/future.apply/branch/develop/graph/badge.svg" alt="Coverage Status"></a></li>
 </ul>
 </div>
-</div>
+
+  </div>
 </div>
 
 
       <footer><div class="copyright">
-  <p>Developed by Henrik Bengtsson.</p>
+  <p></p>
+<p>Developed by Henrik Bengtsson.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1 and <a href="https://github.com/HenrikBengtsson/pkgdown.extras/">pkgdown.extras</a> 0.0.0.9000.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9000 and <a href="https://github.com/HenrikBengtsson/pkgdown.extras/">pkgdown.extras</a> 0.0.0.9000.</p>
 </div>
 
       </footer>
@@ -299,6 +302,8 @@ All future backends via <a href="https://cran.r-project.org/package=doFuture">do
 
   
 
+
+  
 
   </body>
 </html>

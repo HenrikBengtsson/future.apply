@@ -163,23 +163,26 @@ future_lapply <- function(X, FUN, ..., future.stdout = TRUE, future.conditions =
   ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   ## Future expression
   ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  if (is.null(future.seed) || isFALSE(future.seed) || isNA(future.seed)) {
-    ## Don't set .Random.seed
-    seedExpr <- NULL
-  } else {
-    ## Set .Random.seed
-    seedExpr <- quote(assign(".Random.seed", ...future.seeds_ii[[jj]], envir = globalenv(), inherits = FALSE))
-  }
-
   ...future.FUN <- NULL ## To please R CMD check
   
-  expr <- bquote({
-    lapply(seq_along(...future.elements_ii), FUN = function(jj) {
-       ...future.X_jj <- ...future.elements_ii[[jj]]
-       .(seedExpr)
-       ...future.FUN(...future.X_jj, ...)
+    ## Set .Random.seed?
+  if (is.null(future.seed) || isFALSE(future.seed) || isNA(future.seed)) {
+    expr <- quote({
+      lapply(seq_along(...future.elements_ii), FUN = function(jj) {
+         ...future.X_jj <- ...future.elements_ii[[jj]]
+         ...future.FUN(...future.X_jj, ...)
+      })
     })
-  })
+  } else {
+    expr <- quote({
+      lapply(seq_along(...future.elements_ii), FUN = function(jj) {
+         ...future.X_jj <- ...future.elements_ii[[jj]]
+         assign(".Random.seed", ...future.seeds_ii[[jj]], envir = globalenv(), inherits = FALSE)
+         ...future.FUN(...future.X_jj, ...)
+      })
+    })
+  }
+
 
 
   ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

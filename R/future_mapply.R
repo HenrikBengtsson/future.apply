@@ -98,12 +98,12 @@ future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES 
   ...future.FUN <- NULL ## To please R CMD check
   
   if (is.null(future.seed) || isFALSE(future.seed) || isNA(future.seed)) {
-     expr <- bquote({
+     expr <- quote({
        args <- c(list(FUN = ...future.FUN), ...future.elements_ii, MoreArgs = list(MoreArgs), SIMPLIFY = FALSE, USE.NAMES = FALSE)
        do.call(mapply, args = args)
      })
   } else {
-    expr <- bquote({
+    expr <- quote({
       ...future.FUN2 <- function(..., ...future.seeds_ii_jj) {
         assign(".Random.seed", ...future.seeds_ii_jj, envir = globalenv(), inherits = FALSE)
         ...future.FUN(...)

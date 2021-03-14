@@ -1,5 +1,15 @@
 #' @importFrom future Future nbrOfWorkers future resolve value as.FutureGlobals getGlobalsAndPackages
-future_xapply <- function(FUN, nX, chunk_args, args = NULL, MoreArgs = NULL, expr, envir, future.globals, future.packages, future.scheduling, future.chunk.size, future.stdout, future.conditions, future.seed, future.lazy, future.label, get_chunk, fcn_name, args_name, ..., debug) {
+future_xapply <- local({
+  tmpl_expr_options <- bquote_compile({
+    ...future.globals.maxSize.org <- getOption("future.globals.maxSize")
+    if (!identical(...future.globals.maxSize.org, ...future.globals.maxSize)) {
+      oopts <- options(future.globals.maxSize = ...future.globals.maxSize)
+      on.exit(options(oopts), add = TRUE)
+    }
+    .(expr)
+  })
+  
+function(FUN, nX, chunk_args, args = NULL, MoreArgs = NULL, expr, envir, future.globals, future.packages, future.scheduling, future.chunk.size, future.stdout, future.conditions, future.seed, future.lazy, future.label, get_chunk, fcn_name, args_name, ..., debug) {
   stop_if_not(is.function(FUN))
   
   stop_if_not(is.logical(future.stdout), length(future.stdout) == 1L)
@@ -96,14 +106,7 @@ future_xapply <- function(FUN, nX, chunk_args, args = NULL, MoreArgs = NULL, exp
   ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   ## Futures
   ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  expr <- bquote({
-    ...future.globals.maxSize.org <- getOption("future.globals.maxSize")
-    if (!identical(...future.globals.maxSize.org, ...future.globals.maxSize)) {
-      oopts <- options(future.globals.maxSize = ...future.globals.maxSize)
-      on.exit(options(oopts), add = TRUE)
-    }
-    .(expr)
-  })
+  expr <- bquote_apply(tmpl_expr_options)
 
   ## Create labels?
   if (isTRUE(future.label)) {
@@ -280,3 +283,4 @@ future_xapply <- function(FUN, nX, chunk_args, args = NULL, MoreArgs = NULL, exp
 
   values
 } ## future_xapply()
+})

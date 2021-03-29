@@ -62,6 +62,7 @@ and a high-performance compute cluster." />
 
 
 
+
   
 
   
@@ -149,15 +150,15 @@ and a high-performance compute cluster.</p>
     <p>Currently implemented functions are:</p><ul>
 <li><p><code><a href='future_apply.html'>future_apply()</a></code>: a parallel version of <a href='https://rdrr.io/r/base/apply.html'>apply()</a></p></li>
 <li><p><code><a href='future_by.html'>future_by()</a></code>: a parallel version of <a href='https://rdrr.io/r/base/by.html'>by()</a></p></li>
-<li><p><code><a href='future_eapply.html'>future_eapply()</a></code>: a parallel version of <a href='https://rdrr.io/r/base/lapply.html'>eapply()</a></p></li>
-<li><p><code><a href='future_eapply.html'>future_lapply()</a></code>: a parallel version of <a href='https://rdrr.io/r/base/lapply.html'>lapply()</a></p></li>
-<li><p><code><a href='future_Map.html'>future_mapply()</a></code>: a parallel version of <a href='https://rdrr.io/r/base/mapply.html'>mapply()</a></p></li>
-<li><p><code><a href='future_eapply.html'>future_sapply()</a></code>: a parallel version of <a href='https://rdrr.io/r/base/lapply.html'>sapply()</a></p></li>
-<li><p><code><a href='future_eapply.html'>future_tapply()</a></code>: a parallel version of <a href='https://rdrr.io/r/base/tapply.html'>tapply()</a></p></li>
-<li><p><code><a href='future_eapply.html'>future_vapply()</a></code>: a parallel version of <a href='https://rdrr.io/r/base/lapply.html'>vapply()</a></p></li>
-<li><p><code><a href='future_Map.html'>future_Map()</a></code>: a parallel version of Map()</p></li>
-<li><p><code><a href='future_eapply.html'>future_replicate()</a></code>: a parallel version of <a href='https://rdrr.io/r/base/lapply.html'>replicate()</a></p></li>
-<li><p><code><a href='future_Map.html'>future_.mapply()</a></code>: a parallel version of .mapply()</p></li>
+<li><p><code><a href='future_lapply.html'>future_eapply()</a></code>: a parallel version of <a href='https://rdrr.io/r/base/lapply.html'>eapply()</a></p></li>
+<li><p><code><a href='future_lapply.html'>future_lapply()</a></code>: a parallel version of <a href='https://rdrr.io/r/base/lapply.html'>lapply()</a></p></li>
+<li><p><code><a href='future_mapply.html'>future_mapply()</a></code>: a parallel version of <a href='https://rdrr.io/r/base/mapply.html'>mapply()</a></p></li>
+<li><p><code><a href='future_lapply.html'>future_sapply()</a></code>: a parallel version of <a href='https://rdrr.io/r/base/lapply.html'>sapply()</a></p></li>
+<li><p><code><a href='future_lapply.html'>future_tapply()</a></code>: a parallel version of <a href='https://rdrr.io/r/base/tapply.html'>tapply()</a></p></li>
+<li><p><code><a href='future_lapply.html'>future_vapply()</a></code>: a parallel version of <a href='https://rdrr.io/r/base/lapply.html'>vapply()</a></p></li>
+<li><p><code><a href='future_mapply.html'>future_Map()</a></code>: a parallel version of Map()</p></li>
+<li><p><code><a href='future_lapply.html'>future_replicate()</a></code>: a parallel version of <a href='https://rdrr.io/r/base/lapply.html'>replicate()</a></p></li>
+<li><p><code><a href='future_mapply.html'>future_.mapply()</a></code>: a parallel version of .mapply()</p></li>
 </ul>
 
 <p>Reproducibility is part of the core design, which means that perfect,
@@ -170,7 +171,7 @@ renaming the function in the code.  For example, after attaching the package:<di
 <p>code such as:<div class="r"></p><pre><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>a <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span>, beta <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Log.html'>exp</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>3</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>)</span>, logic <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='cn'>TRUE</span>,<span class='cn'>FALSE</span>,<span class='cn'>FALSE</span>,<span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>y</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>quantile</span>, probs <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>/</span><span class='fl'>4</span><span class='op'>)</span>
 </pre><p></div></p>
-<p>can be updated to:<div class="r"></p><pre><span class='va'>y</span> <span class='op'>&lt;-</span> <span class='fu'><a href='future_eapply.html'>future_lapply</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>quantile</span>, probs <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>/</span><span class='fl'>4</span><span class='op'>)</span>
+<p>can be updated to:<div class="r"></p><pre><span class='va'>y</span> <span class='op'>&lt;-</span> <span class='fu'><a href='future_lapply.html'>future_lapply</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>quantile</span>, probs <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>/</span><span class='fl'>4</span><span class='op'>)</span>
 </pre><p></div></p>
 <p>The default settings in the <span class="pkg">future</span> framework is to process code
 <em>sequentially</em>.  To run the above in parallel on the local machine
@@ -203,8 +204,8 @@ section on the
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
     <p>Henrik Bengtsson, except for the implementations of <code><a href='future_apply.html'>future_apply()</a></code>,
-<code><a href='future_Map.html'>future_Map()</a></code>, <code><a href='future_eapply.html'>future_replicate()</a></code>, <code><a href='future_eapply.html'>future_sapply()</a></code>, and
-<code><a href='future_eapply.html'>future_tapply()</a></code>, which are adopted from the source code of the
+<code><a href='future_mapply.html'>future_Map()</a></code>, <code><a href='future_lapply.html'>future_replicate()</a></code>, <code><a href='future_lapply.html'>future_sapply()</a></code>, and
+<code><a href='future_lapply.html'>future_tapply()</a></code>, which are adopted from the source code of the
 corresponding base <span style="R">R</span> functions, which are licensed under GPL (&gt;= 2)
 with 'The R Core Team' as the copyright holder.
 Because of these dependencies, the license of this package is GPL (&gt;= 2).</p>
@@ -224,7 +225,7 @@ Because of these dependencies, the license of this package is GPL (&gt;= 2).</p>
 </div>
 
 <div class="pkgdown">
-  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9000.</p> and <a href="https://github.com/HenrikBengtsson/pkgdown.extras/">pkgdown.extras</a> 0.0.0.9000.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p> and <a href="https://github.com/HenrikBengtsson/pkgdown.extras/">pkgdown.extras</a> 0.0.0.9000.</p>
 </div>
 
       </footer>

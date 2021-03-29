@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://future.apply.futureverse.org/index.html</loc>
+  </url>
+  <url>
+    <loc>https://future.apply.futureverse.org/reference/fold.html</loc>
+  </url>
+  <url>
+    <loc>https://future.apply.futureverse.org/reference/future.apply.html</loc>
+  </url>
+  <url>
+    <loc>https://future.apply.futureverse.org/reference/future_apply.html</loc>
+  </url>
+  <url>
+    <loc>https://future.apply.futureverse.org/reference/future_by.html</loc>
+  </url>
+  <url>
+    <loc>https://future.apply.futureverse.org/reference/future_lapply.html</loc>
+  </url>
+  <url>
+    <loc>https://future.apply.futureverse.org/reference/future_mapply.html</loc>
+  </url>
+  <url>
+    <loc>https://future.apply.futureverse.org/reference/makeChunks.html</loc>
+  </url>
+  <url>
+    <loc>https://future.apply.futureverse.org/reference/make_rng_seeds.html</loc>
+  </url>
+  <url>
+    <loc>https://future.apply.futureverse.org/articles/future.apply-1-overview.html</loc>
+  </url>
+</urlset>

@@ -1,7 +1,10 @@
 pandoc: 1.19.2.4
-pkgdown: 1.6.1.9000
-pkgdown_sha: ae4332d48aedc46be2b532b26661a9bc6b7244fc
+pkgdown: 1.6.1.9001
+pkgdown_sha: 5f1ef9785827a976afbdc09a2d2a626d6ef1f2b4
 articles:
   future.apply-1-overview: future.apply-1-overview.html
-last_built: 2021-03-16T03:56Z
+last_built: 2021-03-29T00:24Z
+urls:
+  reference: https://future.apply.futureverse.org/reference
+  article: https://future.apply.futureverse.org/articles
 

@@ -9,8 +9,7 @@
 
 </div>
 
-
-# future.apply: Apply Function to Elements in Parallel using Futures
+# future.apply: Apply Function to Elements in Parallel using Futures 
 
 ## Introduction
 

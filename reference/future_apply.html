@@ -270,7 +270,7 @@ If <code>NA</code> (not recommended), output is <em>not</em> intercepted.</p></t
       <th>future.conditions</th>
       <td><p>A character string of conditions classes to be
 captured and relayed.  The default is the same as the <code>condition</code>
-argument of <code><a href='https://rdrr.io/pkg/future/man/Future-class.html'>future::Future()</a></code>.
+argument of <code><a href='https://future.futureverse.org/reference/Future-class.html'>future::Future()</a></code>.
 To not intercept conditions, use <code>conditions = character(0L)</code>.
 Errors are always relayed.</p></td>
     </tr>
@@ -347,28 +347,14 @@ with 'The R Core Team' as the copyright holder.</p>
 
 <span class='va'>Y0</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/apply.html'>apply</a></span><span class='op'>(</span><span class='va'>X</span>, MARGIN <span class='op'>=</span> <span class='fl'>1L</span>, FUN <span class='op'>=</span> <span class='va'>table</span><span class='op'>)</span>
 <span class='va'>Y1</span> <span class='op'>&lt;-</span> <span class='fu'>future_apply</span><span class='op'>(</span><span class='va'>X</span>, MARGIN <span class='op'>=</span> <span class='fl'>1L</span>, FUN <span class='op'>=</span> <span class='va'>table</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>Y1</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [[1]]
-#&gt; ...future.X_jj
-#&gt; 1 3 7 
-#&gt; 2 1 1 
-#&gt; 
-#&gt; [[2]]
-#&gt; ...future.X_jj
-#&gt; 2 4 6 8 
-#&gt; 1 1 1 1 
-#&gt; </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/stopifnot.html'>stopifnot</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/all.equal.html'>all.equal</a></span><span class='op'>(</span><span class='va'>Y1</span>, <span class='va'>Y0</span>, check.attributes <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span><span class='op'>)</span> <span class='co'>## FIXME</span>
-
+</div><div class='output co'>#&gt; <span class='error'>Error in if (chunk_size &gt; maxSize) {    asIEC &lt;- import_future("asIEC")    msg &lt;- sprintf("The total size of %s (of class %s and type %s) is %s and the total size of the other argument is %s. With %d workers, this translates to %s per worker needed for future_apply(), which exceeds the maximum allowed size of %s (option 'future.globals.maxSize').",         sQuote("X"), sQuote(class(X)[1]), sQuote(typeof(X)),         asIEC(size), asIEC(other_size), nWorkers, asIEC(chunk_size),         asIEC(maxSize))    if (debug)         mdebug(msg)    stop(msg)}: missing value where TRUE/FALSE needed</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>Y1</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in print(Y1): object 'Y1' not found</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/stopifnot.html'>stopifnot</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/all.equal.html'>all.equal</a></span><span class='op'>(</span><span class='va'>Y1</span>, <span class='va'>Y0</span>, check.attributes <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span><span class='op'>)</span> <span class='co'>## FIXME</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in all.equal(Y1, Y0, check.attributes = FALSE): object 'Y1' not found</span></div><div class='input'>
 <span class='va'>Y0</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/apply.html'>apply</a></span><span class='op'>(</span><span class='va'>X</span>, MARGIN <span class='op'>=</span> <span class='fl'>1L</span>, FUN <span class='op'>=</span> <span class='fu'>stats</span><span class='fu'>::</span><span class='va'><a href='https://rdrr.io/r/stats/quantile.html'>quantile</a></span><span class='op'>)</span>
 <span class='va'>Y1</span> <span class='op'>&lt;-</span> <span class='fu'>future_apply</span><span class='op'>(</span><span class='va'>X</span>, MARGIN <span class='op'>=</span> <span class='fl'>1L</span>, FUN <span class='op'>=</span> <span class='fu'>stats</span><span class='fu'>::</span><span class='va'><a href='https://rdrr.io/r/stats/quantile.html'>quantile</a></span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>Y1</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;      [,1] [,2]
-#&gt; 0%      1  2.0
-#&gt; 25%     1  3.5
-#&gt; 50%     2  5.0
-#&gt; 75%     4  6.5
-#&gt; 100%    7  8.0</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/stopifnot.html'>stopifnot</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/all.equal.html'>all.equal</a></span><span class='op'>(</span><span class='va'>Y1</span>, <span class='va'>Y0</span><span class='op'>)</span><span class='op'>)</span>
-
+</div><div class='output co'>#&gt; <span class='error'>Error in if (chunk_size &gt; maxSize) {    asIEC &lt;- import_future("asIEC")    msg &lt;- sprintf("The total size of %s (of class %s and type %s) is %s and the total size of the other argument is %s. With %d workers, this translates to %s per worker needed for future_apply(), which exceeds the maximum allowed size of %s (option 'future.globals.maxSize').",         sQuote("X"), sQuote(class(X)[1]), sQuote(typeof(X)),         asIEC(size), asIEC(other_size), nWorkers, asIEC(chunk_size),         asIEC(maxSize))    if (debug)         mdebug(msg)    stop(msg)}: missing value where TRUE/FALSE needed</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>Y1</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in print(Y1): object 'Y1' not found</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/stopifnot.html'>stopifnot</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/all.equal.html'>all.equal</a></span><span class='op'>(</span><span class='va'>Y1</span>, <span class='va'>Y0</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in all.equal(Y1, Y0): object 'Y1' not found</span></div><div class='input'>
 
 <span class='co'>## ---------------------------------------------------------</span>
 <span class='co'>## Parallel Random Number Generation</span>
@@ -381,22 +367,14 @@ with 'The R Core Team' as the copyright holder.</p>
 
 <span class='fu'>plan</span><span class='op'>(</span><span class='va'>multisession</span><span class='op'>)</span>
 <span class='va'>Y1</span> <span class='op'>&lt;-</span> <span class='fu'>future_apply</span><span class='op'>(</span><span class='va'>X</span>, MARGIN <span class='op'>=</span> <span class='fl'>1L</span>, FUN <span class='op'>=</span> <span class='va'>sample</span>, future.seed <span class='op'>=</span> <span class='fl'>0xBEEF</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>Y1</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;      [,1] [,2]
-#&gt; [1,]    7    6
-#&gt; [2,]    1    8
-#&gt; [3,]    3    4
-#&gt; [4,]    1    2</div><div class='input'>
+</div><div class='output co'>#&gt; <span class='error'>Error in if (chunk_size &gt; maxSize) {    asIEC &lt;- import_future("asIEC")    msg &lt;- sprintf("The total size of %s (of class %s and type %s) is %s and the total size of the other argument is %s. With %d workers, this translates to %s per worker needed for future_apply(), which exceeds the maximum allowed size of %s (option 'future.globals.maxSize').",         sQuote("X"), sQuote(class(X)[1]), sQuote(typeof(X)),         asIEC(size), asIEC(other_size), nWorkers, asIEC(chunk_size),         asIEC(maxSize))    if (debug)         mdebug(msg)    stop(msg)}: missing value where TRUE/FALSE needed</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>Y1</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in print(Y1): object 'Y1' not found</span></div><div class='input'>
 <span class='fu'>plan</span><span class='op'>(</span><span class='va'>sequential</span><span class='op'>)</span>
 <span class='va'>Y2</span> <span class='op'>&lt;-</span> <span class='fu'>future_apply</span><span class='op'>(</span><span class='va'>X</span>, MARGIN <span class='op'>=</span> <span class='fl'>1L</span>, FUN <span class='op'>=</span> <span class='va'>sample</span>, future.seed <span class='op'>=</span> <span class='fl'>0xBEEF</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>Y2</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;      [,1] [,2]
-#&gt; [1,]    7    6
-#&gt; [2,]    1    8
-#&gt; [3,]    3    4
-#&gt; [4,]    1    2</div><div class='input'>
+</div><div class='output co'>#&gt; <span class='error'>Error in if (chunk_size &gt; maxSize) {    asIEC &lt;- import_future("asIEC")    msg &lt;- sprintf("The total size of %s (of class %s and type %s) is %s and the total size of the other argument is %s. With %d workers, this translates to %s per worker needed for future_apply(), which exceeds the maximum allowed size of %s (option 'future.globals.maxSize').",         sQuote("X"), sQuote(class(X)[1]), sQuote(typeof(X)),         asIEC(size), asIEC(other_size), nWorkers, asIEC(chunk_size),         asIEC(maxSize))    if (debug)         mdebug(msg)    stop(msg)}: missing value where TRUE/FALSE needed</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>Y2</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in print(Y2): object 'Y2' not found</span></div><div class='input'>
 <span class='fu'><a href='https://rdrr.io/r/base/stopifnot.html'>stopifnot</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/all.equal.html'>all.equal</a></span><span class='op'>(</span><span class='va'>Y1</span>, <span class='va'>Y2</span><span class='op'>)</span><span class='op'>)</span>
-<span class='co'># }</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in all.equal(Y1, Y2): object 'Y1' not found</span></div><div class='input'><span class='co'># }</span>
 
 <span class='co'># \dontshow{</span>
 <span class='co'>## R CMD check: make sure any open connections are closed afterward</span>

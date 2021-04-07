@@ -3,7 +3,7 @@ pkgdown: 1.6.1.9001
 pkgdown_sha: c6bd498aa2e0ae2e15e267891aaa69c6c15ab79f
 articles:
   future.apply-1-overview: future.apply-1-overview.html
-last_built: 2021-04-07T18:04Z
+last_built: 2021-04-07T18:35Z
 urls:
   reference: https://future.apply.futureverse.org/reference
   article: https://future.apply.futureverse.org/articles

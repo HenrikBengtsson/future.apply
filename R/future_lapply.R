@@ -122,7 +122,7 @@
 #' This attribute can take the following values:
 #' * index vector - an numeric vector of length `length(X)`
 #' * function     - an function taking one argument which is called as
-#'                  `ordering(length(X))` and which much return an
+#'                  `ordering(length(X))` and which must return an
 #'                  index vector of length `length(X)`, e.g.
 #'                  `function(n) rev(seq_len(n))` for reverse ordering.
 #' * `"random"`   - this will randomize the ordering via random index

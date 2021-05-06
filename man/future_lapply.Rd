@@ -248,7 +248,7 @@ This attribute can take the following values:
 \itemize{
 \item index vector - an numeric vector of length \code{length(X)}
 \item function     - an function taking one argument which is called as
-\code{ordering(length(X))} and which much return an
+\code{ordering(length(X))} and which must return an
 index vector of length \code{length(X)}, e.g.
 \code{function(n) rev(seq_len(n))} for reverse ordering.
 \item \code{"random"}   - this will randomize the ordering via random index

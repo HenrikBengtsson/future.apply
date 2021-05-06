@@ -42,7 +42,7 @@ This attribute can take the following values:
 \item index vector - an numeric vector of length \code{nbrOfElements} specifying
 how elements are remapped
 \item function     - an function taking one argument which is called as
-\code{ordering(nbrOfElements)} and which much return an
+\code{ordering(nbrOfElements)} and which must return an
 index vector of length \code{nbrOfElements}, e.g.
 \code{function(n) rev(seq_len(n))} for reverse ordering.
 \item \code{"random"}   - this will randomize the ordering via random index

@@ -60,8 +60,6 @@ Analogously, this is true for all the other future_nnn() functions." />
 
 
 
-
-
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -83,18 +81,9 @@ Analogously, this is true for all the other future_nnn() functions." />
 </script>
 
 
-<!-- dependencies from examples -->
-
-
-  
-
-  
-
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    
-
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -115,7 +104,16 @@ Analogously, this is true for all the other future_nnn() functions." />
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
+  <a href="../index.html">
+    <span class="fas fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
+</li>
+<li>
+  <a href="../news/index.html">Changelog</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -128,9 +126,6 @@ Analogously, this is true for all the other future_nnn() functions." />
       <a href="../articles/future.apply-1-overview.html">A Future for R: Apply Function to Elements in Parallel</a>
     </li>
   </ul>
-</li>
-<li>
-  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -178,6 +173,9 @@ Analogously, this is true for all the other future_nnn() functions." />
       <a href="https://listenv.futureverse.org">listenv</a>
     </li>
     <li>
+      <a href="https://marshal.futureverse.org">marshal</a>
+    </li>
+    <li>
       <a href="https://parallelly.futureverse.org">parallelly</a>
     </li>
     <li>
@@ -222,12 +220,12 @@ Analogously, this is true for all the other future_nnn() functions." />
     </div>
 
     <div class="ref-description">
-    <p><code><a href='future_lapply.html'>future_lapply()</a></code> implements <code><a href='https://rdrr.io/r/base/lapply.html'>base::lapply()</a></code> using futures with perfect
+    <p><code>future_lapply()</code> implements <code><a href='https://rdrr.io/r/base/lapply.html'>base::lapply()</a></code> using futures with perfect
 replication of results, regardless of future backend used.
 Analogously, this is true for all the other <code>future_nnn()</code> functions.</p>
     </div>
 
-    <pre class="usage"><span class='fu'><a href='future_lapply.html'>future_eapply</a></span><span class='op'>(</span>
+    <pre class="usage"><span class='fu'>future_eapply</span><span class='op'>(</span>
   <span class='va'>env</span>,
   <span class='va'>FUN</span>,
   <span class='va'>...</span>,
@@ -236,7 +234,7 @@ Analogously, this is true for all the other <code>future_nnn()</code> functions.
   future.label <span class='op'>=</span> <span class='st'>"future_eapply-%d"</span>
 <span class='op'>)</span>
 
-<span class='fu'><a href='future_lapply.html'>future_lapply</a></span><span class='op'>(</span>
+<span class='fu'>future_lapply</span><span class='op'>(</span>
   <span class='va'>X</span>,
   <span class='va'>FUN</span>,
   <span class='va'>...</span>,
@@ -251,7 +249,7 @@ Analogously, this is true for all the other <code>future_nnn()</code> functions.
   future.label <span class='op'>=</span> <span class='st'>"future_lapply-%d"</span>
 <span class='op'>)</span>
 
-<span class='fu'><a href='future_lapply.html'>future_replicate</a></span><span class='op'>(</span>
+<span class='fu'>future_replicate</span><span class='op'>(</span>
   <span class='va'>n</span>,
   <span class='va'>expr</span>,
   simplify <span class='op'>=</span> <span class='st'>"array"</span>,
@@ -260,7 +258,7 @@ Analogously, this is true for all the other <code>future_nnn()</code> functions.
   future.label <span class='op'>=</span> <span class='st'>"future_replicate-%d"</span>
 <span class='op'>)</span>
 
-<span class='fu'><a href='future_lapply.html'>future_sapply</a></span><span class='op'>(</span>
+<span class='fu'>future_sapply</span><span class='op'>(</span>
   <span class='va'>X</span>,
   <span class='va'>FUN</span>,
   <span class='va'>...</span>,
@@ -269,7 +267,7 @@ Analogously, this is true for all the other <code>future_nnn()</code> functions.
   future.label <span class='op'>=</span> <span class='st'>"future_sapply-%d"</span>
 <span class='op'>)</span>
 
-<span class='fu'><a href='future_lapply.html'>future_tapply</a></span><span class='op'>(</span>
+<span class='fu'>future_tapply</span><span class='op'>(</span>
   <span class='va'>X</span>,
   <span class='va'>INDEX</span>,
   FUN <span class='op'>=</span> <span class='cn'>NULL</span>,
@@ -279,7 +277,7 @@ Analogously, this is true for all the other <code>future_nnn()</code> functions.
   future.label <span class='op'>=</span> <span class='st'>"future_tapply-%d"</span>
 <span class='op'>)</span>
 
-<span class='fu'><a href='future_lapply.html'>future_vapply</a></span><span class='op'>(</span>
+<span class='fu'>future_vapply</span><span class='op'>(</span>
   <span class='va'>X</span>,
   <span class='va'>FUN</span>,
   <span class='va'>FUN.VALUE</span>,
@@ -332,7 +330,7 @@ If <code>NA</code> (not recommended), output is <em>not</em> intercepted.</p></t
       <th>future.conditions</th>
       <td><p>A character string of conditions classes to be
 captured and relayed.  The default is the same as the <code>condition</code>
-argument of <code><a href='https://future.futureverse.org/reference/Future-class.html'>future::Future()</a></code>.
+argument of <code><a href='https://rdrr.io/pkg/future/man/Future-class.html'>future::Future()</a></code>.
 To not intercept conditions, use <code>conditions = character(0L)</code>.
 Errors are always relayed.</p></td>
     </tr>
@@ -409,7 +407,7 @@ See <code><a href='https://rdrr.io/r/base/lapply.html'>base::vapply()</a></code>
       <th>...</th>
       <td><p>(optional) Additional arguments passed to <code>FUN()</code>.
 For <code>future_*apply()</code> functions and <code><a href='https://rdrr.io/r/base/lapply.html'>replicate()</a></code>, any <code>future.*</code> arguments
-part of <code>\ldots</code> are passed on to <code><a href='future_lapply.html'>future_lapply()</a></code> used internally.</p></td>
+part of <code>\ldots</code> are passed on to <code>future_lapply()</code> used internally.</p></td>
     </tr>
     </table>
 
@@ -417,21 +415,21 @@ part of <code>\ldots</code> are passed on to <code><a href='future_lapply.html'>
 
     <p>A named (unless <code>USE.NAMES = FALSE</code>) list.
 See <code><a href='https://rdrr.io/r/base/eapply.html'>base::eapply()</a></code> for details.</p>
-<p>For <code><a href='future_lapply.html'>future_lapply()</a></code>, a list with same length and names as <code>X</code>.
+<p>For <code>future_lapply()</code>, a list with same length and names as <code>X</code>.
 See <code><a href='https://rdrr.io/r/base/lapply.html'>base::lapply()</a></code> for details.</p>
-<p><code><a href='future_lapply.html'>future_replicate()</a></code> is a wrapper around <code><a href='future_lapply.html'>future_sapply()</a></code> and return
+<p><code>future_replicate()</code> is a wrapper around <code>future_sapply()</code> and return
 simplified object according to the <code>simplify</code> argument.
 See <code><a href='https://rdrr.io/r/base/lapply.html'>base::replicate()</a></code> for details.
-Since <code><a href='future_lapply.html'>future_replicate()</a></code> usually involves random number generation (RNG),
+Since <code>future_replicate()</code> usually involves random number generation (RNG),
 it uses <code>future.seed = TRUE</code> by default in order produce sound random
 numbers regardless of future backend and number of background workers used.</p>
-<p>For <code><a href='future_lapply.html'>future_sapply()</a></code>, a vector with same length and names as <code>X</code>.
+<p>For <code>future_sapply()</code>, a vector with same length and names as <code>X</code>.
 See <code><a href='https://rdrr.io/r/base/lapply.html'>base::sapply()</a></code> for details.</p>
-<p><code><a href='future_lapply.html'>future_tapply()</a></code> returns an array with mode <code>"list"</code>, unless
+<p><code>future_tapply()</code> returns an array with mode <code>"list"</code>, unless
 <code>simplify = TRUE</code> (default) <em>and</em> <code>FUN</code> returns a scalar, in which
 case the mode of the array is the same as the returned scalars.
 See <code><a href='https://rdrr.io/r/base/tapply.html'>base::tapply()</a></code> for details.</p>
-<p>For <code><a href='future_lapply.html'>future_vapply()</a></code>, a vector with same length and names as <code>X</code>.
+<p>For <code>future_vapply()</code>, a vector with same length and names as <code>X</code>.
 See <code><a href='https://rdrr.io/r/base/lapply.html'>base::vapply()</a></code> for details.</p>
     <h2 class="hasAnchor" id="global-variables"><a class="anchor" href="#global-variables"></a>Global variables</h2>
 
@@ -475,7 +473,7 @@ sequence of RNG seeds as a list such that
 <code>length(future.seed) == length(X)</code> and where each element is an
 integer seed vector that can be assigned to
 <code><a href='https://rdrr.io/r/base/Random.html'>.Random.seed</a></code>.  One approach to generate a
-set of valid RNG seeds based on fixed initial seed (here <code>42L</code>) is:<div class="r"></p><pre><span class='va'>seeds</span> <span class='op'>&lt;-</span> <span class='fu'><a href='future_lapply.html'>future_lapply</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq_along</a></span><span class='op'>(</span><span class='va'>X</span><span class='op'>)</span>, FUN <span class='op'>=</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='va'>.Random.seed</span>,
+set of valid RNG seeds based on fixed initial seed (here <code>42L</code>) is:<div class="r"></p><pre><span class='va'>seeds</span> <span class='op'>&lt;-</span> <span class='fu'>future_lapply</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq_along</a></span><span class='op'>(</span><span class='va'>X</span><span class='op'>)</span>, FUN <span class='op'>=</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='va'>.Random.seed</span>,
                        future.chunk.size <span class='op'>=</span> <span class='cn'>Inf</span>, future.seed <span class='op'>=</span> <span class='fl'>42L</span><span class='op'>)</span>
 </pre><p></div></p>
 <p><strong>Note that <code><a href='https://rdrr.io/r/base/list.html'>as.list(seq_along(X))</a></code> is <em>not</em> a valid set of such
@@ -485,7 +483,7 @@ R processes after this function returns is guaranteed to be
 "forwarded one step" from the RNG state that was before the call and
 in the same way regardless of <code>future.seed</code>, <code>future.scheduling</code>
 and future strategy used.  This is done in order to guarantee that an <span style="R">R</span>
-script calling <code><a href='future_lapply.html'>future_lapply()</a></code> multiple times should be numerically
+script calling <code>future_lapply()</code> multiple times should be numerically
 reproducible given the same initial seed.</p>
     <h2 class="hasAnchor" id="control-processing-order-of-elements"><a class="anchor" href="#control-processing-order-of-elements"></a>Control processing order of elements</h2>
 
@@ -497,7 +495,7 @@ only affects the processing order and <em>not</em> the order values are returned
 This attribute can take the following values:</p><ul>
 <li><p>index vector - an numeric vector of length <code><a href='https://rdrr.io/r/base/length.html'>length(X)</a></code></p></li>
 <li><p>function     - an function taking one argument which is called as
-<code>ordering(length(X))</code> and which much return an
+<code>ordering(length(X))</code> and which must return an
 index vector of length <code><a href='https://rdrr.io/r/base/length.html'>length(X)</a></code>, e.g.
 <code>function(n) rev(seq_len(n))</code> for reverse ordering.</p></li>
 <li><p><code>"random"</code>   - this will randomize the ordering via random index
@@ -509,8 +507,8 @@ output and conditions are also relayed in that order, that is out of order.</p><
 
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
-    <p>The implementations of <code><a href='future_lapply.html'>future_replicate()</a></code>, <code><a href='future_lapply.html'>future_sapply()</a></code>, and
-<code><a href='future_lapply.html'>future_tapply()</a></code> are adopted from the source code of the corresponding
+    <p>The implementations of <code>future_replicate()</code>, <code>future_sapply()</code>, and
+<code>future_tapply()</code> are adopted from the source code of the corresponding
 base <span style="R">R</span> functions, which are licensed under GPL (&gt;= 2) with
 'The R Core Team' as the copyright holder.</p>
 
@@ -520,7 +518,7 @@ base <span style="R">R</span> functions, which are licensed under GPL (&gt;= 2) 
 <span class='co'>## ---------------------------------------------------------</span>
 <span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>a <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span>, beta <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Log.html'>exp</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>3</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>)</span>, logic <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='cn'>TRUE</span>, <span class='cn'>FALSE</span>, <span class='cn'>FALSE</span>, <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>y0</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span><span class='op'>(</span><span class='va'>x</span>, FUN <span class='op'>=</span> <span class='va'>quantile</span>, probs <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>/</span><span class='fl'>4</span><span class='op'>)</span>
-<span class='va'>y1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='future_lapply.html'>future_lapply</a></span><span class='op'>(</span><span class='va'>x</span>, FUN <span class='op'>=</span> <span class='va'>quantile</span>, probs <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>/</span><span class='fl'>4</span><span class='op'>)</span>
+<span class='va'>y1</span> <span class='op'>&lt;-</span> <span class='fu'>future_lapply</span><span class='op'>(</span><span class='va'>x</span>, FUN <span class='op'>=</span> <span class='va'>quantile</span>, probs <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>/</span><span class='fl'>4</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>y1</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; $a
 #&gt;  25%  50%  75% 
@@ -536,7 +534,7 @@ base <span style="R">R</span> functions, which are licensed under GPL (&gt;= 2) 
 #&gt; </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/stopifnot.html'>stopifnot</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/all.equal.html'>all.equal</a></span><span class='op'>(</span><span class='va'>y1</span>, <span class='va'>y0</span><span class='op'>)</span><span class='op'>)</span>
 
 <span class='va'>y0</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>sapply</a></span><span class='op'>(</span><span class='va'>x</span>, FUN <span class='op'>=</span> <span class='va'>quantile</span><span class='op'>)</span>
-<span class='va'>y1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='future_lapply.html'>future_sapply</a></span><span class='op'>(</span><span class='va'>x</span>, FUN <span class='op'>=</span> <span class='va'>quantile</span><span class='op'>)</span>
+<span class='va'>y1</span> <span class='op'>&lt;-</span> <span class='fu'>future_sapply</span><span class='op'>(</span><span class='va'>x</span>, FUN <span class='op'>=</span> <span class='va'>quantile</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>y1</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;          a        beta logic
 #&gt; 0%    1.00  0.04978707   0.0
@@ -546,7 +544,7 @@ base <span style="R">R</span> functions, which are licensed under GPL (&gt;= 2) 
 #&gt; 100% 10.00 20.08553692   1.0</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/stopifnot.html'>stopifnot</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/all.equal.html'>all.equal</a></span><span class='op'>(</span><span class='va'>y1</span>, <span class='va'>y0</span><span class='op'>)</span><span class='op'>)</span>
 
 <span class='va'>y0</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>vapply</a></span><span class='op'>(</span><span class='va'>x</span>, FUN <span class='op'>=</span> <span class='va'>quantile</span>, FUN.VALUE <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/double.html'>double</a></span><span class='op'>(</span><span class='fl'>5L</span><span class='op'>)</span><span class='op'>)</span>
-<span class='va'>y1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='future_lapply.html'>future_vapply</a></span><span class='op'>(</span><span class='va'>x</span>, FUN <span class='op'>=</span> <span class='va'>quantile</span>, FUN.VALUE <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/double.html'>double</a></span><span class='op'>(</span><span class='fl'>5L</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>y1</span> <span class='op'>&lt;-</span> <span class='fu'>future_vapply</span><span class='op'>(</span><span class='va'>x</span>, FUN <span class='op'>=</span> <span class='va'>quantile</span>, FUN.VALUE <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/double.html'>double</a></span><span class='op'>(</span><span class='fl'>5L</span><span class='op'>)</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>y1</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;          a        beta logic
 #&gt; 0%    1.00  0.04978707   0.0
@@ -564,7 +562,7 @@ base <span style="R">R</span> functions, which are licensed under GPL (&gt;= 2) 
 <span class='co'>## where they are, the random numbers produced are identical</span>
 
 <span class='fu'>plan</span><span class='op'>(</span><span class='va'>multisession</span><span class='op'>)</span>
-<span class='va'>y1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='future_lapply.html'>future_lapply</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span>, FUN <span class='op'>=</span> <span class='va'>rnorm</span>, future.seed <span class='op'>=</span> <span class='fl'>0xBEEF</span><span class='op'>)</span>
+<span class='va'>y1</span> <span class='op'>&lt;-</span> <span class='fu'>future_lapply</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span>, FUN <span class='op'>=</span> <span class='va'>rnorm</span>, future.seed <span class='op'>=</span> <span class='fl'>0xBEEF</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span><span class='op'>(</span><span class='va'>y1</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; List of 5
 #&gt;  $ : num 0.682
@@ -573,7 +571,7 @@ base <span style="R">R</span> functions, which are licensed under GPL (&gt;= 2) 
 #&gt;  $ : num [1:4] 1.143 -1.278 0.438 0.819
 #&gt;  $ : num [1:5] -1.2935 -0.0878 -0.3909 0.5652 0.2253</div><div class='input'>
 <span class='fu'>plan</span><span class='op'>(</span><span class='va'>sequential</span><span class='op'>)</span>
-<span class='va'>y2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='future_lapply.html'>future_lapply</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span>, FUN <span class='op'>=</span> <span class='va'>rnorm</span>, future.seed <span class='op'>=</span> <span class='fl'>0xBEEF</span><span class='op'>)</span>
+<span class='va'>y2</span> <span class='op'>&lt;-</span> <span class='fu'>future_lapply</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span>, FUN <span class='op'>=</span> <span class='va'>rnorm</span>, future.seed <span class='op'>=</span> <span class='fl'>0xBEEF</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span><span class='op'>(</span><span class='va'>y2</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; List of 5
 #&gt;  $ : num 0.682
@@ -592,7 +590,7 @@ base <span style="R">R</span> functions, which are licensed under GPL (&gt;= 2) 
 <span class='va'>chunks</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/split.html'>split</a></span><span class='op'>(</span><span class='va'>iris</span>, <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span>, length.out <span class='op'>=</span> <span class='fl'>3L</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>y0</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span><span class='op'>(</span><span class='va'>chunks</span>, FUN <span class='op'>=</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span> <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>$</span><span class='va'>Sepal.Length</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>y0</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/do.call.html'>do.call</a></span><span class='op'>(</span><span class='va'>sum</span>, <span class='va'>y0</span><span class='op'>)</span>
-<span class='va'>y1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='future_lapply.html'>future_lapply</a></span><span class='op'>(</span><span class='va'>chunks</span>, FUN <span class='op'>=</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span> <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>$</span><span class='va'>Sepal.Length</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>y1</span> <span class='op'>&lt;-</span> <span class='fu'>future_lapply</span><span class='op'>(</span><span class='va'>chunks</span>, FUN <span class='op'>=</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span> <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>$</span><span class='va'>Sepal.Length</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>y1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/do.call.html'>do.call</a></span><span class='op'>(</span><span class='va'>sum</span>, <span class='va'>y1</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>y1</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] 876.5</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/stopifnot.html'>stopifnot</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/all.equal.html'>all.equal</a></span><span class='op'>(</span><span class='va'>y1</span>, <span class='va'>y0</span><span class='op'>)</span><span class='op'>)</span>
@@ -614,11 +612,11 @@ base <span style="R">R</span> functions, which are licensed under GPL (&gt;= 2) 
 
       <footer>
       <div class="copyright">
-  <p><p>Developed by Henrik Bengtsson.</p></p>
+  <p>Developed by Henrik Bengtsson.</p>
 </div>
 
 <div class="pkgdown">
-  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p> and <a href="https://github.com/HenrikBengtsson/pkgdown.extras/">pkgdown.extras</a> 0.0.0.9001.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1 and <a href="https://github.com/HenrikBengtsson/pkgdown.extras/">pkgdown.extras</a> 0.0.0.9002.</p>
 </div>
 
       </footer>
@@ -644,8 +642,6 @@ base <span style="R">R</span> functions, which are licensed under GPL (&gt;= 2) 
 </script>
 
 
-
-  
 
   </body>
 </html>

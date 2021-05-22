@@ -49,12 +49,18 @@ getGlobalsAndPackagesXApply <- function(FUN, args = NULL, MoreArgs = NULL, envir
   
   if (use_args) {
     if (!is.element("...", names)) {
-      objectSize <- import_future("objectSize")
       if (debug) mdebug("Getting '...' globals ...")
       dotdotdot <- globalsByName("...", envir = envir, mustExist = TRUE)
       dotdotdot <- as.FutureGlobals(dotdotdot)
       dotdotdot <- resolve(dotdotdot)
-      attr(dotdotdot, "total_size") <- objectSize(dotdotdot)
+
+      ## Recalculate the total size?
+      maxSize <- getOption("future.globals.maxSize")
+      if (is.null(maxSize) || is.finite(maxSize)) {
+        objectSize <- import_future("objectSize")
+        attr(dotdotdot, "total_size") <- objectSize(dotdotdot)
+      }
+      
       if (debug) mdebug("Getting '...' globals ... DONE")
       globals <- c(globals, dotdotdot)
     }

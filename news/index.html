@@ -222,6 +222,13 @@
 <h1 class="page-header" data-toc-text="1.7.0-9000">
 <a href="#future-apply-1-7-0-9000" class="anchor"></a>future.apply 1.7.0-9000<small> Unreleased </small>
 </h1>
+<div id="performance" class="section level3">
+<h3 class="hasAnchor">
+<a href="#performance" class="anchor"></a>Performance</h3>
+<ul>
+<li>Internal getGlobalsAndPackagesXApply() now avoids calculating the object size of ‘…’ arguments if option ‘future.globals.maxSize’ is +Inf.</li>
+</ul>
+</div>
 </div>
     <div id="future-apply-1-7-0" class="section level1">
 <h1 class="page-header" data-toc-text="1.7.0">
@@ -282,8 +289,14 @@
 <h3 class="hasAnchor">
 <a href="#new-features-2" class="anchor"></a>New Features</h3>
 <ul>
-<li><p>Now all future_nnn() functions set a label on each future that reflects the name of the future_nnn() function and the index of the chunk, e.g. ‘future_lapply-3’. The format can be controlled by argument ‘future.label’.</p></li>
-<li><p>PERFORMANCE: The assertion of the maximum size of globals per chunk is now significantly faster for future_apply().</p></li>
+<li>Now all future_nnn() functions set a label on each future that reflects the name of the future_nnn() function and the index of the chunk, e.g. ‘future_lapply-3’. The format can be controlled by argument ‘future.label’.</li>
+</ul>
+</div>
+<div id="performance-1" class="section level3">
+<h3 class="hasAnchor">
+<a href="#performance-1" class="anchor"></a>Performance</h3>
+<ul>
+<li>The assertion of the maximum size of globals per chunk is now significantly faster for future_apply().</li>
 </ul>
 </div>
 <div id="bug-fixes-2" class="section level3">
@@ -451,11 +464,11 @@
 <h1 class="page-header" data-toc-text="0.0.2">
 <a href="#future-apply-0-0-2" class="anchor"></a>future.apply 0.0.2<small> Unreleased </small>
 </h1>
-<div id="new-features-8" class="section level3">
+<div id="performance-2" class="section level3">
 <h3 class="hasAnchor">
-<a href="#new-features-8" class="anchor"></a>New Features</h3>
+<a href="#performance-2" class="anchor"></a>Performance</h3>
 <ul>
-<li>PERFORMANCE: future_lapply(x, …) is now much faster and more memory efficient for large ‘x’ vectors because it uses internal fold() function that is more efficient (memory and speed) version of base::Reduce(f, x), especially when length(x) is large.</li>
+<li>future_lapply(x, …) is now much faster and more memory efficient for large ‘x’ vectors because it uses internal fold() function that is more efficient (memory and speed) version of base::Reduce(f, x), especially when length(x) is large.</li>
 </ul>
 </div>
 </div>
@@ -463,9 +476,9 @@
 <h1 class="page-header" data-toc-text="0.0.0-9000">
 <a href="#future-apply-0-0-0-9000" class="anchor"></a>future.apply 0.0.0-9000<small> Unreleased </small>
 </h1>
-<div id="new-features-9" class="section level3">
+<div id="new-features-8" class="section level3">
 <h3 class="hasAnchor">
-<a href="#new-features-9" class="anchor"></a>New Features</h3>
+<a href="#new-features-8" class="anchor"></a>New Features</h3>
 <ul>
 <li><p>Added future_sapply().</p></li>
 <li><p>Added future_lapply() - originally from the future package.</p></li>

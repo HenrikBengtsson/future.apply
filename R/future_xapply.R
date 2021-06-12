@@ -210,7 +210,11 @@ function(FUN, nX, chunk_args, args = NULL, MoreArgs = NULL, expr, envir, future.
   ## Check for RngFutureCondition:s when resolving futures?
   if (isFALSE(future.seed)) {
     withCallingHandlers({
-      values <- value(fs)
+      values <- local({
+        oopts <- options(future.rng.onMisuse.keepFuture = FALSE)
+        on.exit(options(oopts))
+        value(fs)
+      })
     }, RngFutureCondition = function(cond) {
       ## One of "our" futures?
       idx <- NULL

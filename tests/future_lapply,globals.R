@@ -137,11 +137,12 @@ for (strategy in supportedStrategies()) {
   fcn0 <- function(...) { lapply(1, FUN = function(x) list(...)) }
   z0 <- fcn0(a = 1)
   str(list(z0 = z0))
+  stopifnot(identical(z0, list(list(a = 1))))
   fcn <- function(...) { future_lapply(1, FUN = function(x) list(...)) }
   z1 <- fcn(a = 1)
   str(list(z1 = z1))
   stopifnot(identical(z1, z0))
-  
+stop()  
   ## https://github.com/HenrikBengtsson/future.apply/issues/47
   message("- future_lapply(X, ...) - '{ a <- a + 1; a }' ...")
   a <- 1
@@ -161,11 +162,7 @@ for (strategy in supportedStrategies()) {
     a
     a <- a + 1
   }), error = identity)
-  if (packageVersion("globals") <= "0.12.4" && strategy %in% c("multisession")) {
-    stopifnot(inherits(z2, "error"))
-  } else {
-    stopifnot(identical(z2, z0))
-  }
+  stopifnot(identical(z2, z0))
 } ## for (strategy ...)
 
 message("*** future_lapply() - tricky globals ... DONE")

@@ -148,7 +148,7 @@ future_lapply <- function(X, FUN, ..., future.stdout = TRUE, future.conditions =
   nX <- length(X)
   if (nX == 0L) return(as.list(X))
 
-  debug <- getOption("future.debug", FALSE)
+  debug <- getOption("future.apply.debug", getOption("future.debug", FALSE))
   
   if (debug) mdebugf("%s() ...", fcn_name)
 

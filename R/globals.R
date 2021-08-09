@@ -1,7 +1,8 @@
 #' @importFrom globals globalsByName
 #' @importFrom future as.FutureGlobals getGlobalsAndPackages resolve
-getGlobalsAndPackagesXApply <- function(FUN, args = NULL, MoreArgs = NULL, envir, future.globals = TRUE, future.packages = NULL, debug = getOption("future.debug", FALSE)) {
+getGlobalsAndPackagesXApply <- function(FUN, args = NULL, MoreArgs = NULL, envir, future.globals = TRUE, future.packages = NULL, debug = NA) {
   use_args <- !is.null(args)
+  if (is.na(debug)) debug <- getOption("future.apply.debug", getOption("future.debug", FALSE))
   
   packages <- NULL
   globals <- future.globals

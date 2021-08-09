@@ -54,30 +54,39 @@ hpaste <- function(..., sep = "", collapse = ", ", lastCollapse = NULL, maxHead 
   x
 } # hpaste()
 
+trim <- function(s) sub("[\t\n\f\r ]+$", "", sub("^[\t\n\f\r ]+", "", s))
+
+comma <- function(x, sep = ", ") paste(x, collapse = sep)
+
+commaq <- function(x, sep = ", ") paste(sQuote(x), collapse = sep)
+
 now <- function(x = Sys.time(), format = "[%H:%M:%OS3] ") {
   ## format(x, format = format) ## slower
   format(as.POSIXlt(x, tz = ""), format = format)
 }
 
-mdebug <- function(..., debug = getOption("future.debug", FALSE)) {
+mdebug <- function(..., debug = NA) {
+  if (is.na(debug)) debug <- getOption("future.apply.debug", getOption("future.debug", FALSE))
   if (!debug) return()
   message(now(), ...)
 }
 
-mdebugf <- function(..., appendLF = TRUE,
-                    debug = getOption("future.debug", FALSE)) {
+mdebugf <- function(..., appendLF = TRUE, debug = NA) {
+  if (is.na(debug)) debug <- getOption("future.apply.debug", getOption("future.debug", FALSE))
   if (!debug) return()
   message(now(), sprintf(...), appendLF = appendLF)
 }
 
 #' @importFrom utils capture.output
-mprint <- function(..., appendLF = TRUE, debug = getOption("future.debug", FALSE)) {
+mprint <- function(..., appendLF = TRUE, debug = NA) {
+  if (is.na(debug)) debug <- getOption("future.apply.debug", getOption("future.debug", FALSE))
   if (!debug) return()
   message(paste(now(), capture.output(print(...)), sep = "", collapse = "\n"), appendLF = appendLF)
 }
 
 #' @importFrom utils capture.output
-mstr <- function(..., appendLF = TRUE, debug = getOption("future.debug", FALSE)) {
+mstr <- function(..., appendLF = TRUE, debug = NA) {
+  if (is.na(debug)) debug <- getOption("future.apply.debug", getOption("future.debug", FALSE))
   if (!debug) return()
   message(paste(now(), capture.output(str(...)), sep = "", collapse = "\n"), appendLF = appendLF)
 }

@@ -100,8 +100,9 @@ as_lecyer_cmrg_seed <- function(seed) {
 #' @importFrom utils capture.output str
 #' 
 #' @keywords internal
-make_rng_seeds <- function(count, seed = FALSE,
-                           debug = getOption("future.debug", FALSE)) {
+make_rng_seeds <- function(count, seed = FALSE, debug = NA) {
+  if (is.na(debug)) debug <- getOption("future.apply.debug", getOption("future.debug", FALSE))
+  
   ## Don't use RNGs? (seed = {FALSE, NULL})
   if (is.null(seed)) return(NULL)
   if (is.logical(seed) && !is.na(seed) && !seed) return(NULL)

@@ -79,7 +79,7 @@ future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES 
   
   stop_if_not(is.null(MoreArgs) || is.list(MoreArgs))
 
-  debug <- getOption("future.debug", FALSE)
+  debug <- getOption("future.apply.debug", getOption("future.debug", FALSE))
   
   if (debug) mdebugf("%s() ...", fcn_name)
 

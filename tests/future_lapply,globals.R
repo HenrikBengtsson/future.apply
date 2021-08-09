@@ -1,11 +1,13 @@
 source("incl/start.R")
 library("tools") ## toTitleCase()
 
+options(future.debug = FALSE)
+options(future.apply.debug = TRUE)
+
 message("*** future_lapply() - globals ...")
 
 plan(cluster, workers = "localhost")
 
-options(future.debug = FALSE)
 a <- 1
 b <- 2
 

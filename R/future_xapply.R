@@ -137,12 +137,12 @@ function(FUN, nX, chunk_args, args = NULL, MoreArgs = NULL, expr, envir, future.
       globals_args <- gp$globals
       packages_args <- gp$packages
       gp <- NULL
-
+      
       if (debug) {
-        mdebugf("   + globals found in '%s' for chunk #%d: [%d] %s",
-	        args_name, chunk, length(globals_args), hpaste(sQuote(names(globals_args))))
-        mdebugf("   + needed namespaces for '%s' for chunk #%d: [%d] %s",
-	        args_name, chunk, length(packages_args), hpaste(sQuote(packages_args)))
+        mdebugf("   + additional globals found: [n=%d] %s",
+	        length(globals_args), commaq(names(globals_args)))
+        mdebugf("   + additional namespaces needed: [n=%d] %s",
+	        length(packages_args), commaq(packages_args))
       }
     
       ## Export also globals found in arguments?
@@ -160,6 +160,7 @@ function(FUN, nX, chunk_args, args = NULL, MoreArgs = NULL, expr, envir, future.
         if (length(packages_args) > 0L)
           packages_ii <- unique(c(packages_ii, packages_args))
       }
+      
       if (debug) mdebugf(" - Finding globals in '%s' for chunk #%d ... DONE", args_name, ii)
     }
     
@@ -196,7 +197,12 @@ function(FUN, nX, chunk_args, args = NULL, MoreArgs = NULL, expr, envir, future.
       lazy = future.lazy,
       label = labels[ii]
     )
-
+    
+    if (debug) {
+      mdebug("Created future:")
+      mprint(fs[[ii]])
+    }
+    
     ## Not needed anymore
     rm(list = c("chunk", "globals_ii"))
 

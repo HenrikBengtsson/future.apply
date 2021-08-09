@@ -10,6 +10,7 @@ future_apply(
   FUN,
   ...,
   simplify = TRUE,
+  future.envir = parent.frame(),
   future.stdout = TRUE,
   future.conditions = "condition",
   future.globals = TRUE,
@@ -34,6 +35,9 @@ dimension names.}
 
 \item{simplify}{a logical indicating whether results should be simplified
 if possible.}
+
+\item{future.envir}{An \link{environment} passed as argument \code{envir} to
+\code{\link[future:future]{future::future()}} as-is.}
 
 \item{future.stdout}{If \code{TRUE} (default), then the standard output of the
 underlying futures is captured, and re-outputted as soon as possible.

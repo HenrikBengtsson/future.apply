@@ -1,5 +1,7 @@
 #' Apply a Function to a Data Frame Split by Factors via Futures
 #'
+#' @inheritParams future_lapply
+#' 
 #' @param data An \R object, normally a data frame, possibly a matrix.
 #' 
 #' @param INDICES A factor or a list of factors, each of length `nrow(data)`.
@@ -41,13 +43,14 @@
 #'
 #' @rdname future_by
 #' @export
-future_by <- function(data, INDICES, FUN, ..., simplify = TRUE) {
+future_by <- function(data, INDICES, FUN, ..., simplify = TRUE, future.envir = parent.frame()) {
+  future.envir <- force(future.envir)
   UseMethod("future_by")
 }
 
 
 #' @export
-future_by.default <- function(data, INDICES, FUN, ..., simplify = TRUE) {
+future_by.default <- function(data, INDICES, FUN, ..., simplify = TRUE, future.envir = parent.frame()) {
   ndim <- length(dim(data))
   .SUBSETTER <- if (ndim == 0L) {
      function(row) data[row, , drop = TRUE]
@@ -60,22 +63,24 @@ future_by.default <- function(data, INDICES, FUN, ..., simplify = TRUE) {
                      simplify = simplify,
 		     .INDICES.NAME = deparse(substitute(INDICES))[1L],
 		     .CALL = match.call(),
-		     .SUBSETTER = .SUBSETTER)
+		     .SUBSETTER = .SUBSETTER,
+                     future.envir = future.envir)
 }
 
 
 #' @export
-future_by.data.frame <- function(data, INDICES, FUN, ..., simplify = TRUE) {
+future_by.data.frame <- function(data, INDICES, FUN, ..., simplify = TRUE, future.envir = parent.frame()) {
   future_by_internal(data = data, INDICES = INDICES, FUN = FUN, ...,
                      simplify = simplify,
 		     .INDICES.NAME = deparse(substitute(INDICES))[1L],
 		     .CALL = match.call(),
-		     .SUBSETTER = function(row) data[row, , drop = FALSE])
+		     .SUBSETTER = function(row) data[row, , drop = FALSE],
+                     future.envir = future.envir)
 }
 
 
 
-future_by_internal <- function(data, INDICES, FUN, ..., simplify = TRUE, .SUBSETTER, .CALL, .INDICES.NAME, future.label = "future_by-%d") {
+future_by_internal <- function(data, INDICES, FUN, ..., simplify = TRUE, .SUBSETTER, .CALL, .INDICES.NAME, future.envir = parent.frame(), future.label = "future_by-%d") {
   FUN <- if (!is.null(FUN)) match.fun(FUN)
   stop_if_not(is.function(.SUBSETTER))
 
@@ -120,7 +125,7 @@ future_by_internal <- function(data, INDICES, FUN, ..., simplify = TRUE, .SUBSET
   group <- NULL ## Not needed anymore
 
   grouped_data <- lapply(X = ans[index], FUN = .SUBSETTER)
-  ans <- future_lapply(X = grouped_data, FUN = FUN, ..., future.label = future.label)
+  ans <- future_lapply(X = grouped_data, FUN = FUN, ..., future.envir = future.envir, future.label = future.label)
   grouped_data <- NULL  ## Not needed anymore
 
   ansmat <- array({

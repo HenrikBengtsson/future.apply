@@ -12,6 +12,9 @@
 #' For `future_*apply()` functions and `replicate()`, any `future.*` arguments
 #' part of `\ldots` are passed on to `future_lapply()` used internally.
 #' 
+#' @param future.envir An [environment] passed as argument `envir` to
+#'        [future::future()] as-is.
+#'
 #' @param future.stdout If `TRUE` (default), then the standard output of the
 #'        underlying futures is captured, and re-outputted as soon as possible.
 #'        If `FALSE`, any output is silenced (by sinking it to the null device
@@ -137,7 +140,7 @@
 #'
 #' @importFrom globals findGlobals
 #' @export
-future_lapply <- function(X, FUN, ..., future.stdout = TRUE, future.conditions = "condition", future.globals = TRUE, future.packages = NULL, future.lazy = FALSE, future.seed = FALSE, future.scheduling = 1.0, future.chunk.size = NULL, future.label = "future_lapply-%d") {
+future_lapply <- function(X, FUN, ..., future.envir = parent.frame(), future.stdout = TRUE, future.conditions = "condition", future.globals = TRUE, future.packages = NULL, future.lazy = FALSE, future.seed = FALSE, future.scheduling = 1.0, future.chunk.size = NULL, future.label = "future_lapply-%d") {
   fcn_name <- "future_lapply"
   args_name <- "X"
 
@@ -157,9 +160,7 @@ future_lapply <- function(X, FUN, ..., future.stdout = TRUE, future.conditions =
   ## to do this, because we need to have globalsOf() to search for globals
   ## from the current environment in order to identify the globals of 
   ## arguments 'FUN' and '...'. /HB 2017-03-10
-  future.envir <- environment()  ## Not used; just to clarify the above.
-  
-  envir <- future.envir
+  envir <- environment()
   
   ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   ## Future expression
@@ -204,6 +205,7 @@ future_lapply <- function(X, FUN, ..., future.stdout = TRUE, future.conditions =
     get_chunk = `[`,
     expr = expr,
     envir = envir,
+    future.envir = future.envir,
     future.globals = future.globals,
     future.packages = future.packages,
     future.scheduling = future.scheduling,

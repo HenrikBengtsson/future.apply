@@ -14,7 +14,7 @@ globals_set <- list(
   A = FALSE,
   B = TRUE,
   C = c("a", "b"),
-  D = list(a = 2, b = 3)
+  D = list(a = 1, b = 2)
 )
 
 x <- list(1)
@@ -22,16 +22,29 @@ x <- list(1)
 for (name in names(globals_set)) {
   globals <- globals_set[[name]]
   message("Globals set ", sQuote(name))
-  y_truth <- tryCatch({
-    mapply(function(x) median(c(x, a, b)), x)
-  }, error = identity)
+  str(globals)
   
-  y <- tryCatch({
-    future_mapply(function(x) median(c(x, a, b)), x,
-                  future.globals = globals, future.packages = "utils")
+  y_truth <- tryCatch({
+    mapply(function(x) {
+      median(c(x, a, b))
+    }, x)
   }, error = identity)
-  print(y)
-  stopifnot(identical(y, y_truth))
+
+  y1 <- tryCatch({
+    future_mapply(function(x) {
+      median(c(x, a, b))
+    }, x)
+  }, error = identity)
+  print(y1)
+  stopifnot(identical(y1, y_truth))
+
+  y2 <- tryCatch({
+    future_mapply(function(x) {
+      median(c(x, a, b))
+    }, x, future.globals = globals, future.packages = "utils")
+  }, error = identity)
+  print(y2)
+  stopifnot(identical(y2, y_truth))
 }
 
 message("*** future_mapply() - globals ... DONE")

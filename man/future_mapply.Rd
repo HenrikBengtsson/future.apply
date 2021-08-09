@@ -6,7 +6,12 @@
 \alias{future_.mapply}
 \title{Apply a Function to Multiple List or Vector Arguments}
 \usage{
-future_Map(f, ..., future.label = "future_Map-\%d")
+future_Map(
+  f,
+  ...,
+  future.envir = parent.frame(),
+  future.label = "future_Map-\%d"
+)
 
 future_mapply(
   FUN,
@@ -14,6 +19,7 @@ future_mapply(
   MoreArgs = NULL,
   SIMPLIFY = TRUE,
   USE.NAMES = TRUE,
+  future.envir = parent.frame(),
   future.stdout = TRUE,
   future.conditions = "condition",
   future.globals = TRUE,
@@ -30,6 +36,9 @@ future_.mapply(FUN, dots, MoreArgs, ..., future.label = "future_.mapply-\%d")
 \arguments{
 \item{f}{A function of the arity \eqn{k} if \code{future_Map()} is called with
 \eqn{k} arguments.}
+
+\item{future.envir}{An \link{environment} passed as argument \code{envir} to
+\code{\link[future:future]{future::future()}} as-is.}
 
 \item{future.label}{If a character string, then each future is assigned
 a label \code{sprintf(future.label, chunk_idx)}.  If TRUE, then the

@@ -12,9 +12,9 @@
 #'
 #' @rdname future_lapply
 #' @export
-future_eapply <- function(env, FUN, ..., all.names = FALSE, USE.NAMES = TRUE, future.label = "future_eapply-%d") {
+future_eapply <- function(env, FUN, ..., all.names = FALSE, USE.NAMES = TRUE, future.envir = parent.frame(), future.label = "future_eapply-%d") {
   names <- ls(envir = env, all.names = all.names, sorted = FALSE)
   X <- mget(names, envir = env, inherits = FALSE)
   if (!USE.NAMES) names(X) <- NULL
-  future_lapply(X = X, FUN = FUN, ..., future.label = future.label)
+  future_lapply(X = X, FUN = FUN, ..., future.envir = future.envir, future.label = future.label)
 }

@@ -41,6 +41,16 @@ for (strategy in supportedStrategies()) {
       }
     }
   }
+
+  ## https://github.com/HenrikBengtsson/future.apply/issues/61
+  compute <- function(a, x_vec) a + x_vec
+  call_compute <- function(..., x_vec = 1:2){
+    compute_with_dots <- function(x) compute(..., x_vec = x)
+    future_sapply(x_vec, FUN = compute_with_dots)
+  }
+  y <- call_compute(0L)
+  print(y)
+  stopifnot(identical(y, 1:2))
   
   plan(sequential)
   message(sprintf("*** strategy = %s ... done", sQuote(strategy)))

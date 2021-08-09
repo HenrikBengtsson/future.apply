@@ -19,7 +19,7 @@ jobs:
           - {os: macOS-latest,   r: 'devel'   }
           - {os: macOS-latest,   r: 'release' }
           - {os: ubuntu-20.04,   r: 'release', rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest" }
-          - {os: ubuntu-20.04,   r: 'release', rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest", future_plan: "multisession", label: "w/ multisession" }
+          - {os: ubuntu-20.04,   r: 'release', rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest", future_plan: 'multisession', label: 'w/ multisession' }
           - {os: ubuntu-20.04,   r: 'oldrel',  rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest" }
           - {os: ubuntu-20.04,   r: '3.5',     rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest" }
           - {os: ubuntu-20.04,   r: '3.4',     rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest" }
@@ -36,7 +36,7 @@ jobs:
       _R_CHECK_CRAN_INCOMING_: false
       ## Specific to futures
       R_FUTURE_RNG_ONMISUSE: error
-      R_FUTURE_PLAN: {{ matrix.config.future_plan }}
+      R_FUTURE_PLAN: ${{ matrix.config.future_plan }}
 
     steps:
       - uses: actions/checkout@v2

@@ -59,4 +59,5 @@ Rplots.pdf$
 ^.ghi
 ^.issues
 ^.local
-
+^docs
+^pkgdown

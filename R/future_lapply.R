@@ -135,6 +135,7 @@
 #'
 #' @keywords manip programming iteration
 #'
+#' @importFrom globals findGlobals
 #' @export
 future_lapply <- function(X, FUN, ..., future.stdout = TRUE, future.conditions = "condition", future.globals = TRUE, future.packages = NULL, future.lazy = FALSE, future.seed = FALSE, future.scheduling = 1.0, future.chunk.size = NULL, future.label = "future_lapply-%d") {
   fcn_name <- "future_lapply"
@@ -164,25 +165,32 @@ future_lapply <- function(X, FUN, ..., future.stdout = TRUE, future.conditions =
   ## Future expression
   ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   ...future.FUN <- NULL ## To please R CMD check
+
+  ## Does FUN() rely on '...' being a global?
+  global_dotdotdot <- ("..." %in% findGlobals(FUN, dotdotdot = "return"))
+  if (global_dotdotdot) {
+    expr_FUN <- quote(...future.FUN(...future.X_jj))
+  } else {
+    expr_FUN <- quote(...future.FUN(...future.X_jj, ...))
+  }
   
-    ## Set .Random.seed?
+  ## Set .Random.seed?
   if (is.null(future.seed) || isFALSE(future.seed) || isNA(future.seed)) {
-    expr <- quote({
+    expr <- bquote({
       lapply(seq_along(...future.elements_ii), FUN = function(jj) {
          ...future.X_jj <- ...future.elements_ii[[jj]]
-         ...future.FUN(...future.X_jj, ...)
+         .(expr_FUN)
       })
     })
   } else {
-    expr <- quote({
+    expr <- bquote({
       lapply(seq_along(...future.elements_ii), FUN = function(jj) {
          ...future.X_jj <- ...future.elements_ii[[jj]]
          assign(".Random.seed", ...future.seeds_ii[[jj]], envir = globalenv(), inherits = FALSE)
-         ...future.FUN(...future.X_jj, ...)
+         .(expr_FUN)
       })
     })
   }
-
 
 
   ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

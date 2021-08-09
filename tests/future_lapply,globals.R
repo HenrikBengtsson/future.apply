@@ -142,7 +142,7 @@ for (strategy in supportedStrategies()) {
   z1 <- fcn(a = 1)
   str(list(z1 = z1))
   stopifnot(identical(z1, z0))
-stop()  
+
   ## https://github.com/HenrikBengtsson/future.apply/issues/47
   message("- future_lapply(X, ...) - '{ a <- a + 1; a }' ...")
   a <- 1

@@ -97,6 +97,7 @@ future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES 
   ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   ...future.FUN <- NULL ## To please R CMD check
   
+  ## Set .Random.seed?
   if (is.null(future.seed) || isFALSE(future.seed) || isNA(future.seed)) {
      expr <- quote({
        args <- c(list(FUN = ...future.FUN), ...future.elements_ii, MoreArgs = list(MoreArgs), SIMPLIFY = FALSE, USE.NAMES = FALSE)

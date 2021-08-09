@@ -7,8 +7,8 @@ environment:
   _R_CHECK_FORCE_SUGGESTS_: false
   
   matrix:
-  - R_VERSION: devel
-    R_ARCH: x64
+#  - R_VERSION: devel
+#    R_ARCH: x64
 
   - R_VERSION: release
     R_ARCH: x64

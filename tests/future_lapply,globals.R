@@ -165,6 +165,18 @@ for (strategy in supportedStrategies()) {
     a <- a + 1
   }), error = identity)
   stopifnot(identical(z2, z0))
+
+  ## https://github.com/HenrikBengtsson/future.apply/issues/85
+  message("- future_lapply(..., future.globals = <list>) ...")
+  a <- 0
+  y <- future_lapply(1, FUN = function(x) a, future.globals = list(a = 42))
+  str(y)
+  if (packageVersion("future") <= "1.21.0" &&
+      strategy %in% c("sequential", "multicore")) {
+    stopifnot(y[[1]] == 0)
+  } else {
+    stopifnot(y[[1]] == 42)
+  }
 } ## for (strategy ...)
 
 message("*** future_lapply() - tricky globals ... DONE")

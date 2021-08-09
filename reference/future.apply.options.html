@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Create Chunks of Index Vectors — makeChunks • future.apply</title>
+<title>Options used for future.apply — future.apply.options • future.apply</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -52,8 +52,13 @@
 
 
 
-<meta property="og:title" content="Create Chunks of Index Vectors — makeChunks" />
-<meta property="og:description" content="This is an internal function." />
+<meta property="og:title" content="Options used for future.apply — future.apply.options" />
+<meta property="og:description" content="Below are the R options and environment variables that are used by the
+future.apply package and packages enhancing it.
+
+WARNING: Note that the names and the default values of these options may
+change in future versions of the package.  Please use with care until
+further notice." />
 
 
 
@@ -215,71 +220,52 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Create Chunks of Index Vectors</h1>
-    <small class="dont-index">Source: <a href='https://github.com/HenrikBengtsson/future.apply/blob/master/R/makeChunks.R'><code>R/makeChunks.R</code></a></small>
-    <div class="hidden name"><code>makeChunks.Rd</code></div>
+    <h1>Options used for future.apply</h1>
+    <small class="dont-index">Source: <a href='https://github.com/HenrikBengtsson/future.apply/blob/master/R/options.R'><code>R/options.R</code></a></small>
+    <div class="hidden name"><code>future.apply.options.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p><em>This is an internal function.</em></p>
+    <p>Below are the <span style="R">R</span> options and environment variables that are used by the
+<span class="pkg">future.apply</span> package and packages enhancing it.<br />
+<br />
+<em>WARNING: Note that the names and the default values of these options may
+change in future versions of the package.  Please use with care until
+further notice.</em></p>
     </div>
 
-    <pre class="usage"><span class='fu'>makeChunks</span><span class='op'>(</span>
-  <span class='va'>nbrOfElements</span>,
-  <span class='va'>nbrOfWorkers</span>,
-  future.scheduling <span class='op'>=</span> <span class='fl'>1</span>,
-  future.chunk.size <span class='op'>=</span> <span class='cn'>NULL</span>
-<span class='op'>)</span></pre>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>nbrOfElements</th>
-      <td><p>(integer) Total number of elements to iterate over.</p></td>
-    </tr>
-    <tr>
-      <th>nbrOfWorkers</th>
-      <td><p>(integer) Number of workers available.</p></td>
-    </tr>
-    <tr>
-      <th>future.scheduling</th>
-      <td><p>(numeric) A strictly positive scalar.
-Only used if argument <code>future.chunk.size</code> is <code>NULL</code>.</p></td>
-    </tr>
-    <tr>
-      <th>future.chunk.size</th>
-      <td><p>(numeric) The maximum number of elements per
-chunk, or <code>NULL</code>.  If <code>NULL</code>, then the chunk sizes are given by the
-<code>future.scheduling</code> argument.</p></td>
-    </tr>
-    </table>
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>A list of chunks, where each chunk is an integer vector of
-unique indices <code>[1, nbrOfElements]</code>.  The union of all chunks
-holds <code>nbrOfElements</code> elements and equals <code>1:nbrOfElements</code>.
-If <code>nbrOfElements == 0</code>, then an empty list is returned.</p>
-    <h2 class="hasAnchor" id="control-processing-order-of-elements"><a class="anchor" href="#control-processing-order-of-elements"></a>Control processing order of elements</h2>
+    <p>For settings specific to the <span class="pkg">future</span> package, see
+<a href='https://rdrr.io/pkg/future/man/future.options.html'>future::future.options</a> page.</p>
+    <h2 class="hasAnchor" id="options-for-debugging-future-apply"><a class="anchor" href="#options-for-debugging-future-apply"></a>Options for debugging future.apply</h2>
 
     
 
-<p>Attribute <code>ordering</code> of <code>future.chunk.size</code> or <code>future.scheduling</code> can
-be used to control the ordering the elements are iterated over, which
-only affects the processing order <em>not</em> the order values are returned.
-This attribute can take the following values:</p><ul>
-<li><p>index vector - an numeric vector of length <code>nbrOfElements</code> specifying
-how elements are remapped</p></li>
-<li><p>function     - an function taking one argument which is called as
-<code>ordering(nbrOfElements)</code> and which must return an
-index vector of length <code>nbrOfElements</code>, e.g.
-<code>function(n) rev(seq_len(n))</code> for reverse ordering.</p></li>
-<li><p><code>"random"</code>   - this will randomize the ordering via random index
-vector <code><a href='https://rdrr.io/r/base/sample.html'>sample.int(nbrOfElements)</a></code>.</p></li>
-</ul>
+<dl>
+<dt><span class="option">future.apply.debug</span>:</dt><dd><p>(logical) If <code>TRUE</code>, extensive debug messages are generated. (Default: <code>FALSE</code>)</p></dd>
 
+</dl>
 
+    <h2 class="hasAnchor" id="environment-variables-that-set-r-options"><a class="anchor" href="#environment-variables-that-set-r-options"></a>Environment variables that set R options</h2>
+
+    
+
+<p>All of the above <span style="R">R</span> <span class="option">future.apply.*</span> options can be set by
+corresponding environment variable <code class="env">R_FUTURE_APPLY_*</code> <em>when the
+<span class="pkg">future.apply</span> package is loaded</em>.
+For example, if <code>R_FUTURE_APPLY_DEBUG = "TRUE"</code>, then option
+<span class="option">future.apply.debug</span> is set to <code>TRUE</code> (logical).</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>To set <span style="R">R</span> options or environment variables when <span style="R">R</span> starts (even before the <span class="pkg">future</span> package is loaded), see the <a href='https://rdrr.io/r/base/Startup.html'>Startup</a> help page.  The <a href='https://cran.r-project.org/package=startup'><span class="pkg">startup</span></a> package provides a friendly mechanism for configurating <span style="R">R</span>'s startup process.</p></div>
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span><span class='op'>(</span>future.apply.debug <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

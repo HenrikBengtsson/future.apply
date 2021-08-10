@@ -1,8 +1,20 @@
-# CRAN submission future.apply 1.7.0
+# CRAN submission future.apply 1.8.1
 
-on 2021-01-04
+on 2021-08-10
 
-I've verified that this submission does not cause issues for the 57 reverse package dependency available on CRAN and Bioconductor.
+Second submission:
+
+This is a resubmission that fixes the following on note on Debian CRAN incoming:
+
+Problems when formatting CITATION entries:
+    partial match of 'note' to 'notes'
+
+Thanks
+
+
+First submission:
+
+I've verified this submission has no negative impact on any of the 82 reverse package dependencies available on CRAN (n=79) and Bioconductor (n=3).
 
 Thanks in advance
 
@@ -13,13 +25,13 @@ Thanks in advance
 
 The package has been verified using `R CMD check --as-cran` on:
 
-| R version          | GitHub Actions | Travis CI | AppVeyor CI | Rhub      | Win-builder | Other  |
-| ------------------ | -------------- | --------- | ----------- | --------- | ----------- | ------ |
-| 3.3.3              | L              |           |             |           |             |        |
-| 3.4.4              | L              |           |             |           |             |        |
-| 3.5.3              | L              |           |             |           |             |        |
-| 3.6.3              | L, M           | L, M      | W           | L         |             |        |
-| 4.0.{0,1,2}        | L              | L, M      | W           |    S      | W           |        |
-| devel              |    M           | L         | W (32 & 64) | L     W   | W           |        |
+| R version | GitHub | R-hub   | AppVeyor | win-builder |
+| --------- | ------ | ------- | -------- | ----------- |
+| 3.3.x     | L      |         |          |             |
+| 3.4.x     | L      |         |          |             |
+| 3.5.x     | L      |         |          |             |
+| 4.0.x     | L M    |         |          |             |
+| 4.1.x     | L M W  | L S M   | W        | W           |
+| devel     |   M    | L     W |          | W           |
 
-*Legend: OS: L = Linux, S = Solaris, M = macOS, W = Windows.  Architecture: 32 = 32-bit, 64 = 64-bit*
+_Legend: L = Linux, S = Solaris, M = macOS, W = Windows_

@@ -1,11 +1,13 @@
 source("incl/start.R")
 library("tools") ## toTitleCase()
 
+options(future.debug = FALSE)
+options(future.apply.debug = TRUE)
+
 message("*** future_lapply() - globals ...")
 
 plan(cluster, workers = "localhost")
 
-options(future.debug = FALSE)
 a <- 1
 b <- 2
 
@@ -137,11 +139,12 @@ for (strategy in supportedStrategies()) {
   fcn0 <- function(...) { lapply(1, FUN = function(x) list(...)) }
   z0 <- fcn0(a = 1)
   str(list(z0 = z0))
+  stopifnot(identical(z0, list(list(a = 1))))
   fcn <- function(...) { future_lapply(1, FUN = function(x) list(...)) }
   z1 <- fcn(a = 1)
   str(list(z1 = z1))
   stopifnot(identical(z1, z0))
-  
+
   ## https://github.com/HenrikBengtsson/future.apply/issues/47
   message("- future_lapply(X, ...) - '{ a <- a + 1; a }' ...")
   a <- 1
@@ -161,10 +164,18 @@ for (strategy in supportedStrategies()) {
     a
     a <- a + 1
   }), error = identity)
-  if (packageVersion("globals") <= "0.12.4" && strategy %in% c("multisession")) {
-    stopifnot(inherits(z2, "error"))
+  stopifnot(identical(z2, z0))
+
+  ## https://github.com/HenrikBengtsson/future.apply/issues/85
+  message("- future_lapply(..., future.globals = <list>) ...")
+  a <- 0
+  y <- future_lapply(1, FUN = function(x) a, future.globals = list(a = 42))
+  str(y)
+  if (packageVersion("future") <= "1.21.0" &&
+      strategy %in% c("sequential", "multicore")) {
+    stopifnot(y[[1]] == 0)
   } else {
-    stopifnot(identical(z2, z0))
+    stopifnot(y[[1]] == 42)
   }
 } ## for (strategy ...)
 

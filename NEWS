@@ -1,6 +1,35 @@
 Package: future.apply
 =====================
 
+Version: 1.8.1 [2021-08-09]
+
+BUG FIX:
+
+ * citEntry() in CITATION used argument 'notes' instead of 'note'.
+ 
+
+Version: 1.8.0 [2021-08-09]
+
+NEW FEATURES:
+
+ * Add argument 'future.envir' to all future_nnn() functions, which is passed
+   as argument 'envir' to future().
+
+ * Add option 'future.apply.debug' for debugging features specific to this
+   package.  It defaults to option 'future.debug'.
+ 
+PERFORMANCE:
+
+ * Internal getGlobalsAndPackagesXApply() now avoids calculating the object
+   size of '...' arguments if option 'future.globals.maxSize' is +Inf.
+
+BUG FIX:
+
+ * f <- function(...) future_lapply(X, function(x) list(...)); f(a=1) would
+   produce an error on 'unused argument (a = 1)" with the upcoming release
+   of future 1.22.0.
+ 
+
 Version: 1.7.0 [2021-01-02]
 
 NEW FEATURES:
@@ -49,8 +78,10 @@ NEW FEATURES:
    name of the future_nnn() function and the index of the chunk, e.g.
    'future_lapply-3'. The format can be controlled by argument 'future.label'.
 
- * PERFORMANCE: The assertion of the maximum size of globals per chunk is now
-   significantly faster for future_apply().
+PERFORMANCE:
+
+ * The assertion of the maximum size of globals per chunk is now significantly
+   faster for future_apply().
 
 BUG FIXES:
 
@@ -194,12 +225,12 @@ SOFTWARE QUALITY:
 
 Version: 0.0.2 [2017-12-06]
 
-NEW FEATURES:
+PERFORMANCE:
 
- * PERFORMANCE: future_lapply(x, ...) is now much faster and more memory
-   efficient for large 'x' vectors because it uses internal fold() function
-   that is more efficient (memory and speed) version of base::Reduce(f, x),
-   especially when length(x) is large.
+ * future_lapply(x, ...) is now much faster and more memory efficient for
+   large 'x' vectors because it uses internal fold() function that is more
+   efficient (memory and speed) version of base::Reduce(f, x), especially
+   when length(x) is large.
 
 
 Version: 0.0.0-9000 [2017-08-31]

@@ -42,7 +42,7 @@
 #' @keywords manip programming iteration
 #'
 #' @export
-future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES = TRUE, future.stdout = TRUE, future.conditions = "condition", future.globals = TRUE, future.packages = NULL, future.lazy = FALSE, future.seed = FALSE, future.scheduling = 1.0, future.chunk.size = NULL, future.label = "future_mapply-%d") {
+future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES = TRUE, future.envir = parent.frame(), future.stdout = TRUE, future.conditions = "condition", future.globals = TRUE, future.packages = NULL, future.lazy = FALSE, future.seed = FALSE, future.scheduling = 1.0, future.chunk.size = NULL, future.label = "future_mapply-%d") {
   fcn_name <- "future_mapply"
   args_name <- "..."
   
@@ -79,7 +79,7 @@ future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES 
   
   stop_if_not(is.null(MoreArgs) || is.list(MoreArgs))
 
-  debug <- getOption("future.debug", FALSE)
+  debug <- getOption("future.apply.debug", getOption("future.debug", FALSE))
   
   if (debug) mdebugf("%s() ...", fcn_name)
 
@@ -88,22 +88,22 @@ future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES 
   ## to do this, because we need to have globalsOf() to search for globals
   ## from the current environment in order to identify the globals of 
   ## arguments 'FUN' and '...'. /HB 2017-03-10
-  future.envir <- environment()  ## Not used; just to clarify the above.
-  
   envir <- future.envir
+  envir <- environment()
   
   ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   ## Future expression
   ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   ...future.FUN <- NULL ## To please R CMD check
   
+  ## Set .Random.seed?
   if (is.null(future.seed) || isFALSE(future.seed) || isNA(future.seed)) {
-     expr <- bquote({
+     expr <- quote({
        args <- c(list(FUN = ...future.FUN), ...future.elements_ii, MoreArgs = list(MoreArgs), SIMPLIFY = FALSE, USE.NAMES = FALSE)
        do.call(mapply, args = args)
      })
   } else {
-    expr <- bquote({
+    expr <- quote({
       ...future.FUN2 <- function(..., ...future.seeds_ii_jj) {
         assign(".Random.seed", ...future.seeds_ii_jj, envir = globalenv(), inherits = FALSE)
         ...future.FUN(...)
@@ -125,6 +125,7 @@ future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES 
     get_chunk = function(X, chunk) lapply(X, FUN = `[`, chunk),
     expr = expr,
     envir = envir,
+    future.envir = future.envir,
     future.globals = future.globals,
     future.packages = future.packages,
     future.scheduling = future.scheduling,

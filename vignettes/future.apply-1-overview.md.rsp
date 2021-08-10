@@ -180,6 +180,3 @@ The API and identity of the future.apply package will be kept close to the `*app
 [future.callr]: https://cran.r-project.org/package=future.callr
 [furrr]: https://cran.r-project.org/package=furrr
 [plyr]: https://cran.r-project.org/package=plyr
-
----
-Copyright Henrik Bengtsson, 2017-2020

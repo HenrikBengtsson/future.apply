@@ -8,6 +8,7 @@
 ^OVERVIEW[.]md$
 ^README[.]md$
 ^CONDUCT[.]md$
+^CONTRIBUTING[.]md$
 
 #----------------------------
 # devtools
@@ -56,4 +57,6 @@ Rplots.pdf$
 ^.ghi
 ^.issues
 ^.local
-
+^docs
+^pkgdown
+[.]Rdump

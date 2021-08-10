@@ -17,6 +17,7 @@ future_eapply(
   ...,
   all.names = FALSE,
   USE.NAMES = TRUE,
+  future.envir = parent.frame(),
   future.label = "future_eapply-\%d"
 )
 
@@ -24,6 +25,7 @@ future_lapply(
   X,
   FUN,
   ...,
+  future.envir = parent.frame(),
   future.stdout = TRUE,
   future.conditions = "condition",
   future.globals = TRUE,
@@ -41,6 +43,7 @@ future_replicate(
   simplify = "array",
   future.seed = TRUE,
   ...,
+  future.envir = parent.frame(),
   future.label = "future_replicate-\%d"
 )
 
@@ -50,6 +53,7 @@ future_sapply(
   ...,
   simplify = TRUE,
   USE.NAMES = TRUE,
+  future.envir = parent.frame(),
   future.label = "future_sapply-\%d"
 )
 
@@ -60,6 +64,7 @@ future_tapply(
   ...,
   default = NA,
   simplify = TRUE,
+  future.envir = parent.frame(),
   future.label = "future_tapply-\%d"
 )
 
@@ -69,6 +74,7 @@ future_vapply(
   FUN.VALUE,
   ...,
   USE.NAMES = TRUE,
+  future.envir = parent.frame(),
   future.label = "future_vapply-\%d"
 )
 }
@@ -82,6 +88,9 @@ that start with a period (\code{.}), otherwise not.
 See \code{\link[base:eapply]{base::eapply()}} for details.}
 
 \item{USE.NAMES}{See \code{\link[base:lapply]{base::sapply()}}.}
+
+\item{future.envir}{An \link{environment} passed as argument \code{envir} to
+\code{\link[future:future]{future::future()}} as-is.}
 
 \item{future.label}{If a character string, then each future is assigned
 a label \code{sprintf(future.label, chunk_idx)}.  If TRUE, then the
@@ -248,7 +257,7 @@ This attribute can take the following values:
 \itemize{
 \item index vector - an numeric vector of length \code{length(X)}
 \item function     - an function taking one argument which is called as
-\code{ordering(length(X))} and which much return an
+\code{ordering(length(X))} and which must return an
 index vector of length \code{length(X)}, e.g.
 \code{function(n) rev(seq_len(n))} for reverse ordering.
 \item \code{"random"}   - this will randomize the ordering via random index

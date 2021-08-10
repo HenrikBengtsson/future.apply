@@ -36,8 +36,8 @@
 #'
 #' @importFrom future nbrOfWorkers
 #' @export
-future_apply <- function(X, MARGIN, FUN, ..., simplify = TRUE, future.stdout = TRUE, future.conditions = "condition", future.globals = TRUE, future.packages = NULL, future.lazy = FALSE, future.seed = FALSE, future.scheduling = 1.0, future.chunk.size = NULL, future.label = "future_apply-%d") {
-    debug <- getOption("future.debug", FALSE)
+future_apply <- function(X, MARGIN, FUN, ..., simplify = TRUE, future.envir = parent.frame(), future.stdout = TRUE, future.conditions = "condition", future.globals = TRUE, future.packages = NULL, future.lazy = FALSE, future.seed = FALSE, future.scheduling = 1.0, future.chunk.size = NULL, future.label = "future_apply-%d") {
+    debug <- getOption("future.apply.debug", getOption("future.debug", FALSE))
 
     FUN <- match.fun(FUN)
     simplify <- isTRUE(simplify)
@@ -137,6 +137,7 @@ future_apply <- function(X, MARGIN, FUN, ..., simplify = TRUE, future.stdout = T
       X = newX,
       FUN = FUN,
       ...,
+      future.envir = future.envir,
       future.stdout = future.stdout,
       future.conditions = future.conditions,
       future.lazy = future.lazy,

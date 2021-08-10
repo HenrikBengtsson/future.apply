@@ -54,30 +54,39 @@ hpaste <- function(..., sep = "", collapse = ", ", lastCollapse = NULL, maxHead 
   x
 } # hpaste()
 
+trim <- function(s) sub("[\t\n\f\r ]+$", "", sub("^[\t\n\f\r ]+", "", s))
+
+comma <- function(x, sep = ", ") paste(x, collapse = sep)
+
+commaq <- function(x, sep = ", ") paste(sQuote(x), collapse = sep)
+
 now <- function(x = Sys.time(), format = "[%H:%M:%OS3] ") {
   ## format(x, format = format) ## slower
   format(as.POSIXlt(x, tz = ""), format = format)
 }
 
-mdebug <- function(..., debug = getOption("future.debug", FALSE)) {
+mdebug <- function(..., debug = NA) {
+  if (is.na(debug)) debug <- getOption("future.apply.debug", getOption("future.debug", FALSE))
   if (!debug) return()
   message(now(), ...)
 }
 
-mdebugf <- function(..., appendLF = TRUE,
-                    debug = getOption("future.debug", FALSE)) {
+mdebugf <- function(..., appendLF = TRUE, debug = NA) {
+  if (is.na(debug)) debug <- getOption("future.apply.debug", getOption("future.debug", FALSE))
   if (!debug) return()
   message(now(), sprintf(...), appendLF = appendLF)
 }
 
 #' @importFrom utils capture.output
-mprint <- function(..., appendLF = TRUE, debug = getOption("future.debug", FALSE)) {
+mprint <- function(..., appendLF = TRUE, debug = NA) {
+  if (is.na(debug)) debug <- getOption("future.apply.debug", getOption("future.debug", FALSE))
   if (!debug) return()
   message(paste(now(), capture.output(print(...)), sep = "", collapse = "\n"), appendLF = appendLF)
 }
 
 #' @importFrom utils capture.output
-mstr <- function(..., appendLF = TRUE, debug = getOption("future.debug", FALSE)) {
+mstr <- function(..., appendLF = TRUE, debug = NA) {
+  if (is.na(debug)) debug <- getOption("future.apply.debug", getOption("future.debug", FALSE))
   if (!debug) return()
   message(paste(now(), capture.output(str(...)), sep = "", collapse = "\n"), appendLF = appendLF)
 }
@@ -92,21 +101,6 @@ getOption <- local({
     if (missing(default) || match(x, table = names(.Options), nomatch = 0L) > 0L) go(x) else default
   }
 }) ## getOption()
-
-import_from <- function(name, default = NULL, package) {
-  ns <- getNamespace(package)
-  if (exists(name, mode = "function", envir = ns, inherits = FALSE)) {
-    get(name, mode = "function", envir = ns, inherits = FALSE)
-  } else if (!is.null(default)) {
-    default
-  } else {
-    stop(sprintf("No such '%s' function: %s()", package, name))
-  }
-}
-
-import_future <- function(name, default = NULL) {
-  import_from(name, default = default, package = "future")
-}
 
 #' @importFrom future FutureError
 #' @importFrom utils capture.output head str

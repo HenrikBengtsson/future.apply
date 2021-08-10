@@ -4,7 +4,14 @@
 \alias{future_by}
 \title{Apply a Function to a Data Frame Split by Factors via Futures}
 \usage{
-future_by(data, INDICES, FUN, ..., simplify = TRUE)
+future_by(
+  data,
+  INDICES,
+  FUN,
+  ...,
+  simplify = TRUE,
+  future.envir = parent.frame()
+)
 }
 \arguments{
 \item{data}{An \R object, normally a data frame, possibly a matrix.}
@@ -14,6 +21,9 @@ future_by(data, INDICES, FUN, ..., simplify = TRUE)
 \item{FUN}{a function to be applied to (usually data-frame) subsets of \code{data}.}
 
 \item{simplify}{logical: see \link[base:tapply]{base::tapply}.}
+
+\item{future.envir}{An \link{environment} passed as argument \code{envir} to
+\code{\link[future:future]{future::future()}} as-is.}
 
 \item{\ldots}{Additional arguments pass to \code{\link[=future_lapply]{future_lapply()}} and
 then to \code{FUN()}.}

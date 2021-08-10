@@ -1,15 +1,21 @@
 #' @importFrom globals globalsByName
 #' @importFrom future as.FutureGlobals getGlobalsAndPackages resolve
-getGlobalsAndPackagesXApply <- function(FUN, args = NULL, MoreArgs = NULL, envir, future.globals = TRUE, future.packages = NULL, debug = getOption("future.debug", FALSE)) {
+getGlobalsAndPackagesXApply <- function(FUN, args = NULL, MoreArgs = NULL, envir, future.globals = TRUE, future.packages = NULL, debug = NA) {
   use_args <- !is.null(args)
-  
+  if (is.na(debug)) debug <- getOption("future.apply.debug", getOption("future.debug", FALSE))
+
+  if (debug) {
+    mdebug("getGlobalsAndPackagesXApply() ...")
+    on.exit(mdebug("getGlobalsAndPackagesXApply() ... DONE"), add = TRUE)
+  }
+
   packages <- NULL
   globals <- future.globals
   scanForGlobals <- FALSE
   if (is.logical(globals)) {
+    if (debug) mdebugf(" - future.globals: %s", globals)
     ## Gather all globals?
     if (globals) {
-      if (debug) mdebug("Finding globals ...")
       scanForGlobals <- TRUE
       expr <- do.call(call, args = c(list("FUN"),
                                      if (use_args) args else MoreArgs))
@@ -24,15 +30,17 @@ getGlobalsAndPackagesXApply <- function(FUN, args = NULL, MoreArgs = NULL, envir
     gp <- NULL
       
     if (debug) {
-      mdebugf(" - globals found/used: [%d] %s", length(globals), hpaste(sQuote(names(globals))))
-      mdebugf(" - needed namespaces: [%d] %s", length(packages), hpaste(sQuote(packages)))
+      mdebugf(" - globals found/used: [n=%d] %s", length(globals), commaq(names(globals)))
+      mdebugf(" - needed namespaces: [n=%d] %s", length(packages), commaq(packages))
       mdebug("Finding globals ... DONE")
     }
   } else if (is.character(globals)) {
+    if (debug) mdebugf(" - future.globals: %s", commaq(globals))
     globals <- unique(c(globals, "FUN", if (use_args) "..." else "MoreArgs"))
     globals <- globalsByName(globals, envir = envir, mustExist = FALSE)
   } else if (is.list(globals)) {
     names <- names(globals)
+    if (debug) mdebugf(" - future.globals: <name-value list> with names %s", commaq(globals))
     if (length(globals) > 0 && is.null(names)) {
       stop("Invalid argument 'future.globals'. All globals must be named.")
     }
@@ -48,14 +56,25 @@ getGlobalsAndPackagesXApply <- function(FUN, args = NULL, MoreArgs = NULL, envir
   }
   
   if (use_args) {
+    if (debug) mdebug(" - use_args: TRUE")
     if (!is.element("...", names)) {
-      objectSize <- import_future("objectSize")
-      if (debug) mdebug("Getting '...' globals ...")
+      if (debug) mdebug(" - Getting '...' globals ...")
       dotdotdot <- globalsByName("...", envir = envir, mustExist = TRUE)
       dotdotdot <- as.FutureGlobals(dotdotdot)
       dotdotdot <- resolve(dotdotdot)
-      attr(dotdotdot, "total_size") <- objectSize(dotdotdot)
-      if (debug) mdebug("Getting '...' globals ... DONE")
+      if (debug) {
+        mdebugf("   - '...' content: [n=%d] %s", length(dotdotdot[[1]]), commaq(names(dotdotdot[[1]])))
+        mstr(dotdotdot)
+      }
+
+      ## Recalculate the total size?
+      maxSize <- getOption("future.globals.maxSize")
+      if (is.null(maxSize) || is.finite(maxSize)) {
+        objectSize <- import_future("objectSize")
+        attr(dotdotdot, "total_size") <- objectSize(dotdotdot)
+      }
+      
+      if (debug) mdebug(" - Getting '...' globals ... DONE")
       globals <- c(globals, dotdotdot)
     }
   } else if (!is.element("MoreArgs", names)) {
@@ -76,7 +95,7 @@ getGlobalsAndPackagesXApply <- function(FUN, args = NULL, MoreArgs = NULL, envir
   names(globals) <- names
   
   if (debug) {
-    mdebug("Globals to be used in all futures:")
+    mdebugf("Globals to be used in all futures (chunks): [n=%d] %s", length(globals), commaq(names(globals)))
     mstr(globals)
   }
 
@@ -88,8 +107,7 @@ getGlobalsAndPackagesXApply <- function(FUN, args = NULL, MoreArgs = NULL, envir
   }
   
   if (debug) {
-    mdebug("Packages to be attached in all futures:")
-    mstr(packages)
+    mdebugf("Packages to be attached in all futures: [n=%d] %s", length(packages), commaq(packages))
   }
 
   list(globals = globals, packages = packages, scanForGlobals = scanForGlobals)

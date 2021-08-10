@@ -12,6 +12,9 @@
 #' For `future_*apply()` functions and `replicate()`, any `future.*` arguments
 #' part of `\ldots` are passed on to `future_lapply()` used internally.
 #' 
+#' @param future.envir An [environment] passed as argument `envir` to
+#'        [future::future()] as-is.
+#'
 #' @param future.stdout If `TRUE` (default), then the standard output of the
 #'        underlying futures is captured, and re-outputted as soon as possible.
 #'        If `FALSE`, any output is silenced (by sinking it to the null device
@@ -122,7 +125,7 @@
 #' This attribute can take the following values:
 #' * index vector - an numeric vector of length `length(X)`
 #' * function     - an function taking one argument which is called as
-#'                  `ordering(length(X))` and which much return an
+#'                  `ordering(length(X))` and which must return an
 #'                  index vector of length `length(X)`, e.g.
 #'                  `function(n) rev(seq_len(n))` for reverse ordering.
 #' * `"random"`   - this will randomize the ordering via random index
@@ -135,84 +138,102 @@
 #'
 #' @keywords manip programming iteration
 #'
+#' @importFrom globals findGlobals
 #' @export
-future_lapply <- function(X, FUN, ..., future.stdout = TRUE, future.conditions = "condition", future.globals = TRUE, future.packages = NULL, future.lazy = FALSE, future.seed = FALSE, future.scheduling = 1.0, future.chunk.size = NULL, future.label = "future_lapply-%d") {
-  fcn_name <- "future_lapply"
-  args_name <- "X"
-
-  ## Coerce to as.list()?
-  if (!is.vector(X) || is.object(X)) X <- as.list(X)
-  
-  ## Nothing to do?
-  nX <- length(X)
-  if (nX == 0L) return(as.list(X))
-
-  debug <- getOption("future.debug", FALSE)
-  
-  if (debug) mdebugf("%s() ...", fcn_name)
-
-  ## NOTE TO SELF: We'd ideally have a 'future.envir' argument also for
-  ## this function, cf. future().  However, it's not yet clear to me how
-  ## to do this, because we need to have globalsOf() to search for globals
-  ## from the current environment in order to identify the globals of 
-  ## arguments 'FUN' and '...'. /HB 2017-03-10
-  future.envir <- environment()  ## Not used; just to clarify the above.
-  
-  envir <- future.envir
-  
-  ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  ## Future expression
-  ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  if (is.null(future.seed) || isFALSE(future.seed) || isNA(future.seed)) {
-    ## Don't set .Random.seed
-    seedExpr <- NULL
-  } else {
-    ## Set .Random.seed
-    seedExpr <- quote(assign(".Random.seed", ...future.seeds_ii[[jj]], envir = globalenv(), inherits = FALSE))
-  }
-
-  ...future.FUN <- NULL ## To please R CMD check
-  
-  expr <- bquote({
+future_lapply <- local({
+  tmpl_expr <- bquote_compile({
     lapply(seq_along(...future.elements_ii), FUN = function(jj) {
        ...future.X_jj <- ...future.elements_ii[[jj]]
-       .(seedExpr)
-       ...future.FUN(...future.X_jj, ...)
+       .(expr_FUN)
     })
   })
 
+  tmpl_expr_with_rng <- bquote_compile({
+    lapply(seq_along(...future.elements_ii), FUN = function(jj) {
+       ...future.X_jj <- ...future.elements_ii[[jj]]
+       assign(".Random.seed", ...future.seeds_ii[[jj]], envir = globalenv(), inherits = FALSE)
+       .(expr_FUN)
+    })
+  })
 
-  ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  ## Process
-  ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  values <- future_xapply(
-    FUN = FUN,
-    nX = nX,
-    chunk_args = X,
-    args = list(...),
-    get_chunk = `[`,
-    expr = expr,
-    envir = envir,
-    future.globals = future.globals,
-    future.packages = future.packages,
-    future.scheduling = future.scheduling,
-    future.chunk.size = future.chunk.size,
-    future.stdout = future.stdout,
-    future.conditions = future.conditions,
-    future.seed = future.seed,
-    future.lazy = future.lazy,
-    future.label = future.label,
-    fcn_name = fcn_name,
-    args_name = args_name,
-    debug = debug
-  )
-
-  ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  ## Reduce
-  ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  names(values) <- names(X)
-
-  if (debug) mdebugf("%s() ... DONE", fcn_name)
+  function(X, FUN, ..., future.envir = parent.frame(), future.stdout = TRUE, future.conditions = "condition", future.globals = TRUE, future.packages = NULL, future.lazy = FALSE, future.seed = FALSE, future.scheduling = 1.0, future.chunk.size = NULL, future.label = "future_lapply-%d") {
+    fcn_name <- "future_lapply"
+    args_name <- "X"
   
-  values
-}
+    ## Coerce to as.list()?
+    if (!is.vector(X) || is.object(X)) X <- as.list(X)
+    
+    ## Nothing to do?
+    nX <- length(X)
+    if (nX == 0L) return(as.list(X))
+  
+    debug <- getOption("future.apply.debug", getOption("future.debug", FALSE))
+    
+    if (debug) mdebugf("%s() ...", fcn_name)
+  
+    ## NOTE TO SELF: We'd ideally have a 'future.envir' argument also for
+    ## this function, cf. future().  However, it's not yet clear to me how
+    ## to do this, because we need to have globalsOf() to search for globals
+    ## from the current environment in order to identify the globals of 
+    ## arguments 'FUN' and '...'. /HB 2017-03-10
+    envir <- environment()
+    
+    ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    ## Future expression
+    ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    ...future.FUN <- NULL ## To please R CMD check
+  
+    ## Does FUN() rely on '...' being a global?
+    global_dotdotdot <- ("..." %in% findGlobals(FUN, dotdotdot = "return"))
+    if (global_dotdotdot) {
+      expr_FUN <- quote(...future.FUN(...future.X_jj))
+    } else {
+      expr_FUN <- quote(...future.FUN(...future.X_jj, ...))
+    }
+    
+    ## With or without RNG?
+    expr <- bquote_apply(
+      if (is.null(future.seed) || isFALSE(future.seed) || isNA(future.seed)) {
+        tmpl_expr
+      } else {
+        tmpl_expr_with_rng
+      }
+    )
+  
+  
+    ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    ## Process
+    ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    values <- future_xapply(
+      FUN = FUN,
+      nX = nX,
+      chunk_args = X,
+      args = list(...),
+      get_chunk = `[`,
+      expr = expr,
+      envir = envir,
+      future.envir = future.envir,
+      future.globals = future.globals,
+      future.packages = future.packages,
+      future.scheduling = future.scheduling,
+      future.chunk.size = future.chunk.size,
+      future.stdout = future.stdout,
+      future.conditions = future.conditions,
+      future.seed = future.seed,
+      future.lazy = future.lazy,
+      future.label = future.label,
+      fcn_name = fcn_name,
+      args_name = args_name,
+      debug = debug
+    )
+  
+    ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    ## Reduce
+    ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    names(values) <- names(X)
+  
+    if (debug) mdebugf("%s() ... DONE", fcn_name)
+    
+    values
+  }
+})

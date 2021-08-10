@@ -17,8 +17,8 @@
 #' 'The R Core Team' as the copyright holder.
 #' 
 #' @rdname future_lapply
-future_sapply <- function(X, FUN, ..., simplify = TRUE, USE.NAMES = TRUE, future.label = "future_sapply-%d") {
-  answer <- future_lapply(X = X, FUN = FUN, ..., future.label = future.label)
+future_sapply <- function(X, FUN, ..., simplify = TRUE, USE.NAMES = TRUE, future.envir = parent.frame(), future.label = "future_sapply-%d") {
+  answer <- future_lapply(X = X, FUN = FUN, ..., future.envir = future.envir, future.label = future.label)
   if (USE.NAMES && is.character(X) && is.null(names(answer)))
     names(answer) <- X
 

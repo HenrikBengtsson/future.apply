@@ -9,8 +9,6 @@
 ^README[.]md$
 ^CONDUCT[.]md$
 ^CONTRIBUTING[.]md$
-^docs/
-^pkgdown/
 
 #----------------------------
 # devtools
@@ -61,3 +59,4 @@ Rplots.pdf$
 ^.local
 ^docs
 ^pkgdown
+[.]Rdump

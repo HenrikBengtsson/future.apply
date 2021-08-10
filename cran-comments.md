@@ -1,6 +1,18 @@
-# CRAN submission future.apply 1.8.0
+# CRAN submission future.apply 1.8.1
 
 on 2021-08-10
+
+Second submission:
+
+This is a resubmission that fixes the following on note on Debian CRAN incoming:
+
+Problems when formatting CITATION entries:
+    partial match of 'note' to 'notes'
+
+Thanks
+
+
+First submission:
 
 I've verified this submission has no negative impact on any of the 82 reverse package dependencies available on CRAN (n=79) and Bioconductor (n=3).
 

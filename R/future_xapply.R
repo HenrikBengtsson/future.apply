@@ -67,7 +67,7 @@ future_xapply <- local({
     ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     gp <- getGlobalsAndPackagesXApply(FUN = FUN,
                                       args = args,
-  				    MoreArgs = MoreArgs,
+                                      MoreArgs = MoreArgs,
                                       envir = envir,
                                       future.globals = future.globals,
                                       future.packages = future.packages,
@@ -140,9 +140,9 @@ future_xapply <- local({
         
         if (debug) {
           mdebugf("   + additional globals found: [n=%d] %s",
-  	        length(globals_args), commaq(names(globals_args)))
+                  length(globals_args), commaq(names(globals_args)))
           mdebugf("   + additional namespaces needed: [n=%d] %s",
-  	        length(packages_args), commaq(packages_args))
+                  length(packages_args), commaq(packages_args))
         }
       
         ## Export also globals found in arguments?

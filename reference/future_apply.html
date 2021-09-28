@@ -98,7 +98,7 @@ function to margins of an array or matrix." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">future.apply</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.8.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.8.1-9001</span>
       </span>
     </div>
 
@@ -241,7 +241,6 @@ function to margins of an array or matrix.</p>
   future.conditions <span class='op'>=</span> <span class='st'>"condition"</span>,
   future.globals <span class='op'>=</span> <span class='cn'>TRUE</span>,
   future.packages <span class='op'>=</span> <span class='cn'>NULL</span>,
-  future.lazy <span class='op'>=</span> <span class='cn'>FALSE</span>,
   future.seed <span class='op'>=</span> <span class='cn'>FALSE</span>,
   future.scheduling <span class='op'>=</span> <span class='fl'>1</span>,
   future.chunk.size <span class='op'>=</span> <span class='cn'>NULL</span>,
@@ -304,11 +303,6 @@ controlling how globals are handled. For details, see below section.</p></td>
 to be attached in the R environment evaluating the future.</p></td>
     </tr>
     <tr>
-      <th>future.lazy</th>
-      <td><p>Specifies whether the futures should be resolved
-lazily or eagerly (default).</p></td>
-    </tr>
-    <tr>
       <th>future.seed</th>
       <td><p>A logical or an integer (of length one or seven),
 or a list of <code><a href='https://rdrr.io/r/base/length.html'>length(X)</a></code> with pre-generated random seeds.
@@ -366,65 +360,7 @@ with 'The R Core Team' as the copyright holder.</p>
 
 <span class='va'>Y0</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/apply.html'>apply</a></span><span class='op'>(</span><span class='va'>X</span>, MARGIN <span class='op'>=</span> <span class='fl'>1L</span>, FUN <span class='op'>=</span> <span class='va'>table</span><span class='op'>)</span>
 <span class='va'>Y1</span> <span class='op'>&lt;-</span> <span class='fu'>future_apply</span><span class='op'>(</span><span class='va'>X</span>, MARGIN <span class='op'>=</span> <span class='fl'>1L</span>, FUN <span class='op'>=</span> <span class='va'>table</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>[13:58:13.200] getGlobalsAndPackagesXApply() ...</span></div><div class='output co'>#&gt; <span class='message'>[13:58:13.200]  - future.globals: TRUE</span></div><div class='output co'>#&gt; <span class='message'>[13:58:13.249]  - globals found/used: [n=1] ‘FUN’</span></div><div class='output co'>#&gt; <span class='message'>[13:58:13.249]  - needed namespaces: [n=0] </span></div><div class='output co'>#&gt; <span class='message'>[13:58:13.249] Finding globals ... DONE</span></div><div class='output co'>#&gt; <span class='message'>[13:58:13.250]  - use_args: TRUE</span></div><div class='output co'>#&gt; <span class='message'>[13:58:13.250]  - Getting '...' globals ...</span></div><div class='output co'>#&gt; <span class='message'>[13:58:13.251]    - '...' content: [n=0] </span></div><div class='output co'>#&gt; <span class='message'>[13:58:13.251] List of 1</span>
-#&gt; <span class='message'>[13:58:13.251]  $ ...: list()</span>
-#&gt; <span class='message'>[13:58:13.251]   ..- attr(*, "class")= chr [1:2] "DotDotDotList" "list"</span>
-#&gt; <span class='message'>[13:58:13.251]  - attr(*, "class")= chr [1:3] "FutureGlobals" "Globals" "list"</span>
-#&gt; <span class='message'>[13:58:13.251]  - attr(*, "where")=List of 1</span>
-#&gt; <span class='message'>[13:58:13.251]   ..$ ...:&lt;environment: 0x5572e925ad18&gt; </span>
-#&gt; <span class='message'>[13:58:13.251]  - attr(*, "resolved")= logi TRUE</span>
-#&gt; <span class='message'>[13:58:13.251]  - attr(*, "total_size")= num NA</span></div><div class='output co'>#&gt; <span class='message'>[13:58:13.257]  - Getting '...' globals ... DONE</span></div><div class='output co'>#&gt; <span class='message'>[13:58:13.257] Globals to be used in all futures (chunks): [n=2] ‘...future.FUN’, ‘...’</span></div><div class='output co'>#&gt; <span class='message'>[13:58:13.257] List of 2</span>
-#&gt; <span class='message'>[13:58:13.257]  $ ...future.FUN:function (..., exclude = if (useNA == "no") c(NA, NaN), useNA = c("no", </span>
-#&gt; <span class='message'>[13:58:13.257]     "ifany", "always"), dnn = list.names(...), deparse.level = 1)  </span>
-#&gt; <span class='message'>[13:58:13.257]  $ ...          : list()</span>
-#&gt; <span class='message'>[13:58:13.257]   ..- attr(*, "class")= chr [1:2] "DotDotDotList" "list"</span>
-#&gt; <span class='message'>[13:58:13.257]  - attr(*, "class")= chr [1:3] "FutureGlobals" "Globals" "list"</span>
-#&gt; <span class='message'>[13:58:13.257]  - attr(*, "where")=List of 2</span>
-#&gt; <span class='message'>[13:58:13.257]   ..$ ...future.FUN:&lt;environment: R_EmptyEnv&gt; </span>
-#&gt; <span class='message'>[13:58:13.257]   ..$ ...          :&lt;environment: 0x5572e925ad18&gt; </span>
-#&gt; <span class='message'>[13:58:13.257]  - attr(*, "resolved")= logi FALSE</span>
-#&gt; <span class='message'>[13:58:13.257]  - attr(*, "total_size")= num 336976</span></div><div class='output co'>#&gt; <span class='message'>[13:58:13.261] Packages to be attached in all futures: [n=0] </span></div><div class='output co'>#&gt; <span class='message'>[13:58:13.261] getGlobalsAndPackagesXApply() ... DONE</span></div><div class='output co'>#&gt; <span class='message'>[13:58:13.261] future_lapply() ...</span></div><div class='output co'>#&gt; <span class='message'>[13:58:13.293] Number of chunks: 1</span></div><div class='output co'>#&gt; <span class='message'>[13:58:13.293] getGlobalsAndPackagesXApply() ...</span></div><div class='output co'>#&gt; <span class='message'>[13:58:13.293]  - future.globals: &lt;name-value list&gt; with names ‘list()’</span></div><div class='output co'>#&gt; <span class='message'>[13:58:13.294]  - use_args: TRUE</span></div><div class='output co'>#&gt; <span class='message'>[13:58:13.294] Globals to be used in all futures (chunks): [n=2] ‘...’, ‘...future.FUN’</span></div><div class='output co'>#&gt; <span class='message'>[13:58:13.294] List of 2</span>
-#&gt; <span class='message'>[13:58:13.294]  $ ...          : list()</span>
-#&gt; <span class='message'>[13:58:13.294]   ..- attr(*, "class")= chr [1:2] "DotDotDotList" "list"</span>
-#&gt; <span class='message'>[13:58:13.294]  $ ...future.FUN:function (..., exclude = if (useNA == "no") c(NA, NaN), useNA = c("no", </span>
-#&gt; <span class='message'>[13:58:13.294]     "ifany", "always"), dnn = list.names(...), deparse.level = 1)  </span>
-#&gt; <span class='message'>[13:58:13.294]  - attr(*, "class")= chr [1:3] "FutureGlobals" "Globals" "list"</span>
-#&gt; <span class='message'>[13:58:13.294]  - attr(*, "where")=List of 2</span>
-#&gt; <span class='message'>[13:58:13.294]   ..$ ...          :&lt;environment: 0x5572e925ad18&gt; </span>
-#&gt; <span class='message'>[13:58:13.294]   ..$ ...future.FUN:&lt;environment: R_EmptyEnv&gt; </span>
-#&gt; <span class='message'>[13:58:13.294]  - attr(*, "resolved")= logi FALSE</span>
-#&gt; <span class='message'>[13:58:13.294]  - attr(*, "total_size")= num NA</span></div><div class='output co'>#&gt; <span class='message'>[13:58:13.297] Packages to be attached in all futures: [n=0] </span></div><div class='output co'>#&gt; <span class='message'>[13:58:13.297] getGlobalsAndPackagesXApply() ... DONE</span></div><div class='output co'>#&gt; <span class='message'>[13:58:13.297] Number of futures (= number of chunks): 1</span></div><div class='output co'>#&gt; <span class='message'>[13:58:13.297] Launching 1 futures (chunks) ...</span></div><div class='output co'>#&gt; <span class='message'>[13:58:13.297] Chunk #1 of 1 ...</span></div><div class='output co'>#&gt; <span class='message'>[13:58:13.298]  - Adjusted option 'future.globals.maxSize': Inf -&gt; 2 * Inf = Inf (bytes)</span></div><div class='output co'>#&gt; <span class='message'>[13:58:13.298]  - seeds: &lt;none&gt;</span></div><div class='output co'>#&gt; <span class='message'>[13:58:13.331] Created future:</span></div><div class='output co'>#&gt; <span class='message'>[13:58:13.331] SequentialFuture:</span>
-#&gt; <span class='message'>[13:58:13.331] Label: ‘future_apply-1’</span>
-#&gt; <span class='message'>[13:58:13.331] Expression:</span>
-#&gt; <span class='message'>[13:58:13.331] {</span>
-#&gt; <span class='message'>[13:58:13.331]     do.call(function(...) {</span>
-#&gt; <span class='message'>[13:58:13.331]         ...future.globals.maxSize.org &lt;- getOption("future.globals.maxSize")</span>
-#&gt; <span class='message'>[13:58:13.331]         if (!identical(...future.globals.maxSize.org, ...future.globals.maxSize)) {</span>
-#&gt; <span class='message'>[13:58:13.331]             oopts &lt;- options(future.globals.maxSize = ...future.globals.maxSize)</span>
-#&gt; <span class='message'>[13:58:13.331]             on.exit(options(oopts), add = TRUE)</span>
-#&gt; <span class='message'>[13:58:13.331]         }</span>
-#&gt; <span class='message'>[13:58:13.331]         {</span>
-#&gt; <span class='message'>[13:58:13.331]             lapply(seq_along(...future.elements_ii), FUN = function(jj) {</span>
-#&gt; <span class='message'>[13:58:13.331]                 ...future.X_jj &lt;- ...future.elements_ii[[jj]]</span>
-#&gt; <span class='message'>[13:58:13.331]                 ...future.FUN(...future.X_jj, ...)</span>
-#&gt; <span class='message'>[13:58:13.331]             })</span>
-#&gt; <span class='message'>[13:58:13.331]         }</span>
-#&gt; <span class='message'>[13:58:13.331]     }, args = future.call.arguments)</span>
-#&gt; <span class='message'>[13:58:13.331] }</span>
-#&gt; <span class='message'>[13:58:13.331] Lazy evaluation: FALSE</span>
-#&gt; <span class='message'>[13:58:13.331] Asynchronous evaluation: FALSE</span>
-#&gt; <span class='message'>[13:58:13.331] Local evaluation: TRUE</span>
-#&gt; <span class='message'>[13:58:13.331] Environment: 0x5572e9181490</span>
-#&gt; <span class='message'>[13:58:13.331] Capture standard output: TRUE</span>
-#&gt; <span class='message'>[13:58:13.331] Capture condition classes: ‘condition’ (excluding ‘nothing’)</span>
-#&gt; <span class='message'>[13:58:13.331] Globals: 5 objects totaling 329.29 KiB (DotDotDotList ‘future.call.arguments’ of 0 bytes, function ‘...future.FUN’ of 329.08 KiB, list ‘...future.elements_ii’ of 160 bytes, NULL ‘...future.seeds_ii’ of 0 bytes, numeric ‘...future.globals.maxSize’ of 56 bytes)</span>
-#&gt; <span class='message'>[13:58:13.331] Packages: &lt;none&gt;</span>
-#&gt; <span class='message'>[13:58:13.331] L'Ecuyer-CMRG RNG seed: &lt;none&gt; (seed = FALSE)</span>
-#&gt; <span class='message'>[13:58:13.331] Resolved: TRUE</span>
-#&gt; <span class='message'>[13:58:13.331] Value: 2.21 KiB of class ‘list’</span>
-#&gt; <span class='message'>[13:58:13.331] Early signaling: FALSE</span>
-#&gt; <span class='message'>[13:58:13.331] Owner process: 9d04a638-80d7-2cb1-c9c4-7dbd6de2ef73</span>
-#&gt; <span class='message'>[13:58:13.331] Class: ‘SequentialFuture’, ‘UniprocessFuture’, ‘Future’, ‘environment’</span></div><div class='output co'>#&gt; <span class='message'>[13:58:13.333] Chunk #1 of 1 ... DONE</span></div><div class='output co'>#&gt; <span class='message'>[13:58:13.333] Launching 1 futures (chunks) ... DONE</span></div><div class='output co'>#&gt; <span class='message'>[13:58:13.333] Resolving 1 futures (chunks) ...</span></div><div class='output co'>#&gt; <span class='message'>[13:58:13.334]  - Number of value chunks collected: 1</span></div><div class='output co'>#&gt; <span class='message'>[13:58:13.335] Resolving 1 futures (chunks) ... DONE</span></div><div class='output co'>#&gt; <span class='message'>[13:58:13.335] Reducing values from 1 chunks ...</span></div><div class='output co'>#&gt; <span class='message'>[13:58:13.335]  - Number of values collected after concatenation: 2</span></div><div class='output co'>#&gt; <span class='message'>[13:58:13.335]  - Number of values expected: 2</span></div><div class='output co'>#&gt; <span class='message'>[13:58:13.335] Reducing values from 1 chunks ... DONE</span></div><div class='output co'>#&gt; <span class='message'>[13:58:13.335] future_lapply() ... DONE</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>Y1</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>Y1</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [[1]]
 #&gt; ...future.X_jj
 #&gt; 1 3 7 
@@ -438,63 +374,7 @@ with 'The R Core Team' as the copyright holder.</p>
 
 <span class='va'>Y0</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/apply.html'>apply</a></span><span class='op'>(</span><span class='va'>X</span>, MARGIN <span class='op'>=</span> <span class='fl'>1L</span>, FUN <span class='op'>=</span> <span class='fu'>stats</span><span class='fu'>::</span><span class='va'><a href='https://rdrr.io/r/stats/quantile.html'>quantile</a></span><span class='op'>)</span>
 <span class='va'>Y1</span> <span class='op'>&lt;-</span> <span class='fu'>future_apply</span><span class='op'>(</span><span class='va'>X</span>, MARGIN <span class='op'>=</span> <span class='fl'>1L</span>, FUN <span class='op'>=</span> <span class='fu'>stats</span><span class='fu'>::</span><span class='va'><a href='https://rdrr.io/r/stats/quantile.html'>quantile</a></span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>[13:58:13.340] getGlobalsAndPackagesXApply() ...</span></div><div class='output co'>#&gt; <span class='message'>[13:58:13.340]  - future.globals: TRUE</span></div><div class='output co'>#&gt; <span class='message'>[13:58:13.342]  - globals found/used: [n=1] ‘FUN’</span></div><div class='output co'>#&gt; <span class='message'>[13:58:13.342]  - needed namespaces: [n=1] ‘stats’</span></div><div class='output co'>#&gt; <span class='message'>[13:58:13.342] Finding globals ... DONE</span></div><div class='output co'>#&gt; <span class='message'>[13:58:13.343]  - use_args: TRUE</span></div><div class='output co'>#&gt; <span class='message'>[13:58:13.343]  - Getting '...' globals ...</span></div><div class='output co'>#&gt; <span class='message'>[13:58:13.343]    - '...' content: [n=0] </span></div><div class='output co'>#&gt; <span class='message'>[13:58:13.343] List of 1</span>
-#&gt; <span class='message'>[13:58:13.343]  $ ...: list()</span>
-#&gt; <span class='message'>[13:58:13.343]   ..- attr(*, "class")= chr [1:2] "DotDotDotList" "list"</span>
-#&gt; <span class='message'>[13:58:13.343]  - attr(*, "class")= chr [1:3] "FutureGlobals" "Globals" "list"</span>
-#&gt; <span class='message'>[13:58:13.343]  - attr(*, "where")=List of 1</span>
-#&gt; <span class='message'>[13:58:13.343]   ..$ ...:&lt;environment: 0x5572e91155e8&gt; </span>
-#&gt; <span class='message'>[13:58:13.343]  - attr(*, "resolved")= logi TRUE</span>
-#&gt; <span class='message'>[13:58:13.343]  - attr(*, "total_size")= num NA</span></div><div class='output co'>#&gt; <span class='message'>[13:58:13.346]  - Getting '...' globals ... DONE</span></div><div class='output co'>#&gt; <span class='message'>[13:58:13.346] Globals to be used in all futures (chunks): [n=2] ‘...future.FUN’, ‘...’</span></div><div class='output co'>#&gt; <span class='message'>[13:58:13.346] List of 2</span>
-#&gt; <span class='message'>[13:58:13.346]  $ ...future.FUN:function (x, ...)  </span>
-#&gt; <span class='message'>[13:58:13.346]  $ ...          : list()</span>
-#&gt; <span class='message'>[13:58:13.346]   ..- attr(*, "class")= chr [1:2] "DotDotDotList" "list"</span>
-#&gt; <span class='message'>[13:58:13.346]  - attr(*, "class")= chr [1:3] "FutureGlobals" "Globals" "list"</span>
-#&gt; <span class='message'>[13:58:13.346]  - attr(*, "where")=List of 2</span>
-#&gt; <span class='message'>[13:58:13.346]   ..$ ...future.FUN:&lt;environment: R_EmptyEnv&gt; </span>
-#&gt; <span class='message'>[13:58:13.346]   ..$ ...          :&lt;environment: 0x5572e91155e8&gt; </span>
-#&gt; <span class='message'>[13:58:13.346]  - attr(*, "resolved")= logi FALSE</span>
-#&gt; <span class='message'>[13:58:13.346]  - attr(*, "total_size")= num 1248</span></div><div class='output co'>#&gt; <span class='message'>[13:58:13.349] Packages to be attached in all futures: [n=1] ‘stats’</span></div><div class='output co'>#&gt; <span class='message'>[13:58:13.349] getGlobalsAndPackagesXApply() ... DONE</span></div><div class='output co'>#&gt; <span class='message'>[13:58:13.350] future_lapply() ...</span></div><div class='output co'>#&gt; <span class='message'>[13:58:13.350] Number of chunks: 1</span></div><div class='output co'>#&gt; <span class='message'>[13:58:13.351] getGlobalsAndPackagesXApply() ...</span></div><div class='output co'>#&gt; <span class='message'>[13:58:13.351]  - future.globals: &lt;name-value list&gt; with names ‘list()’</span></div><div class='output co'>#&gt; <span class='message'>[13:58:13.351]  - use_args: TRUE</span></div><div class='output co'>#&gt; <span class='message'>[13:58:13.351] Globals to be used in all futures (chunks): [n=2] ‘...’, ‘...future.FUN’</span></div><div class='output co'>#&gt; <span class='message'>[13:58:13.351] List of 2</span>
-#&gt; <span class='message'>[13:58:13.351]  $ ...          : list()</span>
-#&gt; <span class='message'>[13:58:13.351]   ..- attr(*, "class")= chr [1:2] "DotDotDotList" "list"</span>
-#&gt; <span class='message'>[13:58:13.351]  $ ...future.FUN:function (x, ...)  </span>
-#&gt; <span class='message'>[13:58:13.351]  - attr(*, "class")= chr [1:3] "FutureGlobals" "Globals" "list"</span>
-#&gt; <span class='message'>[13:58:13.351]  - attr(*, "where")=List of 2</span>
-#&gt; <span class='message'>[13:58:13.351]   ..$ ...          :&lt;environment: 0x5572e91155e8&gt; </span>
-#&gt; <span class='message'>[13:58:13.351]   ..$ ...future.FUN:&lt;environment: R_EmptyEnv&gt; </span>
-#&gt; <span class='message'>[13:58:13.351]  - attr(*, "resolved")= logi FALSE</span>
-#&gt; <span class='message'>[13:58:13.351]  - attr(*, "total_size")= num NA</span></div><div class='output co'>#&gt; <span class='message'>[13:58:13.356] Packages to be attached in all futures: [n=1] ‘stats’</span></div><div class='output co'>#&gt; <span class='message'>[13:58:13.356] getGlobalsAndPackagesXApply() ... DONE</span></div><div class='output co'>#&gt; <span class='message'>[13:58:13.356] Number of futures (= number of chunks): 1</span></div><div class='output co'>#&gt; <span class='message'>[13:58:13.356] Launching 1 futures (chunks) ...</span></div><div class='output co'>#&gt; <span class='message'>[13:58:13.357] Chunk #1 of 1 ...</span></div><div class='output co'>#&gt; <span class='message'>[13:58:13.357]  - Adjusted option 'future.globals.maxSize': Inf -&gt; 2 * Inf = Inf (bytes)</span></div><div class='output co'>#&gt; <span class='message'>[13:58:13.357]  - seeds: &lt;none&gt;</span></div><div class='output co'>#&gt; <span class='message'>[13:58:13.362] Created future:</span></div><div class='output co'>#&gt; <span class='message'>[13:58:13.362] SequentialFuture:</span>
-#&gt; <span class='message'>[13:58:13.362] Label: ‘future_apply-1’</span>
-#&gt; <span class='message'>[13:58:13.362] Expression:</span>
-#&gt; <span class='message'>[13:58:13.362] {</span>
-#&gt; <span class='message'>[13:58:13.362]     do.call(function(...) {</span>
-#&gt; <span class='message'>[13:58:13.362]         ...future.globals.maxSize.org &lt;- getOption("future.globals.maxSize")</span>
-#&gt; <span class='message'>[13:58:13.362]         if (!identical(...future.globals.maxSize.org, ...future.globals.maxSize)) {</span>
-#&gt; <span class='message'>[13:58:13.362]             oopts &lt;- options(future.globals.maxSize = ...future.globals.maxSize)</span>
-#&gt; <span class='message'>[13:58:13.362]             on.exit(options(oopts), add = TRUE)</span>
-#&gt; <span class='message'>[13:58:13.362]         }</span>
-#&gt; <span class='message'>[13:58:13.362]         {</span>
-#&gt; <span class='message'>[13:58:13.362]             lapply(seq_along(...future.elements_ii), FUN = function(jj) {</span>
-#&gt; <span class='message'>[13:58:13.362]                 ...future.X_jj &lt;- ...future.elements_ii[[jj]]</span>
-#&gt; <span class='message'>[13:58:13.362]                 ...future.FUN(...future.X_jj, ...)</span>
-#&gt; <span class='message'>[13:58:13.362]             })</span>
-#&gt; <span class='message'>[13:58:13.362]         }</span>
-#&gt; <span class='message'>[13:58:13.362]     }, args = future.call.arguments)</span>
-#&gt; <span class='message'>[13:58:13.362] }</span>
-#&gt; <span class='message'>[13:58:13.362] Lazy evaluation: FALSE</span>
-#&gt; <span class='message'>[13:58:13.362] Asynchronous evaluation: FALSE</span>
-#&gt; <span class='message'>[13:58:13.362] Local evaluation: TRUE</span>
-#&gt; <span class='message'>[13:58:13.362] Environment: 0x5572e9181490</span>
-#&gt; <span class='message'>[13:58:13.362] Capture standard output: TRUE</span>
-#&gt; <span class='message'>[13:58:13.362] Capture condition classes: ‘condition’ (excluding ‘nothing’)</span>
-#&gt; <span class='message'>[13:58:13.362] Globals: 5 objects totaling 1.43 KiB (DotDotDotList ‘future.call.arguments’ of 0 bytes, function ‘...future.FUN’ of 1.22 KiB, list ‘...future.elements_ii’ of 160 bytes, NULL ‘...future.seeds_ii’ of 0 bytes, numeric ‘...future.globals.maxSize’ of 56 bytes)</span>
-#&gt; <span class='message'>[13:58:13.362] Packages: 1 packages (‘stats’)</span>
-#&gt; <span class='message'>[13:58:13.362] L'Ecuyer-CMRG RNG seed: &lt;none&gt; (seed = FALSE)</span>
-#&gt; <span class='message'>[13:58:13.362] Resolved: TRUE</span>
-#&gt; <span class='message'>[13:58:13.362] Value: 1.14 KiB of class ‘list’</span>
-#&gt; <span class='message'>[13:58:13.362] Early signaling: FALSE</span>
-#&gt; <span class='message'>[13:58:13.362] Owner process: 9d04a638-80d7-2cb1-c9c4-7dbd6de2ef73</span>
-#&gt; <span class='message'>[13:58:13.362] Class: ‘SequentialFuture’, ‘UniprocessFuture’, ‘Future’, ‘environment’</span></div><div class='output co'>#&gt; <span class='message'>[13:58:13.364] Chunk #1 of 1 ... DONE</span></div><div class='output co'>#&gt; <span class='message'>[13:58:13.364] Launching 1 futures (chunks) ... DONE</span></div><div class='output co'>#&gt; <span class='message'>[13:58:13.364] Resolving 1 futures (chunks) ...</span></div><div class='output co'>#&gt; <span class='message'>[13:58:13.365]  - Number of value chunks collected: 1</span></div><div class='output co'>#&gt; <span class='message'>[13:58:13.365] Resolving 1 futures (chunks) ... DONE</span></div><div class='output co'>#&gt; <span class='message'>[13:58:13.365] Reducing values from 1 chunks ...</span></div><div class='output co'>#&gt; <span class='message'>[13:58:13.365]  - Number of values collected after concatenation: 2</span></div><div class='output co'>#&gt; <span class='message'>[13:58:13.365]  - Number of values expected: 2</span></div><div class='output co'>#&gt; <span class='message'>[13:58:13.365] Reducing values from 1 chunks ... DONE</span></div><div class='output co'>#&gt; <span class='message'>[13:58:13.366] future_lapply() ... DONE</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>Y1</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>Y1</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;      [,1] [,2]
 #&gt; 0%      1  2.0
 #&gt; 25%     1  3.5
@@ -514,100 +394,7 @@ with 'The R Core Team' as the copyright holder.</p>
 
 <span class='fu'>plan</span><span class='op'>(</span><span class='va'>multisession</span><span class='op'>)</span>
 <span class='va'>Y1</span> <span class='op'>&lt;-</span> <span class='fu'>future_apply</span><span class='op'>(</span><span class='va'>X</span>, MARGIN <span class='op'>=</span> <span class='fl'>1L</span>, FUN <span class='op'>=</span> <span class='va'>sample</span>, future.seed <span class='op'>=</span> <span class='fl'>0xBEEF</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>[13:58:14.402] getGlobalsAndPackagesXApply() ...</span></div><div class='output co'>#&gt; <span class='message'>[13:58:14.403]  - future.globals: TRUE</span></div><div class='output co'>#&gt; <span class='message'>[13:58:14.408]  - globals found/used: [n=1] ‘FUN’</span></div><div class='output co'>#&gt; <span class='message'>[13:58:14.408]  - needed namespaces: [n=0] </span></div><div class='output co'>#&gt; <span class='message'>[13:58:14.408] Finding globals ... DONE</span></div><div class='output co'>#&gt; <span class='message'>[13:58:14.408]  - use_args: TRUE</span></div><div class='output co'>#&gt; <span class='message'>[13:58:14.409]  - Getting '...' globals ...</span></div><div class='output co'>#&gt; <span class='message'>[13:58:14.409]    - '...' content: [n=0] </span></div><div class='output co'>#&gt; <span class='message'>[13:58:14.409] List of 1</span>
-#&gt; <span class='message'>[13:58:14.409]  $ ...: list()</span>
-#&gt; <span class='message'>[13:58:14.409]   ..- attr(*, "class")= chr [1:2] "DotDotDotList" "list"</span>
-#&gt; <span class='message'>[13:58:14.409]  - attr(*, "class")= chr [1:3] "FutureGlobals" "Globals" "list"</span>
-#&gt; <span class='message'>[13:58:14.409]  - attr(*, "where")=List of 1</span>
-#&gt; <span class='message'>[13:58:14.409]   ..$ ...:&lt;environment: 0x5572e9fa2cb8&gt; </span>
-#&gt; <span class='message'>[13:58:14.409]  - attr(*, "resolved")= logi TRUE</span>
-#&gt; <span class='message'>[13:58:14.409]  - attr(*, "total_size")= num NA</span></div><div class='output co'>#&gt; <span class='message'>[13:58:14.413]  - Getting '...' globals ... DONE</span></div><div class='output co'>#&gt; <span class='message'>[13:58:14.413] Globals to be used in all futures (chunks): [n=2] ‘...future.FUN’, ‘...’</span></div><div class='output co'>#&gt; <span class='message'>[13:58:14.413] List of 2</span>
-#&gt; <span class='message'>[13:58:14.413]  $ ...future.FUN:function (x, size, replace = FALSE, prob = NULL)  </span>
-#&gt; <span class='message'>[13:58:14.413]  $ ...          : list()</span>
-#&gt; <span class='message'>[13:58:14.413]   ..- attr(*, "class")= chr [1:2] "DotDotDotList" "list"</span>
-#&gt; <span class='message'>[13:58:14.413]  - attr(*, "class")= chr [1:3] "FutureGlobals" "Globals" "list"</span>
-#&gt; <span class='message'>[13:58:14.413]  - attr(*, "where")=List of 2</span>
-#&gt; <span class='message'>[13:58:14.413]   ..$ ...future.FUN:&lt;environment: R_EmptyEnv&gt; </span>
-#&gt; <span class='message'>[13:58:14.413]   ..$ ...          :&lt;environment: 0x5572e9fa2cb8&gt; </span>
-#&gt; <span class='message'>[13:58:14.413]  - attr(*, "resolved")= logi FALSE</span>
-#&gt; <span class='message'>[13:58:14.413]  - attr(*, "total_size")= num 36296</span></div><div class='output co'>#&gt; <span class='message'>[13:58:14.417] Packages to be attached in all futures: [n=0] </span></div><div class='output co'>#&gt; <span class='message'>[13:58:14.417] getGlobalsAndPackagesXApply() ... DONE</span></div><div class='output co'>#&gt; <span class='message'>[13:58:14.424] future_lapply() ...</span></div><div class='output co'>#&gt; <span class='message'>[13:58:14.427] Generating random seeds ...</span></div><div class='output co'>#&gt; <span class='message'>[13:58:14.428] Generating random seed streams for 2 elements ...</span></div><div class='output co'>#&gt; <span class='message'>[13:58:14.428] Generating random seed streams for 2 elements ... DONE</span></div><div class='output co'>#&gt; <span class='message'>[13:58:14.429] Generating random seeds ... DONE</span></div><div class='output co'>#&gt; <span class='message'>[13:58:14.436] Number of chunks: 2</span></div><div class='output co'>#&gt; <span class='message'>[13:58:14.436] getGlobalsAndPackagesXApply() ...</span></div><div class='output co'>#&gt; <span class='message'>[13:58:14.437]  - future.globals: &lt;name-value list&gt; with names ‘list()’</span></div><div class='output co'>#&gt; <span class='message'>[13:58:14.437]  - use_args: TRUE</span></div><div class='output co'>#&gt; <span class='message'>[13:58:14.437] Globals to be used in all futures (chunks): [n=2] ‘...’, ‘...future.FUN’</span></div><div class='output co'>#&gt; <span class='message'>[13:58:14.437] List of 2</span>
-#&gt; <span class='message'>[13:58:14.437]  $ ...          : list()</span>
-#&gt; <span class='message'>[13:58:14.437]   ..- attr(*, "class")= chr [1:2] "DotDotDotList" "list"</span>
-#&gt; <span class='message'>[13:58:14.437]  $ ...future.FUN:function (x, size, replace = FALSE, prob = NULL)  </span>
-#&gt; <span class='message'>[13:58:14.437]  - attr(*, "class")= chr [1:3] "FutureGlobals" "Globals" "list"</span>
-#&gt; <span class='message'>[13:58:14.437]  - attr(*, "where")=List of 2</span>
-#&gt; <span class='message'>[13:58:14.437]   ..$ ...          :&lt;environment: 0x5572e9fa2cb8&gt; </span>
-#&gt; <span class='message'>[13:58:14.437]   ..$ ...future.FUN:&lt;environment: R_EmptyEnv&gt; </span>
-#&gt; <span class='message'>[13:58:14.437]  - attr(*, "resolved")= logi FALSE</span>
-#&gt; <span class='message'>[13:58:14.437]  - attr(*, "total_size")= num NA</span></div><div class='output co'>#&gt; <span class='message'>[13:58:14.441] Packages to be attached in all futures: [n=0] </span></div><div class='output co'>#&gt; <span class='message'>[13:58:14.442] getGlobalsAndPackagesXApply() ... DONE</span></div><div class='output co'>#&gt; <span class='message'>[13:58:14.442] Number of futures (= number of chunks): 2</span></div><div class='output co'>#&gt; <span class='message'>[13:58:14.442] Launching 2 futures (chunks) ...</span></div><div class='output co'>#&gt; <span class='message'>[13:58:14.442] Chunk #1 of 2 ...</span></div><div class='output co'>#&gt; <span class='message'>[13:58:14.442]  - seeds: [1] &lt;seeds&gt;</span></div><div class='output co'>#&gt; <span class='message'>[13:58:14.500] Created future:</span></div><div class='output co'>#&gt; <span class='message'>[13:58:14.501] MultisessionFuture:</span>
-#&gt; <span class='message'>[13:58:14.501] Label: ‘future_apply-1’</span>
-#&gt; <span class='message'>[13:58:14.501] Expression:</span>
-#&gt; <span class='message'>[13:58:14.501] {</span>
-#&gt; <span class='message'>[13:58:14.501]     do.call(function(...) {</span>
-#&gt; <span class='message'>[13:58:14.501]         ...future.globals.maxSize.org &lt;- getOption("future.globals.maxSize")</span>
-#&gt; <span class='message'>[13:58:14.501]         if (!identical(...future.globals.maxSize.org, ...future.globals.maxSize)) {</span>
-#&gt; <span class='message'>[13:58:14.501]             oopts &lt;- options(future.globals.maxSize = ...future.globals.maxSize)</span>
-#&gt; <span class='message'>[13:58:14.501]             on.exit(options(oopts), add = TRUE)</span>
-#&gt; <span class='message'>[13:58:14.501]         }</span>
-#&gt; <span class='message'>[13:58:14.501]         {</span>
-#&gt; <span class='message'>[13:58:14.501]             lapply(seq_along(...future.elements_ii), FUN = function(jj) {</span>
-#&gt; <span class='message'>[13:58:14.501]                 ...future.X_jj &lt;- ...future.elements_ii[[jj]]</span>
-#&gt; <span class='message'>[13:58:14.501]                 assign(".Random.seed", ...future.seeds_ii[[jj]], </span>
-#&gt; <span class='message'>[13:58:14.501]                   envir = globalenv(), inherits = FALSE)</span>
-#&gt; <span class='message'>[13:58:14.501]                 ...future.FUN(...future.X_jj, ...)</span>
-#&gt; <span class='message'>[13:58:14.501]             })</span>
-#&gt; <span class='message'>[13:58:14.501]         }</span>
-#&gt; <span class='message'>[13:58:14.501]     }, args = future.call.arguments)</span>
-#&gt; <span class='message'>[13:58:14.501] }</span>
-#&gt; <span class='message'>[13:58:14.501] Lazy evaluation: FALSE</span>
-#&gt; <span class='message'>[13:58:14.501] Asynchronous evaluation: TRUE</span>
-#&gt; <span class='message'>[13:58:14.501] Local evaluation: TRUE</span>
-#&gt; <span class='message'>[13:58:14.501] Environment: 0x5572e9181490</span>
-#&gt; <span class='message'>[13:58:14.501] Capture standard output: TRUE</span>
-#&gt; <span class='message'>[13:58:14.501] Capture condition classes: ‘condition’ (excluding ‘nothing’)</span>
-#&gt; <span class='message'>[13:58:14.501] Globals: 5 objects totaling 35.60 KiB (DotDotDotList ‘future.call.arguments’ of 0 bytes, function ‘...future.FUN’ of 35.45 KiB, list ‘...future.elements_ii’ of 80 bytes, list ‘...future.seeds_ii’ of 80 bytes, NULL ‘...future.globals.maxSize’ of 0 bytes)</span>
-#&gt; <span class='message'>[13:58:14.501] Packages: &lt;none&gt;</span>
-#&gt; <span class='message'>[13:58:14.501] L'Ecuyer-CMRG RNG seed: &lt;none&gt; (seed = NULL)</span>
-#&gt; <span class='message'>[13:58:14.501] Resolved: FALSE</span>
-#&gt; <span class='message'>[13:58:14.501] Value: &lt;not collected&gt;</span>
-#&gt; <span class='message'>[13:58:14.501] Conditions captured: &lt;none&gt;</span>
-#&gt; <span class='message'>[13:58:14.501] Early signaling: FALSE</span>
-#&gt; <span class='message'>[13:58:14.501] Owner process: 9d04a638-80d7-2cb1-c9c4-7dbd6de2ef73</span>
-#&gt; <span class='message'>[13:58:14.501] Class: ‘MultisessionFuture’, ‘ClusterFuture’, ‘MultiprocessFuture’, ‘Future’, ‘environment’</span></div><div class='output co'>#&gt; <span class='message'>[13:58:14.519] Chunk #1 of 2 ... DONE</span></div><div class='output co'>#&gt; <span class='message'>[13:58:14.520] Chunk #2 of 2 ...</span></div><div class='output co'>#&gt; <span class='message'>[13:58:14.520]  - seeds: [1] &lt;seeds&gt;</span></div><div class='output co'>#&gt; <span class='message'>[13:58:14.627] Created future:</span></div><div class='output co'>#&gt; <span class='message'>[13:58:14.627] MultisessionFuture:</span>
-#&gt; <span class='message'>[13:58:14.627] Label: ‘future_apply-2’</span>
-#&gt; <span class='message'>[13:58:14.627] Expression:</span>
-#&gt; <span class='message'>[13:58:14.627] {</span>
-#&gt; <span class='message'>[13:58:14.627]     do.call(function(...) {</span>
-#&gt; <span class='message'>[13:58:14.627]         ...future.globals.maxSize.org &lt;- getOption("future.globals.maxSize")</span>
-#&gt; <span class='message'>[13:58:14.627]         if (!identical(...future.globals.maxSize.org, ...future.globals.maxSize)) {</span>
-#&gt; <span class='message'>[13:58:14.627]             oopts &lt;- options(future.globals.maxSize = ...future.globals.maxSize)</span>
-#&gt; <span class='message'>[13:58:14.627]             on.exit(options(oopts), add = TRUE)</span>
-#&gt; <span class='message'>[13:58:14.627]         }</span>
-#&gt; <span class='message'>[13:58:14.627]         {</span>
-#&gt; <span class='message'>[13:58:14.627]             lapply(seq_along(...future.elements_ii), FUN = function(jj) {</span>
-#&gt; <span class='message'>[13:58:14.627]                 ...future.X_jj &lt;- ...future.elements_ii[[jj]]</span>
-#&gt; <span class='message'>[13:58:14.627]                 assign(".Random.seed", ...future.seeds_ii[[jj]], </span>
-#&gt; <span class='message'>[13:58:14.627]                   envir = globalenv(), inherits = FALSE)</span>
-#&gt; <span class='message'>[13:58:14.627]                 ...future.FUN(...future.X_jj, ...)</span>
-#&gt; <span class='message'>[13:58:14.627]             })</span>
-#&gt; <span class='message'>[13:58:14.627]         }</span>
-#&gt; <span class='message'>[13:58:14.627]     }, args = future.call.arguments)</span>
-#&gt; <span class='message'>[13:58:14.627] }</span>
-#&gt; <span class='message'>[13:58:14.627] Lazy evaluation: FALSE</span>
-#&gt; <span class='message'>[13:58:14.627] Asynchronous evaluation: TRUE</span>
-#&gt; <span class='message'>[13:58:14.627] Local evaluation: TRUE</span>
-#&gt; <span class='message'>[13:58:14.627] Environment: 0x5572e9181490</span>
-#&gt; <span class='message'>[13:58:14.627] Capture standard output: TRUE</span>
-#&gt; <span class='message'>[13:58:14.627] Capture condition classes: ‘condition’ (excluding ‘nothing’)</span>
-#&gt; <span class='message'>[13:58:14.627] Globals: 5 objects totaling 35.60 KiB (DotDotDotList ‘future.call.arguments’ of 0 bytes, function ‘...future.FUN’ of 35.45 KiB, list ‘...future.elements_ii’ of 80 bytes, list ‘...future.seeds_ii’ of 80 bytes, NULL ‘...future.globals.maxSize’ of 0 bytes)</span>
-#&gt; <span class='message'>[13:58:14.627] Packages: &lt;none&gt;</span>
-#&gt; <span class='message'>[13:58:14.627] L'Ecuyer-CMRG RNG seed: &lt;none&gt; (seed = NULL)</span>
-#&gt; <span class='message'>[13:58:14.627] Resolved: FALSE</span>
-#&gt; <span class='message'>[13:58:14.627] Value: &lt;not collected&gt;</span>
-#&gt; <span class='message'>[13:58:14.627] Conditions captured: &lt;none&gt;</span>
-#&gt; <span class='message'>[13:58:14.627] Early signaling: FALSE</span>
-#&gt; <span class='message'>[13:58:14.627] Owner process: 9d04a638-80d7-2cb1-c9c4-7dbd6de2ef73</span>
-#&gt; <span class='message'>[13:58:14.627] Class: ‘MultisessionFuture’, ‘ClusterFuture’, ‘MultiprocessFuture’, ‘Future’, ‘environment’</span></div><div class='output co'>#&gt; <span class='message'>[13:58:14.641] Chunk #2 of 2 ... DONE</span></div><div class='output co'>#&gt; <span class='message'>[13:58:14.641] Launching 2 futures (chunks) ... DONE</span></div><div class='output co'>#&gt; <span class='message'>[13:58:14.641] Resolving 2 futures (chunks) ...</span></div><div class='output co'>#&gt; <span class='message'>[13:58:14.756]  - Number of value chunks collected: 2</span></div><div class='output co'>#&gt; <span class='message'>[13:58:14.756] Resolving 2 futures (chunks) ... DONE</span></div><div class='output co'>#&gt; <span class='message'>[13:58:14.756] Reducing values from 2 chunks ...</span></div><div class='output co'>#&gt; <span class='message'>[13:58:14.756]  - Number of values collected after concatenation: 2</span></div><div class='output co'>#&gt; <span class='message'>[13:58:14.757]  - Number of values expected: 2</span></div><div class='output co'>#&gt; <span class='message'>[13:58:14.757] Reducing values from 2 chunks ... DONE</span></div><div class='output co'>#&gt; <span class='message'>[13:58:14.757] future_lapply() ... DONE</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>Y1</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>Y1</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;      [,1] [,2]
 #&gt; [1,]    7    6
 #&gt; [2,]    1    8
@@ -615,65 +402,7 @@ with 'The R Core Team' as the copyright holder.</p>
 #&gt; [4,]    1    2</div><div class='input'>
 <span class='fu'>plan</span><span class='op'>(</span><span class='va'>sequential</span><span class='op'>)</span>
 <span class='va'>Y2</span> <span class='op'>&lt;-</span> <span class='fu'>future_apply</span><span class='op'>(</span><span class='va'>X</span>, MARGIN <span class='op'>=</span> <span class='fl'>1L</span>, FUN <span class='op'>=</span> <span class='va'>sample</span>, future.seed <span class='op'>=</span> <span class='fl'>0xBEEF</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>[13:58:14.784] getGlobalsAndPackagesXApply() ...</span></div><div class='output co'>#&gt; <span class='message'>[13:58:14.789]  - future.globals: TRUE</span></div><div class='output co'>#&gt; <span class='message'>[13:58:14.794]  - globals found/used: [n=1] ‘FUN’</span></div><div class='output co'>#&gt; <span class='message'>[13:58:14.794]  - needed namespaces: [n=0] </span></div><div class='output co'>#&gt; <span class='message'>[13:58:14.794] Finding globals ... DONE</span></div><div class='output co'>#&gt; <span class='message'>[13:58:14.795]  - use_args: TRUE</span></div><div class='output co'>#&gt; <span class='message'>[13:58:14.795]  - Getting '...' globals ...</span></div><div class='output co'>#&gt; <span class='message'>[13:58:14.795]    - '...' content: [n=0] </span></div><div class='output co'>#&gt; <span class='message'>[13:58:14.795] List of 1</span>
-#&gt; <span class='message'>[13:58:14.795]  $ ...: list()</span>
-#&gt; <span class='message'>[13:58:14.795]   ..- attr(*, "class")= chr [1:2] "DotDotDotList" "list"</span>
-#&gt; <span class='message'>[13:58:14.795]  - attr(*, "class")= chr [1:3] "FutureGlobals" "Globals" "list"</span>
-#&gt; <span class='message'>[13:58:14.795]  - attr(*, "where")=List of 1</span>
-#&gt; <span class='message'>[13:58:14.795]   ..$ ...:&lt;environment: 0x5572e734aab8&gt; </span>
-#&gt; <span class='message'>[13:58:14.795]  - attr(*, "resolved")= logi TRUE</span>
-#&gt; <span class='message'>[13:58:14.795]  - attr(*, "total_size")= num NA</span></div><div class='output co'>#&gt; <span class='message'>[13:58:14.799]  - Getting '...' globals ... DONE</span></div><div class='output co'>#&gt; <span class='message'>[13:58:14.799] Globals to be used in all futures (chunks): [n=2] ‘...future.FUN’, ‘...’</span></div><div class='output co'>#&gt; <span class='message'>[13:58:14.799] List of 2</span>
-#&gt; <span class='message'>[13:58:14.799]  $ ...future.FUN:function (x, size, replace = FALSE, prob = NULL)  </span>
-#&gt; <span class='message'>[13:58:14.799]  $ ...          : list()</span>
-#&gt; <span class='message'>[13:58:14.799]   ..- attr(*, "class")= chr [1:2] "DotDotDotList" "list"</span>
-#&gt; <span class='message'>[13:58:14.799]  - attr(*, "class")= chr [1:3] "FutureGlobals" "Globals" "list"</span>
-#&gt; <span class='message'>[13:58:14.799]  - attr(*, "where")=List of 2</span>
-#&gt; <span class='message'>[13:58:14.799]   ..$ ...future.FUN:&lt;environment: R_EmptyEnv&gt; </span>
-#&gt; <span class='message'>[13:58:14.799]   ..$ ...          :&lt;environment: 0x5572e734aab8&gt; </span>
-#&gt; <span class='message'>[13:58:14.799]  - attr(*, "resolved")= logi FALSE</span>
-#&gt; <span class='message'>[13:58:14.799]  - attr(*, "total_size")= num 36296</span></div><div class='output co'>#&gt; <span class='message'>[13:58:14.803] Packages to be attached in all futures: [n=0] </span></div><div class='output co'>#&gt; <span class='message'>[13:58:14.803] getGlobalsAndPackagesXApply() ... DONE</span></div><div class='output co'>#&gt; <span class='message'>[13:58:14.803] future_lapply() ...</span></div><div class='output co'>#&gt; <span class='message'>[13:58:14.806] Generating random seeds ...</span></div><div class='output co'>#&gt; <span class='message'>[13:58:14.806] Generating random seed streams for 2 elements ...</span></div><div class='output co'>#&gt; <span class='message'>[13:58:14.806] Generating random seed streams for 2 elements ... DONE</span></div><div class='output co'>#&gt; <span class='message'>[13:58:14.806] Generating random seeds ... DONE</span></div><div class='output co'>#&gt; <span class='message'>[13:58:14.806] Number of chunks: 1</span></div><div class='output co'>#&gt; <span class='message'>[13:58:14.807] getGlobalsAndPackagesXApply() ...</span></div><div class='output co'>#&gt; <span class='message'>[13:58:14.807]  - future.globals: &lt;name-value list&gt; with names ‘list()’</span></div><div class='output co'>#&gt; <span class='message'>[13:58:14.807]  - use_args: TRUE</span></div><div class='output co'>#&gt; <span class='message'>[13:58:14.807] Globals to be used in all futures (chunks): [n=2] ‘...’, ‘...future.FUN’</span></div><div class='output co'>#&gt; <span class='message'>[13:58:14.807] List of 2</span>
-#&gt; <span class='message'>[13:58:14.807]  $ ...          : list()</span>
-#&gt; <span class='message'>[13:58:14.807]   ..- attr(*, "class")= chr [1:2] "DotDotDotList" "list"</span>
-#&gt; <span class='message'>[13:58:14.807]  $ ...future.FUN:function (x, size, replace = FALSE, prob = NULL)  </span>
-#&gt; <span class='message'>[13:58:14.807]  - attr(*, "class")= chr [1:3] "FutureGlobals" "Globals" "list"</span>
-#&gt; <span class='message'>[13:58:14.807]  - attr(*, "where")=List of 2</span>
-#&gt; <span class='message'>[13:58:14.807]   ..$ ...          :&lt;environment: 0x5572e734aab8&gt; </span>
-#&gt; <span class='message'>[13:58:14.807]   ..$ ...future.FUN:&lt;environment: R_EmptyEnv&gt; </span>
-#&gt; <span class='message'>[13:58:14.807]  - attr(*, "resolved")= logi FALSE</span>
-#&gt; <span class='message'>[13:58:14.807]  - attr(*, "total_size")= num NA</span></div><div class='output co'>#&gt; <span class='message'>[13:58:14.811] Packages to be attached in all futures: [n=0] </span></div><div class='output co'>#&gt; <span class='message'>[13:58:14.811] getGlobalsAndPackagesXApply() ... DONE</span></div><div class='output co'>#&gt; <span class='message'>[13:58:14.811] Number of futures (= number of chunks): 1</span></div><div class='output co'>#&gt; <span class='message'>[13:58:14.811] Launching 1 futures (chunks) ...</span></div><div class='output co'>#&gt; <span class='message'>[13:58:14.811] Chunk #1 of 1 ...</span></div><div class='output co'>#&gt; <span class='message'>[13:58:14.811]  - Adjusted option 'future.globals.maxSize': Inf -&gt; 2 * Inf = Inf (bytes)</span></div><div class='output co'>#&gt; <span class='message'>[13:58:14.812]  - seeds: [2] &lt;seeds&gt;</span></div><div class='output co'>#&gt; <span class='message'>[13:58:14.814] Created future:</span></div><div class='output co'>#&gt; <span class='message'>[13:58:14.814] SequentialFuture:</span>
-#&gt; <span class='message'>[13:58:14.814] Label: ‘future_apply-1’</span>
-#&gt; <span class='message'>[13:58:14.814] Expression:</span>
-#&gt; <span class='message'>[13:58:14.814] {</span>
-#&gt; <span class='message'>[13:58:14.814]     do.call(function(...) {</span>
-#&gt; <span class='message'>[13:58:14.814]         ...future.globals.maxSize.org &lt;- getOption("future.globals.maxSize")</span>
-#&gt; <span class='message'>[13:58:14.814]         if (!identical(...future.globals.maxSize.org, ...future.globals.maxSize)) {</span>
-#&gt; <span class='message'>[13:58:14.814]             oopts &lt;- options(future.globals.maxSize = ...future.globals.maxSize)</span>
-#&gt; <span class='message'>[13:58:14.814]             on.exit(options(oopts), add = TRUE)</span>
-#&gt; <span class='message'>[13:58:14.814]         }</span>
-#&gt; <span class='message'>[13:58:14.814]         {</span>
-#&gt; <span class='message'>[13:58:14.814]             lapply(seq_along(...future.elements_ii), FUN = function(jj) {</span>
-#&gt; <span class='message'>[13:58:14.814]                 ...future.X_jj &lt;- ...future.elements_ii[[jj]]</span>
-#&gt; <span class='message'>[13:58:14.814]                 assign(".Random.seed", ...future.seeds_ii[[jj]], </span>
-#&gt; <span class='message'>[13:58:14.814]                   envir = globalenv(), inherits = FALSE)</span>
-#&gt; <span class='message'>[13:58:14.814]                 ...future.FUN(...future.X_jj, ...)</span>
-#&gt; <span class='message'>[13:58:14.814]             })</span>
-#&gt; <span class='message'>[13:58:14.814]         }</span>
-#&gt; <span class='message'>[13:58:14.814]     }, args = future.call.arguments)</span>
-#&gt; <span class='message'>[13:58:14.814] }</span>
-#&gt; <span class='message'>[13:58:14.814] Lazy evaluation: FALSE</span>
-#&gt; <span class='message'>[13:58:14.814] Asynchronous evaluation: FALSE</span>
-#&gt; <span class='message'>[13:58:14.814] Local evaluation: TRUE</span>
-#&gt; <span class='message'>[13:58:14.814] Environment: 0x5572e9181490</span>
-#&gt; <span class='message'>[13:58:14.814] Capture standard output: TRUE</span>
-#&gt; <span class='message'>[13:58:14.814] Capture condition classes: ‘condition’ (excluding ‘nothing’)</span>
-#&gt; <span class='message'>[13:58:14.814] Globals: 5 objects totaling 35.81 KiB (DotDotDotList ‘future.call.arguments’ of 0 bytes, function ‘...future.FUN’ of 35.45 KiB, list ‘...future.elements_ii’ of 160 bytes, list ‘...future.seeds_ii’ of 160 bytes, numeric ‘...future.globals.maxSize’ of 56 bytes)</span>
-#&gt; <span class='message'>[13:58:14.814] Packages: &lt;none&gt;</span>
-#&gt; <span class='message'>[13:58:14.814] L'Ecuyer-CMRG RNG seed: &lt;none&gt; (seed = NULL)</span>
-#&gt; <span class='message'>[13:58:14.814] Resolved: TRUE</span>
-#&gt; <span class='message'>[13:58:14.814] Value: 160 bytes of class ‘list’</span>
-#&gt; <span class='message'>[13:58:14.814] Early signaling: FALSE</span>
-#&gt; <span class='message'>[13:58:14.814] Owner process: 9d04a638-80d7-2cb1-c9c4-7dbd6de2ef73</span>
-#&gt; <span class='message'>[13:58:14.814] Class: ‘SequentialFuture’, ‘UniprocessFuture’, ‘Future’, ‘environment’</span></div><div class='output co'>#&gt; <span class='message'>[13:58:14.816] Chunk #1 of 1 ... DONE</span></div><div class='output co'>#&gt; <span class='message'>[13:58:14.816] Launching 1 futures (chunks) ... DONE</span></div><div class='output co'>#&gt; <span class='message'>[13:58:14.816] Resolving 1 futures (chunks) ...</span></div><div class='output co'>#&gt; <span class='message'>[13:58:14.816]  - Number of value chunks collected: 1</span></div><div class='output co'>#&gt; <span class='message'>[13:58:14.816] Resolving 1 futures (chunks) ... DONE</span></div><div class='output co'>#&gt; <span class='message'>[13:58:14.817] Reducing values from 1 chunks ...</span></div><div class='output co'>#&gt; <span class='message'>[13:58:14.817]  - Number of values collected after concatenation: 2</span></div><div class='output co'>#&gt; <span class='message'>[13:58:14.817]  - Number of values expected: 2</span></div><div class='output co'>#&gt; <span class='message'>[13:58:14.817] Reducing values from 1 chunks ... DONE</span></div><div class='output co'>#&gt; <span class='message'>[13:58:14.817] future_lapply() ... DONE</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>Y2</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>Y2</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;      [,1] [,2]
 #&gt; [1,]    7    6
 #&gt; [2,]    1    8

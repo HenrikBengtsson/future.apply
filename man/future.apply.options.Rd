@@ -34,7 +34,9 @@ For example, if \code{R_FUTURE_APPLY_DEBUG = "TRUE"}, then option
 }
 
 \examples{
+\dontrun{
 options(future.apply.debug = TRUE)
+}
 
 }
 \seealso{

@@ -24,7 +24,9 @@
 #' \option{future.apply.debug} is set to `TRUE` (logical).
 #'
 #' @examples
+#' \dontrun{
 #' options(future.apply.debug = TRUE)
+#' }
 #'
 #' @seealso
 #' To set \R options or environment variables when \R starts (even before the \pkg{future} package is loaded), see the \link[base]{Startup} help page.  The \href{https://cran.r-project.org/package=startup}{\pkg{startup}} package provides a friendly mechanism for configurating \R's startup process.

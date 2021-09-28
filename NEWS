@@ -1,9 +1,13 @@
 Package: future.apply
 =====================
 
-Version: 1.8.1-9001 [2021-09-23]
+Version: 1.8.1-9001 [2021-09-28]
 
- * ...
+DEPRECATED AND DEFUNCT:
+
+ * Removed moot argument 'future.lazy' from all functions. Regardless of
+   setting it to TRUE or FALSE, futures would be resolved momentarily and
+   always before the apply returned.
 
 
 Version: 1.8.1 [2021-08-09]

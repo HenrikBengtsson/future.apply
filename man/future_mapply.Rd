@@ -24,7 +24,6 @@ future_mapply(
   future.conditions = "condition",
   future.globals = TRUE,
   future.packages = NULL,
-  future.lazy = FALSE,
   future.seed = FALSE,
   future.scheduling = 1,
   future.chunk.size = NULL,
@@ -75,9 +74,6 @@ For details, see \code{\link[=future_lapply]{future_lapply()}}.}
 
 \item{future.packages}{(optional) a character vector specifying packages
 to be attached in the R environment evaluating the future.}
-
-\item{future.lazy}{Specifies whether the futures should be resolved
-lazily or eagerly (default).}
 
 \item{future.seed}{A logical or an integer (of length one or seven), or
 a list of \code{max(lengths(list(...)))} with pre-generated random seeds.

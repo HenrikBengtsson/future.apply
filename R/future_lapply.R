@@ -33,9 +33,6 @@
 #' @param future.packages (optional) a character vector specifying packages
 #'        to be attached in the R environment evaluating the future.
 #' 
-#' @param future.lazy Specifies whether the futures should be resolved
-#'        lazily or eagerly (default).
-#' 
 #' @param future.seed A logical or an integer (of length one or seven),
 #'        or a list of `length(X)` with pre-generated random seeds.
 #'        For details, see below section.
@@ -156,7 +153,7 @@ future_lapply <- local({
     })
   })
 
-  function(X, FUN, ..., future.envir = parent.frame(), future.stdout = TRUE, future.conditions = "condition", future.globals = TRUE, future.packages = NULL, future.lazy = FALSE, future.seed = FALSE, future.scheduling = 1.0, future.chunk.size = NULL, future.label = "future_lapply-%d") {
+  function(X, FUN, ..., future.envir = parent.frame(), future.stdout = TRUE, future.conditions = "condition", future.globals = TRUE, future.packages = NULL, future.seed = FALSE, future.scheduling = 1.0, future.chunk.size = NULL, future.label = "future_lapply-%d") {
     fcn_name <- "future_lapply"
     args_name <- "X"
   
@@ -220,7 +217,6 @@ future_lapply <- local({
       future.stdout = future.stdout,
       future.conditions = future.conditions,
       future.seed = future.seed,
-      future.lazy = future.lazy,
       future.label = future.label,
       fcn_name = fcn_name,
       args_name = args_name,

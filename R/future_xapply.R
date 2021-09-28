@@ -9,13 +9,11 @@ future_xapply <- local({
     .(expr)
   })
   
-  function(FUN, nX, chunk_args, args = NULL, MoreArgs = NULL, expr, envir = parent.frame(), future.envir, future.globals, future.packages, future.scheduling, future.chunk.size, future.stdout, future.conditions, future.seed, future.lazy, future.label, get_chunk, fcn_name, args_name, ..., debug) {
+  function(FUN, nX, chunk_args, args = NULL, MoreArgs = NULL, expr, envir = parent.frame(), future.envir, future.globals, future.packages, future.scheduling, future.chunk.size, future.stdout, future.conditions, future.seed, future.label, get_chunk, fcn_name, args_name, ..., debug) {
     stop_if_not(is.function(FUN))
     
     stop_if_not(is.logical(future.stdout), length(future.stdout) == 1L)
     
-    stop_if_not(is.logical(future.lazy), length(future.lazy) == 1L)
-  
     stop_if_not(length(future.scheduling) == 1L, !is.na(future.scheduling),
               is.numeric(future.scheduling) || is.logical(future.scheduling))
   
@@ -194,7 +192,6 @@ future_xapply <- local({
         conditions = future.conditions,
         globals = globals_ii, packages = packages_ii,
         seed = future.seed,
-        lazy = future.lazy,
         label = labels[ii]
       )
       

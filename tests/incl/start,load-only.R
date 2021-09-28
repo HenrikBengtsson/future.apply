@@ -61,8 +61,7 @@ supportedStrategies <- function(cores = 1L, excl = c("multiprocess", "cluster"),
   strategies <- future:::supportedStrategies(...)
   strategies <- setdiff(strategies, excl)
   if (cores > 1) {
-    strategies <- setdiff(strategies,
-                          c("sequential", "uniprocess", "eager", "lazy"))
+    strategies <- setdiff(strategies, c("sequential", "uniprocess"))
   }
   strategies
 }

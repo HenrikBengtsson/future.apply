@@ -570,23 +570,25 @@ base <span style="R">R</span> functions, which are licensed under GPL (&gt;= 2) 
 <span class='co'>## where they are, the random numbers produced are identical</span>
 
 <span class='fu'>plan</span><span class='op'>(</span><span class='va'>multisession</span><span class='op'>)</span>
-<span class='va'>y1</span> <span class='op'>&lt;-</span> <span class='fu'>future_lapply</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span>, FUN <span class='op'>=</span> <span class='va'>rnorm</span>, future.seed <span class='op'>=</span> <span class='fl'>0xBEEF</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>0xBEEF</span><span class='op'>)</span>
+<span class='va'>y1</span> <span class='op'>&lt;-</span> <span class='fu'>future_lapply</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span>, FUN <span class='op'>=</span> <span class='va'>rnorm</span>, future.seed <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span><span class='op'>(</span><span class='va'>y1</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; List of 5
-#&gt;  $ : num 0.682
-#&gt;  $ : num [1:2] 1.19 -0.474
-#&gt;  $ : num [1:3] -1.081 -2.412 -0.466
-#&gt;  $ : num [1:4] 1.143 -1.278 0.438 0.819
-#&gt;  $ : num [1:5] -1.2935 -0.0878 -0.3909 0.5652 0.2253</div><div class='input'>
+#&gt;  $ : num -1.32
+#&gt;  $ : num [1:2] -1.5 0.293
+#&gt;  $ : num [1:3] 2.787 0.929 -0.461
+#&gt;  $ : num [1:4] -0.193 -0.184 0.504 1.255
+#&gt;  $ : num [1:5] -1.704 1.142 2.352 -1.474 -0.559</div><div class='input'>
 <span class='fu'>plan</span><span class='op'>(</span><span class='va'>sequential</span><span class='op'>)</span>
-<span class='va'>y2</span> <span class='op'>&lt;-</span> <span class='fu'>future_lapply</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span>, FUN <span class='op'>=</span> <span class='va'>rnorm</span>, future.seed <span class='op'>=</span> <span class='fl'>0xBEEF</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>0xBEEF</span><span class='op'>)</span>
+<span class='va'>y2</span> <span class='op'>&lt;-</span> <span class='fu'>future_lapply</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span>, FUN <span class='op'>=</span> <span class='va'>rnorm</span>, future.seed <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span><span class='op'>(</span><span class='va'>y2</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; List of 5
-#&gt;  $ : num 0.682
-#&gt;  $ : num [1:2] 1.19 -0.474
-#&gt;  $ : num [1:3] -1.081 -2.412 -0.466
-#&gt;  $ : num [1:4] 1.143 -1.278 0.438 0.819
-#&gt;  $ : num [1:5] -1.2935 -0.0878 -0.3909 0.5652 0.2253</div><div class='input'>
+#&gt;  $ : num -1.32
+#&gt;  $ : num [1:2] -1.5 0.293
+#&gt;  $ : num [1:3] 2.787 0.929 -0.461
+#&gt;  $ : num [1:4] -0.193 -0.184 0.504 1.255
+#&gt;  $ : num [1:5] -1.704 1.142 2.352 -1.474 -0.559</div><div class='input'>
 <span class='fu'><a href='https://rdrr.io/r/base/stopifnot.html'>stopifnot</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/all.equal.html'>all.equal</a></span><span class='op'>(</span><span class='va'>y1</span>, <span class='va'>y2</span><span class='op'>)</span><span class='op'>)</span>
 <span class='co'># }</span>
 

@@ -160,13 +160,15 @@ stopifnot(identical(y1, y0))
 ## where they are, the random numbers produced are identical
 
 plan(multisession)
+set.seed(0xBEEF)
 y1 <- future_mapply(stats::runif, n = 1:4, max = 2:5,
-                    MoreArgs = list(min = 1), future.seed = 0xBEEF)
+                    MoreArgs = list(min = 1), future.seed = TRUE)
 print(y1)
 
 plan(sequential)
+set.seed(0xBEEF)
 y2 <- future_mapply(stats::runif, n = 1:4, max = 2:5,
-                    MoreArgs = list(min = 1), future.seed = 0xBEEF)
+                    MoreArgs = list(min = 1), future.seed = TRUE)
 print(y2)
 
 stopifnot(all.equal(y1, y2))

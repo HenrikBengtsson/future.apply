@@ -30,9 +30,6 @@ future_xapply <- local({
     ## pass possibly tweaked 'future.seed' to future()
     if (is.null(seeds)) {
       stop_if_not(is.null(future.seed) || isFALSE(future.seed))
-      if (isFALSE(future.seed) && future_version() <= "1.15.1") {
-        future.seed <- NULL
-      }
     } else {
       ## If RNG seeds are used (given or generated), make sure to reset
       ## the RNG state afterward

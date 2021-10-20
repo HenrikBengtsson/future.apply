@@ -38,9 +38,8 @@ future_vapply <- function(X, FUN, FUN.VALUE, ..., USE.NAMES = TRUE, future.envir
   res <- future_lapply(X, FUN = function(x, ...) {
     value <- x_FUN(x, ...)
     if (length(value) != times) {
-      stop(sprintf(
-        "values must be length %d, but FUN(X[[ii]]) result is length %d",
-        times, length(value)))
+      stopf("values must be length %d, but FUN(X[[ii]]) result is length %d",
+            times, length(value))
     }
     stop_if_not(all(dim(value) == dim), typeof(value) %in% valid_types)
     value

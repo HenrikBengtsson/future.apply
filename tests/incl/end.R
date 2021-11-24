@@ -37,9 +37,17 @@ if (!identical(Sys.getenv(), oenvs0)) {
   added <- setdiff(names(cenvs), names(oenvs0))
   message(sprintf("Failed to undo 'added' environment variables: [%d] %s",
           length(added), paste(sQuote(added), collapse = ", ")))
+  for (name in added) {
+    message(sprintf("'added' environment variable %s: %s",
+            sQuote(name), sQuote(cenvs[[name]])))
+  }
   missing <- setdiff(names(oenvs0), names(cenvs))
   message(sprintf("Failed to redo 'missing' environment variables: [%d] %s",
           length(missing), paste(sQuote(missing), collapse = ", ")))
+  for (name in missing) {
+    message(sprintf("'missing' environment variable %s: %s",
+            sQuote(name), sQuote(oenvs0[[name]])))
+  }
   for (name in intersect(names(cenvs), names(oenvs0))) {
     cenv <- cenvs[[name]]
     oenv0 <- oenvs0[[name]]

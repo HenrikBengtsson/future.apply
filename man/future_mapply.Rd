@@ -107,7 +107,7 @@ See \code{\link[base:funprog]{base::Map()}} for details.
 \code{future_mapply()} returns a list, or for \code{SIMPLIFY = TRUE}, a vector,
 array or list.  See \code{\link[base:mapply]{base::mapply()}} for details.
 
-\code{future_.mapply()} returns a list. See \code{\link[base:base-internal]{base::.mapply()}} for details.
+\code{future_.mapply()} returns a list. See \code{\link[base:mapply]{base::.mapply()}} for details.
 }
 \description{
 \code{future_mapply()} implements \code{\link[base:mapply]{base::mapply()}} using futures with perfect
@@ -119,7 +119,7 @@ the second elements, the third elements, and so on.
 Arguments are recycled if necessary.
 }
 \details{
-Note that \code{\link[base:base-internal]{base::.mapply()}}, which \code{future_.mapply()} is modeled after
+Note that \code{\link[base:mapply]{base::.mapply()}}, which \code{future_.mapply()} is modeled after
 is listed as an "internal" function in \R despite being exported.
 }
 \examples{

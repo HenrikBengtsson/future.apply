@@ -29,7 +29,8 @@ if (length(missing) > 0) {
   if (.Platform$OS.type == "windows") {
     drop <- missing[!nzchar(values)]
     if (length(drop) > 0) {
-      oenvs0[drop] <- NULL
+      message(sprintf("WORKAROUND: Ignoring empty environment variables on MS Windows: %s", paste(sQuote(drop), collape = ", ")))
+      oenvs0 <- oenvs0[setdiff(names(oenvs0), drop)]
       ## In case Sys.setenv() supports empty string in the future
       Sys.unsetenv(drop)
     }

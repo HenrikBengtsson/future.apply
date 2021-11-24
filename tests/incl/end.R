@@ -29,7 +29,6 @@ if (length(missing) > 0) {
   if (.Platform$OS.type == "windows") {
     drop <- missing[!nzchar(values)]
     if (length(drop) > 0) {
-      message(sprintf("WORKAROUND: Ignoring empty environment variables on MS Windows: %s", paste(sQuote(drop), collape = ", ")))
       oenvs0 <- oenvs0[setdiff(names(oenvs0), drop)]
       ## In case Sys.setenv() supports empty string in the future
       Sys.unsetenv(drop)
@@ -43,34 +42,16 @@ for (name in intersect(names(cenvs), names(oenvs0))) {
   if (nchar(name) == 0) next
   if (!identical(cenvs[[name]], oenvs0[[name]])) {
     do.call(Sys.setenv, as.list(oenvs0[name]))
-  }
-}
-## (d) Assert that everything was undone
-if (!identical(Sys.getenv(), oenvs0)) {
-  cenvs <- Sys.getenv()
-  added <- setdiff(names(cenvs), names(oenvs0))
-  message(sprintf("Failed to undo 'added' environment variables: [%d] %s",
-          length(added), paste(sQuote(added), collapse = ", ")))
-  for (name in added) {
-    message(sprintf("'added' environment variable %s: %s",
-            sQuote(name), sQuote(cenvs[[name]])))
-  }
-  missing <- setdiff(names(oenvs0), names(cenvs))
-  message(sprintf("Failed to redo 'missing' environment variables: [%d] %s",
-          length(missing), paste(sQuote(missing), collapse = ", ")))
-  for (name in missing) {
-    message(sprintf("'missing' environment variable %s: %s",
-            sQuote(name), sQuote(oenvs0[[name]])))
-  }
-  for (name in intersect(names(cenvs), names(oenvs0))) {
-    cenv <- cenvs[[name]]
-    oenv0 <- oenvs0[[name]]
-    if (!identical(cenv, oenv0)) {
-      message("Failed to reset environment variable %s: %s != %s", sQuote(name), sQuote(cenv), sQuote(oenv0))
+    ## WORKAROUND: Most platforms allow setting an environment variable to
+    ## "", but Windows does not and there Sys.setenv(FOO = "") unsets FOO.
+    if (.Platform$OS.type == "windows" && !nzchar(oenvs0[[name]])) {
+      oenvs0 <- oenvs0[setdiff(names(oenvs0), name)]
+      ## In case Sys.setenv() supports empty string in the future
+      Sys.unsetenv(name)
     }
   }
 }
-stopifnot(all.equal(Sys.getenv(), oenvs0))
+## (d) Assert that everything was undone
 stopifnot(identical(Sys.getenv(), oenvs0))
 
 

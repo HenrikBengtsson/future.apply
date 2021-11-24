@@ -32,6 +32,23 @@ for (name in intersect(names(cenvs), names(oenvs0))) {
   }
 }
 ## (d) Assert that everything was undone
+if (!identical(Sys.getenv(), oenvs0)) {
+  cenvs <- Sys.getenv()
+  added <- setdiff(names(cenvs), names(oenvs0))
+  message(sprintf("Failed to undo 'added' environment variables: [%d] %s",
+          length(added), paste(sQuote(added), collapse = ", ")))
+  missing <- setdiff(names(oenvs0), names(cenvs))
+  message(sprintf("Failed to redo 'missing' environment variables: [%d] %s",
+          length(missing), paste(sQuote(missing), collapse = ", ")))
+  for (name in intersect(names(cenvs), names(oenvs0))) {
+    cenv <- cenvs[[name]]
+    oenv0 <- oenvs0[[name]]
+    if (!identical(cenv, oenv0)) {
+      message("Failed to reset environment variable %s: %s != %s", sQuote(name), sQuote(cenv), sQuote(oenv0))
+    }
+  }
+}
+stopifnot(all.equal(Sys.getenv(), oenvs0))
 stopifnot(identical(Sys.getenv(), oenvs0))
 
 

@@ -12,8 +12,8 @@
 #' 
 #' @param FUN  A function to apply, found via [base::match.fun()].
 #' 
-#' @param \ldots  Arguments to vectorize over (vectors or lists of strictly
-#' positive length, or all of zero length).
+#' @param \ldots  Arguments to vectorize over, will be recycled to common
+#' length, or zero if one of them is of length zero.
 #'
 #' @param MoreArgs  A list of other arguments to `FUN`.
 #'
@@ -56,12 +56,13 @@ future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES 
   ns <- lengths(dots)
   
   ## Nothing to do?
-  if (all(ns == 0L)) {
+  ## "max-or-0-if-any" recycling rule was introduced in R (>= 4.2.0)
+  if (any(ns == 0L)) {
     if (!USE.NAMES) return(list())
     values <- list()
     first <- dots[[1]]
     names <- names(first)
-    if (is.null(names) && is.character(first)) names <- first
+    if (is.null(names) && is.character(first)) names <- character(0L)
     names(values) <- names
     return(values)
   }

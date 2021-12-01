@@ -1,7 +1,13 @@
 Package: future.apply
 =====================
 
-Version: 1.8.1-9001 [2021-10-02]
+Version: 1.8.1-9002 [2021-11-30]
+
+SIGNIFICANT CHANGES:
+
+ * future_mapply() and future_Map() was updated to match the new behavior of
+   mapply() and Map() in R-devel (to become R 4.2.0), which follows the
+   "max-or-0-if-any" recycling rule.
 
 DEPRECATED AND DEFUNCT:
 

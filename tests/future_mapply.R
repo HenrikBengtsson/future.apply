@@ -111,6 +111,92 @@ for (strategy in supportedStrategies()) {
   y0 <- Map(weighted.mean, xs, ws)
   y1 <- future_Map(stats::weighted.mean, xs, ws)
   stopifnot(all.equal(y1, y0))
+
+  message("- future_mapply() - 'max-or-0-if' recycling rule ...")
+  ## R (>= 4.2.0): mapply() & Map() follow usual "max-or-0-if" recycling rule
+  ## and keeps returning a named list in the "empty" case.
+  
+  truth <- list()
+  if (getRversion() >= "4.2.0") {
+    y0 <- mapply(`+`, 1:3, NULL)
+    stopifnot(identical(y0, truth))
+  }
+  y <- future_mapply(`+`, 1:3, NULL)
+  stopifnot(identical(y, truth))
+  
+  truth <- setNames(list(), character())
+  if (getRversion() >= "4.2.0") {
+    y0 <- mapply(paste, character(), NULL)
+    stopifnot(identical(y0, truth))
+  }
+  y <- future_mapply(paste, character(), NULL)
+  stopifnot(identical(y, truth))
+  
+  if (getRversion() >= "4.2.0") {
+    y0 <- mapply(paste, character(), letters)
+    stopifnot(identical(y0, truth))
+  }
+  y <- future_mapply(paste, character(), letters)
+  stopifnot(identical(y, truth))
+  
+  if (getRversion() >= "4.2.0") {
+    y0 <- mapply(paste, "A", character())
+    stopifnot(identical(y0, truth))
+  }
+  y <- future_mapply(paste, "A", character())
+  stopifnot(identical(y, truth))
+  
+  if (getRversion() >= "4.2.0") {
+    y0 <- mapply(paste, character(), letters) 
+    stopifnot(identical(y0, truth))
+  }
+  y <- future_mapply(paste, character(), letters) 
+  stopifnot(identical(y, truth))
+  
+  if (getRversion() >= "4.2.0") {
+    y0 <- mapply(paste, character(), NULL)
+    stopifnot(identical(y0, truth))
+  }
+  y <- future_mapply(paste, character(), NULL)
+  stopifnot(identical(y, truth))
+  
+  if (getRversion() >= "4.2.0") {
+    y0 <- mapply(paste, character(), letters)
+    stopifnot(identical(y0, truth))
+  }
+  y <- future_mapply(paste, character(), letters)
+  stopifnot(identical(y, truth))
+  
+  if (getRversion() >= "4.2.0") {
+    y0 <- mapply(paste, "A", character()) 
+    stopifnot(identical(y0, truth))
+  }
+  y <- future_mapply(paste, "A", character()) 
+  stopifnot(identical(y, truth))
+  
+  if (getRversion() >= "4.2.0") {
+    y0 <- mapply(paste, character(), letters) 
+    stopifnot(identical(y0, truth))
+  }
+  y <- future_mapply(paste, character(), letters) 
+  stopifnot(identical(y, truth))
+  
+  ## R (>= 4.2.0): Map() now recycles similar to basic Ops:
+  truth <- as.list(1 + 1:3)
+  if (getRversion() >= "4.2.0") {
+    y0 <- Map(`+`, 1, 1:3)
+    stopifnot(identical(y0, truth))
+  }
+  y <- future_Map(`+`, 1, 1:3)
+  stopifnot(identical(y, truth))
+  
+  truth <- as.list(numeric() + 1:3)
+  if (getRversion() >= "4.2.0") {
+    y0 <- Map(`+`, numeric(), 1:3)
+    stopifnot(identical(y0, truth))
+  }
+  y <- future_Map(`+`, numeric(), 1:3)
+  stopifnot(identical(y0, truth))
   
   plan(sequential)
   message(sprintf("*** strategy = %s ... done", sQuote(strategy)))

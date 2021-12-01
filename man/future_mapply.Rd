@@ -96,8 +96,8 @@ If \code{NULL}, then argument \code{future.scheduling} is used.}
 \item{dots}{A list of arguments to vectorize over (vectors or lists of
 strictly positive length, or all of zero length).}
 
-\item{\ldots}{Arguments to vectorize over (vectors or lists of strictly
-positive length, or all of zero length).}
+\item{\ldots}{Arguments to vectorize over, will be recycled to common
+length, or zero if one of them is of length zero.}
 }
 \value{
 \code{future_Map()} is a simple wrapper to \code{future_mapply()} which does not

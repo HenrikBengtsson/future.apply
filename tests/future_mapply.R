@@ -196,7 +196,7 @@ for (strategy in supportedStrategies()) {
     stopifnot(identical(y0, truth))
   }
   y <- future_Map(`+`, numeric(), 1:3)
-  stopifnot(identical(y0, truth))
+  stopifnot(identical(y, truth))
   
   plan(sequential)
   message(sprintf("*** strategy = %s ... done", sQuote(strategy)))

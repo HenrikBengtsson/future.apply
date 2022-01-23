@@ -170,7 +170,7 @@ future_xapply <- local({
       if (length(chunk) > 1L) {
         globals_ii["...future.globals.maxSize"] <- list(globals.maxSize)
         options(future.globals.maxSize = length(chunk) * globals.maxSize.default)
-        if (debug) mdebugf(" - Adjusted option 'future.globals.maxSize': %g -> %d * %g = %g (bytes)", globals.maxSize.default, length(chunk), globals.maxSize.default, getOption("future.globals.maxSize"))
+        if (debug) mdebugf(" - Adjusted option 'future.globals.maxSize': %.0f -> %d * %.0f = %.0f (bytes)", globals.maxSize.default, length(chunk), globals.maxSize.default, getOption("future.globals.maxSize"))
         on.exit(options(future.globals.maxSize = globals.maxSize), add = TRUE)
       }
       

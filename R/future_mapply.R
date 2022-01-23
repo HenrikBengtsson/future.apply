@@ -62,7 +62,11 @@ future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES 
     values <- list()
     first <- dots[[1]]
     names <- names(first)
-    if (is.null(names) && is.character(first)) names <- character(0L)
+    if (length(names) > 0L) {
+      names <- character(0L)
+    } else if (is.null(names) && is.character(first)) {
+      names <- character(0L)
+    }
     names(values) <- names
     return(values)
   }

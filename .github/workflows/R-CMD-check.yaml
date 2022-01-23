@@ -21,7 +21,7 @@ jobs:
           - {os: ubuntu-20.04,   r: 'release' }
           - {os: ubuntu-20.04,   r: 'oldrel'  }
           - {os: ubuntu-20.04,   r: '3.5'     }
-          - {os: ubuntu-20.04,   r: '3.3'     }
+          - {os: ubuntu-20.04,   r: '3.4'     }
 
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}

@@ -180,7 +180,15 @@ for (strategy in supportedStrategies()) {
   }
   y <- future_mapply(paste, character(), letters) 
   stopifnot(identical(y, truth))
-  
+
+  ## Gives an error in R-devel (2021-11-26 r81252)
+  if (getRversion() >= "4.2.0" && FALSE) {
+    y0 <- mapply(paste, c(a = "A"), character())
+    stopifnot(identical(y0, truth))
+  }
+  y <- future_mapply(paste, c(a = "A"), character())
+  stopifnot(identical(y, truth))
+
   ## R (>= 4.2.0): Map() now recycles similar to basic Ops:
   truth <- as.list(1 + 1:3)
   if (getRversion() >= "4.2.0") {

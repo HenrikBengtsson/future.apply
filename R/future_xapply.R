@@ -67,7 +67,7 @@ future_xapply <- local({
                                       future.globals = future.globals,
                                       future.packages = future.packages,
                                       debug = debug)
-  
+
     if (!isNamespace(environment(gp$globals$...future.FUN)))
       environment(gp$globals$...future.FUN) <- .GlobalEnv
     packages <- gp$packages

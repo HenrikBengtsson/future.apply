@@ -68,8 +68,14 @@ future_xapply <- local({
                                       future.packages = future.packages,
                                       debug = debug)
 
-    if (!isNamespace(environment(gp$globals$...future.FUN)))
-      environment(gp$globals$...future.FUN) <- .GlobalEnv
+    ## Strip the function from its enclosing environment
+    env <- environment(gp$globals$...future.FUN)
+    if (!isNamespace(env)) { # Except when it's a package namespace!
+      ## Assign a new environment
+      environment(gp$globals$...future.FUN) <- new.env(parent = .GlobalEnv)
+      ## Need to retain the '...' list as it is not handled well otherwise
+      environment(gp$globals$...future.FUN)$... <- env$...
+    }
     packages <- gp$packages
     globals <- gp$globals
     scanForGlobals <- gp$scanForGlobals

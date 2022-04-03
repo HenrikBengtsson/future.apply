@@ -23,7 +23,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">future.apply</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.8.1-9002</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.8.1-9003</span>
       </span>
     </div>
 
@@ -32,7 +32,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -51,7 +51,7 @@
   </a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Packages
      
     <span class="caret"></span>
@@ -130,13 +130,17 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="1.8.1-9002" id="futureapply-181-9002">future.apply 1.8.1-9002<a class="anchor" aria-label="anchor" href="#futureapply-181-9002"></a></h2>
+<h2 class="page-header" data-toc-text="1.8.1-9003" id="futureapply-181-9003">future.apply 1.8.1-9003<a class="anchor" aria-label="anchor" href="#futureapply-181-9003"></a></h2>
 <div class="section level4">
-<h4 id="significant-changes-1-8-1-9002">Significant Changes<a class="anchor" aria-label="anchor" href="#significant-changes-1-8-1-9002"></a></h4>
+<h4 id="significant-changes-1-8-1-9003">Significant Changes<a class="anchor" aria-label="anchor" href="#significant-changes-1-8-1-9003"></a></h4>
 <ul><li>future_mapply() and future_Map() was updated to match the new behavior of mapply() and Map() in R-devel (to become R 4.2.0), which follows the “max-or-0-if-any” recycling rule.</li>
 </ul></div>
 <div class="section level4">
-<h4 id="deprecated-and-defunct-1-8-1-9002">Deprecated and Defunct<a class="anchor" aria-label="anchor" href="#deprecated-and-defunct-1-8-1-9002"></a></h4>
+<h4 id="performance-1-8-1-9003">Performance<a class="anchor" aria-label="anchor" href="#performance-1-8-1-9003"></a></h4>
+<ul><li>Now captured standard output and conditions are deleted as soon as they have been relayed. This required future (&gt;= 1.25.0).</li>
+</ul></div>
+<div class="section level4">
+<h4 id="deprecated-and-defunct-1-8-1-9003">Deprecated and Defunct<a class="anchor" aria-label="anchor" href="#deprecated-and-defunct-1-8-1-9003"></a></h4>
 <ul><li>Removed moot argument ‘future.lazy’ from all functions. Regardless of setting it to TRUE or FALSE, futures would be resolved momentarily and always before the apply returned.</li>
 </ul></div>
 </div>

@@ -100,8 +100,12 @@ future_xapply <- local({
 
     ## Drop captured standard output and conditions as soon as they have
     ## been relayed?
-    future.stdout <- structure(future.stdout, drop = TRUE)
-    future.conditions <- structure(future.conditions, drop = TRUE)
+    if (isTRUE(future.stdout)) {
+      future.stdout <- structure(future.stdout, drop = TRUE)
+    }
+    if (length(future.conditions) > 0) {
+      future.conditions <- structure(future.conditions, drop = TRUE)
+    }
     
   
     ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

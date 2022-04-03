@@ -96,7 +96,13 @@ future_xapply <- local({
     
     nchunks <- length(chunks)
     if (debug) mdebugf("Number of futures (= number of chunks): %d", nchunks)
-  
+
+
+    ## Drop captured standard output and conditions as soon as they have
+    ## been relayed?
+    future.stdout <- structure(future.stdout, drop = TRUE)
+    future.conditions <- structure(future.conditions, drop = TRUE)
+    
   
     ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     ## Futures

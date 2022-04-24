@@ -6,6 +6,8 @@ jobs:
   R-CMD-check:
     if: "! contains(github.event.head_commit.message, '[ci skip]')"    
 
+    timeout-minutes: 20
+
     runs-on: ${{ matrix.config.os }}
 
     name: ${{ matrix.config.os }} (${{ matrix.config.r }}) ${{ matrix.config.label }}
@@ -14,14 +16,18 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          - {os: windows-latest, r: 'devel'   }
-          - {os: windows-latest, r: 'release' }
-          - {os: macOS-latest,   r: 'release' }
-          - {os: ubuntu-20.04,   r: 'devel'   }
-          - {os: ubuntu-20.04,   r: 'release' }
-          - {os: ubuntu-20.04,   r: 'oldrel'  }
-          - {os: ubuntu-20.04,   r: '3.5'     }
-          - {os: ubuntu-20.04,   r: '3.4'     }
+#          - {os: windows-latest, r: 'devel'    }
+          - {os: windows-latest, r: 'release'  }
+          - {os: windows-latest, r: 'oldrel'   }
+          - {os: macOS-latest,   r: 'devel'    }
+          - {os: macOS-latest,   r: 'release'  }
+          - {os: macOS-latest,   r: 'oldrel'   }
+          - {os: ubuntu-20.04,   r: 'devel'    }
+          - {os: ubuntu-20.04,   r: 'release'  }
+          - {os: ubuntu-20.04,   r: 'oldrel'   }
+          - {os: ubuntu-20.04,   r: 'oldrel-1' }
+          - {os: ubuntu-20.04,   r: 'oldrel-2' }
+          - {os: ubuntu-20.04,   r: '3.4'      }
 
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
@@ -92,7 +98,7 @@ jobs:
         shell: Rscript {0}
 
       - name: Check
-        run: rcmdcheck::rcmdcheck(args = c("--no-manual", "--as-cran"), error_on = "warning", check_dir = "check")
+        run: rcmdcheck::rcmdcheck(args = c("--no-manual", "--as-cran"), error_on = "note", check_dir = "check")
         shell: Rscript {0}
 
       - name: Upload check results

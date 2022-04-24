@@ -11,8 +11,8 @@ SIGNIFICANT CHANGES:
 
 PERFORMANCE:
 
-  * Now captured standard output and conditions are deleted as soon as
-    they have been relayed. This required future (>= 1.25.0).
+ * Now captured standard output and conditions are deleted as soon as
+   they have been relayed. This required future (>= 1.25.0).
 
 DEPRECATED AND DEFUNCT:
 

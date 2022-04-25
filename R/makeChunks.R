@@ -85,7 +85,7 @@ makeChunks <- function(nbrOfElements, nbrOfWorkers,
     } else if (is.function(ordering)) {
       map <- ordering(nbrOfElements)
     } else {
-      stop(sprintf("Unknown value of attribute %s for argument %s: ", "ordering", if (!is.null(future.chunk.size)) "future.chunk.size" else "future.scheduling"), mode(ordering))
+      stopf("Unknown value of attribute %s for argument %s: %s", "ordering", if (!is.null(future.chunk.size)) "future.chunk.size" else "future.scheduling", mode(ordering))
     }
 
     if (!is.null(map)) {

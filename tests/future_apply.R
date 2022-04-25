@@ -77,7 +77,6 @@ for (strategy in supportedStrategies()) {
           future.conditions = NULL,
           future.globals    = TRUE,
           future.packages   = NULL,
-          future.lazy       = FALSE,
           future.scheduling = 1.0,
           future.chunk.size = NULL,
           future.label      = "future_apply-%d"

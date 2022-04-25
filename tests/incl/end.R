@@ -21,7 +21,20 @@ added <- setdiff(names(cenvs), names(oenvs0))
 for (name in added) Sys.unsetenv(name)
 ## (b) Missing
 missing <- setdiff(names(oenvs0), names(cenvs))
-if (length(missing) > 0) do.call(Sys.setenv, as.list(oenvs0[missing]))
+if (length(missing) > 0) {
+  values <- oenvs0[missing]
+  do.call(Sys.setenv, as.list(values))
+  ## WORKAROUND: Most platforms allow setting an environment variable to
+  ## "", but Windows does not and there Sys.setenv(FOO = "") unsets FOO.
+  if (.Platform$OS.type == "windows") {
+    drop <- missing[!nzchar(values)]
+    if (length(drop) > 0) {
+      oenvs0 <- oenvs0[setdiff(names(oenvs0), drop)]
+      ## In case Sys.setenv() supports empty string in the future
+      Sys.unsetenv(drop)
+    }
+  }
+}
 ## (c) Modified?
 for (name in intersect(names(cenvs), names(oenvs0))) {
   ## WORKAROUND: On Linux Wine, base::Sys.getenv() may
@@ -29,6 +42,13 @@ for (name in intersect(names(cenvs), names(oenvs0))) {
   if (nchar(name) == 0) next
   if (!identical(cenvs[[name]], oenvs0[[name]])) {
     do.call(Sys.setenv, as.list(oenvs0[name]))
+    ## WORKAROUND: Most platforms allow setting an environment variable to
+    ## "", but Windows does not and there Sys.setenv(FOO = "") unsets FOO.
+    if (.Platform$OS.type == "windows" && !nzchar(oenvs0[[name]])) {
+      oenvs0 <- oenvs0[setdiff(names(oenvs0), name)]
+      ## In case Sys.setenv() supports empty string in the future
+      Sys.unsetenv(name)
+    }
   }
 }
 ## (d) Assert that everything was undone

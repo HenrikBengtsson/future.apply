@@ -24,7 +24,6 @@ future_mapply(
   future.conditions = "condition",
   future.globals = TRUE,
   future.packages = NULL,
-  future.lazy = FALSE,
   future.seed = FALSE,
   future.scheduling = 1,
   future.chunk.size = NULL,
@@ -76,9 +75,6 @@ For details, see \code{\link[=future_lapply]{future_lapply()}}.}
 \item{future.packages}{(optional) a character vector specifying packages
 to be attached in the R environment evaluating the future.}
 
-\item{future.lazy}{Specifies whether the futures should be resolved
-lazily or eagerly (default).}
-
 \item{future.seed}{A logical or an integer (of length one or seven), or
 a list of \code{max(lengths(list(...)))} with pre-generated random seeds.
 For details, see \code{\link[=future_lapply]{future_lapply()}}.}
@@ -100,8 +96,8 @@ If \code{NULL}, then argument \code{future.scheduling} is used.}
 \item{dots}{A list of arguments to vectorize over (vectors or lists of
 strictly positive length, or all of zero length).}
 
-\item{\ldots}{Arguments to vectorize over (vectors or lists of strictly
-positive length, or all of zero length).}
+\item{\ldots}{Arguments to vectorize over, will be recycled to common
+length, or zero if one of them is of length zero.}
 }
 \value{
 \code{future_Map()} is a simple wrapper to \code{future_mapply()} which does not
@@ -111,7 +107,7 @@ See \code{\link[base:funprog]{base::Map()}} for details.
 \code{future_mapply()} returns a list, or for \code{SIMPLIFY = TRUE}, a vector,
 array or list.  See \code{\link[base:mapply]{base::mapply()}} for details.
 
-\code{future_.mapply()} returns a list. See \code{\link[base:base-internal]{base::.mapply()}} for details.
+\code{future_.mapply()} returns a list. See \code{\link[base:mapply]{base::.mapply()}} for details.
 }
 \description{
 \code{future_mapply()} implements \code{\link[base:mapply]{base::mapply()}} using futures with perfect
@@ -123,7 +119,7 @@ the second elements, the third elements, and so on.
 Arguments are recycled if necessary.
 }
 \details{
-Note that \code{\link[base:base-internal]{base::.mapply()}}, which \code{future_.mapply()} is modeled after
+Note that \code{\link[base:mapply]{base::.mapply()}}, which \code{future_.mapply()} is modeled after
 is listed as an "internal" function in \R despite being exported.
 }
 \examples{
@@ -164,13 +160,15 @@ stopifnot(identical(y1, y0))
 ## where they are, the random numbers produced are identical
 
 plan(multisession)
+set.seed(0xBEEF)
 y1 <- future_mapply(stats::runif, n = 1:4, max = 2:5,
-                    MoreArgs = list(min = 1), future.seed = 0xBEEF)
+                    MoreArgs = list(min = 1), future.seed = TRUE)
 print(y1)
 
 plan(sequential)
+set.seed(0xBEEF)
 y2 <- future_mapply(stats::runif, n = 1:4, max = 2:5,
-                    MoreArgs = list(min = 1), future.seed = 0xBEEF)
+                    MoreArgs = list(min = 1), future.seed = TRUE)
 print(y2)
 
 stopifnot(all.equal(y1, y2))

@@ -9,13 +9,11 @@ future_xapply <- local({
     .(expr)
   })
   
-  function(FUN, nX, chunk_args, args = NULL, MoreArgs = NULL, expr, envir = parent.frame(), future.envir, future.globals, future.packages, future.scheduling, future.chunk.size, future.stdout, future.conditions, future.seed, future.lazy, future.label, get_chunk, fcn_name, args_name, ..., debug) {
+  function(FUN, nX, chunk_args, args = NULL, MoreArgs = NULL, expr, envir = parent.frame(), future.envir, future.globals, future.packages, future.scheduling, future.chunk.size, future.stdout, future.conditions, future.seed, future.label, get_chunk, fcn_name, args_name, ..., debug) {
     stop_if_not(is.function(FUN))
     
     stop_if_not(is.logical(future.stdout), length(future.stdout) == 1L)
     
-    stop_if_not(is.logical(future.lazy), length(future.lazy) == 1L)
-  
     stop_if_not(length(future.scheduling) == 1L, !is.na(future.scheduling),
               is.numeric(future.scheduling) || is.logical(future.scheduling))
   
@@ -32,9 +30,6 @@ future_xapply <- local({
     ## pass possibly tweaked 'future.seed' to future()
     if (is.null(seeds)) {
       stop_if_not(is.null(future.seed) || isFALSE(future.seed))
-      if (isFALSE(future.seed) && future_version() <= "1.15.1") {
-        future.seed <- NULL
-      }
     } else {
       ## If RNG seeds are used (given or generated), make sure to reset
       ## the RNG state afterward
@@ -101,7 +96,17 @@ future_xapply <- local({
     
     nchunks <- length(chunks)
     if (debug) mdebugf("Number of futures (= number of chunks): %d", nchunks)
-  
+
+
+    ## Drop captured standard output and conditions as soon as they have
+    ## been relayed?
+    if (isTRUE(future.stdout)) {
+      future.stdout <- structure(future.stdout, drop = TRUE)
+    }
+    if (length(future.conditions) > 0) {
+      future.conditions <- structure(future.conditions, drop = TRUE)
+    }
+    
   
     ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     ## Futures
@@ -175,7 +180,7 @@ future_xapply <- local({
       if (length(chunk) > 1L) {
         globals_ii["...future.globals.maxSize"] <- list(globals.maxSize)
         options(future.globals.maxSize = length(chunk) * globals.maxSize.default)
-        if (debug) mdebugf(" - Adjusted option 'future.globals.maxSize': %g -> %d * %g = %g (bytes)", globals.maxSize.default, length(chunk), globals.maxSize.default, getOption("future.globals.maxSize"))
+        if (debug) mdebugf(" - Adjusted option 'future.globals.maxSize': %.0f -> %d * %.0f = %.0f (bytes)", globals.maxSize.default, length(chunk), globals.maxSize.default, getOption("future.globals.maxSize"))
         on.exit(options(future.globals.maxSize = globals.maxSize), add = TRUE)
       }
       
@@ -194,7 +199,6 @@ future_xapply <- local({
         conditions = future.conditions,
         globals = globals_ii, packages = packages_ii,
         seed = future.seed,
-        lazy = future.lazy,
         label = labels[ii]
       )
       

@@ -1,6 +1,26 @@
 Package: future.apply
 =====================
 
+Version: 1.9.0 [2022-04-24]
+
+SIGNIFICANT CHANGES:
+
+ * future_mapply() and future_Map() was updated to match the new
+   behavior of mapply() and Map() in R (>= 4.2.0), which follows the
+   "max-or-0-if-any" recycling rule.
+
+PERFORMANCE:
+
+ * Now captured standard output and conditions are deleted as soon as
+   they have been relayed. This required future (>= 1.25.0).
+
+DEPRECATED AND DEFUNCT:
+
+ * Removed moot argument 'future.lazy' from all functions. Regardless
+   of setting it to TRUE or FALSE, futures would be resolved
+   momentarily and always before the apply returned.
+
+
 Version: 1.8.1 [2021-08-09]
 
 BUG FIX:

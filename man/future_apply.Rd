@@ -15,7 +15,6 @@ future_apply(
   future.conditions = "condition",
   future.globals = TRUE,
   future.packages = NULL,
-  future.lazy = FALSE,
   future.seed = FALSE,
   future.scheduling = 1,
   future.chunk.size = NULL,
@@ -56,9 +55,6 @@ controlling how globals are handled. For details, see below section.}
 
 \item{future.packages}{(optional) a character vector specifying packages
 to be attached in the R environment evaluating the future.}
-
-\item{future.lazy}{Specifies whether the futures should be resolved
-lazily or eagerly (default).}
 
 \item{future.seed}{A logical or an integer (of length one or seven),
 or a list of \code{length(X)} with pre-generated random seeds.
@@ -125,11 +121,13 @@ stopifnot(all.equal(Y1, Y0))
 X <- matrix(c(1:4, 1, 6:8), nrow = 2L)
 
 plan(multisession)
-Y1 <- future_apply(X, MARGIN = 1L, FUN = sample, future.seed = 0xBEEF)
+set.seed(0xBEEF)
+Y1 <- future_apply(X, MARGIN = 1L, FUN = sample, future.seed = TRUE)
 print(Y1)
 
 plan(sequential)
-Y2 <- future_apply(X, MARGIN = 1L, FUN = sample, future.seed = 0xBEEF)
+set.seed(0xBEEF)
+Y2 <- future_apply(X, MARGIN = 1L, FUN = sample, future.seed = TRUE)
 print(Y2)
 
 stopifnot(all.equal(Y1, Y2))

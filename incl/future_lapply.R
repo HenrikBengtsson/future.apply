@@ -26,11 +26,13 @@ stopifnot(all.equal(y1, y0))
 ## where they are, the random numbers produced are identical
 
 plan(multisession)
-y1 <- future_lapply(1:5, FUN = rnorm, future.seed = 0xBEEF)
+set.seed(0xBEEF)
+y1 <- future_lapply(1:5, FUN = rnorm, future.seed = TRUE)
 str(y1)
 
 plan(sequential)
-y2 <- future_lapply(1:5, FUN = rnorm, future.seed = 0xBEEF)
+set.seed(0xBEEF)
+y2 <- future_lapply(1:5, FUN = rnorm, future.seed = TRUE)
 str(y2)
 
 stopifnot(all.equal(y1, y2))

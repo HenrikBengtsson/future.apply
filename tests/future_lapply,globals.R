@@ -171,12 +171,7 @@ for (strategy in supportedStrategies()) {
   a <- 0
   y <- future_lapply(1, FUN = function(x) a, future.globals = list(a = 42))
   str(y)
-  if (packageVersion("future") <= "1.21.0" &&
-      strategy %in% c("sequential", "multicore")) {
-    stopifnot(y[[1]] == 0)
-  } else {
-    stopifnot(y[[1]] == 42)
-  }
+  stopifnot(y[[1]] == 42)
 } ## for (strategy ...)
 
 message("*** future_lapply() - tricky globals ... DONE")

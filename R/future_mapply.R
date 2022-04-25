@@ -12,8 +12,8 @@
 #' 
 #' @param FUN  A function to apply, found via [base::match.fun()].
 #' 
-#' @param \ldots  Arguments to vectorize over (vectors or lists of strictly
-#' positive length, or all of zero length).
+#' @param \ldots  Arguments to vectorize over, will be recycled to common
+#' length, or zero if one of them is of length zero.
 #'
 #' @param MoreArgs  A list of other arguments to `FUN`.
 #'
@@ -42,7 +42,7 @@
 #' @keywords manip programming iteration
 #'
 #' @export
-future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES = TRUE, future.envir = parent.frame(), future.stdout = TRUE, future.conditions = "condition", future.globals = TRUE, future.packages = NULL, future.lazy = FALSE, future.seed = FALSE, future.scheduling = 1.0, future.chunk.size = NULL, future.label = "future_mapply-%d") {
+future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES = TRUE, future.envir = parent.frame(), future.stdout = TRUE, future.conditions = "condition", future.globals = TRUE, future.packages = NULL, future.seed = FALSE, future.scheduling = 1.0, future.chunk.size = NULL, future.label = "future_mapply-%d") {
   fcn_name <- "future_mapply"
   args_name <- "..."
   
@@ -56,12 +56,17 @@ future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES 
   ns <- lengths(dots)
   
   ## Nothing to do?
-  if (all(ns == 0L)) {
+  ## "max-or-0-if-any" recycling rule was introduced in R (>= 4.2.0)
+  if (any(ns == 0L)) {
     if (!USE.NAMES) return(list())
     values <- list()
     first <- dots[[1]]
     names <- names(first)
-    if (is.null(names) && is.character(first)) names <- first
+    if (length(names) > 0L) {
+      names <- character(0L)
+    } else if (is.null(names) && is.character(first)) {
+      names <- character(0L)
+    }
     names(values) <- names
     return(values)
   }
@@ -133,7 +138,6 @@ future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES 
     future.stdout = future.stdout,
     future.conditions = future.conditions,
     future.seed = future.seed,
-    future.lazy = future.lazy,
     future.label = future.label,
     fcn_name = fcn_name,
     args_name = args_name,

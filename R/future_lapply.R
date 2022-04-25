@@ -33,9 +33,6 @@
 #' @param future.packages (optional) a character vector specifying packages
 #'        to be attached in the R environment evaluating the future.
 #' 
-#' @param future.lazy Specifies whether the futures should be resolved
-#'        lazily or eagerly (default).
-#' 
 #' @param future.seed A logical or an integer (of length one or seven),
 #'        or a list of `length(X)` with pre-generated random seeds.
 #'        For details, see below section.
@@ -78,8 +75,8 @@
 #' passed as globals to each future created as they are always needed.
 #'
 #' @section Reproducible random number generation (RNG):
-#' Unless `future.seed = FALSE`, this function guarantees to generate
-#' the exact same sequence of random numbers _given the same initial
+#' Unless `future.seed` is `FALSE` or `NULL`, this function guarantees to
+#' generate the exact same sequence of random numbers _given the same initial
 #' seed / RNG state_ - this regardless of type of futures, scheduling
 #' ("chunking") strategy, and number of workers.
 #' 
@@ -87,15 +84,22 @@
 #' iterations (over `X`) by using L'Ecuyer-CMRG RNG streams.  In each
 #' iteration, these seeds are set before calling `FUN(X[[ii]], ...)`.
 #' _Note, for large `length(X)` this may introduce a large overhead._
-#' As input (`future.seed`), a fixed seed (integer) may be given, either
-#' as a full L'Ecuyer-CMRG RNG seed (vector of 1+6 integers) or as a seed
-#' generating such a full L'Ecuyer-CMRG seed.
+#'
 #' If `future.seed = TRUE`, then \code{\link[base:Random]{.Random.seed}}
-#' is returned if it holds a L'Ecuyer-CMRG RNG seed, otherwise one is created
+#' is used if it holds a L'Ecuyer-CMRG RNG seed, otherwise one is created
 #' randomly.
-#' If `future.seed = NA`, a L'Ecuyer-CMRG RNG seed is randomly created.
-#' If none of the function calls `FUN(X[[ii]], ...)` uses random number
-#' generation, then `future.seed = FALSE` may be used.
+#'
+#' If `future.seed = FALSE`, it is expected that none of the
+#' `FUN(X[[ii]], ...)` function calls use random number generation.
+#' If they do, then an informative warning or error is produces depending
+#' on settings. See [future::future] for more details.
+#' Using `future.seed = NULL`, is like `future.seed = FALSE` but without
+#' the check whether random numbers were generated or not.
+#'
+#' As input, `future.seed` may also take a fixed initial seed (integer),
+#' either as a full L'Ecuyer-CMRG RNG seed (vector of 1+6 integers), or
+#' as a seed generating such a full L'Ecuyer-CMRG seed. This seed will
+#' be used to generated `length(X)` L'Ecuyer-CMRG RNG streams.
 #'
 #' In addition to the above, it is possible to specify a pre-generated
 #' sequence of RNG seeds as a list such that
@@ -110,13 +114,14 @@
 #' **Note that `as.list(seq_along(X))` is _not_ a valid set of such
 #' `.Random.seed` values.**
 #' 
-#' In all cases but `future.seed = FALSE`, the RNG state of the calling
-#' R processes after this function returns is guaranteed to be
+#' In all cases but `future.seed = FALSE` and `NULL`, the RNG state of the
+#' calling R processes after this function returns is guaranteed to be
 #' "forwarded one step" from the RNG state that was before the call and
 #' in the same way regardless of `future.seed`, `future.scheduling`
 #' and future strategy used.  This is done in order to guarantee that an \R
 #' script calling `future_lapply()` multiple times should be numerically
 #' reproducible given the same initial seed.
+#'
 #'
 #' @section Control processing order of elements:
 #' Attribute `ordering` of `future.chunk.size` or `future.scheduling` can
@@ -156,7 +161,7 @@ future_lapply <- local({
     })
   })
 
-  function(X, FUN, ..., future.envir = parent.frame(), future.stdout = TRUE, future.conditions = "condition", future.globals = TRUE, future.packages = NULL, future.lazy = FALSE, future.seed = FALSE, future.scheduling = 1.0, future.chunk.size = NULL, future.label = "future_lapply-%d") {
+  function(X, FUN, ..., future.envir = parent.frame(), future.stdout = TRUE, future.conditions = "condition", future.globals = TRUE, future.packages = NULL, future.seed = FALSE, future.scheduling = 1.0, future.chunk.size = NULL, future.label = "future_lapply-%d") {
     fcn_name <- "future_lapply"
     args_name <- "X"
   
@@ -220,7 +225,6 @@ future_lapply <- local({
       future.stdout = future.stdout,
       future.conditions = future.conditions,
       future.seed = future.seed,
-      future.lazy = future.lazy,
       future.label = future.label,
       fcn_name = fcn_name,
       args_name = args_name,

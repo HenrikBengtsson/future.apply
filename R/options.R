@@ -24,10 +24,12 @@
 #' \option{future.apply.debug} is set to `TRUE` (logical).
 #'
 #' @examples
+#' \dontrun{
 #' options(future.apply.debug = TRUE)
+#' }
 #'
 #' @seealso
-#' To set \R options or environment variables when \R starts (even before the \pkg{future} package is loaded), see the \link[base]{Startup} help page.  The \href{https://cran.r-project.org/package=startup}{\pkg{startup}} package provides a friendly mechanism for configurating \R's startup process.
+#' To set \R options or environment variables when \R starts (even before the \pkg{future} package is loaded), see the \link[base]{Startup} help page.  The \href{https://cran.r-project.org/package=startup}{\pkg{startup}} package provides a friendly mechanism for configuring \R's startup process.
 #'
 #' @aliases
 #' future.apply.debug
@@ -86,18 +88,18 @@ update_package_option <- function(name, mode = "character", default = NULL, spli
   if (length(disallow) > 0) {
     if ("NA" %in% disallow) {
       if (any(is.na(value))) {
-        stop(sprintf("Coercing environment variable %s=%s to %s would result in missing values for option %s: %s", sQuote(env), sQuote(env_value), sQuote(mode), sQuote(name), commaq(value)))
+        stopf("Coercing environment variable %s=%s to %s would result in missing values for option %s: %s", sQuote(env), sQuote(env_value), sQuote(mode), sQuote(name), commaq(value))
       }
     }
     if (is.numeric(value)) {
       if ("non-positive" %in% disallow) {
         if (any(value <= 0, na.rm = TRUE)) {
-          stop(sprintf("Environment variable %s=%s specifies a non-positive value for option %s: %s", sQuote(env), sQuote(env_value), sQuote(name), commaq(value)))
+          stopf("Environment variable %s=%s specifies a non-positive value for option %s: %s", sQuote(env), sQuote(env_value), sQuote(name), commaq(value))
         }
       }
       if ("negative" %in% disallow) {
         if (any(value < 0, na.rm = TRUE)) {
-          stop(sprintf("Environment variable %s=%s specifies a negative value for option %s: %s", sQuote(env), sQuote(env_value), sQuote(name), commaq(value)))
+          stopf("Environment variable %s=%s specifies a negative value for option %s: %s", sQuote(env), sQuote(env_value), sQuote(name), commaq(value))
         }
       }
     }

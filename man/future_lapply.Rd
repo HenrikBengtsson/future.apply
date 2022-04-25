@@ -30,7 +30,6 @@ future_lapply(
   future.conditions = "condition",
   future.globals = TRUE,
   future.packages = NULL,
-  future.lazy = FALSE,
   future.seed = FALSE,
   future.scheduling = 1,
   future.chunk.size = NULL,
@@ -116,9 +115,6 @@ controlling how globals are handled. For details, see below section.}
 
 \item{future.packages}{(optional) a character vector specifying packages
 to be attached in the R environment evaluating the future.}
-
-\item{future.lazy}{Specifies whether the futures should be resolved
-lazily or eagerly (default).}
 
 \item{future.seed}{A logical or an integer (of length one or seven),
 or a list of \code{length(X)} with pre-generated random seeds.
@@ -208,8 +204,8 @@ passed as globals to each future created as they are always needed.
 
 \section{Reproducible random number generation (RNG)}{
 
-Unless \code{future.seed = FALSE}, this function guarantees to generate
-the exact same sequence of random numbers \emph{given the same initial
+Unless \code{future.seed} is \code{FALSE} or \code{NULL}, this function guarantees to
+generate the exact same sequence of random numbers \emph{given the same initial
 seed / RNG state} - this regardless of type of futures, scheduling
 ("chunking") strategy, and number of workers.
 
@@ -217,30 +213,37 @@ RNG reproducibility is achieved by pregenerating the random seeds for all
 iterations (over \code{X}) by using L'Ecuyer-CMRG RNG streams.  In each
 iteration, these seeds are set before calling \code{FUN(X[[ii]], ...)}.
 \emph{Note, for large \code{length(X)} this may introduce a large overhead.}
-As input (\code{future.seed}), a fixed seed (integer) may be given, either
-as a full L'Ecuyer-CMRG RNG seed (vector of 1+6 integers) or as a seed
-generating such a full L'Ecuyer-CMRG seed.
+
 If \code{future.seed = TRUE}, then \code{\link[base:Random]{.Random.seed}}
-is returned if it holds a L'Ecuyer-CMRG RNG seed, otherwise one is created
+is used if it holds a L'Ecuyer-CMRG RNG seed, otherwise one is created
 randomly.
-If \code{future.seed = NA}, a L'Ecuyer-CMRG RNG seed is randomly created.
-If none of the function calls \code{FUN(X[[ii]], ...)} uses random number
-generation, then \code{future.seed = FALSE} may be used.
+
+If \code{future.seed = FALSE}, it is expected that none of the
+\code{FUN(X[[ii]], ...)} function calls use random number generation.
+If they do, then an informative warning or error is produces depending
+on settings. See \link[future:future]{future::future} for more details.
+Using \code{future.seed = NULL}, is like \code{future.seed = FALSE} but without
+the check whether random numbers were generated or not.
+
+As input, \code{future.seed} may also take a fixed initial seed (integer),
+either as a full L'Ecuyer-CMRG RNG seed (vector of 1+6 integers), or
+as a seed generating such a full L'Ecuyer-CMRG seed. This seed will
+be used to generated \code{length(X)} L'Ecuyer-CMRG RNG streams.
 
 In addition to the above, it is possible to specify a pre-generated
 sequence of RNG seeds as a list such that
 \code{length(future.seed) == length(X)} and where each element is an
 integer seed vector that can be assigned to
 \code{\link[base:Random]{.Random.seed}}.  One approach to generate a
-set of valid RNG seeds based on fixed initial seed (here \code{42L}) is:\if{html}{\out{<div class="r">}}\preformatted{seeds <- future_lapply(seq_along(X), FUN = function(x) .Random.seed,
+set of valid RNG seeds based on fixed initial seed (here \code{42L}) is:\if{html}{\out{<div class="sourceCode r">}}\preformatted{seeds <- future_lapply(seq_along(X), FUN = function(x) .Random.seed,
                        future.chunk.size = Inf, future.seed = 42L)
 }\if{html}{\out{</div>}}
 
 \strong{Note that \code{as.list(seq_along(X))} is \emph{not} a valid set of such
 \code{.Random.seed} values.}
 
-In all cases but \code{future.seed = FALSE}, the RNG state of the calling
-R processes after this function returns is guaranteed to be
+In all cases but \code{future.seed = FALSE} and \code{NULL}, the RNG state of the
+calling R processes after this function returns is guaranteed to be
 "forwarded one step" from the RNG state that was before the call and
 in the same way regardless of \code{future.seed}, \code{future.scheduling}
 and future strategy used.  This is done in order to guarantee that an \R
@@ -297,11 +300,13 @@ stopifnot(all.equal(y1, y0))
 ## where they are, the random numbers produced are identical
 
 plan(multisession)
-y1 <- future_lapply(1:5, FUN = rnorm, future.seed = 0xBEEF)
+set.seed(0xBEEF)
+y1 <- future_lapply(1:5, FUN = rnorm, future.seed = TRUE)
 str(y1)
 
 plan(sequential)
-y2 <- future_lapply(1:5, FUN = rnorm, future.seed = 0xBEEF)
+set.seed(0xBEEF)
+y2 <- future_lapply(1:5, FUN = rnorm, future.seed = TRUE)
 str(y2)
 
 stopifnot(all.equal(y1, y2))

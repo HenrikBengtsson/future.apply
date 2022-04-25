@@ -11,7 +11,7 @@
     envs <- Sys.getenv()
     envs <- envs[grep("R_FUTURE_APPLY_", names(envs), fixed = TRUE)]
     envs <- sprintf("- %s=%s", names(envs), sQuote(envs))
-    mdebug(paste(c("Rnvironment variables specific to future.apply:", envs), collapse = "\n"))
+    mdebug(paste(c("R environment variables specific to future.apply:", envs), collapse = "\n"))
   }
 
   ## Set future options based on environment variables

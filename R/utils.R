@@ -6,18 +6,6 @@ isNA <- function(x) {
   is.logical(x) && length(x) == 1L && is.na(x)
 }
 
-stopf <- function(fmt, ..., call. = TRUE, domain = NULL) {  #nolint
-  stop(sprintf(fmt, ...), call. = call., domain = domain)
-}
-
-warnf <- function(fmt, ..., call. = TRUE, immediate. = FALSE, domain = NULL) {  #nolint
-  warning(sprintf(fmt, ...), call. = call., immediate. = immediate., domain = domain)
-}
-
-msgf <- function(fmt, ..., appendLF = FALSE, domain = NULL) {  #nolint
-  message(sprintf(fmt, ...), appendLF = appendLF, domain = domain)
-}
-
 stop_if_not <- function(...) {
   res <- list(...)
   for (ii in 1L:length(res)) {

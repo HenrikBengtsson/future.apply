@@ -25,7 +25,7 @@ Analogously, this is true for all the other future_nnn() functions."><!-- mathja
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">future.apply</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.9.0-9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.9.0-9001</span>
       </span>
     </div>
 
@@ -355,7 +355,8 @@ sequence of RNG seeds as a list such that
 <code>length(future.seed) == length(X)</code> and where each element is an
 integer seed vector that can be assigned to
 <code><a href="https://rdrr.io/r/base/Random.html" class="external-link">.Random.seed</a></code>.  One approach to generate a
-set of valid RNG seeds based on fixed initial seed (here <code>42L</code>) is:</p><div class="sourceCode r"><pre><code><span class="va">seeds</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/future_lapply.html">future_lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_along</a></span><span class="op">(</span><span class="va">X</span><span class="op">)</span>, FUN <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">.Random.seed</span>,
+set of valid RNG seeds based on fixed initial seed (here <code>42L</code>) is:</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">seeds</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/future_lapply.html">future_lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_along</a></span><span class="op">(</span><span class="va">X</span><span class="op">)</span>, FUN <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">.Random.seed</span>,
                        future.chunk.size <span class="op">=</span> <span class="cn">Inf</span>, future.seed <span class="op">=</span> <span class="fl">42L</span><span class="op">)</span></code></pre><p></p></div>
 <p><strong>Note that <code>as.list(seq_along(X))</code> is <em>not</em> a valid set of such
 <code>.Random.seed</code> values.</strong></p>

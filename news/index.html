@@ -23,7 +23,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">future.apply</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.9.0-9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.9.0-9001</span>
       </span>
     </div>
 
@@ -126,200 +126,212 @@
   <div class="col-md-9 contents">
     <div class="page-header">
       <h1 data-toc-skip>Changelog <small></small></h1>
-      <small>Source: <a href="https://github.com/HenrikBengtsson/future.apply/blob/HEAD/NEWS" class="external-link"><code>NEWS</code></a></small>
+      <small>Source: <a href="https://github.com/HenrikBengtsson/future.apply/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="1.9.0-9000" id="futureapply-190-9000">future.apply 1.9.0-9000<a class="anchor" aria-label="anchor" href="#futureapply-190-9000"></a></h2>
-</div>
-    <div class="section level2">
-<h2 class="page-header" data-toc-text="1.9.0" id="futureapply-190">future.apply 1.9.0<small>2022-04-25</small><a class="anchor" aria-label="anchor" href="#futureapply-190"></a></h2>
-<div class="section level4">
-<h4 id="significant-changes-1-9-0">Significant Changes<a class="anchor" aria-label="anchor" href="#significant-changes-1-9-0"></a></h4>
-<ul><li>future_mapply() and future_Map() was updated to match the new behavior of mapply() and Map() in R (&gt;= 4.2.0), which follows the “max-or-0-if-any” recycling rule.</li>
-</ul></div>
-<div class="section level4">
-<h4 id="performance-1-9-0">Performance<a class="anchor" aria-label="anchor" href="#performance-1-9-0"></a></h4>
-<ul><li>Now captured standard output and conditions are deleted as soon as they have been relayed. This required future (&gt;= 1.25.0).</li>
-</ul></div>
-<div class="section level4">
-<h4 id="deprecated-and-defunct-1-9-0">Deprecated and Defunct<a class="anchor" aria-label="anchor" href="#deprecated-and-defunct-1-9-0"></a></h4>
-<ul><li>Removed moot argument ‘future.lazy’ from all functions. Regardless of setting it to TRUE or FALSE, futures would be resolved momentarily and always before the apply returned.</li>
+<h2 class="page-header" data-toc-text="1.9.0-9001" id="version-190-9001">Version 1.9.0-9001<a class="anchor" aria-label="anchor" href="#version-190-9001"></a></h2>
+<div class="section level3">
+<h3 id="bug-fixes-1-9-0-9001">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-1-9-0-9001"></a></h3>
+<ul><li>Some warnings and errors showed the wrong call.</li>
 </ul></div>
 </div>
     <div class="section level2">
-<h2 class="page-header" data-toc-text="1.8.1" id="futureapply-181">future.apply 1.8.1<small>2021-08-10</small><a class="anchor" aria-label="anchor" href="#futureapply-181"></a></h2>
-<div class="section level4">
-<h4 id="bug-fix-1-8-1">Bug Fix<a class="anchor" aria-label="anchor" href="#bug-fix-1-8-1"></a></h4>
-<ul><li>citEntry() in CITATION used argument ‘notes’ instead of ‘note’.</li>
+<h2 class="page-header" data-toc-text="1.9.0" id="version-190">Version 1.9.0<small>2022-04-25</small><a class="anchor" aria-label="anchor" href="#version-190"></a></h2>
+<div class="section level3">
+<h3 id="signficant-changes-1-9-0">Signficant Changes<a class="anchor" aria-label="anchor" href="#signficant-changes-1-9-0"></a></h3>
+<ul><li>
+<code><a href="../reference/future_mapply.html">future_mapply()</a></code> and <code><a href="../reference/future_mapply.html">future_Map()</a></code> was updated to match the new behavior of <code><a href="https://rdrr.io/r/base/mapply.html" class="external-link">mapply()</a></code> and <code><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Map()</a></code> in R (&gt;= 4.2.0), which follows the “max-or-0-if-any” recycling rule.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="performance-1-9-0">Performance<a class="anchor" aria-label="anchor" href="#performance-1-9-0"></a></h3>
+<ul><li>Now captured standard output and conditions are deleted as soon as they have been relayed. This required <strong>future</strong> (&gt;= 1.25.0).</li>
+</ul></div>
+<div class="section level3">
+<h3 id="deprecated-and-defunct-1-9-0">Deprecated and Defunct<a class="anchor" aria-label="anchor" href="#deprecated-and-defunct-1-9-0"></a></h3>
+<ul><li>Removed moot argument <code>future.lazy</code> from all functions. Regardless of setting it to TRUE or FALSE, futures would be resolved momentarily and always before the apply returned.</li>
 </ul></div>
 </div>
     <div class="section level2">
-<h2 class="page-header" data-toc-text="1.8.0" id="futureapply-180">future.apply 1.8.0<a class="anchor" aria-label="anchor" href="#futureapply-180"></a></h2>
-<div class="section level4">
-<h4 id="new-features-1-8-0">New Features<a class="anchor" aria-label="anchor" href="#new-features-1-8-0"></a></h4>
-<ul><li><p>Add argument ‘future.envir’ to all future_nnn() functions, which is passed as argument ‘envir’ to future().</p></li>
-<li><p>Add option ‘future.apply.debug’ for debugging features specific to this package. It defaults to option ‘future.debug’.</p></li>
-</ul></div>
-<div class="section level4">
-<h4 id="performance-1-8-0">Performance<a class="anchor" aria-label="anchor" href="#performance-1-8-0"></a></h4>
-<ul><li>Internal getGlobalsAndPackagesXApply() now avoids calculating the object size of ‘…’ arguments if option ‘future.globals.maxSize’ is +Inf.</li>
-</ul></div>
-<div class="section level4">
-<h4 id="bug-fix-1-8-0">Bug Fix<a class="anchor" aria-label="anchor" href="#bug-fix-1-8-0"></a></h4>
-<ul><li>f &lt;- function(…) future_lapply(X, function(x) list(…)); f(a=1) would produce an error on ’unused argument (a = 1)” with the upcoming release of future 1.22.0.</li>
+<h2 class="page-header" data-toc-text="1.8.1" id="version-181">Version 1.8.1<small>2021-08-10</small><a class="anchor" aria-label="anchor" href="#version-181"></a></h2>
+<div class="section level3">
+<h3 id="bug-fixes-1-8-1">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-1-8-1"></a></h3>
+<ul><li>
+<code><a href="https://rdrr.io/r/utils/citEntry.html" class="external-link">citEntry()</a></code> in CITATION used argument <code>notes</code> instead of <code>note</code>.</li>
 </ul></div>
 </div>
     <div class="section level2">
-<h2 class="page-header" data-toc-text="1.7.0" id="futureapply-170">future.apply 1.7.0<small>2021-01-04</small><a class="anchor" aria-label="anchor" href="#futureapply-170"></a></h2>
-<div class="section level4">
-<h4 id="new-features-1-7-0">New Features<a class="anchor" aria-label="anchor" href="#new-features-1-7-0"></a></h4>
-<ul><li><p>The automatic capturing of conditions can be disabled by specifying ‘future.conditions = NULL’.</p></li>
-<li><p>Warnings and errors on using the RNG without specifying ‘future.seed’ are now tailored to the ‘future.apply’ package.</p></li>
+<h2 class="page-header" data-toc-text="1.8.0" id="version-180">Version 1.8.0<a class="anchor" aria-label="anchor" href="#version-180"></a></h2>
+<div class="section level3">
+<h3 id="new-features-1-8-0">New Features<a class="anchor" aria-label="anchor" href="#new-features-1-8-0"></a></h3>
+<ul><li><p>Add argument <code>future.envir</code> to all <code>future_nnn()</code> functions, which is passed as argument <code>envir</code> to <code><a href="https://future.futureverse.org/reference/future.html" class="external-link">future()</a></code>.</p></li>
+<li><p>Add option <code>future.apply.debug</code> for debugging features specific to this package. It defaults to option <code>future.debug</code>.</p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="performance-1-8-0">Performance<a class="anchor" aria-label="anchor" href="#performance-1-8-0"></a></h3>
+<ul><li>Internal <code>getGlobalsAndPackagesXApply()</code> now avoids calculating the object size of <code>...</code> arguments if option <code>future.globals.maxSize</code> is +Inf.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="bug-fixes-1-8-0">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-1-8-0"></a></h3>
+<ul><li>
+<code>f &lt;- function(...) future_lapply(X, function(x) list(...));    f(a=1)</code> would produce an error on ’unused argument (a = 1)” with the upcoming release of <strong>future</strong> 1.22.0.</li>
 </ul></div>
 </div>
     <div class="section level2">
-<h2 class="page-header" data-toc-text="1.6.0" id="futureapply-160">future.apply 1.6.0<small>2020-07-01</small><a class="anchor" aria-label="anchor" href="#futureapply-160"></a></h2>
-<div class="section level4">
-<h4 id="significant-changes-1-6-0">Significant Changes<a class="anchor" aria-label="anchor" href="#significant-changes-1-6-0"></a></h4>
-<ul><li>future_apply() gained argument ‘simplify’, which is added to R-devel (to become R 4.1.0).</li>
-</ul></div>
-<div class="section level4">
-<h4 id="bug-fixes-1-6-0">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-1-6-0"></a></h4>
-<ul><li>future_apply(X, FUN, …) would pass all ‘future.*’ arguments except ‘future.globals’, ‘future.packages’, and ‘future.labels’ to the ‘FUN’ function instead of processing them locally. This would often result in the ‘FUN’ producing an error on “unused argument”. It also affected ‘future.seed’ not being applied, which means for some ‘FUN’ functions that did not produce this error, non-reproducible results could have been produced.</li>
+<h2 class="page-header" data-toc-text="1.7.0" id="version-170">Version 1.7.0<small>2021-01-04</small><a class="anchor" aria-label="anchor" href="#version-170"></a></h2>
+<div class="section level3">
+<h3 id="new-features-1-7-0">New Features<a class="anchor" aria-label="anchor" href="#new-features-1-7-0"></a></h3>
+<ul><li><p>The automatic capturing of conditions can be disabled by specifying <code>future.conditions = NULL</code>.</p></li>
+<li><p>Warnings and errors on using the RNG without specifying <code>future.seed</code> are now tailored to the <strong>future.apply</strong> package.</p></li>
 </ul></div>
 </div>
     <div class="section level2">
-<h2 class="page-header" data-toc-text="1.5.0" id="futureapply-150">future.apply 1.5.0<small>2020-04-17</small><a class="anchor" aria-label="anchor" href="#futureapply-150"></a></h2>
-<div class="section level4">
-<h4 id="new-features-1-5-0">New Features<a class="anchor" aria-label="anchor" href="#new-features-1-5-0"></a></h4>
-<ul><li>Add future_.mapply() corresponding to .mapply() in the ‘base’ package.</li>
+<h2 class="page-header" data-toc-text="1.6.0" id="version-160">Version 1.6.0<small>2020-07-01</small><a class="anchor" aria-label="anchor" href="#version-160"></a></h2>
+<div class="section level3">
+<h3 id="signficant-changes-1-6-0">Signficant Changes<a class="anchor" aria-label="anchor" href="#signficant-changes-1-6-0"></a></h3>
+<ul><li>
+<code><a href="../reference/future_apply.html">future_apply()</a></code> gained argument <code>simplify</code>, which is added to R-devel (to become R 4.1.0).</li>
 </ul></div>
-<div class="section level4">
-<h4 id="bug-fixes-1-5-0">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-1-5-0"></a></h4>
-<ul><li>future_mapply() would chunk up ‘MoreArgs’ when future.seed = TRUE.</li>
-</ul></div>
-</div>
-    <div class="section level2">
-<h2 class="page-header" data-toc-text="1.4.0" id="futureapply-140">future.apply 1.4.0<small>2020-01-07</small><a class="anchor" aria-label="anchor" href="#futureapply-140"></a></h2>
-<div class="section level4">
-<h4 id="new-features-1-4-0">New Features<a class="anchor" aria-label="anchor" href="#new-features-1-4-0"></a></h4>
-<ul><li>Now all future_nnn() functions set a label on each future that reflects the name of the future_nnn() function and the index of the chunk, e.g. ‘future_lapply-3’. The format can be controlled by argument ‘future.label’.</li>
-</ul></div>
-<div class="section level4">
-<h4 id="performance-1-4-0">Performance<a class="anchor" aria-label="anchor" href="#performance-1-4-0"></a></h4>
-<ul><li>The assertion of the maximum size of globals per chunk is now significantly faster for future_apply().</li>
-</ul></div>
-<div class="section level4">
-<h4 id="bug-fixes-1-4-0">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-1-4-0"></a></h4>
-<ul><li><p>future_lapply(X) and future_mapply(FUN, X) would drop ‘names’ argument of the returned empty list when length(X) == 0.</p></li>
-<li><p>Package could set ‘.Random.seed’ to NULL, instead of removing it, which in turn would produce a warning on “‘.Random.seed’ is not an integer vector but of type ‘NULL’, so ignored” when the next random number generated.</p></li>
+<div class="section level3">
+<h3 id="bug-fixes-1-6-0">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-1-6-0"></a></h3>
+<ul><li>
+<code>future_apply(X, FUN, ...)</code> would pass all <code>future.*</code> arguments except <code>future.globals</code>, <code>future.packages</code>, and <code>future.labels</code> to the <code>FUN</code> function instead of processing them locally. This would often result in the <code>FUN</code> producing an error on “unused argument”. It also affected <code>future.seed</code> not being applied, which means for some <code>FUN</code> functions that did not produce this error, non-reproducible results could have been produced.</li>
 </ul></div>
 </div>
     <div class="section level2">
-<h2 class="page-header" data-toc-text="1.3.0" id="futureapply-130">future.apply 1.3.0<small>2019-06-18</small><a class="anchor" aria-label="anchor" href="#futureapply-130"></a></h2>
-<div class="section level4">
-<h4 id="new-features-1-3-0">New Features<a class="anchor" aria-label="anchor" href="#new-features-1-3-0"></a></h4>
-<ul><li><p>Now ‘future.conditions’ defaults to the same as argument ‘conditions’ of future::future(). If the latter changes, this package will follow.</p></li>
+<h2 class="page-header" data-toc-text="1.5.0" id="version-150">Version 1.5.0<small>2020-04-17</small><a class="anchor" aria-label="anchor" href="#version-150"></a></h2>
+<div class="section level3">
+<h3 id="new-features-1-5-0">New Features<a class="anchor" aria-label="anchor" href="#new-features-1-5-0"></a></h3>
+<ul><li>Add <code><a href="../reference/future_mapply.html">future_.mapply()</a></code> corresponding to <code><a href="https://rdrr.io/r/base/mapply.html" class="external-link">.mapply()</a></code> in the <strong>base</strong> package.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="bug-fixes-1-5-0">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-1-5-0"></a></h3>
+<ul><li>
+<code><a href="../reference/future_mapply.html">future_mapply()</a></code> would chunk up <code>MoreArgs</code> when <code>future.seed =    TRUE</code>.</li>
+</ul></div>
+</div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="1.4.0" id="version-140">Version 1.4.0<small>2020-01-07</small><a class="anchor" aria-label="anchor" href="#version-140"></a></h2>
+<div class="section level3">
+<h3 id="new-features-1-4-0">New Features<a class="anchor" aria-label="anchor" href="#new-features-1-4-0"></a></h3>
+<ul><li>Now all <code>future_nnn()</code> functions set a label on each future that reflects the name of the <code>future_nnn()</code> function and the index of the chunk, e.g. <code>"future_lapply-3"</code>. The format can be controlled by argument <code>future.label</code>.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="performance-1-4-0">Performance<a class="anchor" aria-label="anchor" href="#performance-1-4-0"></a></h3>
+<ul><li>The assertion of the maximum size of globals per chunk is now significantly faster for <code><a href="../reference/future_apply.html">future_apply()</a></code>.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="bug-fixes-1-4-0">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-1-4-0"></a></h3>
+<ul><li><p><code>future_lapply(X)</code> and <code>future_mapply(FUN, X)</code> would drop <code>names</code> argument of the returned empty list when <code>length(X) == 0</code>.</p></li>
+<li><p>Package could set <code>.Random.seed</code> to NULL, instead of removing it, which in turn would produce a warning on “‘.Random.seed’ is not an integer vector but of type ‘NULL’, so ignored” when the next random number generated.</p></li>
+</ul></div>
+</div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="1.3.0" id="version-130">Version 1.3.0<small>2019-06-18</small><a class="anchor" aria-label="anchor" href="#version-130"></a></h2>
+<div class="section level3">
+<h3 id="new-features-1-3-0">New Features<a class="anchor" aria-label="anchor" href="#new-features-1-3-0"></a></h3>
+<ul><li><p>Now <code>future.conditions</code> defaults to the same as argument <code>conditions</code> of <code><a href="https://future.futureverse.org/reference/future.html" class="external-link">future::future()</a></code>. If the latter changes, this package will follow.</p></li>
 <li><p>Debug messages are now prepended with a timestamp.</p></li>
 </ul></div>
-<div class="section level4">
-<h4 id="bug-fixes-1-3-0">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-1-3-0"></a></h4>
+<div class="section level3">
+<h3 id="bug-fixes-1-3-0">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-1-3-0"></a></h3>
 <ul><li>The error “sprintf(…) : ‘fmt’ length exceeds maximal format length 8192” could be produced when debugging tried to report on too many globals.</li>
 </ul></div>
 </div>
     <div class="section level2">
-<h2 class="page-header" data-toc-text="1.2.0" id="futureapply-120">future.apply 1.2.0<small>2019-03-07</small><a class="anchor" aria-label="anchor" href="#futureapply-120"></a></h2>
-<div class="section level4">
-<h4 id="new-features-1-2-0">New Features<a class="anchor" aria-label="anchor" href="#new-features-1-2-0"></a></h4>
-<ul><li>Added future_by().</li>
+<h2 class="page-header" data-toc-text="1.2.0" id="version-120">Version 1.2.0<small>2019-03-07</small><a class="anchor" aria-label="anchor" href="#version-120"></a></h2>
+<div class="section level3">
+<h3 id="new-features-1-2-0">New Features<a class="anchor" aria-label="anchor" href="#new-features-1-2-0"></a></h3>
+<ul><li>Added <code><a href="../reference/future_by.html">future_by()</a></code>.</li>
 </ul></div>
-<div class="section level4">
-<h4 id="bug-fixes-1-2-0">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-1-2-0"></a></h4>
-<ul><li><p>Attributes ‘add’ and ‘ignore’ of argument ‘future.globals’ were ignored although support for them was added in future (&gt;= 1.10.0).</p></li>
+<div class="section level3">
+<h3 id="bug-fixes-1-2-0">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-1-2-0"></a></h3>
+<ul><li><p>Attributes <code>add</code> and <code>ignore</code> of argument <code>future.globals</code> were ignored although support for them was added in <strong>future</strong> (&gt;= 1.10.0).</p></li>
 <li><p>Validation of L’Ecuyer-CMRG RNG seeds failed in recent R devel.</p></li>
 </ul></div>
 </div>
     <div class="section level2">
-<h2 class="page-header" data-toc-text="1.1.0" id="futureapply-110">future.apply 1.1.0<small>2019-01-17</small><a class="anchor" aria-label="anchor" href="#futureapply-110"></a></h2>
-<div class="section level4">
-<h4 id="significant-changes-1-1-0">Significant Changes<a class="anchor" aria-label="anchor" href="#significant-changes-1-1-0"></a></h4>
-<ul><li>Added argument ‘future.stdout’ and ‘future.conditions’ for controlling whether standard output and conditions (e.g. messages and warnings) produced during the evaluation of futures should be captured and relayed or not. Standard output is guaranteed to be relayed in the same order as it would when using sequential processing. Analogously for conditions. However, standard output is always relayed before conditions. Errors are always relayed. Relaying of non-error conditions requires future (&gt;= 1.11.0).</li>
+<h2 class="page-header" data-toc-text="1.1.0" id="version-110">Version 1.1.0<small>2019-01-17</small><a class="anchor" aria-label="anchor" href="#version-110"></a></h2>
+<div class="section level3">
+<h3 id="signficant-changes-1-1-0">Signficant Changes<a class="anchor" aria-label="anchor" href="#signficant-changes-1-1-0"></a></h3>
+<ul><li>Added argument <code>future.stdout</code> and <code>future.conditions</code> for controlling whether standard output and conditions (e.g. messages and warnings) produced during the evaluation of futures should be captured and relayed or not. Standard output is guaranteed to be relayed in the same order as it would when using sequential processing. Analogously for conditions. However, standard output is always relayed before conditions. Errors are always relayed. Relaying of non-error conditions requires <strong>future</strong> (&gt;= 1.11.0).</li>
 </ul></div>
-<div class="section level4">
-<h4 id="new-features-1-1-0">New Features<a class="anchor" aria-label="anchor" href="#new-features-1-1-0"></a></h4>
-<ul><li><p>Elements can be processed in random order by setting attribute ‘ordering’ to “random” of argument ‘future.chunk.size’ or ‘future.scheduling’, e.g. future.chunk.size = structure(TRUE, ordering = “random”). This can help improve load balancing in cases where there is a correlation between processing time and ordering of the elements. Note that the order of the returned values is not affected when randomizing the processing order.</p></li>
-<li><p>Swapped order of arguments ‘future.lazy’ and ‘future.seed’ to be consistent with ditto arguments of future::future().</p></li>
+<div class="section level3">
+<h3 id="new-features-1-1-0">New Features<a class="anchor" aria-label="anchor" href="#new-features-1-1-0"></a></h3>
+<ul><li><p>Elements can be processed in random order by setting attribute <code>ordering</code> to <code>"random"</code> of argument <code>future.chunk.size</code> or <code>future.scheduling</code>, e.g. <code>future.chunk.size = structure(TRUE,    ordering = "random")</code>. This can help improve load balancing in cases where there is a correlation between processing time and ordering of the elements. Note that the order of the returned values is not affected when randomizing the processing order.</p></li>
+<li><p>Swapped order of arguments <code>future.lazy</code> and <code>future.seed</code> to be consistent with ditto arguments of <code><a href="https://future.futureverse.org/reference/future.html" class="external-link">future::future()</a></code>.</p></li>
 </ul></div>
 </div>
     <div class="section level2">
-<h2 class="page-header" data-toc-text="1.0.1" id="futureapply-101">future.apply 1.0.1<small>2018-08-26</small><a class="anchor" aria-label="anchor" href="#futureapply-101"></a></h2>
-<div class="section level4">
-<h4 id="documentation--licence-1-0-1">Documentation / Licence<a class="anchor" aria-label="anchor" href="#documentation--licence-1-0-1"></a></h4>
+<h2 class="page-header" data-toc-text="1.0.1" id="version-101">Version 1.0.1<small>2018-08-26</small><a class="anchor" aria-label="anchor" href="#version-101"></a></h2>
+<div class="section level3">
+<h3 id="documentation--licence-1-0-1">Documentation / Licence<a class="anchor" aria-label="anchor" href="#documentation--licence-1-0-1"></a></h3>
 <ul><li>The license is GPL (&gt;= 2). Previously it was documented as GPL (&gt;= 2.1) but that is a non-existing GPL version.</li>
 </ul></div>
-<div class="section level4">
-<h4 id="bug-fixes-1-0-1">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-1-0-1"></a></h4>
-<ul><li><p>For list objects ‘X’ where X != as.list(X), future_lapply(X) did not give the same result as lapply(X). Analogously for future_vapply(X).</p></li>
-<li><p>future_mapply() could drop class attribute on elements iterated over, because .subset() was used internally instead of `[`(). For instance, iteration over Date objects were affected.</p></li>
+<div class="section level3">
+<h3 id="bug-fixes-1-0-1">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-1-0-1"></a></h3>
+<ul><li><p>For list objects <code>X</code> where <code>X != as.list(X), future_lapply(X)</code> did not give the same result as <code>lapply(X)</code>. Analogously for <code>future_vapply(X)</code>.</p></li>
+<li><p><code><a href="../reference/future_mapply.html">future_mapply()</a></code> could drop class attribute on elements iterated over, because <code><a href="https://rdrr.io/r/base/base-internal.html" class="external-link">.subset()</a></code> was used internally instead of <code><a href="https://rdrr.io/r/base/Extract.html" class="external-link">`[`()</a></code>. For instance, iteration over <code>Date</code> objects were affected.</p></li>
 </ul></div>
 </div>
     <div class="section level2">
-<h2 class="page-header" data-toc-text="1.0.0" id="futureapply-100">future.apply 1.0.0<small>2018-06-20</small><a class="anchor" aria-label="anchor" href="#futureapply-100"></a></h2>
-<div class="section level4">
-<h4 id="significant-changes-1-0-0">Significant Changes<a class="anchor" aria-label="anchor" href="#significant-changes-1-0-0"></a></h4>
-<ul><li>License changed from LGPL (&gt;= 2.1) to GPL (&gt;= 2) to make sure it is compatible with the source code adopted from R base’s apply(), Map(), replicate(), sapply(), and tapply(), which are all GPL (&gt;= 2).</li>
+<h2 class="page-header" data-toc-text="1.0.0" id="version-100">Version 1.0.0<small>2018-06-20</small><a class="anchor" aria-label="anchor" href="#version-100"></a></h2>
+<div class="section level3">
+<h3 id="signficant-changes-1-0-0">Signficant Changes<a class="anchor" aria-label="anchor" href="#signficant-changes-1-0-0"></a></h3>
+<ul><li>License changed from LGPL (&gt;= 2.1) to GPL (&gt;= 2) to make sure it is compatible with the source code adopted from R base’s <code><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply()</a></code>, <code><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Map()</a></code>, <code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">replicate()</a></code>, <code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply()</a></code>, and <code><a href="https://rdrr.io/r/base/tapply.html" class="external-link">tapply()</a></code>, which are all GPL (&gt;= 2).</li>
 </ul></div>
-<div class="section level4">
-<h4 id="new-features-1-0-0">New Features<a class="anchor" aria-label="anchor" href="#new-features-1-0-0"></a></h4>
-<ul><li><p>Added future_apply(), future_mapply(), and future_Map().</p></li>
-<li><p>Added argument `future.chunk.size` as an alternative to argument `future.scheduling` for controlling the average number of elements processed per future (“chunk”). In R 3.5.0, the parallel package introduced argument ‘chunk.size’.</p></li>
-<li><p>The maximum total size of globals allowed (option ‘future.globals.maxSize’) per future (“chunk”) is now scaled up by the number of elements processed by the future (“chunk”) making the protection approximately invariant to the amount of chunking (arguments ‘future.scheduling’ and ‘future.chunk.size’).</p></li>
+<div class="section level3">
+<h3 id="new-features-1-0-0">New Features<a class="anchor" aria-label="anchor" href="#new-features-1-0-0"></a></h3>
+<ul><li><p>Added <code><a href="../reference/future_apply.html">future_apply()</a></code>, <code><a href="../reference/future_mapply.html">future_mapply()</a></code>, and <code><a href="../reference/future_mapply.html">future_Map()</a></code>.</p></li>
+<li><p>Added argument <code>future.chunk.size</code> as an alternative to argument <code>future.scheduling</code> for controlling the average number of elements processed per future (“chunk”). In R 3.5.0, the <strong>parallel</strong> package introduced argument <code>chunk.size</code>.</p></li>
+<li><p>The maximum total size of globals allowed (option <code>future.globals.maxSize</code>) per future (“chunk”) is now scaled up by the number of elements processed by the future (“chunk”) making the protection approximately invariant to the amount of chunking (arguments <code>future.scheduling</code> and <code>future.chunk.size</code>).</p></li>
 </ul></div>
-<div class="section level4">
-<h4 id="bug-fixes-1-0-0">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-1-0-0"></a></h4>
-<ul><li><p>future_lapply(X, …) did not search for globals in ‘X’.</p></li>
-<li><p>future_vapply() did not return the same dimension names as vapply() when FUN.VALUE had no names but FUN(X[[1]]) had.</p></li>
+<div class="section level3">
+<h3 id="bug-fixes-1-0-0">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-1-0-0"></a></h3>
+<ul><li><p><code>future_lapply(X, ...)</code> did not search for globals in <code>X</code>.</p></li>
+<li><p><code><a href="../reference/future_lapply.html">future_vapply()</a></code> did not return the same dimension names as <code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">vapply()</a></code> when <code>FUN.VALUE</code> had no names but <code>FUN(X[[1]])</code> had.</p></li>
 </ul></div>
-<div class="section level4">
-<h4 id="software-quality-1-0-0">Software Quality<a class="anchor" aria-label="anchor" href="#software-quality-1-0-0"></a></h4>
+<div class="section level3">
+<h3 id="software-quality-1-0-0">Software Quality<a class="anchor" aria-label="anchor" href="#software-quality-1-0-0"></a></h3>
 <ul><li>Test code coverage is 100%.</li>
 </ul></div>
 </div>
     <div class="section level2">
-<h2 class="page-header" data-toc-text="0.2.0" id="futureapply-020">future.apply 0.2.0<small>2018-05-01</small><a class="anchor" aria-label="anchor" href="#futureapply-020"></a></h2>
-<div class="section level4">
-<h4 id="new-features-0-2-0">New Features<a class="anchor" aria-label="anchor" href="#new-features-0-2-0"></a></h4>
-<ul><li>Added future_eapply(), future_tapply(), future_vapply(), and future_replicate().</li>
+<h2 class="page-header" data-toc-text="0.2.0" id="version-020">Version 0.2.0<small>2018-05-01</small><a class="anchor" aria-label="anchor" href="#version-020"></a></h2>
+<div class="section level3">
+<h3 id="new-features-0-2-0">New Features<a class="anchor" aria-label="anchor" href="#new-features-0-2-0"></a></h3>
+<ul><li>Added <code><a href="../reference/future_lapply.html">future_eapply()</a></code>, <code><a href="../reference/future_lapply.html">future_tapply()</a></code>, <code><a href="../reference/future_lapply.html">future_vapply()</a></code>, and <code><a href="../reference/future_lapply.html">future_replicate()</a></code>.</li>
 </ul></div>
 </div>
     <div class="section level2">
-<h2 class="page-header" data-toc-text="0.1.0" id="futureapply-010">future.apply 0.1.0<small>2018-01-15</small><a class="anchor" aria-label="anchor" href="#futureapply-010"></a></h2>
-</div>
+<h2 class="page-header" data-toc-text="0.1.0" id="version-010">Version 0.1.0<small>2018-01-15</small><a class="anchor" aria-label="anchor" href="#version-010"></a></h2>
+<ul><li>Package submitted to CRAN.</li>
+</ul></div>
     <div class="section level2">
-<h2 class="page-header" data-toc-text="0.0.3" id="futureapply-003">future.apply 0.0.3<a class="anchor" aria-label="anchor" href="#futureapply-003"></a></h2>
-<div class="section level4">
-<h4 id="documentation-0-0-3">Documentation<a class="anchor" aria-label="anchor" href="#documentation-0-0-3"></a></h4>
+<h2 class="page-header" data-toc-text="0.0.3" id="version-003">Version 0.0.3<a class="anchor" aria-label="anchor" href="#version-003"></a></h2>
+<div class="section level3">
+<h3 id="documentation-0-0-3">Documentation<a class="anchor" aria-label="anchor" href="#documentation-0-0-3"></a></h3>
 <ul><li>Vignette now covers the basics of the package and describes its role in the R package ecosystem together with a road map going forward.</li>
 </ul></div>
-<div class="section level4">
-<h4 id="software-quality-0-0-3">Software Quality<a class="anchor" aria-label="anchor" href="#software-quality-0-0-3"></a></h4>
+<div class="section level3">
+<h3 id="software-quality-0-0-3">Software Quality<a class="anchor" aria-label="anchor" href="#software-quality-0-0-3"></a></h3>
 <ul><li>Added more package tests. Code coverage is currently at 100%.</li>
 </ul></div>
 </div>
     <div class="section level2">
-<h2 class="page-header" data-toc-text="0.0.2" id="futureapply-002">future.apply 0.0.2<a class="anchor" aria-label="anchor" href="#futureapply-002"></a></h2>
-<div class="section level4">
-<h4 id="performance-0-0-2">Performance<a class="anchor" aria-label="anchor" href="#performance-0-0-2"></a></h4>
-<ul><li>future_lapply(x, …) is now much faster and more memory efficient for large ‘x’ vectors because it uses internal fold() function that is more efficient (memory and speed) version of base::Reduce(f, x), especially when length(x) is large.</li>
+<h2 class="page-header" data-toc-text="0.0.2" id="version-002">Version 0.0.2<a class="anchor" aria-label="anchor" href="#version-002"></a></h2>
+<div class="section level3">
+<h3 id="performance-0-0-2">Performance<a class="anchor" aria-label="anchor" href="#performance-0-0-2"></a></h3>
+<ul><li>
+<code>future_lapply(x, ...)</code> is now much faster and more memory efficient for large <code>x</code> vectors because it uses internal <code><a href="../reference/fold.html">fold()</a></code> function that is more efficient (memory and speed) version of <code>base::Reduce(f, x)</code>, especially when <code>length(x)</code> is large.</li>
 </ul></div>
 </div>
     <div class="section level2">
-<h2 class="page-header" data-toc-text="0.0.0-9000" id="futureapply-000-9000">future.apply 0.0.0-9000<a class="anchor" aria-label="anchor" href="#futureapply-000-9000"></a></h2>
-<div class="section level4">
-<h4 id="new-features-0-0-0-9000">New Features<a class="anchor" aria-label="anchor" href="#new-features-0-0-0-9000"></a></h4>
-<ul><li><p>Added future_sapply().</p></li>
-<li><p>Added future_lapply() - originally from the future package.</p></li>
+<h2 class="page-header" data-toc-text="0.0.0-9000" id="version-000-9000">Version 0.0.0-9000<a class="anchor" aria-label="anchor" href="#version-000-9000"></a></h2>
+<div class="section level3">
+<h3 id="new-features-0-0-0-9000">New Features<a class="anchor" aria-label="anchor" href="#new-features-0-0-0-9000"></a></h3>
+<ul><li><p>Added <code><a href="../reference/future_lapply.html">future_sapply()</a></code>.</p></li>
+<li><p>Added <code><a href="../reference/future_lapply.html">future_lapply()</a></code> - originally from the <strong>future</strong> package.</p></li>
 <li><p>Created package.</p></li>
 </ul></div>
 </div>

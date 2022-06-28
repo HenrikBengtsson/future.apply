@@ -7,8 +7,6 @@
 #' If a list, then it should be of length `count` and each element should
 #' consist of a valid RNG seed.
 #'
-#' @param debug If `TRUE`, debug output is produced, otherwise not.
-#'
 #' @return Returns a non-named list of `count` independent `L'Ecuyer-CMRG`
 #' random seeds.
 #' If `seed` is `NULL` or `FALSE`, then `NULL` is returned.
@@ -24,8 +22,8 @@
 #' ```r
 #' seed <- <initial RNG seed>
 #' for (ii in seq_len(count)) {
-#'   seeds[[ii]] <- nextRNGSubStream(seed)
-#'   seed <- nextRNGStream(seed)
+#'   seeds[[ii]] <- parallel::nextRNGSubStream(seed)
+#'   seed <- parallel::nextRNGStream(seed)
 #' }
 #' ```
 #' This function forwards the RNG state `1 + count` times if `seed = TRUE`.
@@ -33,15 +31,16 @@
 #' @importFrom parallel nextRNGStream nextRNGSubStream splitIndices
 #' @importFrom utils capture.output str
 #' @noRd
-make_rng_seeds <- function(count, seed = FALSE,
-                           debug = getOption("future.debug", FALSE)) {
+make_rng_seeds <- function(count, seed = FALSE) {
   ## Don't use RNGs? (seed = {FALSE, NULL})
   if (is.null(seed)) return(NULL)
   if (is.logical(seed) && !is.na(seed) && !seed) return(NULL)
 
   stop_if_not(is.numeric(count), length(count) == 1L, !is.na(count),
               count >= 0L)
-  
+
+  debug <- getOption("future.debug", FALSE)
+
   ## Placeholder for all RNG stream seeds.
   seeds <- NULL
   

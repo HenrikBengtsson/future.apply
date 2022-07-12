@@ -1,4 +1,5 @@
 #' @importFrom future Future nbrOfWorkers future resolve value as.FutureGlobals getGlobalsAndPackages
+#' @importFrom future.mapreduce make_chunks make_rng_seeds
 future_xapply <- local({
   tmpl_expr_options <- bquote_compile({
     ...future.globals.maxSize.org <- getOption("future.globals.maxSize")
@@ -43,10 +44,10 @@ future_xapply <- local({
     ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     ## Load balancing ("chunking")
     ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    chunks <- makeChunks(nX,
-                         nbrOfWorkers = nbrOfWorkers(),
-                         future.scheduling = future.scheduling,
-                         future.chunk.size = future.chunk.size)
+    chunks <- make_chunks(nX,
+                          nworkers   = nbrOfWorkers(),
+                          scheduling = future.scheduling,
+                          chunk_size = future.chunk.size)
     if (debug) mdebugf("Number of chunks: %d", length(chunks))
   
     ## Process elements in a custom order?

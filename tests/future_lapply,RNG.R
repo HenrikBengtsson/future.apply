@@ -1,5 +1,8 @@
 source("incl/start.R")
 
+as_lecyer_cmrg_seed <- import_future("as_lecyer_cmrg_seed")
+get_random_seed <- import_future("get_random_seed")
+
 message("*** future_lapply() and RNGs ...")
 
 options(future.debug = FALSE)

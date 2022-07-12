@@ -1,12 +1,12 @@
 Package: future.apply
-Version: 1.9.0-9003
+Version: 1.9.0-9503
 Title: Apply Function to Elements in Parallel using Futures
 Depends:
     R (>= 3.2.0),
     future (>= 1.26.1)
 Imports:
+    future.mapreduce,
     globals (>= 0.15.1),
-    parallel,
     utils
 Suggests:
     datasets,
@@ -15,6 +15,8 @@ Suggests:
     listenv (>= 0.8.0),
     R.rsp,
     markdown
+Remotes:
+    HenrikBengtsson/future.mapreduce@develop
 VignetteBuilder: R.rsp
 Authors@R: c(person("Henrik", "Bengtsson", role=c("aut", "cre", "cph"),
                                           email = "henrikb@braju.com"),

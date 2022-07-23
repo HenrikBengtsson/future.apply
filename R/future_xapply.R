@@ -1,5 +1,5 @@
 #' @importFrom future Future nbrOfWorkers future resolve value as.FutureGlobals getGlobalsAndPackages
-#' @importFrom future.mapreduce make_chunks make_rng_seeds
+#' @importFrom future.mapreduce get_globals_and_packages_xapply make_chunks make_rng_seeds
 future_xapply <- local({
   tmpl_expr_options <- bquote_compile({
     ...future.globals.maxSize.org <- getOption("future.globals.maxSize")
@@ -61,17 +61,21 @@ future_xapply <- local({
     ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     ## Globals and Packages
     ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    gp <- getGlobalsAndPackagesXApply(FUN = FUN,
-                                      args = args,
-                                      MoreArgs = MoreArgs,
-                                      envir = envir,
-                                      future.globals = future.globals,
-                                      future.packages = future.packages,
-                                      debug = debug)
-  
+    if (is.null(args)) {
+      args <- MoreArgs
+      args_name2 <- "MoreArgs"
+    } else {
+      args_name2 <- "..."
+    }
+    gp <- get_globals_and_packages_xapply(FUN,
+                                          fun_name = "FUN",
+                                          args = args,
+                                          args_name = args_name2,
+                                          globals = future.globals,
+                                          packages = future.packages,
+                                          envir = envir)
     packages <- gp$packages
     globals <- gp$globals
-    scanForGlobals <- gp$scanForGlobals
     gp <- NULL
     
     ## Add argument placeholders
@@ -137,7 +141,7 @@ future_xapply <- local({
       globals_ii[["...future.elements_ii"]] <- args_ii
       packages_ii <- packages
   
-      if (scanForGlobals) {
+      if (isTRUE(future.globals)) {
         if (debug) mdebugf(" - Finding globals in '%s' for chunk #%d ...", args_name, ii)
         gp <- getGlobalsAndPackages(args_ii, envir = envir, globals = TRUE)
         globals_args <- gp$globals

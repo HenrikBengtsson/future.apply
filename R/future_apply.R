@@ -88,14 +88,14 @@ future_apply <- function(X, MARGIN, FUN, ..., simplify = TRUE, future.envir = pa
     ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     ## Globals and Packages
     ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    gp <- getGlobalsAndPackagesXApply(
-      FUN,
-      args = list(X = X, ...),
-      envir = environment(),
-      future.globals = future.globals,
-      future.packages = future.packages,
-      debug = debug
-    )
+    gp <- get_globals_and_packages_xapply(
+            FUN,
+            fun_name = "FUN",
+            args = list(X = X, ...),
+            globals = future.globals,
+            packages = future.packages,
+            envir = environment()
+          )
     globals <- gp$globals
     packages <- gp$packages
     gp <- NULL

@@ -1,9 +1,9 @@
 Package: future.apply
-Version: 1.9.0-9503
+Version: 1.9.0-9504
 Title: Apply Function to Elements in Parallel using Futures
 Depends:
     R (>= 3.2.0),
-    future (>= 1.26.1)
+    future (>= 1.27.0)
 Imports:
     future.mapreduce,
     globals (>= 0.15.1),

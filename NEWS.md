@@ -4,6 +4,10 @@
 
  * Some warnings and errors showed the wrong call.
 
+## Miscellaneous
+
+ * Fix some HTML5 issues in help pages.
+ 
 
 # Version 1.9.0 [2022-04-24]
 

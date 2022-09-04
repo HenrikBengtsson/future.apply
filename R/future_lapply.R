@@ -107,10 +107,12 @@
 #' integer seed vector that can be assigned to
 #' \code{\link[base:Random]{.Random.seed}}.  One approach to generate a
 #' set of valid RNG seeds based on fixed initial seed (here `42L`) is:
+#'
 #' ```r
 #' seeds <- future_lapply(seq_along(X), FUN = function(x) .Random.seed,
 #'                        future.chunk.size = Inf, future.seed = 42L)
 #' ```
+#'
 #' **Note that `as.list(seq_along(X))` is _not_ a valid set of such
 #' `.Random.seed` values.**
 #' 

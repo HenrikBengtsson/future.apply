@@ -1,4 +1,4 @@
-# Version 1.9.0-9001 [2022-05-28]
+# Version (development version)
 
 ## Bug Fixes
 
@@ -20,7 +20,7 @@
 ## Performance
 
  * Now captured standard output and conditions are deleted as soon as
-   they have been relayed. This required **future** (>= 1.25.0).
+   they have been relayed. This requires **future** (>= 1.25.0).
 
 ## Deprecated and Defunct
 

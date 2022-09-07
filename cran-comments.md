@@ -1,6 +1,6 @@
 # CRAN submission future.apply 1.9.1
 
-on 2022-09-05
+on 2022-09-07
 
 I've verified this submission has no negative impact on any of the 113 reverse package dependencies available on CRAN (n=108) and Bioconductor (n=5).
 

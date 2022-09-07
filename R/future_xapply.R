@@ -24,7 +24,7 @@ future_xapply <- local({
     ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     ## Reproducible RNG (for sequential and parallel processing)
     ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    seeds <- make_rng_seeds(nX, seed = future.seed, debug = debug)
+    seeds <- make_rng_seeds(nX, seed = future.seed)
     
     ## Future expression (with or without setting the RNG state) and
     ## pass possibly tweaked 'future.seed' to future()

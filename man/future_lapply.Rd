@@ -235,7 +235,9 @@ sequence of RNG seeds as a list such that
 \code{length(future.seed) == length(X)} and where each element is an
 integer seed vector that can be assigned to
 \code{\link[base:Random]{.Random.seed}}.  One approach to generate a
-set of valid RNG seeds based on fixed initial seed (here \code{42L}) is:\if{html}{\out{<div class="sourceCode r">}}\preformatted{seeds <- future_lapply(seq_along(X), FUN = function(x) .Random.seed,
+set of valid RNG seeds based on fixed initial seed (here \code{42L}) is:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{seeds <- future_lapply(seq_along(X), FUN = function(x) .Random.seed,
                        future.chunk.size = Inf, future.seed = 42L)
 }\if{html}{\out{</div>}}
 

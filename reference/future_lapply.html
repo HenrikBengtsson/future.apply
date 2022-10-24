@@ -25,7 +25,7 @@ Analogously, this is true for all the other future_nnn() functions."><!-- mathja
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">future.apply</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.9.0-9001</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.9.1-9003</span>
       </span>
     </div>
 
@@ -139,117 +139,141 @@ Analogously, this is true for all the other <code>future_nnn()</code> functions.
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">future_eapply</span><span class="op">(</span>
-  <span class="va">env</span>,
-  <span class="va">FUN</span>,
-  <span class="va">...</span>,
-  all.names <span class="op">=</span> <span class="cn">FALSE</span>,
-  USE.NAMES <span class="op">=</span> <span class="cn">TRUE</span>,
-  future.envir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sys.parent.html" class="external-link">parent.frame</a></span><span class="op">(</span><span class="op">)</span>,
-  future.label <span class="op">=</span> <span class="st">"future_eapply-%d"</span>
-<span class="op">)</span>
-
-<span class="fu">future_lapply</span><span class="op">(</span>
-  <span class="va">X</span>,
-  <span class="va">FUN</span>,
-  <span class="va">...</span>,
-  future.envir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sys.parent.html" class="external-link">parent.frame</a></span><span class="op">(</span><span class="op">)</span>,
-  future.stdout <span class="op">=</span> <span class="cn">TRUE</span>,
-  future.conditions <span class="op">=</span> <span class="st">"condition"</span>,
-  future.globals <span class="op">=</span> <span class="cn">TRUE</span>,
-  future.packages <span class="op">=</span> <span class="cn">NULL</span>,
-  future.seed <span class="op">=</span> <span class="cn">FALSE</span>,
-  future.scheduling <span class="op">=</span> <span class="fl">1</span>,
-  future.chunk.size <span class="op">=</span> <span class="cn">NULL</span>,
-  future.label <span class="op">=</span> <span class="st">"future_lapply-%d"</span>
-<span class="op">)</span>
-
-<span class="fu">future_replicate</span><span class="op">(</span>
-  <span class="va">n</span>,
-  <span class="va">expr</span>,
-  simplify <span class="op">=</span> <span class="st">"array"</span>,
-  future.seed <span class="op">=</span> <span class="cn">TRUE</span>,
-  <span class="va">...</span>,
-  future.envir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sys.parent.html" class="external-link">parent.frame</a></span><span class="op">(</span><span class="op">)</span>,
-  future.label <span class="op">=</span> <span class="st">"future_replicate-%d"</span>
-<span class="op">)</span>
-
-<span class="fu">future_sapply</span><span class="op">(</span>
-  <span class="va">X</span>,
-  <span class="va">FUN</span>,
-  <span class="va">...</span>,
-  simplify <span class="op">=</span> <span class="cn">TRUE</span>,
-  USE.NAMES <span class="op">=</span> <span class="cn">TRUE</span>,
-  future.envir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sys.parent.html" class="external-link">parent.frame</a></span><span class="op">(</span><span class="op">)</span>,
-  future.label <span class="op">=</span> <span class="st">"future_sapply-%d"</span>
-<span class="op">)</span>
-
-<span class="fu">future_tapply</span><span class="op">(</span>
-  <span class="va">X</span>,
-  <span class="va">INDEX</span>,
-  FUN <span class="op">=</span> <span class="cn">NULL</span>,
-  <span class="va">...</span>,
-  default <span class="op">=</span> <span class="cn">NA</span>,
-  simplify <span class="op">=</span> <span class="cn">TRUE</span>,
-  future.envir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sys.parent.html" class="external-link">parent.frame</a></span><span class="op">(</span><span class="op">)</span>,
-  future.label <span class="op">=</span> <span class="st">"future_tapply-%d"</span>
-<span class="op">)</span>
-
-<span class="fu">future_vapply</span><span class="op">(</span>
-  <span class="va">X</span>,
-  <span class="va">FUN</span>,
-  <span class="va">FUN.VALUE</span>,
-  <span class="va">...</span>,
-  USE.NAMES <span class="op">=</span> <span class="cn">TRUE</span>,
-  future.envir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sys.parent.html" class="external-link">parent.frame</a></span><span class="op">(</span><span class="op">)</span>,
-  future.label <span class="op">=</span> <span class="st">"future_vapply-%d"</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">future_eapply</span><span class="op">(</span></span>
+<span>  <span class="va">env</span>,</span>
+<span>  <span class="va">FUN</span>,</span>
+<span>  <span class="va">...</span>,</span>
+<span>  all.names <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  USE.NAMES <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  future.envir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sys.parent.html" class="external-link">parent.frame</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  future.label <span class="op">=</span> <span class="st">"future_eapply-%d"</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">future_lapply</span><span class="op">(</span></span>
+<span>  <span class="va">X</span>,</span>
+<span>  <span class="va">FUN</span>,</span>
+<span>  <span class="va">...</span>,</span>
+<span>  future.envir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sys.parent.html" class="external-link">parent.frame</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  future.stdout <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  future.conditions <span class="op">=</span> <span class="st">"condition"</span>,</span>
+<span>  future.globals <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  future.packages <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  future.seed <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  future.scheduling <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  future.chunk.size <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  future.label <span class="op">=</span> <span class="st">"future_lapply-%d"</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">future_replicate</span><span class="op">(</span></span>
+<span>  <span class="va">n</span>,</span>
+<span>  <span class="va">expr</span>,</span>
+<span>  simplify <span class="op">=</span> <span class="st">"array"</span>,</span>
+<span>  future.seed <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  <span class="va">...</span>,</span>
+<span>  future.envir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sys.parent.html" class="external-link">parent.frame</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  future.label <span class="op">=</span> <span class="st">"future_replicate-%d"</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">future_sapply</span><span class="op">(</span></span>
+<span>  <span class="va">X</span>,</span>
+<span>  <span class="va">FUN</span>,</span>
+<span>  <span class="va">...</span>,</span>
+<span>  simplify <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  USE.NAMES <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  future.envir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sys.parent.html" class="external-link">parent.frame</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  future.label <span class="op">=</span> <span class="st">"future_sapply-%d"</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">future_tapply</span><span class="op">(</span></span>
+<span>  <span class="va">X</span>,</span>
+<span>  <span class="va">INDEX</span>,</span>
+<span>  FUN <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">...</span>,</span>
+<span>  default <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  simplify <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  future.envir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sys.parent.html" class="external-link">parent.frame</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  future.label <span class="op">=</span> <span class="st">"future_tapply-%d"</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">future_vapply</span><span class="op">(</span></span>
+<span>  <span class="va">X</span>,</span>
+<span>  <span class="va">FUN</span>,</span>
+<span>  <span class="va">FUN.VALUE</span>,</span>
+<span>  <span class="va">...</span>,</span>
+<span>  USE.NAMES <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  future.envir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sys.parent.html" class="external-link">parent.frame</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  future.label <span class="op">=</span> <span class="st">"future_vapply-%d"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>env</dt>
 <dd><p>An <span style="R">R</span> environment.</p></dd>
+
+
 <dt>FUN</dt>
 <dd><p>A function taking at least one argument.</p></dd>
+
+
 <dt>all.names</dt>
 <dd><p>If <code>TRUE</code>, the function will also be applied to variables
 that start with a period (<code>.</code>), otherwise not.
 See <code><a href="https://rdrr.io/r/base/eapply.html" class="external-link">base::eapply()</a></code> for details.</p></dd>
+
+
 <dt>USE.NAMES</dt>
 <dd><p>See <code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">base::sapply()</a></code>.</p></dd>
+
+
 <dt>future.envir</dt>
 <dd><p>An <a href="https://rdrr.io/r/base/environment.html" class="external-link">environment</a> passed as argument <code>envir</code> to
 <code><a href="https://future.futureverse.org/reference/future.html" class="external-link">future::future()</a></code> as-is.</p></dd>
+
+
 <dt>future.label</dt>
 <dd><p>If a character string, then each future is assigned
 a label <code>sprintf(future.label, chunk_idx)</code>.  If TRUE, then the
 same as <code>future.label = "future_lapply-%d"</code>.  If FALSE, no labels
 are assigned.</p></dd>
+
+
 <dt>X</dt>
 <dd><p>A vector-like object to iterate over.</p></dd>
+
+
 <dt>future.stdout</dt>
 <dd><p>If <code>TRUE</code> (default), then the standard output of the
 underlying futures is captured, and re-outputted as soon as possible.
 If <code>FALSE</code>, any output is silenced (by sinking it to the null device
 as it is outputted).
 If <code>NA</code> (not recommended), output is <em>not</em> intercepted.</p></dd>
+
+
 <dt>future.conditions</dt>
 <dd><p>A character string of conditions classes to be
 captured and relayed.  The default is the same as the <code>condition</code>
 argument of <code><a href="https://future.futureverse.org/reference/Future-class.html" class="external-link">future::Future()</a></code>.
 To not intercept conditions, use <code>conditions = character(0L)</code>.
 Errors are always relayed.</p></dd>
+
+
 <dt>future.globals</dt>
 <dd><p>A logical, a character vector, or a named list for
 controlling how globals are handled. For details, see below section.</p></dd>
+
+
 <dt>future.packages</dt>
 <dd><p>(optional) a character vector specifying packages
 to be attached in the R environment evaluating the future.</p></dd>
+
+
 <dt>future.seed</dt>
 <dd><p>A logical or an integer (of length one or seven),
 or a list of <code>length(X)</code> with pre-generated random seeds.
 For details, see below section.</p></dd>
+
+
 <dt>future.scheduling</dt>
 <dd><p>Average number of futures ("chunks") per worker.
 If <code>0.0</code>, then a single future is used to process all elements
@@ -260,52 +284,83 @@ If <code>2.0</code>, then each worker will process two futures
 If <code>Inf</code> or <code>FALSE</code>, then one future per element of
 <code>X</code> is used.
 Only used if <code>future.chunk.size</code> is <code>NULL</code>.</p></dd>
+
+
 <dt>future.chunk.size</dt>
 <dd><p>The average number of elements per future ("chunk").
 If <code>Inf</code>, then all elements are processed in a single future.
 If <code>NULL</code>, then argument <code>future.scheduling</code> is used.</p></dd>
+
+
 <dt>n</dt>
 <dd><p>The number of replicates.</p></dd>
+
+
 <dt>expr</dt>
 <dd><p>An <span style="R">R</span> expression to evaluate repeatedly.</p></dd>
+
+
 <dt>simplify</dt>
 <dd><p>See <code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">base::sapply()</a></code> and <code><a href="https://rdrr.io/r/base/tapply.html" class="external-link">base::tapply()</a></code>, respectively.</p></dd>
+
+
 <dt>INDEX</dt>
 <dd><p>A list of one or more factors, each of same length as <code>X</code>.
 The elements are coerced to factors by <code><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor()</a></code>.
 See also <code><a href="https://rdrr.io/r/base/tapply.html" class="external-link">base::tapply()</a></code>.</p></dd>
+
+
 <dt>default</dt>
 <dd><p>See <code><a href="https://rdrr.io/r/base/tapply.html" class="external-link">base::tapply()</a></code>.</p></dd>
+
+
 <dt>FUN.VALUE</dt>
 <dd><p>A template for the required return value from
 each <code>FUN(X[ii], ...)</code>.
 Types may be promoted to a higher type within the ordering
 logical &lt; integer &lt; double &lt; complex, but not demoted.
 See <code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">base::vapply()</a></code> for details.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>(optional) Additional arguments passed to <code>FUN()</code>.
 For <code>future_*apply()</code> functions and <code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">replicate()</a></code>, any <code>future.*</code> arguments
 part of <code>\ldots</code> are passed on to <code>future_lapply()</code> used internally.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A named (unless <code>USE.NAMES = FALSE</code>) list.
-See <code><a href="https://rdrr.io/r/base/eapply.html" class="external-link">base::eapply()</a></code> for details.
-For <code>future_lapply()</code>, a list with same length and names as <code>X</code>.
-See <code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">base::lapply()</a></code> for details.
-<code>future_replicate()</code> is a wrapper around <code>future_sapply()</code> and return
+    
+
+<p>A named (unless <code>USE.NAMES = FALSE</code>) list.
+See <code><a href="https://rdrr.io/r/base/eapply.html" class="external-link">base::eapply()</a></code> for details.</p>
+
+
+<p>For <code>future_lapply()</code>, a list with same length and names as <code>X</code>.
+See <code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">base::lapply()</a></code> for details.</p>
+
+
+<p><code>future_replicate()</code> is a wrapper around <code>future_sapply()</code> and return
 simplified object according to the <code>simplify</code> argument.
 See <code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">base::replicate()</a></code> for details.
 Since <code>future_replicate()</code> usually involves random number generation (RNG),
 it uses <code>future.seed = TRUE</code> by default in order produce sound random
-numbers regardless of future backend and number of background workers used.
-For <code>future_sapply()</code>, a vector with same length and names as <code>X</code>.
-See <code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">base::sapply()</a></code> for details.
-<code>future_tapply()</code> returns an array with mode <code>"list"</code>, unless
-<code>simplify = TRUE</code> (default) <em>and</em><code>FUN</code> returns a scalar, in which
+numbers regardless of future backend and number of background workers used.</p>
+
+
+<p>For <code>future_sapply()</code>, a vector with same length and names as <code>X</code>.
+See <code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">base::sapply()</a></code> for details.</p>
+
+
+<p><code>future_tapply()</code> returns an array with mode <code>"list"</code>, unless
+<code>simplify = TRUE</code> (default) <em>and</em></p>
+<p></p>
+<p><code>FUN</code> returns a scalar, in which
 case the mode of the array is the same as the returned scalars.
-See <code><a href="https://rdrr.io/r/base/tapply.html" class="external-link">base::tapply()</a></code> for details.
-For <code>future_vapply()</code>, a vector with same length and names as <code>X</code>.
+See <code><a href="https://rdrr.io/r/base/tapply.html" class="external-link">base::tapply()</a></code> for details.</p>
+
+
+<p>For <code>future_vapply()</code>, a vector with same length and names as <code>X</code>.
 See <code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">base::vapply()</a></code> for details.</p>
     </div>
     <div id="global-variables">
@@ -356,8 +411,8 @@ sequence of RNG seeds as a list such that
 integer seed vector that can be assigned to
 <code><a href="https://rdrr.io/r/base/Random.html" class="external-link">.Random.seed</a></code>.  One approach to generate a
 set of valid RNG seeds based on fixed initial seed (here <code>42L</code>) is:</p>
-<p></p><div class="sourceCode r"><pre><code><span class="va">seeds</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/future_lapply.html">future_lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_along</a></span><span class="op">(</span><span class="va">X</span><span class="op">)</span>, FUN <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">.Random.seed</span>,
-                       future.chunk.size <span class="op">=</span> <span class="cn">Inf</span>, future.seed <span class="op">=</span> <span class="fl">42L</span><span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">seeds</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/future_lapply.html">future_lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_along</a></span><span class="op">(</span><span class="va">X</span><span class="op">)</span>, FUN <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">.Random.seed</span>,</span>
+<span>                       future.chunk.size <span class="op">=</span> <span class="cn">Inf</span>, future.seed <span class="op">=</span> <span class="fl">42L</span><span class="op">)</span></span></code></pre><p></p></div>
 <p><strong>Note that <code>as.list(seq_along(X))</code> is <em>not</em> a valid set of such
 <code>.Random.seed</code> values.</strong></p>
 <p>In all cases but <code>future.seed = FALSE</code> and <code>NULL</code>, the RNG state of the
@@ -396,13 +451,13 @@ base <span style="R">R</span> functions, which are licensed under GPL (&gt;= 2) 
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">## ---------------------------------------------------------</span></span>
-<span class="r-in"><span class="co">## lapply(), sapply(), tapply()</span></span>
-<span class="r-in"><span class="co">## ---------------------------------------------------------</span></span>
-<span class="r-in"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, beta <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="op">-</span><span class="fl">3</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span>, logic <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">FALSE</span>, <span class="cn">FALSE</span>, <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">y0</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">x</span>, FUN <span class="op">=</span> <span class="va">quantile</span>, probs <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">/</span><span class="fl">4</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">y1</span> <span class="op">&lt;-</span> <span class="fu">future_lapply</span><span class="op">(</span><span class="va">x</span>, FUN <span class="op">=</span> <span class="va">quantile</span>, probs <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">/</span><span class="fl">4</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">y1</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">## ---------------------------------------------------------</span></span></span>
+<span class="r-in"><span><span class="co">## lapply(), sapply(), tapply()</span></span></span>
+<span class="r-in"><span><span class="co">## ---------------------------------------------------------</span></span></span>
+<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, beta <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="op">-</span><span class="fl">3</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span>, logic <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">FALSE</span>, <span class="cn">FALSE</span>, <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">y0</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">x</span>, FUN <span class="op">=</span> <span class="va">quantile</span>, probs <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">/</span><span class="fl">4</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">y1</span> <span class="op">&lt;-</span> <span class="fu">future_lapply</span><span class="op">(</span><span class="va">x</span>, FUN <span class="op">=</span> <span class="va">quantile</span>, probs <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">/</span><span class="fl">4</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">y1</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $a</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  25%  50%  75% </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3.25 5.50 7.75 </span>
@@ -415,82 +470,82 @@ base <span style="R">R</span> functions, which are licensed under GPL (&gt;= 2) 
 <span class="r-out co"><span class="r-pr">#&gt;</span> 25% 50% 75% </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 0.0 0.5 1.0 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html" class="external-link">stopifnot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/all.equal.html" class="external-link">all.equal</a></span><span class="op">(</span><span class="va">y1</span>, <span class="va">y0</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">y0</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">x</span>, FUN <span class="op">=</span> <span class="va">quantile</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">y1</span> <span class="op">&lt;-</span> <span class="fu">future_sapply</span><span class="op">(</span><span class="va">x</span>, FUN <span class="op">=</span> <span class="va">quantile</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">y1</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html" class="external-link">stopifnot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/all.equal.html" class="external-link">all.equal</a></span><span class="op">(</span><span class="va">y1</span>, <span class="va">y0</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">y0</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">x</span>, FUN <span class="op">=</span> <span class="va">quantile</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">y1</span> <span class="op">&lt;-</span> <span class="fu">future_sapply</span><span class="op">(</span><span class="va">x</span>, FUN <span class="op">=</span> <span class="va">quantile</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">y1</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          a        beta logic</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 0%    1.00  0.04978707   0.0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 25%   3.25  0.25160736   0.0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 50%   5.50  1.00000000   0.5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 75%   7.75  5.05366896   1.0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 100% 10.00 20.08553692   1.0</span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html" class="external-link">stopifnot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/all.equal.html" class="external-link">all.equal</a></span><span class="op">(</span><span class="va">y1</span>, <span class="va">y0</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">y0</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">vapply</a></span><span class="op">(</span><span class="va">x</span>, FUN <span class="op">=</span> <span class="va">quantile</span>, FUN.VALUE <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/double.html" class="external-link">double</a></span><span class="op">(</span><span class="fl">5L</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">y1</span> <span class="op">&lt;-</span> <span class="fu">future_vapply</span><span class="op">(</span><span class="va">x</span>, FUN <span class="op">=</span> <span class="va">quantile</span>, FUN.VALUE <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/double.html" class="external-link">double</a></span><span class="op">(</span><span class="fl">5L</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">y1</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html" class="external-link">stopifnot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/all.equal.html" class="external-link">all.equal</a></span><span class="op">(</span><span class="va">y1</span>, <span class="va">y0</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">y0</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">vapply</a></span><span class="op">(</span><span class="va">x</span>, FUN <span class="op">=</span> <span class="va">quantile</span>, FUN.VALUE <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/double.html" class="external-link">double</a></span><span class="op">(</span><span class="fl">5L</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">y1</span> <span class="op">&lt;-</span> <span class="fu">future_vapply</span><span class="op">(</span><span class="va">x</span>, FUN <span class="op">=</span> <span class="va">quantile</span>, FUN.VALUE <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/double.html" class="external-link">double</a></span><span class="op">(</span><span class="fl">5L</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">y1</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          a        beta logic</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 0%    1.00  0.04978707   0.0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 25%   3.25  0.25160736   0.0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 50%   5.50  1.00000000   0.5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 75%   7.75  5.05366896   1.0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 100% 10.00 20.08553692   1.0</span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html" class="external-link">stopifnot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/all.equal.html" class="external-link">all.equal</a></span><span class="op">(</span><span class="va">y1</span>, <span class="va">y0</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## ---------------------------------------------------------</span></span>
-<span class="r-in"><span class="co">## Parallel Random Number Generation</span></span>
-<span class="r-in"><span class="co">## ---------------------------------------------------------</span></span>
-<span class="r-in"><span class="co"># \donttest{</span></span>
-<span class="r-in"><span class="co">## Regardless of the future plan, the number of workers, and</span></span>
-<span class="r-in"><span class="co">## where they are, the random numbers produced are identical</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">0xBEEF</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">y1</span> <span class="op">&lt;-</span> <span class="fu">future_lapply</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, FUN <span class="op">=</span> <span class="va">rnorm</span>, future.seed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">y1</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html" class="external-link">stopifnot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/all.equal.html" class="external-link">all.equal</a></span><span class="op">(</span><span class="va">y1</span>, <span class="va">y0</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## ---------------------------------------------------------</span></span></span>
+<span class="r-in"><span><span class="co">## Parallel Random Number Generation</span></span></span>
+<span class="r-in"><span><span class="co">## ---------------------------------------------------------</span></span></span>
+<span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+<span class="r-in"><span><span class="co">## Regardless of the future plan, the number of workers, and</span></span></span>
+<span class="r-in"><span><span class="co">## where they are, the random numbers produced are identical</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">0xBEEF</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">y1</span> <span class="op">&lt;-</span> <span class="fu">future_lapply</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, FUN <span class="op">=</span> <span class="va">rnorm</span>, future.seed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">y1</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> List of 5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ : num -1.32</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ : num [1:2] -1.5 0.293</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ : num [1:3] 2.787 0.929 -0.461</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ : num [1:4] -0.193 -0.184 0.504 1.255</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ : num [1:5] -1.704 1.142 2.352 -1.474 -0.559</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">sequential</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">0xBEEF</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">y2</span> <span class="op">&lt;-</span> <span class="fu">future_lapply</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, FUN <span class="op">=</span> <span class="va">rnorm</span>, future.seed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">y2</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">sequential</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">0xBEEF</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">y2</span> <span class="op">&lt;-</span> <span class="fu">future_lapply</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, FUN <span class="op">=</span> <span class="va">rnorm</span>, future.seed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">y2</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> List of 5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ : num -1.32</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ : num [1:2] -1.5 0.293</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ : num [1:3] 2.787 0.929 -0.461</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ : num [1:4] -0.193 -0.184 0.504 1.255</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ : num [1:5] -1.704 1.142 2.352 -1.474 -0.559</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html" class="external-link">stopifnot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/all.equal.html" class="external-link">all.equal</a></span><span class="op">(</span><span class="va">y1</span>, <span class="va">y2</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="co"># }</span></span>
-<span class="r-in"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## ---------------------------------------------------------</span></span>
-<span class="r-in"><span class="co">## Process chunks of data.frame rows in parallel</span></span>
-<span class="r-in"><span class="co">## ---------------------------------------------------------</span></span>
-<span class="r-in"><span class="va">iris</span> <span class="op">&lt;-</span> <span class="fu">datasets</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/r/datasets/iris.html" class="external-link">iris</a></span></span>
-<span class="r-in"><span class="va">chunks</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/split.html" class="external-link">split</a></span><span class="op">(</span><span class="va">iris</span>, <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span>, length.out <span class="op">=</span> <span class="fl">3L</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">y0</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">chunks</span>, FUN <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">iris</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">iris</span><span class="op">$</span><span class="va">Sepal.Length</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">y0</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html" class="external-link">do.call</a></span><span class="op">(</span><span class="va">sum</span>, <span class="va">y0</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">y1</span> <span class="op">&lt;-</span> <span class="fu">future_lapply</span><span class="op">(</span><span class="va">chunks</span>, FUN <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">iris</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">iris</span><span class="op">$</span><span class="va">Sepal.Length</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">y1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html" class="external-link">do.call</a></span><span class="op">(</span><span class="va">sum</span>, <span class="va">y1</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">y1</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html" class="external-link">stopifnot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/all.equal.html" class="external-link">all.equal</a></span><span class="op">(</span><span class="va">y1</span>, <span class="va">y2</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## ---------------------------------------------------------</span></span></span>
+<span class="r-in"><span><span class="co">## Process chunks of data.frame rows in parallel</span></span></span>
+<span class="r-in"><span><span class="co">## ---------------------------------------------------------</span></span></span>
+<span class="r-in"><span><span class="va">iris</span> <span class="op">&lt;-</span> <span class="fu">datasets</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/r/datasets/iris.html" class="external-link">iris</a></span></span></span>
+<span class="r-in"><span><span class="va">chunks</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/split.html" class="external-link">split</a></span><span class="op">(</span><span class="va">iris</span>, <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span>, length.out <span class="op">=</span> <span class="fl">3L</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">y0</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">chunks</span>, FUN <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">iris</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">iris</span><span class="op">$</span><span class="va">Sepal.Length</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">y0</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html" class="external-link">do.call</a></span><span class="op">(</span><span class="va">sum</span>, <span class="va">y0</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">y1</span> <span class="op">&lt;-</span> <span class="fu">future_lapply</span><span class="op">(</span><span class="va">chunks</span>, FUN <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">iris</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">iris</span><span class="op">$</span><span class="va">Sepal.Length</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">y1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html" class="external-link">do.call</a></span><span class="op">(</span><span class="va">sum</span>, <span class="va">y1</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">y1</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 876.5</span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html" class="external-link">stopifnot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/all.equal.html" class="external-link">all.equal</a></span><span class="op">(</span><span class="va">y1</span>, <span class="va">y0</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># \dontshow{</span></span>
-<span class="r-in"><span class="co">## R CMD check: make sure any open connections are closed afterward</span></span>
-<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">inherits</a></span><span class="op">(</span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"sequential"</span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">sequential</span><span class="op">)</span></span>
-<span class="r-in"><span class="co"># }</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html" class="external-link">stopifnot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/all.equal.html" class="external-link">all.equal</a></span><span class="op">(</span><span class="va">y1</span>, <span class="va">y0</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># \dontshow{</span></span></span>
+<span class="r-in"><span><span class="co">## R CMD check: make sure any open connections are closed afterward</span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">inherits</a></span><span class="op">(</span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"sequential"</span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">sequential</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -505,7 +560,7 @@ base <span style="R">R</span> functions, which are licensed under GPL (&gt;= 2) 
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3</p> and <a href="https://github.com/HenrikBengtsson/pkgdown.extras/">pkgdown.extras</a> 0.0.0.9004.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6</p> and <a href="https://github.com/HenrikBengtsson/pkgdown.extras/">pkgdown.extras</a> 0.0.0.9005.</p>
 </div>
 
       </footer></div>

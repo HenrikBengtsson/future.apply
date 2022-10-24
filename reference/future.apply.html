@@ -27,7 +27,7 @@ and a high-performance compute cluster.'><!-- mathjax --><script src="https://cd
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">future.apply</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.9.0-9001</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.9.1-9003</span>
       </span>
     </div>
 
@@ -162,20 +162,20 @@ amount of chunking, type of load balancing, and future backend being used.</p>
 <p>Since these <code>future_*()</code> functions have the same arguments as the
 corresponding base <span style="R">R</span> function, start using them is often as simple as
 renaming the function in the code.  For example, after attaching the package:</p>
-<p></p><div class="sourceCode r"><pre><code><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://future.apply.futureverse.org">future.apply</a></span><span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://future.apply.futureverse.org">future.apply</a></span><span class="op">)</span></span></code></pre><p></p></div>
 <p>code such as:</p>
-<p></p><div class="sourceCode r"><pre><code><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, beta <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="op">-</span><span class="fl">3</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span>, logic <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">TRUE</span>,<span class="cn">FALSE</span>,<span class="cn">FALSE</span>,<span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span>
-<span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">quantile</span>, probs <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">/</span><span class="fl">4</span><span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, beta <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="op">-</span><span class="fl">3</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span>, logic <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">TRUE</span>,<span class="cn">FALSE</span>,<span class="cn">FALSE</span>,<span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">quantile</span>, probs <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">/</span><span class="fl">4</span><span class="op">)</span></span></code></pre><p></p></div>
 <p>can be updated to:</p>
-<p></p><div class="sourceCode r"><pre><code><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/future_lapply.html">future_lapply</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">quantile</span>, probs <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">/</span><span class="fl">4</span><span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/future_lapply.html">future_lapply</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">quantile</span>, probs <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">/</span><span class="fl">4</span><span class="op">)</span></span></code></pre><p></p></div>
 <p>The default settings in the <span class="pkg">future</span> framework is to process code
 <em>sequentially</em>.  To run the above in parallel on the local machine
 (on any operating system), use:</p>
-<p></p><div class="sourceCode r"><pre><code><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span></span></code></pre><p></p></div>
 <p>first.  That's it!</p>
 <p>To go back to sequential processing, use <code>plan(sequential)</code>.
 If you have access to multiple machines on your local network, use:</p>
-<p></p><div class="sourceCode r"><pre><code><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">cluster</span>, workers <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"n1"</span>, <span class="st">"n2"</span>, <span class="st">"n2"</span>, <span class="st">"n3"</span><span class="op">)</span><span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">cluster</span>, workers <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"n1"</span>, <span class="st">"n2"</span>, <span class="st">"n2"</span>, <span class="st">"n3"</span><span class="op">)</span><span class="op">)</span></span></code></pre><p></p></div>
 <p>This will set up four workers, one on <code>n1</code> and <code>n3</code>, and two on <code>n2</code>.
 If you have SSH access to some remote machines, use:</p>
 <p></p><div class="sourceCode r"><pre><code>plan(cluster, workers = c("m1.myserver.org", "m2.myserver.org))
@@ -217,7 +217,7 @@ Because of these dependencies, the license of this package is GPL (&gt;= 2).</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3</p> and <a href="https://github.com/HenrikBengtsson/pkgdown.extras/">pkgdown.extras</a> 0.0.0.9004.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6</p> and <a href="https://github.com/HenrikBengtsson/pkgdown.extras/">pkgdown.extras</a> 0.0.0.9005.</p>
 </div>
 
       </footer></div>

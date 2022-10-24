@@ -26,7 +26,7 @@ function to margins of an array or matrix."><!-- mathjax --><script src="https:/
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">future.apply</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.9.0-9001</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.9.1-9003</span>
       </span>
     </div>
 
@@ -141,64 +141,84 @@ function to margins of an array or matrix.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">future_apply</span><span class="op">(</span>
-  <span class="va">X</span>,
-  <span class="va">MARGIN</span>,
-  <span class="va">FUN</span>,
-  <span class="va">...</span>,
-  simplify <span class="op">=</span> <span class="cn">TRUE</span>,
-  future.envir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sys.parent.html" class="external-link">parent.frame</a></span><span class="op">(</span><span class="op">)</span>,
-  future.stdout <span class="op">=</span> <span class="cn">TRUE</span>,
-  future.conditions <span class="op">=</span> <span class="st">"condition"</span>,
-  future.globals <span class="op">=</span> <span class="cn">TRUE</span>,
-  future.packages <span class="op">=</span> <span class="cn">NULL</span>,
-  future.seed <span class="op">=</span> <span class="cn">FALSE</span>,
-  future.scheduling <span class="op">=</span> <span class="fl">1</span>,
-  future.chunk.size <span class="op">=</span> <span class="cn">NULL</span>,
-  future.label <span class="op">=</span> <span class="st">"future_apply-%d"</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">future_apply</span><span class="op">(</span></span>
+<span>  <span class="va">X</span>,</span>
+<span>  <span class="va">MARGIN</span>,</span>
+<span>  <span class="va">FUN</span>,</span>
+<span>  <span class="va">...</span>,</span>
+<span>  simplify <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  future.envir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sys.parent.html" class="external-link">parent.frame</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  future.stdout <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  future.conditions <span class="op">=</span> <span class="st">"condition"</span>,</span>
+<span>  future.globals <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  future.packages <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  future.seed <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  future.scheduling <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  future.chunk.size <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  future.label <span class="op">=</span> <span class="st">"future_apply-%d"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>X</dt>
 <dd><p>an array, including a matrix.</p></dd>
+
+
 <dt>MARGIN</dt>
 <dd><p>A vector giving the subscripts which the function will be
 applied over. For example, for a matrix <code>1</code> indicates rows, <code>2</code> indicates
 columns, <code>c(1, 2)</code> indicates rows and columns.
 Where <code>X</code> has named dimnames, it can be a character vector selecting
 dimension names.</p></dd>
+
+
 <dt>FUN</dt>
 <dd><p>A function taking at least one argument.</p></dd>
+
+
 <dt>simplify</dt>
 <dd><p>a logical indicating whether results should be simplified
 if possible.</p></dd>
+
+
 <dt>future.envir</dt>
 <dd><p>An <a href="https://rdrr.io/r/base/environment.html" class="external-link">environment</a> passed as argument <code>envir</code> to
 <code><a href="https://future.futureverse.org/reference/future.html" class="external-link">future::future()</a></code> as-is.</p></dd>
+
+
 <dt>future.stdout</dt>
 <dd><p>If <code>TRUE</code> (default), then the standard output of the
 underlying futures is captured, and re-outputted as soon as possible.
 If <code>FALSE</code>, any output is silenced (by sinking it to the null device
 as it is outputted).
 If <code>NA</code> (not recommended), output is <em>not</em> intercepted.</p></dd>
+
+
 <dt>future.conditions</dt>
 <dd><p>A character string of conditions classes to be
 captured and relayed.  The default is the same as the <code>condition</code>
 argument of <code><a href="https://future.futureverse.org/reference/Future-class.html" class="external-link">future::Future()</a></code>.
 To not intercept conditions, use <code>conditions = character(0L)</code>.
 Errors are always relayed.</p></dd>
+
+
 <dt>future.globals</dt>
 <dd><p>A logical, a character vector, or a named list for
 controlling how globals are handled. For details, see below section.</p></dd>
+
+
 <dt>future.packages</dt>
 <dd><p>(optional) a character vector specifying packages
 to be attached in the R environment evaluating the future.</p></dd>
+
+
 <dt>future.seed</dt>
 <dd><p>A logical or an integer (of length one or seven),
 or a list of <code>length(X)</code> with pre-generated random seeds.
 For details, see below section.</p></dd>
+
+
 <dt>future.scheduling</dt>
 <dd><p>Average number of futures ("chunks") per worker.
 If <code>0.0</code>, then a single future is used to process all elements
@@ -209,23 +229,32 @@ If <code>2.0</code>, then each worker will process two futures
 If <code>Inf</code> or <code>FALSE</code>, then one future per element of
 <code>X</code> is used.
 Only used if <code>future.chunk.size</code> is <code>NULL</code>.</p></dd>
+
+
 <dt>future.chunk.size</dt>
 <dd><p>The average number of elements per future ("chunk").
 If <code>Inf</code>, then all elements are processed in a single future.
 If <code>NULL</code>, then argument <code>future.scheduling</code> is used.</p></dd>
+
+
 <dt>future.label</dt>
 <dd><p>If a character string, then each future is assigned
 a label <code>sprintf(future.label, chunk_idx)</code>.  If TRUE, then the
 same as <code>future.label = "future_lapply-%d"</code>.  If FALSE, no labels
 are assigned.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>(optional) Additional arguments passed to <code>FUN()</code>, except
 <code>future.*</code> arguments, which are passed on to <code><a href="future_lapply.html">future_lapply()</a></code> used
 internally.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>Returns a vector or array or list of values obtained by applying a
+    
+
+<p>Returns a vector or array or list of values obtained by applying a
 function to margins of an array or matrix.
 See <code><a href="https://rdrr.io/r/base/apply.html" class="external-link">base::apply()</a></code> for details.</p>
     </div>
@@ -238,14 +267,14 @@ with 'The R Core Team' as the copyright holder.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">## ---------------------------------------------------------</span></span>
-<span class="r-in"><span class="co">## apply()</span></span>
-<span class="r-in"><span class="co">## ---------------------------------------------------------</span></span>
-<span class="r-in"><span class="va">X</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span>, <span class="fl">1</span>, <span class="fl">6</span><span class="op">:</span><span class="fl">8</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">2L</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">Y0</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="va">X</span>, MARGIN <span class="op">=</span> <span class="fl">1L</span>, FUN <span class="op">=</span> <span class="va">table</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">Y1</span> <span class="op">&lt;-</span> <span class="fu">future_apply</span><span class="op">(</span><span class="va">X</span>, MARGIN <span class="op">=</span> <span class="fl">1L</span>, FUN <span class="op">=</span> <span class="va">table</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">Y1</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">## ---------------------------------------------------------</span></span></span>
+<span class="r-in"><span><span class="co">## apply()</span></span></span>
+<span class="r-in"><span><span class="co">## ---------------------------------------------------------</span></span></span>
+<span class="r-in"><span><span class="va">X</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span>, <span class="fl">1</span>, <span class="fl">6</span><span class="op">:</span><span class="fl">8</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">2L</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">Y0</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="va">X</span>, MARGIN <span class="op">=</span> <span class="fl">1L</span>, FUN <span class="op">=</span> <span class="va">table</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">Y1</span> <span class="op">&lt;-</span> <span class="fu">future_apply</span><span class="op">(</span><span class="va">X</span>, MARGIN <span class="op">=</span> <span class="fl">1L</span>, FUN <span class="op">=</span> <span class="va">table</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">Y1</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[1]]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ...future.X_jj</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1 3 7 </span>
@@ -256,56 +285,56 @@ with 'The R Core Team' as the copyright holder.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2 4 6 8 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1 1 1 1 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html" class="external-link">stopifnot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/all.equal.html" class="external-link">all.equal</a></span><span class="op">(</span><span class="va">Y1</span>, <span class="va">Y0</span>, check.attributes <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span> <span class="co">## FIXME</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">Y0</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="va">X</span>, MARGIN <span class="op">=</span> <span class="fl">1L</span>, FUN <span class="op">=</span> <span class="fu">stats</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/r/stats/quantile.html" class="external-link">quantile</a></span><span class="op">)</span></span>
-<span class="r-in"><span class="va">Y1</span> <span class="op">&lt;-</span> <span class="fu">future_apply</span><span class="op">(</span><span class="va">X</span>, MARGIN <span class="op">=</span> <span class="fl">1L</span>, FUN <span class="op">=</span> <span class="fu">stats</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/r/stats/quantile.html" class="external-link">quantile</a></span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">Y1</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html" class="external-link">stopifnot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/all.equal.html" class="external-link">all.equal</a></span><span class="op">(</span><span class="va">Y1</span>, <span class="va">Y0</span>, check.attributes <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span> <span class="co">## FIXME</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">Y0</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="va">X</span>, MARGIN <span class="op">=</span> <span class="fl">1L</span>, FUN <span class="op">=</span> <span class="fu">stats</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/r/stats/quantile.html" class="external-link">quantile</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">Y1</span> <span class="op">&lt;-</span> <span class="fu">future_apply</span><span class="op">(</span><span class="va">X</span>, MARGIN <span class="op">=</span> <span class="fl">1L</span>, FUN <span class="op">=</span> <span class="fu">stats</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/r/stats/quantile.html" class="external-link">quantile</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">Y1</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      [,1] [,2]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 0%      1  2.0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 25%     1  3.5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 50%     2  5.0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 75%     4  6.5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 100%    7  8.0</span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html" class="external-link">stopifnot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/all.equal.html" class="external-link">all.equal</a></span><span class="op">(</span><span class="va">Y1</span>, <span class="va">Y0</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## ---------------------------------------------------------</span></span>
-<span class="r-in"><span class="co">## Parallel Random Number Generation</span></span>
-<span class="r-in"><span class="co">## ---------------------------------------------------------</span></span>
-<span class="r-in"><span class="co"># \donttest{</span></span>
-<span class="r-in"><span class="co">## Regardless of the future plan, the number of workers, and</span></span>
-<span class="r-in"><span class="co">## where they are, the random numbers produced are identical</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">X</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span>, <span class="fl">1</span>, <span class="fl">6</span><span class="op">:</span><span class="fl">8</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">2L</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">0xBEEF</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">Y1</span> <span class="op">&lt;-</span> <span class="fu">future_apply</span><span class="op">(</span><span class="va">X</span>, MARGIN <span class="op">=</span> <span class="fl">1L</span>, FUN <span class="op">=</span> <span class="va">sample</span>, future.seed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">Y1</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html" class="external-link">stopifnot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/all.equal.html" class="external-link">all.equal</a></span><span class="op">(</span><span class="va">Y1</span>, <span class="va">Y0</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## ---------------------------------------------------------</span></span></span>
+<span class="r-in"><span><span class="co">## Parallel Random Number Generation</span></span></span>
+<span class="r-in"><span><span class="co">## ---------------------------------------------------------</span></span></span>
+<span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+<span class="r-in"><span><span class="co">## Regardless of the future plan, the number of workers, and</span></span></span>
+<span class="r-in"><span><span class="co">## where they are, the random numbers produced are identical</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">X</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span>, <span class="fl">1</span>, <span class="fl">6</span><span class="op">:</span><span class="fl">8</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">2L</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">0xBEEF</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">Y1</span> <span class="op">&lt;-</span> <span class="fu">future_apply</span><span class="op">(</span><span class="va">X</span>, MARGIN <span class="op">=</span> <span class="fl">1L</span>, FUN <span class="op">=</span> <span class="va">sample</span>, future.seed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">Y1</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      [,1] [,2]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1,]    3    8</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [2,]    1    6</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [3,]    7    2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [4,]    1    4</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">sequential</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">0xBEEF</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">Y2</span> <span class="op">&lt;-</span> <span class="fu">future_apply</span><span class="op">(</span><span class="va">X</span>, MARGIN <span class="op">=</span> <span class="fl">1L</span>, FUN <span class="op">=</span> <span class="va">sample</span>, future.seed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">Y2</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">sequential</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">0xBEEF</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">Y2</span> <span class="op">&lt;-</span> <span class="fu">future_apply</span><span class="op">(</span><span class="va">X</span>, MARGIN <span class="op">=</span> <span class="fl">1L</span>, FUN <span class="op">=</span> <span class="va">sample</span>, future.seed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">Y2</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      [,1] [,2]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1,]    3    8</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [2,]    1    6</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [3,]    7    2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [4,]    1    4</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html" class="external-link">stopifnot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/all.equal.html" class="external-link">all.equal</a></span><span class="op">(</span><span class="va">Y1</span>, <span class="va">Y2</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="co"># }</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># \dontshow{</span></span>
-<span class="r-in"><span class="co">## R CMD check: make sure any open connections are closed afterward</span></span>
-<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">inherits</a></span><span class="op">(</span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"sequential"</span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">sequential</span><span class="op">)</span></span>
-<span class="r-in"><span class="co"># }</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html" class="external-link">stopifnot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/all.equal.html" class="external-link">all.equal</a></span><span class="op">(</span><span class="va">Y1</span>, <span class="va">Y2</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># \dontshow{</span></span></span>
+<span class="r-in"><span><span class="co">## R CMD check: make sure any open connections are closed afterward</span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">inherits</a></span><span class="op">(</span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"sequential"</span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">sequential</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -320,7 +349,7 @@ with 'The R Core Team' as the copyright holder.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3</p> and <a href="https://github.com/HenrikBengtsson/pkgdown.extras/">pkgdown.extras</a> 0.0.0.9004.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6</p> and <a href="https://github.com/HenrikBengtsson/pkgdown.extras/">pkgdown.extras</a> 0.0.0.9005.</p>
 </div>
 
       </footer></div>

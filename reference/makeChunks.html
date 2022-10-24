@@ -23,7 +23,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">future.apply</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.9.0-9001</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.9.1-9003</span>
       </span>
     </div>
 
@@ -135,31 +135,40 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">makeChunks</span><span class="op">(</span>
-  <span class="va">nbrOfElements</span>,
-  <span class="va">nbrOfWorkers</span>,
-  future.scheduling <span class="op">=</span> <span class="fl">1</span>,
-  future.chunk.size <span class="op">=</span> <span class="cn">NULL</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">makeChunks</span><span class="op">(</span></span>
+<span>  <span class="va">nbrOfElements</span>,</span>
+<span>  <span class="va">nbrOfWorkers</span>,</span>
+<span>  future.scheduling <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  future.chunk.size <span class="op">=</span> <span class="cn">NULL</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>nbrOfElements</dt>
 <dd><p>(integer) Total number of elements to iterate over.</p></dd>
+
+
 <dt>nbrOfWorkers</dt>
 <dd><p>(integer) Number of workers available.</p></dd>
+
+
 <dt>future.scheduling</dt>
 <dd><p>(numeric) A strictly positive scalar.
 Only used if argument <code>future.chunk.size</code> is <code>NULL</code>.</p></dd>
+
+
 <dt>future.chunk.size</dt>
 <dd><p>(numeric) The maximum number of elements per
 chunk, or <code>NULL</code>.  If <code>NULL</code>, then the chunk sizes are given by the
 <code>future.scheduling</code> argument.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A list of chunks, where each chunk is an integer vector of
+    
+
+<p>A list of chunks, where each chunk is an integer vector of
 unique indices <code>[1, nbrOfElements]</code>.  The union of all chunks
 holds <code>nbrOfElements</code> elements and equals <code>1:nbrOfElements</code>.
 If <code>nbrOfElements == 0</code>, then an empty list is returned.</p>
@@ -193,7 +202,7 @@ vector <code>sample.int(nbrOfElements)</code>.</p></li>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3</p> and <a href="https://github.com/HenrikBengtsson/pkgdown.extras/">pkgdown.extras</a> 0.0.0.9004.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6</p> and <a href="https://github.com/HenrikBengtsson/pkgdown.extras/">pkgdown.extras</a> 0.0.0.9005.</p>
 </div>
 
       </footer></div>

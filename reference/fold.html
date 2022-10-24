@@ -23,7 +23,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">future.apply</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.9.0-9001</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.9.1-9003</span>
       </span>
     </div>
 
@@ -135,31 +135,42 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">fold</span><span class="op">(</span><span class="va">x</span>, <span class="va">f</span>, left <span class="op">=</span> <span class="cn">TRUE</span>, unname <span class="op">=</span> <span class="cn">TRUE</span>, threshold <span class="op">=</span> <span class="fl">1000L</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">fold</span><span class="op">(</span><span class="va">x</span>, <span class="va">f</span>, left <span class="op">=</span> <span class="cn">TRUE</span>, unname <span class="op">=</span> <span class="cn">TRUE</span>, threshold <span class="op">=</span> <span class="fl">1000L</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>x</dt>
 <dd><p>A vector.</p></dd>
+
+
 <dt>f</dt>
 <dd><p>A binary function, i.e. a function take takes two arguments.</p></dd>
+
+
 <dt>left</dt>
 <dd><p>If <code>TRUE</code>, vector is combined from the left (the first element),
 otherwise the right (the last element).</p></dd>
+
+
 <dt>unname</dt>
 <dd><p>If <code>TRUE</code>, function <code>f</code> is called as
 <code>f(unname(y), x[[ii]])</code>, otherwise as <code>f(y, x[[ii]])</code>,
 which may introduce name <code>"y"</code>.</p></dd>
+
+
 <dt>threshold</dt>
 <dd><p>An integer (&gt;= 2) specifying the length where the
 recursive divide-and-conquer call will stop and incremental building of
 the partial value is performed.  Using <code>threshold = +Inf</code> will disable
 recursive folding.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A vector.</p>
+    
+
+<p>A vector.</p>
     </div>
     <div id="details">
     <h2>Details</h2>
@@ -184,7 +195,7 @@ especially when <code>x</code> is long.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3</p> and <a href="https://github.com/HenrikBengtsson/pkgdown.extras/">pkgdown.extras</a> 0.0.0.9004.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6</p> and <a href="https://github.com/HenrikBengtsson/pkgdown.extras/">pkgdown.extras</a> 0.0.0.9005.</p>
 </div>
 
       </footer></div>

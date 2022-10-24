@@ -10,9 +10,9 @@
 ## Deprecated and Defunct
 
  * Specifying the function `FUN` for `future_by()` as a character
-   string is deprecated, because base::by() does not support it. It
-   should be specified as a function, e.g. `FUN = sqrt` and `FUN =
-   `[[``.
+   string is deprecated, because `base::by()` does not support it. It
+   should be specified as a function, e.g. `FUN = sqrt` and ``FUN =
+   `[[` ``.
 
 
 # Version 1.9.1 [2022-09-07]

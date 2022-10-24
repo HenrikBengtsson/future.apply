@@ -85,7 +85,8 @@ future_by_internal <- function(data, INDICES, FUN, ..., simplify = TRUE, .SUBSET
   debug <- getOption("future.apply.debug", getOption("future.debug", FALSE))
   if (debug) mdebugf("%s() ...", fcn_name)
 
-  FUN <- if (!is.null(FUN)) match.fun(FUN)
+  FUN <- future_by_match_FUN(FUN)  ## do be removed /HB 2022-10-24
+  stop_if_not(is.function(FUN))
   stop_if_not(is.function(.SUBSETTER))
 
   if (!is.list(INDICES)) {
@@ -150,4 +151,13 @@ future_by_internal <- function(data, INDICES, FUN, ..., simplify = TRUE, .SUBSET
     call = .CALL,
     class = "by"
   )
+}
+
+
+future_by_match_FUN <- function(FUN) {
+  if (is.function(FUN)) return(FUN)
+  
+  .Deprecated(msg = "Specifying the function 'FUN' for future_by() as a character string is deprecated in future.apply (>= 1.10.0), because base::by() does not support it. Instead, specify it as a function, e.g. FUN = sqrt and FUN = `[[`. It is deprecated.", package = .packageName)
+
+  match.fun(FUN)
 }

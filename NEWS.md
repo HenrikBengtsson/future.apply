@@ -1,7 +1,12 @@
 # Version (development version)
 
- * ...
+## Bug Fixes
 
+ * Functions `future_eapply()`, `future_lapply()`, `future_sapply()`,
+   and `future_vapply()` failed if `FUN` was specified as the name of
+   a function rather than the function object itself,
+   e.g. `future_lapply(1:3, FUN = "sqrt")`.
+   
 
 # Version 1.9.1 [2022-09-07]
 

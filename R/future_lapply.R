@@ -173,7 +173,9 @@ future_lapply <- local({
     ## Nothing to do?
     nX <- length(X)
     if (nX == 0L) return(as.list(X))
-  
+
+    FUN <- match.fun(FUN)
+
     debug <- getOption("future.apply.debug", getOption("future.debug", FALSE))
     
     if (debug) mdebugf("%s() ...", fcn_name)

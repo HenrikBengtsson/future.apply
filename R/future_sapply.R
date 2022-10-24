@@ -18,6 +18,7 @@
 #' 
 #' @rdname future_lapply
 future_sapply <- function(X, FUN, ..., simplify = TRUE, USE.NAMES = TRUE, future.envir = parent.frame(), future.label = "future_sapply-%d") {
+  FUN <- match.fun(FUN)
   answer <- future_lapply(X = X, FUN = FUN, ..., future.envir = future.envir, future.label = future.label)
   if (USE.NAMES && is.character(X) && is.null(names(answer)))
     names(answer) <- X

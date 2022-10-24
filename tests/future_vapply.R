@@ -9,12 +9,16 @@ for (strategy in supportedStrategies()) {
   
   x <- NULL
   fun <- is.factor
+  fun_name <- "is.factor"
   fun_value <- logical(1L)
   y0 <- vapply(x, FUN = fun, FUN.VALUE = fun_value)
   str(y0)
   y1 <- future_vapply(x, FUN = fun, FUN.VALUE = fun_value)
   str(y1)
   stopifnot(all.equal(y1, y0))
+  y2 <- future_vapply(x, FUN = fun_name, FUN.VALUE = fun_value)
+  str(y2)
+  stopifnot(all.equal(y2, y0))
   
   x <- list()
   fun <- is.numeric

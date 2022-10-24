@@ -16,6 +16,8 @@ for (strategy in supportedStrategies()) {
   y0 <- mapply(rep, 1:4, 4:1)
   y1 <- future_mapply(rep, 1:4, 4:1)
   stopifnot(identical(y1, y0))
+  y2 <- future_mapply("rep", 1:4, 4:1)
+  stopifnot(identical(y2, y0))
   
   y0 <- mapply(rep, times = 1:4, x = 4:1)
   y1 <- future_mapply(rep, times = 1:4, x = 4:1)

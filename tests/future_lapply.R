@@ -39,7 +39,11 @@ for (cores in 1:availCores) {
       y <- future_lapply(x_a, FUN = vector, length = 2L, future.scheduling = scheduling)
       str(list(y = y))
       stopifnot(identical(y, y_a))
-      
+
+      y <- future_lapply(x_a, FUN = "vector", length = 2L, future.scheduling = scheduling)
+      str(list(y = y))
+      stopifnot(identical(y, y_a))
+
       message("- future_lapply(x, FUN = base::vector, ...) ...")
       y <- future_lapply(x_a, FUN = base::vector, length = 2L, future.scheduling = scheduling)
       str(list(y = y))

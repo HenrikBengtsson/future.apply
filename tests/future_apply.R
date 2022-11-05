@@ -15,7 +15,11 @@ for (strategy in supportedStrategies()) {
   Y1 <- future_apply(X, MARGIN = 1L, FUN = table)
   print(Y1)
   stopifnot(all.equal(Y1, Y0, check.attributes = FALSE)) ## FIXME
-  
+
+  Y2 <- future_apply(X, MARGIN = 1L, FUN = "table")
+  print(Y2)
+  stopifnot(identical(Y2, Y1))
+
   Y0 <- apply(X, MARGIN = 1L, FUN = stats::quantile)
   Y1 <- future_apply(X, MARGIN = 1L, FUN = stats::quantile)
   print(Y1)

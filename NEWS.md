@@ -1,3 +1,20 @@
+# Version 1.10.0 [2022-11-04]
+
+## Bug Fixes
+
+ * Functions `future_eapply()`, `future_lapply()`, `future_sapply()`,
+   and `future_vapply()` failed if `FUN` was specified as the name of
+   a function rather than the function object itself,
+   e.g. `future_lapply(1:3, FUN = "sqrt")`.
+
+## Deprecated and Defunct
+
+ * Specifying the function `FUN` for `future_by()` as a character
+   string is deprecated, because `base::by()` does not support it. It
+   should be specified as a function, e.g. `FUN = sqrt` and ``FUN =
+   `[[` ``.
+
+
 # Version 1.9.1 [2022-09-07]
 
 ## Bug Fixes

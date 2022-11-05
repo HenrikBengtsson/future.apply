@@ -21,7 +21,10 @@ for (strategy in supportedStrategies()[1]) {
   y1 <- future_tapply(groups, INDEX = groups, FUN = length)
   print(y1)
   stopifnot(all.equal(y1, y0))
-  
+  y2 <- future_tapply(groups, INDEX = groups, FUN = "length")
+  print(y2)
+  stopifnot(all.equal(y2, y0))
+
   message("  - Example #2")
   ## contingency table from data.frame : array with named dimnames
   y0 <- tapply(warpbreaks$breaks, INDEX = warpbreaks[,-1], FUN = sum)

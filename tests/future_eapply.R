@@ -24,6 +24,8 @@ for (strategy in supportedStrategies()) {
   y0 <- eapply(env, quantile)
   y1 <- future_eapply(env, quantile)
   stopifnot(all.equal(y1, y0))
+  y2 <- future_eapply(env, "quantile")
+  stopifnot(all.equal(y2, y0))
 
   plan(sequential)
   message(sprintf("*** strategy = %s ... done", sQuote(strategy)))

@@ -13,6 +13,7 @@
 #' @rdname future_lapply
 #' @export
 future_eapply <- function(env, FUN, ..., all.names = FALSE, USE.NAMES = TRUE, future.envir = parent.frame(), future.label = "future_eapply-%d") {
+  FUN <- match.fun(FUN)
   names <- ls(envir = env, all.names = all.names, sorted = FALSE)
   X <- mget(names, envir = env, inherits = FALSE)
   if (!USE.NAMES) names(X) <- NULL

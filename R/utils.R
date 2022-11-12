@@ -90,16 +90,18 @@ mstr <- function(..., appendLF = TRUE, debug = NA) {
   message(paste(now(), capture.output(str(...)), sep = "", collapse = "\n"), appendLF = appendLF)
 }
 
-## When 'default' is specified, this is 30x faster than
-## base::getOption().  The difference is that here we use
-## use names(.Options) whereas in 'base' names(options())
-## is used.
-getOption <- local({
-  go <- base::getOption
-  function(x, default = NULL) {
-    if (missing(default) || match(x, table = names(.Options), nomatch = 0L) > 0L) go(x) else default
-  }
-}) ## getOption()
+if (getRversion() < "4.0.0") {
+  ## When 'default' is specified, this is 30x faster than
+  ## base::getOption().  The difference is that here we use
+  ## use names(.Options) whereas in 'base' names(options())
+  ## is used.
+  getOption <- local({
+    go <- base::getOption
+    function(x, default = NULL) {
+      if (missing(default) || match(x, table = names(.Options), nomatch = 0L) > 0L) go(x) else default
+    }
+  })
+}
 
 #' @importFrom future FutureError
 #' @importFrom utils capture.output head str

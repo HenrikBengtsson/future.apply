@@ -22,7 +22,7 @@ y_c$A <- 3L
 y_c$B <- c("hello", b = 1:100)
 x_c$b <- y_c
 print(x_c)
-y_c <- lapply(x_c, FUN = listenv::map)
+y_c <- lapply(x_c, FUN = listenv::mapping)
 str(list(y_c = y_c))
 
 for (cores in 1:availCores) {
@@ -55,7 +55,7 @@ for (cores in 1:availCores) {
       stopifnot(identical(y, y_b))
 
       message("- future_lapply(x, FUN = listenv::listenv, ...) ...")
-      y <- future_lapply(x_c, FUN = listenv::map, future.scheduling = scheduling)
+      y <- future_lapply(x_c, FUN = listenv::mapping, future.scheduling = scheduling)
       str(list(y = y))
       stopifnot(identical(y, y_c))
     } ## for (scheduling ...)

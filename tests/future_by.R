@@ -67,6 +67,18 @@ if (require("datasets") && require("stats")) { ## warpbreaks & lm()
       
       y4f <- future_by2(data, INDICES = data[,"tension"], FUN = summary)
       stopifnot(all_equal_but_call(y4f, y4))
+
+      ## Deprecated /HB 2022-10-24
+      y4f2 <- future_by2(data, INDICES = data[,"tension"], FUN = "summary")
+      stopifnot(all_equal_but_call(y4f2, y4))
+
+      res <- tryCatch({
+        y4f2 <- future_by2(data, INDICES = data[,"tension"], FUN = "summary")
+      }, warning = identity)
+      stopifnot(inherits(res, "warning"))
+      if (getRversion() >= "3.6.0") {
+        stopifnot(inherits(res, "deprecatedWarning"))
+      }
     } ## for (strategy ...)
     
     message(sprintf("Testing with %d cores ... DONE", cores))

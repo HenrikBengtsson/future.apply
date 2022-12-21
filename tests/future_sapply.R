@@ -42,6 +42,10 @@ for (strategy in supportedStrategies()) {
     }
   }
 
+  y0 <- sapply(1:3, FUN = "sqrt")
+  y1 <- future_sapply(1:3, FUN = "sqrt")
+  stopifnot(identical(y1, y0))
+  
   ## https://github.com/HenrikBengtsson/future.apply/issues/61
   compute <- function(a, x_vec) a + x_vec
   call_compute <- function(..., x_vec = 1:2){

@@ -18,6 +18,7 @@ future_vapply <- function(X, FUN, FUN.VALUE, ..., USE.NAMES = TRUE, future.envir
   if (!is.vector(X) || is.object(X)) X <- as.list(X)
   
   n <- length(X)
+  FUN <- match.fun(FUN)
   stop_if_not(is.function(FUN))
   stop_if_not(is.vector(FUN.VALUE) || is.array(FUN.VALUE))
   type <- typeof(FUN.VALUE)

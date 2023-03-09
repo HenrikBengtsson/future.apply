@@ -95,7 +95,19 @@ future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES 
   ## arguments 'FUN' and '...'. /HB 2017-03-10
   envir <- future.envir
   envir <- environment()
-  
+
+
+  ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  ## Support %globals%, %packages%, %seed%, ...
+  ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  opts <- getOption("future.disposable", NULL)
+  for (name in names(opts)) {
+    var <- sprintf("future.%s", name)
+    assign(var, opts[[name]], envir = environment(), inherits = FALSE)
+  }
+  options(future.disposable = NULL)
+
+
   ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   ## Future expression
   ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

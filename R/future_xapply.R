@@ -19,8 +19,18 @@ future_xapply <- local({
   
     stop_if_not(length(future.label) == 1L, !is.na(future.label),
                 is.logical(future.label) || is.character(future.label))
-  
-  
+    
+    ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    ## Support %globals%, %packages%, %seed%, ...
+    ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    opts <- getOption("future.disposable", NULL)
+    for (name in names(opts)) {
+      var <- sprintf("future.%s", name)
+      assign(var, opts[[name]], envir = environment(), inherits = FALSE)
+    }
+    options(future.disposable = NULL)
+
+
     ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     ## Reproducible RNG (for sequential and parallel processing)
     ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -33,7 +43,8 @@ future_xapply <- local({
     } else {
       ## If RNG seeds are used (given or generated), make sure to reset
       ## the RNG state afterward
-      oseed <- next_random_seed()    
+      oseed <- next_random_seed()
+      if (debug) mdebugf("Will set RNG state on exit: %s", hpaste(oseed))
       on.exit(set_random_seed(oseed))
       ## As seed=FALSE but without the RNG check
       future.seed <- NULL

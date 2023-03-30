@@ -4,7 +4,8 @@
 
  * Now **future** operators such as `%globals%`, `%seed%`, and `%stdout%`
    can be used to control the corresponding `future.*` arguments, e.g.
-   `y <- future_lapply(1:3, FUN = function(i) { rnorm(1) }) %seed% TRUE`.
+   `y <- future_lapply(1:3, FUN = my_fun) %seed% TRUE` is the same as
+   `y <- future_lapply(1:3, FUN = my_fun, future.seed = TRUE)`.
 
 
 # Version 1.10.0 [2022-11-04]

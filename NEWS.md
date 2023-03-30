@@ -7,6 +7,14 @@
    `y <- future_lapply(1:3, FUN = my_fun) %seed% TRUE` is the same as
    `y <- future_lapply(1:3, FUN = my_fun, future.seed = TRUE)`.
 
+## Bug Fixes
+
+ * Contrary to `lapply(X, ...), `future_lapply(X, ...)` failed to use
+   method-specific `[[` subsetting, if the class of `X` implemented
+   one. `future_mapply()` and other functions had the same problem.
+   The reason was that when `X` is partitioned into chunks, it would
+   lose the class attribute before subsetting with `[[`.
+
 
 # Version 1.10.0 [2022-11-04]
 

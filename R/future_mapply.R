@@ -139,7 +139,7 @@ future_mapply <- function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES 
     nX = nX,
     chunk_args = dots,
     MoreArgs = MoreArgs,
-    get_chunk = function(X, chunk) lapply(X, FUN = `[`, chunk),
+    get_chunk = function(X, chunk) lapply(X, FUN = `chunkWith[[`, chunk),
     expr = expr,
     envir = envir,
     future.envir = future.envir,

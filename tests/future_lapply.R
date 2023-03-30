@@ -80,7 +80,13 @@ for (cores in 1:availCores) {
     y1 <- future_lapply(x, FUN = length)
     stopifnot(identical(y1, y0))
     
-  } ## for (strategy ...)
+    message("- future_lapply(x, ...) where x[[i]] subsets via S3 method ...")
+    x <- structure(list(a = 1, b = 2), class = "Foo")
+    `[[.Foo` <- function(x, ...) 0
+    y0 <- lapply(x, FUN = identity)
+    y1 <- future_lapply(x, FUN = identity)
+    stopifnot(identical(y1, y0))
+} ## for (strategy ...)
 
   message(sprintf("Testing with %d cores ... DONE", cores))
 } ## for (cores ...)

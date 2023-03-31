@@ -77,15 +77,23 @@ for (cores in 1:availCores) {
     x <- structure(list(a = 1, b = 2), class = "Foo")
     as.list.Foo <- function(x, ...) c(x, c = 3)
     y0 <- lapply(x, FUN = length)
+    stopifnot(identical(y0, list(a = 1L, b = 1L, c = 1L)))
     y1 <- future_lapply(x, FUN = length)
     stopifnot(identical(y1, y0))
+    rm(list = "as.list.Foo")
     
     message("- future_lapply(x, ...) where x[[i]] subsets via S3 method ...")
     x <- structure(list(a = 1, b = 2), class = "Foo")
     `[[.Foo` <- function(x, ...) 0
     y0 <- lapply(x, FUN = identity)
+    stopifnot(identical(y0, list(a = 0, b = 0)))
     y1 <- future_lapply(x, FUN = identity)
-    stopifnot(identical(y1, y0))
+    if (getOption("future.apply.chunkWith", "[") == "[") {
+      stopifnot(identical(y1, unclass(x)))
+    } else {
+      stopifnot(identical(y1, y0))
+    }
+    rm(list = "[[.Foo")
 } ## for (strategy ...)
 
   message(sprintf("Testing with %d cores ... DONE", cores))

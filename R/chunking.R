@@ -1,5 +1,5 @@
 `chunkWith[[` <- function(x, subset) {
-  if (getOption("future.apply.chunkWith", "[") == "[") {
+  if (getOption("future.apply.chunkWith", "[[") == "[") {
     return(x[subset])
   }
   

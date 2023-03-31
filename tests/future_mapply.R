@@ -214,7 +214,7 @@ for (strategy in supportedStrategies()) {
   y0 <- mapply(x, FUN = identity)
   stopifnot(identical(y0, c(a = 0, b = 0)))
   y1 <- future_mapply(x, FUN = identity)
-  if (getOption("future.apply.chunkWith", "[") == "[") {
+  if (getOption("future.apply.chunkWith", "[[") == "[") {
     stopifnot(identical(y1, unlist(x)))
   } else {
     stopifnot(identical(y1, y0))

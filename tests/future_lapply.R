@@ -88,7 +88,7 @@ for (cores in 1:availCores) {
     y0 <- lapply(x, FUN = identity)
     stopifnot(identical(y0, list(a = 0, b = 0)))
     y1 <- future_lapply(x, FUN = identity)
-    if (getOption("future.apply.chunkWith", "[") == "[") {
+    if (getOption("future.apply.chunkWith", "[[") == "[") {
       stopifnot(identical(y1, unclass(x)))
     } else {
       stopifnot(identical(y1, y0))

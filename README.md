@@ -1,7 +1,7 @@
+
+
 <div id="badges"><!-- pkgdown markup -->
-<a href="https://CRAN.R-project.org/web/checks/check_results_future.apply.html"><img border="0" src="https://www.r-pkg.org/badges/version/future.apply" alt="CRAN check status"/></a>
-<a href="https://github.com/HenrikBengtsson/future.apply/actions?query=workflow%3AR-CMD-check"><img border="0" src="https://github.com/HenrikBengtsson/future.apply/actions/workflows/R-CMD-check.yaml/badge.svg?branch=develop" alt="R CMD check status"/></a>
-<a href="https://app.codecov.io/gh/HenrikBengtsson/future.apply"><img border="0" src="https://codecov.io/gh/HenrikBengtsson/future.apply/branch/develop/graph/badge.svg" alt="Coverage Status"/></a> 
+<a href="https://CRAN.R-project.org/web/checks/check_results_future.apply.html"><img border="0" src="https://www.r-pkg.org/badges/version/future.apply" alt="CRAN check status"/></a> <a href="https://github.com/HenrikBengtsson/future.apply/actions?query=workflow%3AR-CMD-check"><img border="0" src="https://github.com/HenrikBengtsson/future.apply/actions/workflows/R-CMD-check.yaml/badge.svg?branch=develop" alt="R CMD check status"/></a>     <a href="https://app.codecov.io/gh/HenrikBengtsson/future.apply"><img border="0" src="https://codecov.io/gh/HenrikBengtsson/future.apply/branch/develop/graph/badge.svg" alt="Coverage Status"/></a> 
 </div>
 
 # future.apply: Apply Function to Elements in Parallel using Futures 
@@ -29,7 +29,7 @@ Reproducibility is part of the core design, which means that perfect, parallel r
 
 ## Role
 
-Where does the **[future.apply]** package fit in the software stack?  You can think of it as a sibling to **[foreach]**, **[furrr]**, **[BiocParallel]**, **[plyr]**, etc.  Just as parallel provides `parLapply()`, **foreach** provides `foreach()`, **BiocParallel** provides `bplapply()`, and **plyr** provides `llply()`, **future.apply** provides `future_lapply()`.  Below is a table summarizing this idea:
+Where does the **[future.apply]** package fit in the software stack?  You can think of it as a sibling to **[foreach]**, **[furrr]**, **[BiocParallel]**, **[plyr]**, etc.  Just as **parallel** provides `parLapply()`, **foreach** provides `foreach()`, **BiocParallel** provides `bplapply()`, and **plyr** provides `llply()`, **future.apply** provides `future_lapply()`.  Below is a table summarizing this idea:
 
 <table>
 <tr>

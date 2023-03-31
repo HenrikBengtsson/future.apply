@@ -19,26 +19,26 @@
 
 The purpose of this package is to provide worry-free parallel alternatives to base-R "apply" functions, e.g. `apply()`, `lapply()`, and `vapply()`.  The goal is that one should be able to replace any of these in the core with its futurized equivalent and things will just work.  For example, instead of doing:
 ```r
-library("datasets")
-library("stats")
+library(datasets)
+library(stats)
 y <- lapply(mtcars, FUN = mean, trim = 0.10)
 ```
 one can do:
 ```r
-library("future.apply")
+library(future.apply)
 plan(multisession) ## Run in parallel on local computer
 
-library("datasets")
-library("stats")
+library(datasets)
+library(stats)
 y <- future_lapply(mtcars, FUN = mean, trim = 0.10)
 ```
 
-Reproducibility is part of the core design, which means that perfect, parallel random number generation (RNG) is supported regardless of the amount of chunking, type of load balancing, and future backend being used.  _To enable parallel RNG, use argument `future.seed = TRUE`._
+Reproducibility is part of the core design, which means that perfect, parallel random number generation (RNG) is supported regardless of the amount of chunking, type of load balancing, and future backend being used.  To enable parallel RNG, use argument `future.seed = TRUE`.
 
 
 ## Role
 
-Where does the [future.apply] package fit in the software stack?  You can think of it as a sibling to [foreach], [furrr], [BiocParallel], [plyr], etc.  Just as parallel provides `parLapply()`, foreach provides `foreach()`, BiocParallel provides `bplapply()`, and plyr provides `llply()`, future.apply provides `future_lapply()`.  Below is a table summarizing this idea:
+Where does the **[future.apply]** package fit in the software stack?  You can think of it as a sibling to **[foreach]**, **[furrr]**, **[BiocParallel]**, **[plyr]**, etc.  Just as **parallel** provides `parLapply()`, **foreach** provides `foreach()`, **BiocParallel** provides `bplapply()`, and **plyr** provides `llply()`, **future.apply** provides `future_lapply()`.  Below is a table summarizing this idea:
 
 <table>
 <tr>
@@ -49,11 +49,11 @@ Where does the [future.apply] package fit in the software stack?  You can think 
 
 <tr style="vertical-align: top">
 <td>
-<a href="https://cran.r-project.org/package=future.apply">future.apply</a><br>
+<a href="https://cran.r-project.org/package=future.apply"><strong>future.apply</strong></a><br>
 <br>
 </td>
 <td>
-Future-versions of common goto <code>*apply()</code> functions available in base R (of the 'base' package):<br>
+Future-versions of common goto <code>*apply()</code> functions available in base R (of the <strong>base</strong> package):<br>
 <code>future_apply()</code>, 
 <code>future_by()</code>, 
 <code>future_eapply()</code>, 
@@ -66,17 +66,17 @@ Future-versions of common goto <code>*apply()</code> functions available in base
 <code>future_tapply()</code>, and 
 <code>future_vapply()</code>.
 <br>
-<em>The following function is yet not implemented:</em><br>
+<em>The following function is not implemented:</em><br>
 <code>future_rapply()</code><br>
 </td>
 <td>
-All future backends
+All <strong>future</strong> backends
 </td>
 </tr>
 
 <tr style="vertical-align: top">
 <td>
-parallel
+<strong>parallel</strong>
 </td>
 <td>
 <code>mclapply()</code>, <code>mcmapply()</code>,
@@ -89,20 +89,20 @@ Built-in and conditional on operating system</a>
 
 <tr style="vertical-align: top">
 <td>
-<a href="https://cran.r-project.org/package=foreach">foreach</a>
+<a href="https://cran.r-project.org/package=foreach"><strong>foreach</strong></a>
 </td>
 <td>
 <code>foreach()</code>,
 <code>times()</code>
 </td>
 <td>
-All future backends via <a href="https://cran.r-project.org/package=doFuture">doFuture</a>
+All <strong>future</strong> backends via <a href="https://cran.r-project.org/package=doFuture"><strong>doFuture</strong></a>
 </td>
 </tr>
 
 <tr style="vertical-align: top">
 <td>
-<a href="https://cran.r-project.org/package=furrr">furrr</a>
+<a href="https://cran.r-project.org/package=furrr"><strong>furrr</strong></a>
 </td>
 <td>
 <code>future_imap()</code>,
@@ -112,13 +112,13 @@ All future backends via <a href="https://cran.r-project.org/package=doFuture">do
 ...
 </td>
 <td>
-All future backends
+All <strong>future</strong> backends
 </td>
 </tr>
 
 <tr style="vertical-align: top">
 <td>
-<a href="https://bioconductor.org/packages/release/bioc/html/BiocParallel.html">BiocParallel</a>
+<a href="https://bioconductor.org/packages/release/bioc/html/BiocParallel.html"><strong>BiocParallel</strong></a>
 </td>
 <td>
 Bioconductor's parallel mappers:<br>
@@ -128,14 +128,14 @@ Bioconductor's parallel mappers:<br>
 <code>bpvec()</code>
 </td>
 <td>
-All future backends via <a href="https://cran.r-project.org/package=doFuture">doFuture</a> (because it supports foreach) or via <a href="https://github.com/HenrikBengtsson/BiocParallel.FutureParam">BiocParallel.FutureParam</a> (direct BiocParallelParam support; prototype)
+All <strong>future</strong> backends via <a href="https://cran.r-project.org/package=doFuture"><strong>doFuture</strong></a> (because it supports <strong>foreach</strong>) or via <a href="https://github.com/HenrikBengtsson/BiocParallel.FutureParam"><strong>BiocParallel.FutureParam</strong></a> (direct BiocParallelParam support; prototype)
 </td>
 </tr>
 
 
 <tr style="vertical-align: top">
 <td>
-<a href="https://cran.r-project.org/package=plyr">plyr</a>
+<a href="https://cran.r-project.org/package=plyr"><strong>plyr</strong></a>
 </td>
 <td>
 <code>**ply(..., .parallel = TRUE)</code> functions:<br>
@@ -145,27 +145,17 @@ All future backends via <a href="https://cran.r-project.org/package=doFuture">do
 <code>llply()</code>, ...
 </td>
 <td>
-All future backends via <a href="https://cran.r-project.org/package=doFuture">doFuture</a> (because it uses foreach internally)
+All <strong>future</strong> backends via <a href="https://cran.r-project.org/package=doFuture"><strong>doFuture</strong></a> (because it uses <strong>foreach</strong> internally)
 </td>
 </tr>
 
 </table>
 
-Note that, except for the built-in parallel package, none of these higher-level APIs implement their own parallel backends, but they rather enhance existing ones.  The foreach framework leverages backends such as [doParallel], [doMC] and [doFuture], and the future.apply framework leverages the [future] ecosystem and therefore backends such as built-in parallel, [future.callr], and [future.batchtools].
+Note that, except for the built-in **parallel** package, none of these higher-level APIs implement their own parallel backends, but they rather enhance existing ones.  The **foreach** framework leverages backends such as **[doParallel]**, **[doMC]** and **[doFuture]**, and the **future.apply** framework leverages the **[future]** ecosystem and therefore backends such as built-in **parallel**, **[future.callr]**, and **[future.batchtools]**.
 
-By separating `future_lapply()` and friends from the [future] package, it helps clarifying the purpose of the future package, which is to define and provide the core Future API, which higher-level parallel APIs can build on and for which any futurized parallel backends can be plugged into.
+By separating `future_lapply()` and friends from the **[future]** package, it helps clarifying the purpose of the **future** package, which is to define and provide the core Future API, which higher-level parallel APIs can build on and for which any futurized parallel backends can be plugged into.
 
-
-## Roadmap
-
-1. Implement `future_*apply()` versions for all common `*apply()` functions that exist in base R.  This also involves writing a large set of package tests asserting the correctness and the same behavior as the corresponding `*apply()` functions.
-
-2. Harmonize all `future_*apply()` functions with each other, e.g. the future-specific arguments.
-
-3. Consider additional `future_*apply()` functions and features that fit in this package but don't necessarily have a corresponding function in base R.  Examples of this may be "apply" functions that return futures rather than values, mechanisms for benchmarking, and richer control over load balancing.
-
-The API and identity of the future.apply package will be kept close to the `*apply()` functions in base R.  In other words, it will _neither_ keep growing nor be expanded with new, more powerful apply-like functions beyond those core ones in base R.  Such extended functionality should be part of a separate package.
-
+The API and identity of the **future.apply** package will be kept close to the `*apply()` functions in base R.  In other words, it will _neither_ keep growing nor be expanded with new, more powerful apply-like functions beyond those core ones in base R.  Such extended functionality should be part of a separate package.
 
 
 [batchtools]: https://cran.r-project.org/package=batchtools

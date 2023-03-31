@@ -1,5 +1,9 @@
 #' @inheritParams future_lapply
 #'
+#' @param X An \R object for which a \code{\link[base]{split}} method
+#' exists.  Typically vector-like, allowing subsetting with
+#' \code{\link[base]{[}}, or a data frame.
+#'  
 #' @param INDEX A list of one or more factors, each of same length as `X`.
 #' The elements are coerced to factors by `as.factor()`.
 #' See also [base::tapply()].
@@ -27,7 +31,7 @@ future_tapply <- function(X, INDEX, FUN = NULL, ...,
   if (!nI)
     stop("'INDEX' is of length zero")
   
-  if (!all(lengths(INDEX) == length(X))) 
+  if (!is.object(X) && !all(lengths(INDEX) == length(X))) 
     stop("arguments must have same length")
   
   namelist <- lapply(INDEX, FUN = levels)

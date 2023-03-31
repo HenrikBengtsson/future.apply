@@ -96,7 +96,9 @@ a label \code{sprintf(future.label, chunk_idx)}.  If TRUE, then the
 same as \code{future.label = "future_lapply-\%d"}.  If FALSE, no labels
 are assigned.}
 
-\item{X}{A vector-like object to iterate over.}
+\item{X}{An \R object for which a \code{\link[base]{split}} method
+exists.  Typically vector-like, allowing subsetting with
+\code{\link[base]{[}}, or a data frame.}
 
 \item{future.stdout}{If \code{TRUE} (default), then the standard output of the
 underlying futures is captured, and re-outputted as soon as possible.

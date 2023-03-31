@@ -1,5 +1,10 @@
 # Version (development version)
 
+## Significant Changes
+
+ * `future_tapply()` now accepts data frames as input, just as
+   `tapply()` in R (>= 4.3.0) does.
+
 ## New Features
 
  * Now **future** operators such as `%globals%`, `%seed%`, and `%stdout%`

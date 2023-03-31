@@ -157,47 +157,6 @@ Run `revdep_details(, "cSEM")` for more info
       All declared Imports should be used.
     ```
 
-# DeclareDesign
-
-<details>
-
-* Version: 1.0.2
-* GitHub: https://github.com/DeclareDesign/DeclareDesign
-* Source code: https://github.com/cran/DeclareDesign
-* Date/Publication: 2023-01-10 07:13:10 UTC
-* Number of recursive dependencies: 135
-
-Run `revdep_details(, "DeclareDesign")` for more info
-
-</details>
-
-## Newly broken
-
-*   checking tests ...
-    ```
-      Running ‘testthat.R’
-     ERROR
-    Running the tests in ‘tests/testthat.R’ failed.
-    Complete output:
-      > library(testthat)
-      > library(DeclareDesign)
-      Loading required package: randomizr
-      Loading required package: fabricatr
-      Loading required package: estimatr
-      > 
-    ...
-      [1] 7 - 14 == -7
-      ── Failure ('test-subset.R:24:3'): Test Subsetting on default inquiry handler ──
-      design %>% draw_estimands() %>% ... is not TRUE
-      
-      `actual`:   FALSE
-      `expected`: TRUE 
-      
-      [ FAIL 2 | WARN 0 | SKIP 6 | PASS 529 ]
-      Error: Test failures
-      Execution halted
-    ```
-
 # dhReg
 
 <details>

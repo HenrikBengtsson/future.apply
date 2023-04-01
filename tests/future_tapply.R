@@ -148,6 +148,10 @@ for (strategy in supportedStrategies()[1]) {
     y_truth <- tapply(data, INDEX = iris$Species, FUN = sum)
     y <- future_tapply(data, INDEX = iris$Species, FUN = sum)
     stopifnot(identical(y, y_truth))
+    
+    y_truth2 <- tapply(data, INDEX = ~ iris$Species + iris$Petal.Width, FUN = sum)
+    y2 <- future_tapply(data, INDEX = ~ iris$Species + iris$Petal.Width, FUN = sum)
+    stopifnot(identical(y2, y_truth2))
   }
 
   plan(sequential)

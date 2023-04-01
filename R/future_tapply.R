@@ -24,6 +24,8 @@ future_tapply <- function(X, INDEX, FUN = NULL, ...,
                           future.label = "future_tapply-%d") {
   FUN <- if (!is.null(FUN)) 
     match.fun(FUN)
+  if (inherits(INDEX, "formula"))
+    INDEX <- .formula2varlist(INDEX, X)
   if (!is.list(INDEX)) 
     INDEX <- list(INDEX)
   INDEX <- lapply(INDEX, FUN = as.factor)
@@ -73,3 +75,8 @@ future_tapply <- function(X, INDEX, FUN = NULL, ...,
 
   ansmat
 }
+
+
+.formula2varlist <- import_base(".formula2varlist", default = function(...) {
+  stop(errorCondition("future_tapply(X, INDEX, ...), where 'INDEX' is a formula, requires R (>= 4.3.0"), class = "NotSupportedByThisRVersionError")
+})

@@ -3,7 +3,11 @@
 ## Significant Changes
 
  * `future_tapply()` now accepts data frames as input, just as
-   `tapply()` in R (>= 4.3.0) does.
+   `tapply()` does in R (>= 4.3.0).
+
+ * In R (>= 4.3.0), `future_tapply(X, INDEX, ...)` now accepts `INDEX`
+   being a formula when `X` is a data frames, just as `tapply()` does
+   in R (>= 4.3.0).  An error is produced if used in R (< 4.3.0).
 
 ## New Features
 

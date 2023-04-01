@@ -12,3 +12,7 @@ import_from <- function(name, default = NULL, package) {
 import_future <- function(name, default = NULL) {
   import_from(name, default = default, package = "future")
 }
+
+import_base <- function(name, default = NULL) {
+  import_from(name, default = default, package = "base")
+}

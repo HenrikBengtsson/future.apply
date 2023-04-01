@@ -18,7 +18,7 @@
 
 ## Bug Fixes
 
- * Contrary to `lapply(X, ...), `future_lapply(X, ...)` failed to use
+ * Contrary to `lapply(X, ...)`, `future_lapply(X, ...)` failed to use
    method-specific `[[` subsetting, if the class of `X` implemented
    one. `future_mapply()` and other functions had the same problem.
    The reason was that when `X` is partitioned into chunks, it would

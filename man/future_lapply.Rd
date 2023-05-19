@@ -143,8 +143,10 @@ If \code{NULL}, then argument \code{future.scheduling} is used.}
 \item{simplify}{See \code{\link[base:lapply]{base::sapply()}} and \code{\link[base:tapply]{base::tapply()}}, respectively.}
 
 \item{INDEX}{A list of one or more factors, each of same length as \code{X}.
-The elements are coerced to factors by \code{as.factor()}.
-See also \code{\link[base:tapply]{base::tapply()}}.}
+The elements are coerced to \code{\link[base]{factor}}s by
+\code{\link[base:as.factor]{as.factor()}}. Can also be a formula, which
+is useful if \code{X} is a data frame; see the \code{f} argument in
+\code{\link[base:split]{split()}} for interpretation.}
 
 \item{default}{See \code{\link[base:tapply]{base::tapply()}}.}
 

@@ -25,7 +25,7 @@ Analogously, this is true for all the other future_nnn() functions."><!-- mathja
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">future.apply</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.10.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.10.0-9013</span>
       </span>
     </div>
 
@@ -239,7 +239,9 @@ are assigned.</p></dd>
 
 
 <dt>X</dt>
-<dd><p>A vector-like object to iterate over.</p></dd>
+<dd><p>An <span style="R">R</span> object for which a <code><a href="https://rdrr.io/r/base/split.html" class="external-link">split</a></code> method
+exists.  Typically vector-like, allowing subsetting with
+<code><a href="https://rdrr.io/r/base/Extract.html" class="external-link">[</a></code>, or a data frame.</p></dd>
 
 
 <dt>future.stdout</dt>
@@ -306,8 +308,10 @@ If <code>NULL</code>, then argument <code>future.scheduling</code> is used.</p><
 
 <dt>INDEX</dt>
 <dd><p>A list of one or more factors, each of same length as <code>X</code>.
-The elements are coerced to factors by <code><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor()</a></code>.
-See also <code><a href="https://rdrr.io/r/base/tapply.html" class="external-link">base::tapply()</a></code>.</p></dd>
+The elements are coerced to <code><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></code>s by
+<code><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor()</a></code>. Can also be a formula, which
+is useful if <code>X</code> is a data frame; see the <code>f</code> argument in
+<code><a href="https://rdrr.io/r/base/split.html" class="external-link">split()</a></code> for interpretation.</p></dd>
 
 
 <dt>default</dt>
@@ -560,7 +564,7 @@ base <span style="R">R</span> functions, which are licensed under GPL (&gt;= 2) 
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6</p> and <a href="https://github.com/HenrikBengtsson/pkgdown.extras/">pkgdown.extras</a> 0.0.0.9005.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7</p> and <a href="https://github.com/HenrikBengtsson/pkgdown.extras/">pkgdown.extras</a> 0.0.0.9005.</p>
 </div>
 
       </footer></div>

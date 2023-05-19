@@ -47,7 +47,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">future.apply</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.10.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.10.0-9013</span>
       </span>
     </div>
 
@@ -183,35 +183,38 @@ alternatives to base-R “apply” functions, e.g. <code><a href="https://rdrr.
 should be able to replace any of these in the core with its futurized
 equivalent and things will just work. For example, instead of doing:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st">"datasets"</span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st">"stats"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">datasets</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">stats</span><span class="op">)</span></span>
 <span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">mtcars</span>, FUN <span class="op">=</span> <span class="va">mean</span>, trim <span class="op">=</span> <span class="fl">0.10</span><span class="op">)</span></span></code></pre></div>
 <p>one can do:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://future.apply.futureverse.org">"future.apply"</a></span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://future.apply.futureverse.org">future.apply</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span> <span class="co">## Run in parallel on local computer</span></span>
 <span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st">"datasets"</span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st">"stats"</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">datasets</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">stats</span><span class="op">)</span></span>
 <span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/future_lapply.html">future_lapply</a></span><span class="op">(</span><span class="va">mtcars</span>, FUN <span class="op">=</span> <span class="va">mean</span>, trim <span class="op">=</span> <span class="fl">0.10</span><span class="op">)</span></span></code></pre></div>
 <p>Reproducibility is part of the core design, which means that perfect,
 parallel random number generation (RNG) is supported regardless of the
 amount of chunking, type of load balancing, and future backend being
-used. <em>To enable parallel RNG, use argument
-<code>future.seed = TRUE</code>.</em></p>
+used. To enable parallel RNG, use argument
+<code>future.seed = TRUE</code>.</p>
 </div>
 <div class="section level2">
 <h2 id="role">Role<a class="anchor" aria-label="anchor" href="#role"></a>
 </h2>
-<p>Where does the <a href="https://cran.r-project.org/package=future.apply" class="external-link">future.apply</a>
+<p>Where does the <strong><a href="https://cran.r-project.org/package=future.apply" class="external-link">future.apply</a></strong>
 package fit in the software stack? You can think of it as a sibling to
-<a href="https://cran.r-project.org/package=foreach" class="external-link">foreach</a>, <a href="https://cran.r-project.org/package=furrr" class="external-link">furrr</a>, <a href="https://bioconductor.org/packages/BiocParallel/" class="external-link">BiocParallel</a>,
-<a href="https://cran.r-project.org/package=plyr" class="external-link">plyr</a>, etc. Just as
-parallel provides <code>parLapply()</code>, foreach provides
-<code>foreach()</code>, BiocParallel provides <code>bplapply()</code>,
-and plyr provides <code>llply()</code>, future.apply provides
-<code><a href="../reference/future_lapply.html">future_lapply()</a></code>. Below is a table summarizing this
-idea:</p>
+<strong><a href="https://cran.r-project.org/package=foreach" class="external-link">foreach</a></strong>,
+<strong><a href="https://cran.r-project.org/package=furrr" class="external-link">furrr</a></strong>,
+<strong><a href="https://bioconductor.org/packages/BiocParallel/" class="external-link">BiocParallel</a></strong>,
+<strong><a href="https://cran.r-project.org/package=plyr" class="external-link">plyr</a></strong>, etc.
+Just as <strong>parallel</strong> provides <code>parLapply()</code>,
+<strong>foreach</strong> provides <code>foreach()</code>,
+<strong>BiocParallel</strong> provides <code>bplapply()</code>, and
+<strong>plyr</strong> provides <code>llply()</code>,
+<strong>future.apply</strong> provides <code><a href="../reference/future_lapply.html">future_lapply()</a></code>.
+Below is a table summarizing this idea:</p>
 <table class="table">
 <tr>
 <th>
@@ -226,24 +229,25 @@ Backends
 </tr>
 <tr style="vertical-align: top">
 <td>
-<a href="https://cran.r-project.org/package=future.apply" class="external-link">future.apply</a><br><br>
+<a href="https://cran.r-project.org/package=future.apply" class="external-link"><strong>future.apply</strong></a><br><br>
 </td>
 <td>
 Future-versions of common goto <code>*apply()</code> functions available
-in base R (of the ‘base’ package):<br><code><a href="../reference/future_apply.html">future_apply()</a></code>,
-<code><a href="../reference/future_by.html">future_by()</a></code>, <code><a href="../reference/future_lapply.html">future_eapply()</a></code>,
-<code><a href="../reference/future_lapply.html">future_lapply()</a></code>, <code><a href="../reference/future_mapply.html">future_Map()</a></code>,
-<code><a href="../reference/future_mapply.html">future_mapply()</a></code>, <code><a href="../reference/future_mapply.html">future_.mapply()</a></code>,
-<code><a href="../reference/future_lapply.html">future_replicate()</a></code>, <code><a href="../reference/future_lapply.html">future_sapply()</a></code>,
-<code><a href="../reference/future_lapply.html">future_tapply()</a></code>, and <code><a href="../reference/future_lapply.html">future_vapply()</a></code>. <br><em>The following function is yet not implemented:</em><br><code>future_rapply()</code><br>
+in base R (of the <strong>base</strong> package):<br><code><a href="../reference/future_apply.html">future_apply()</a></code>, <code><a href="../reference/future_by.html">future_by()</a></code>,
+<code><a href="../reference/future_lapply.html">future_eapply()</a></code>, <code><a href="../reference/future_lapply.html">future_lapply()</a></code>,
+<code><a href="../reference/future_mapply.html">future_Map()</a></code>, <code><a href="../reference/future_mapply.html">future_mapply()</a></code>,
+<code><a href="../reference/future_mapply.html">future_.mapply()</a></code>, <code><a href="../reference/future_lapply.html">future_replicate()</a></code>,
+<code><a href="../reference/future_lapply.html">future_sapply()</a></code>, <code><a href="../reference/future_lapply.html">future_tapply()</a></code>, and
+<code><a href="../reference/future_lapply.html">future_vapply()</a></code>. <br><em>The following function is not
+implemented:</em><br><code>future_rapply()</code><br>
 </td>
 <td>
-All future backends
+All <strong>future</strong> backends
 </td>
 </tr>
 <tr style="vertical-align: top">
 <td>
-parallel
+<strong>parallel</strong>
 </td>
 <td>
 <code>mclapply()</code>, <code>mcmapply()</code>,
@@ -256,31 +260,31 @@ Built-in and conditional on operating system
 </tr>
 <tr style="vertical-align: top">
 <td>
-<a href="https://cran.r-project.org/package=foreach" class="external-link">foreach</a>
+<a href="https://cran.r-project.org/package=foreach" class="external-link"><strong>foreach</strong></a>
 </td>
 <td>
 <code>foreach()</code>, <code>times()</code>
 </td>
 <td>
-All future backends via
-<a href="https://cran.r-project.org/package=doFuture" class="external-link">doFuture</a>
+All <strong>future</strong> backends via
+<a href="https://cran.r-project.org/package=doFuture" class="external-link"><strong>doFuture</strong></a>
 </td>
 </tr>
 <tr style="vertical-align: top">
 <td>
-<a href="https://cran.r-project.org/package=furrr" class="external-link">furrr</a>
+<a href="https://cran.r-project.org/package=furrr" class="external-link"><strong>furrr</strong></a>
 </td>
 <td>
 <code>future_imap()</code>, <code>future_map()</code>,
 <code>future_pmap()</code>, <code>future_map2()</code>, …
 </td>
 <td>
-All future backends
+All <strong>future</strong> backends
 </td>
 </tr>
 <tr style="vertical-align: top">
 <td>
-<a href="https://bioconductor.org/packages/release/bioc/html/BiocParallel.html" class="external-link">BiocParallel</a>
+<a href="https://bioconductor.org/packages/release/bioc/html/BiocParallel.html" class="external-link"><strong>BiocParallel</strong></a>
 </td>
 <td>
 Bioconductor’s parallel mappers:<br><code>bpaggregate()</code>,
@@ -288,64 +292,49 @@ Bioconductor’s parallel mappers:<br><code>bpaggregate()</code>,
 <code>bpvec()</code>
 </td>
 <td>
-All future backends via
-<a href="https://cran.r-project.org/package=doFuture" class="external-link">doFuture</a>
-(because it supports foreach) or via
-<a href="https://github.com/HenrikBengtsson/BiocParallel.FutureParam" class="external-link">BiocParallel.FutureParam</a>
+All <strong>future</strong> backends via
+<a href="https://cran.r-project.org/package=doFuture" class="external-link"><strong>doFuture</strong></a>
+(because it supports <strong>foreach</strong>) or via
+<a href="https://github.com/HenrikBengtsson/BiocParallel.FutureParam" class="external-link"><strong>BiocParallel.FutureParam</strong></a>
 (direct BiocParallelParam support; prototype)
 </td>
 </tr>
 <tr style="vertical-align: top">
 <td>
-<a href="https://cran.r-project.org/package=plyr" class="external-link">plyr</a>
+<a href="https://cran.r-project.org/package=plyr" class="external-link"><strong>plyr</strong></a>
 </td>
 <td>
 <code>**ply(…, .parallel = TRUE)</code> functions:<br><code>aaply()</code>, <code>ddply()</code>, <code>dlply()</code>,
 <code>llply()</code>, …
 </td>
 <td>
-All future backends via
-<a href="https://cran.r-project.org/package=doFuture" class="external-link">doFuture</a>
-(because it uses foreach internally)
+All <strong>future</strong> backends via
+<a href="https://cran.r-project.org/package=doFuture" class="external-link"><strong>doFuture</strong></a>
+(because it uses <strong>foreach</strong> internally)
 </td>
 </tr>
 </table>
-<p>Note that, except for the built-in parallel package, none of these
-higher-level APIs implement their own parallel backends, but they rather
-enhance existing ones. The foreach framework leverages backends such as
-<a href="https://cran.r-project.org/package=doParallel" class="external-link">doParallel</a>,
-<a href="https://cran.r-project.org/package=doMC" class="external-link">doMC</a> and <a href="https://cran.r-project.org/package=doFuture" class="external-link">doFuture</a>, and the
-future.apply framework leverages the <a href="https://cran.r-project.org/package=future" class="external-link">future</a> ecosystem
-and therefore backends such as built-in parallel, <a href="https://cran.r-project.org/package=future.callr" class="external-link">future.callr</a>,
-and <a href="https://cran.r-project.org/package=future.batchtools" class="external-link">future.batchtools</a>.</p>
-<p>By separating <code><a href="../reference/future_lapply.html">future_lapply()</a></code> and friends from the <a href="https://cran.r-project.org/package=future" class="external-link">future</a> package, it
-helps clarifying the purpose of the future package, which is to define
-and provide the core Future API, which higher-level parallel APIs can
-build on and for which any futurized parallel backends can be plugged
-into.</p>
-</div>
-<div class="section level2">
-<h2 id="roadmap">Roadmap<a class="anchor" aria-label="anchor" href="#roadmap"></a>
-</h2>
-<ol style="list-style-type: decimal">
-<li><p>Implement <code>future_*apply()</code> versions for all common
-<code>*apply()</code> functions that exist in base R. This also involves
-writing a large set of package tests asserting the correctness and the
-same behavior as the corresponding <code>*apply()</code>
-functions.</p></li>
-<li><p>Harmonize all <code>future_*apply()</code> functions with each
-other, e.g. the future-specific arguments.</p></li>
-<li><p>Consider additional <code>future_*apply()</code> functions and
-features that fit in this package but don’t necessarily have a
-corresponding function in base R. Examples of this may be “apply”
-functions that return futures rather than values, mechanisms for
-benchmarking, and richer control over load balancing.</p></li>
-</ol>
-<p>The API and identity of the future.apply package will be kept close
-to the <code>*apply()</code> functions in base R. In other words, it
-will <em>neither</em> keep growing nor be expanded with new, more
-powerful apply-like functions beyond those core ones in base R. Such
-extended functionality should be part of a separate package.</p>
+<p>Note that, except for the built-in <strong>parallel</strong> package,
+none of these higher-level APIs implement their own parallel backends,
+but they rather enhance existing ones. The <strong>foreach</strong>
+framework leverages backends such as <strong><a href="https://cran.r-project.org/package=doParallel" class="external-link">doParallel</a></strong>,
+<strong><a href="https://cran.r-project.org/package=doMC" class="external-link">doMC</a></strong> and
+<strong><a href="https://cran.r-project.org/package=doFuture" class="external-link">doFuture</a></strong>,
+and the <strong>future.apply</strong> framework leverages the <strong><a href="https://cran.r-project.org/package=future" class="external-link">future</a></strong>
+ecosystem and therefore backends such as built-in
+<strong>parallel</strong>, <strong><a href="https://cran.r-project.org/package=future.callr" class="external-link">future.callr</a></strong>,
+and <strong><a href="https://cran.r-project.org/package=future.batchtools" class="external-link">future.batchtools</a></strong>.</p>
+<p>By separating <code><a href="../reference/future_lapply.html">future_lapply()</a></code> and friends from the
+<strong><a href="https://cran.r-project.org/package=future" class="external-link">future</a></strong>
+package, it helps clarifying the purpose of the <strong>future</strong>
+package, which is to define and provide the core Future API, which
+higher-level parallel APIs can build on and for which any futurized
+parallel backends can be plugged into.</p>
+<p>The API and identity of the <strong>future.apply</strong> package
+will be kept close to the <code>*apply()</code> functions in base R. In
+other words, it will <em>neither</em> keep growing nor be expanded with
+new, more powerful apply-like functions beyond those core ones in base
+R. Such extended functionality should be part of a separate package.</p>
 </div>
   </div>
 
@@ -366,7 +355,7 @@ extended functionality should be part of a separate package.</p>
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6</p> and <a href="https://github.com/HenrikBengtsson/pkgdown.extras/">pkgdown.extras</a> 0.0.0.9005.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7</p> and <a href="https://github.com/HenrikBengtsson/pkgdown.extras/">pkgdown.extras</a> 0.0.0.9005.</p>
 </div>
 
       </footer>

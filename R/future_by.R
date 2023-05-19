@@ -70,6 +70,9 @@ future_by.default <- function(data, INDICES, FUN, ..., simplify = TRUE, future.e
 
 #' @export
 future_by.data.frame <- function(data, INDICES, FUN, ..., simplify = TRUE, future.envir = parent.frame()) {
+  if (inherits(INDICES, "formula"))
+    INDICES <- .formula2varlist(INDICES, data)
+    
   future_by_internal(data = data, INDICES = INDICES, FUN = FUN, ...,
                      simplify = simplify,
 		     .INDICES.NAME = deparse(substitute(INDICES))[1L],
@@ -85,7 +88,7 @@ future_by_internal <- function(data, INDICES, FUN, ..., simplify = TRUE, .SUBSET
   debug <- getOption("future.apply.debug", getOption("future.debug", FALSE))
   if (debug) mdebugf("%s() ...", fcn_name)
 
-  FUN <- future_by_match_FUN(FUN)  ## do be removed /HB 2022-10-24
+  FUN <- future_by_match_FUN(FUN)  ## to be removed /HB 2022-10-24
   stop_if_not(is.function(FUN))
   stop_if_not(is.function(.SUBSETTER))
 
@@ -157,7 +160,7 @@ future_by_internal <- function(data, INDICES, FUN, ..., simplify = TRUE, .SUBSET
 future_by_match_FUN <- function(FUN) {
   if (is.function(FUN)) return(FUN)
   
-  .Deprecated(msg = "Specifying the function 'FUN' for future_by() as a character string is deprecated in future.apply (>= 1.10.0), because base::by() does not support it. Instead, specify it as a function, e.g. FUN = sqrt and FUN = `[[`. It is deprecated.", package = .packageName)
+  .Deprecated(msg = "Specifying the function 'FUN' for future_by() as a character string is deprecated in future.apply (>= 1.10.0) [2022-11-04], because base::by() does not support it. Instead, specify it as a function, e.g. FUN = sqrt and FUN = `[[`. It is deprecated.", package = .packageName)
 
   match.fun(FUN)
 }

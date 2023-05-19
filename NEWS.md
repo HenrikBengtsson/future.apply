@@ -9,6 +9,10 @@
    being a formula when `X` is a data frames, just as `tapply()` does
    in R (>= 4.3.0).  An error is produced if used in R (< 4.3.0).
 
+ * In R (>= 4.3.0), `future_by(X, INDICES, ...)` now accepts `INDICES`
+   being a formula when `X` is a data frames, just as `by()` does in
+   R (>= 4.3.0).  An error is produced if used in R (< 4.3.0).
+
 ## New Features
 
  * Now **future** operators such as `%globals%`, `%seed%`, and `%stdout%`

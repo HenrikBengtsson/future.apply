@@ -22,7 +22,7 @@ y_c$A <- 3L
 y_c$B <- c("hello", b = 1:100)
 x_c$b <- y_c
 print(x_c)
-y_c <- lapply(x_c, FUN = listenv::map)
+y_c <- lapply(x_c, FUN = listenv::mapping)
 str(list(y_c = y_c))
 
 for (cores in 1:availCores) {
@@ -55,7 +55,7 @@ for (cores in 1:availCores) {
       stopifnot(identical(y, y_b))
 
       message("- future_lapply(x, FUN = listenv::listenv, ...) ...")
-      y <- future_lapply(x_c, FUN = listenv::map, future.scheduling = scheduling)
+      y <- future_lapply(x_c, FUN = listenv::mapping, future.scheduling = scheduling)
       str(list(y = y))
       stopifnot(identical(y, y_c))
     } ## for (scheduling ...)
@@ -77,10 +77,24 @@ for (cores in 1:availCores) {
     x <- structure(list(a = 1, b = 2), class = "Foo")
     as.list.Foo <- function(x, ...) c(x, c = 3)
     y0 <- lapply(x, FUN = length)
+    stopifnot(identical(y0, list(a = 1L, b = 1L, c = 1L)))
     y1 <- future_lapply(x, FUN = length)
     stopifnot(identical(y1, y0))
+    rm(list = "as.list.Foo")
     
-  } ## for (strategy ...)
+    message("- future_lapply(x, ...) where x[[i]] subsets via S3 method ...")
+    x <- structure(list(a = 1, b = 2), class = "Foo")
+    `[[.Foo` <- function(x, ...) 0
+    y0 <- lapply(x, FUN = identity)
+    stopifnot(identical(y0, list(a = 0, b = 0)))
+    y1 <- future_lapply(x, FUN = identity)
+    if (getOption("future.apply.chunkWith", "[[") == "[") {
+      stopifnot(identical(y1, unclass(x)))
+    } else {
+      stopifnot(identical(y1, y0))
+    }
+    rm(list = "[[.Foo")
+} ## for (strategy ...)
 
   message(sprintf("Testing with %d cores ... DONE", cores))
 } ## for (cores ...)

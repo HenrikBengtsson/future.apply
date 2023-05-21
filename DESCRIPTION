@@ -1,5 +1,5 @@
 Package: future.apply
-Version: 1.10.0
+Version: 1.11.0
 Title: Apply Function to Elements in Parallel using Futures
 Depends:
     R (>= 3.2.0),
@@ -24,5 +24,5 @@ License: GPL (>= 2)
 LazyLoad: TRUE
 URL: https://future.apply.futureverse.org, https://github.com/HenrikBengtsson/future.apply
 BugReports: https://github.com/HenrikBengtsson/future.apply/issues
-RoxygenNote: 7.2.1
+RoxygenNote: 7.2.3
 Roxygen: list(markdown = TRUE)

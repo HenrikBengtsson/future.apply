@@ -207,7 +207,19 @@ for (strategy in supportedStrategies()) {
   }
   y <- future_Map(`+`, numeric(), 1:3)
   stopifnot(identical(y, truth))
-  
+
+  message("- future_mapply(x, ...) where x[[i]] subsets via S3 method ...")
+  x <- structure(list(a = 1, b = 2), class = "Foo")
+  `[[.Foo` <- function(x, ...) 0
+  y0 <- mapply(x, FUN = identity)
+  stopifnot(identical(y0, c(a = 0, b = 0)))
+  y1 <- future_mapply(x, FUN = identity)
+  if (getOption("future.apply.chunkWith", "[[") == "[") {
+    stopifnot(identical(y1, unlist(x)))
+  } else {
+    stopifnot(identical(y1, y0))
+  }
+
   plan(sequential)
   message(sprintf("*** strategy = %s ... done", sQuote(strategy)))
 } ## for (strategy in ...) 

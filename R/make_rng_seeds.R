@@ -101,6 +101,10 @@ make_rng_seeds <- function(count, seed = FALSE) {
   ## number. Note that this approach is also independent on the number of
   ## elements iterated over and the different FUN() calls.
   oseed <- next_random_seed()
+##  for (kk in seq_len(count)) {
+##    sample.int(n = 1L, size = 1L, replace = FALSE)
+##  }
+##  oseed <- get_random_seed()
   on.exit(set_random_seed(oseed))
 
   seeds <- vector("list", length = count)

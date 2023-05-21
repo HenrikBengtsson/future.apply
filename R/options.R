@@ -119,4 +119,5 @@ update_package_option <- function(name, mode = "character", default = NULL, spli
 
 ## Set future options based on environment variables
 update_package_options <- function(debug = FALSE) {
+  update_package_option("future.apply.chunkWith", default = "[[", debug = debug)
 }

@@ -1,8 +1,14 @@
 #' @inheritParams future_lapply
 #'
+#' @param X An \R object for which a \code{\link[base]{split}} method
+#' exists.  Typically vector-like, allowing subsetting with
+#' \code{\link[base]{[}}, or a data frame.
+#'  
 #' @param INDEX A list of one or more factors, each of same length as `X`.
-#' The elements are coerced to factors by `as.factor()`.
-#' See also [base::tapply()].
+#' The elements are coerced to \code{\link[base]{factor}}s by
+#' \code{\link[base:as.factor]{as.factor()}}. Can also be a formula, which
+#' is useful if `X` is a data frame; see the `f` argument in
+#' \code{\link[base:split]{split()}} for interpretation.
 #' 
 #' @param default See [base::tapply()].
 #' 
@@ -20,6 +26,11 @@ future_tapply <- function(X, INDEX, FUN = NULL, ...,
                           future.label = "future_tapply-%d") {
   FUN <- if (!is.null(FUN)) 
     match.fun(FUN)
+  if (inherits(INDEX, "formula")) {
+    if (!is.data.frame(X))
+      stop("'X' must be a data frame when 'INDEX' is a formula")
+    INDEX <- .formula2varlist(INDEX, X)
+  }
   if (!is.list(INDEX)) 
     INDEX <- list(INDEX)
   INDEX <- lapply(INDEX, FUN = as.factor)
@@ -27,7 +38,7 @@ future_tapply <- function(X, INDEX, FUN = NULL, ...,
   if (!nI)
     stop("'INDEX' is of length zero")
   
-  if (!all(lengths(INDEX) == length(X))) 
+  if (!is.object(X) && !all(lengths(INDEX) == length(X))) 
     stop("arguments must have same length")
   
   namelist <- lapply(INDEX, FUN = levels)
@@ -69,3 +80,8 @@ future_tapply <- function(X, INDEX, FUN = NULL, ...,
 
   ansmat
 }
+
+
+.formula2varlist <- import_base(".formula2varlist", default = function(...) {
+  stop(errorCondition("future_tapply(X, INDEX, ...), where 'INDEX' is a formula, requires R (>= 4.3.0"), class = "NotSupportedByThisRVersionError")
+})

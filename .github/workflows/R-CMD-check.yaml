@@ -22,14 +22,14 @@ jobs:
           - {os: macOS-latest,   r: 'devel'    }
           - {os: macOS-latest,   r: 'release'  }
           - {os: macOS-latest,   r: 'oldrel'   }
-          - {os: ubuntu-20.04,   r: 'devel'    }
-          - {os: ubuntu-20.04,   r: 'release'  }
-          - {os: ubuntu-20.04,   r: 'oldrel'   }
-          - {os: ubuntu-20.04,   r: 'oldrel-1' }
-          - {os: ubuntu-20.04,   r: '3.4'      }
-          - {os: ubuntu-20.04,   r: 'release'  , language: ko,    label: ko    }
-          - {os: ubuntu-20.04,   r: 'release'  , globals_keepWhere: true, label: 'keepWhere' }
-          - {os: ubuntu-20.04,   r: 'release'  , globals_keepWhere: false, label: '!keepWhere' }
+          - {os: ubuntu-latest,  r: 'devel'    }
+          - {os: ubuntu-latest,  r: 'release'  }
+          - {os: ubuntu-latest,  r: 'oldrel'   }
+          - {os: ubuntu-latest,  r: 'oldrel-1' }
+          - {os: ubuntu-latest,  r: '3.4'      }
+          - {os: ubuntu-latest,  r: 'release'  , language: ko,    label: ko    }
+          - {os: ubuntu-latest,  r: 'release'  , globals_keepWhere: true, label: 'keepWhere' }
+          - {os: ubuntu-latest,  r: 'release'  , globals_keepWhere: false, label: '!keepWhere' }
  
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
@@ -44,6 +44,8 @@ jobs:
       _R_CHECK_MATRIX_DATA_: true
       _R_CHECK_SUGGESTS_ONLY_: true
       _R_CHECK_THINGS_IN_TEMP_DIR_: true
+      ## Specific to 'rcmdcheck'
+      RCMDCHECK_ERROR_ON: note
       ## Specific to futures
       R_FUTURE_RNG_ONMISUSE: error
       R_FUTURE_GLOBALS_KEEPWHERE: ${{ matrix.config.globals_keepWhere }}
@@ -86,9 +88,10 @@ jobs:
 
       - name: Check
         run: |
+          if (nzchar(Sys.getenv("R_FUTURE_PLAN")) || getRversion() < "3.5.0") Sys.setenv(RCMDCHECK_ERROR_ON = "error")
           rcmdcheck::rcmdcheck(
-            args = c("--no-manual", "--as-cran"),
-            error_on = "note",
+            build_args = if (getRversion() < "3.5.0") "--no-build-vignettes",
+            args = c("--no-manual", "--as-cran", if (getRversion() < "3.5.0") c("--no-vignettes", "--no-build-vignettes", "--ignore-vignettes")),
             check_dir = "check"
           )
         shell: Rscript {0}

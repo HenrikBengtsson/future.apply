@@ -209,7 +209,7 @@ future_lapply <- local({
       }
     )
   
-  
+
     ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     ## Process
     ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -218,7 +218,7 @@ future_lapply <- local({
       nX = nX,
       chunk_args = X,
       args = list(...),
-      get_chunk = `[`,
+      get_chunk = `chunkWith[[`,
       expr = expr,
       envir = envir,
       future.envir = future.envir,

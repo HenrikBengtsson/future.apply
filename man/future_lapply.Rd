@@ -96,7 +96,9 @@ a label \code{sprintf(future.label, chunk_idx)}.  If TRUE, then the
 same as \code{future.label = "future_lapply-\%d"}.  If FALSE, no labels
 are assigned.}
 
-\item{X}{A vector-like object to iterate over.}
+\item{X}{An \R object for which a \code{\link[base]{split}} method
+exists.  Typically vector-like, allowing subsetting with
+\code{\link[base]{[}}, or a data frame.}
 
 \item{future.stdout}{If \code{TRUE} (default), then the standard output of the
 underlying futures is captured, and re-outputted as soon as possible.
@@ -141,8 +143,10 @@ If \code{NULL}, then argument \code{future.scheduling} is used.}
 \item{simplify}{See \code{\link[base:lapply]{base::sapply()}} and \code{\link[base:tapply]{base::tapply()}}, respectively.}
 
 \item{INDEX}{A list of one or more factors, each of same length as \code{X}.
-The elements are coerced to factors by \code{as.factor()}.
-See also \code{\link[base:tapply]{base::tapply()}}.}
+The elements are coerced to \code{\link[base]{factor}}s by
+\code{\link[base:as.factor]{as.factor()}}. Can also be a formula, which
+is useful if \code{X} is a data frame; see the \code{f} argument in
+\code{\link[base:split]{split()}} for interpretation.}
 
 \item{default}{See \code{\link[base:tapply]{base::tapply()}}.}
 

@@ -1,6 +1,6 @@
 source("incl/start.R")
 
-library("datasets") ## warpbreaks
+library("datasets") ## warpbreaks, iris
 
 options(future.debug = FALSE)
 message("*** future_tapply() ...")
@@ -142,6 +142,17 @@ for (strategy in supportedStrategies()[1]) {
     dim = 4L, dimnames = list(as.character(2:5)))
   stopifnot(identical(tapply(1:n, fac, quantile)[-1], y_truth))
   stopifnot(identical(future_tapply(1:n, fac, quantile)[-1], y_truth))
+
+  if (getRversion() >= "4.3.0") {
+    data <- iris[, c("Sepal.Length", "Sepal.Width")]
+    y_truth <- tapply(data, INDEX = iris$Species, FUN = sum)
+    y <- future_tapply(data, INDEX = iris$Species, FUN = sum)
+    stopifnot(identical(y, y_truth))
+    
+    y_truth2 <- tapply(data, INDEX = ~ iris$Species + iris$Petal.Width, FUN = sum)
+    y2 <- future_tapply(data, INDEX = ~ iris$Species + iris$Petal.Width, FUN = sum)
+    stopifnot(identical(y2, y_truth2))
+  }
 
   plan(sequential)
   message(sprintf("*** strategy = %s ... done", sQuote(strategy)))

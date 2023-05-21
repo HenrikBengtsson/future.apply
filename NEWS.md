@@ -1,3 +1,34 @@
+# Version 1.11.0 [2023-50-20]
+
+## Significant Changes
+
+ * `future_tapply()` now accepts data frames as input, just as
+   `tapply()` does in R (>= 4.3.0).
+
+ * In R (>= 4.3.0), `future_tapply(X, INDEX, ...)` now accepts `INDEX`
+   being a formula when `X` is a data frames, just as `tapply()` does
+   in R (>= 4.3.0).  An error is produced if used in R (< 4.3.0).
+
+ * In R (>= 4.3.0), `future_by(X, INDICES, ...)` now accepts `INDICES`
+   being a formula when `X` is a data frames, just as `by()` does in
+   R (>= 4.3.0).  An error is produced if used in R (< 4.3.0).
+
+## New Features
+
+ * Now **future** operators such as `%globals%`, `%seed%`, and `%stdout%`
+   can be used to control the corresponding `future.*` arguments, e.g.
+   `y <- future_lapply(1:3, FUN = my_fun) %seed% TRUE` is the same as
+   `y <- future_lapply(1:3, FUN = my_fun, future.seed = TRUE)`.
+
+## Bug Fixes
+
+ * Contrary to `lapply(X, ...)`, `future_lapply(X, ...)` failed to use
+   method-specific `[[` subsetting, if the class of `X` implemented
+   one. `future_mapply()` and other functions had the same problem.
+   The reason was that when `X` is partitioned into chunks, it would
+   lose the class attribute before subsetting with `[[`.
+
+
 # Version 1.10.0 [2022-11-04]
 
 ## Bug Fixes

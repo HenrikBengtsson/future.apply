@@ -3,7 +3,7 @@ pkgdown: 2.0.7
 pkgdown_sha: ~
 articles:
   future.apply-1-overview: future.apply-1-overview.html
-last_built: 2023-05-24T03:39Z
+last_built: 2023-07-31T13:01Z
 urls:
   reference: https://future.apply.futureverse.org/reference
   article: https://future.apply.futureverse.org/articles

@@ -101,9 +101,9 @@ as_lecyer_cmrg_seed <- function(seed) {
     oseed <- get_random_seed()
     
     ## Already a L'Ecuyer-CMRG seed?  Then use that as is.
-    if (!is.na(seed) && seed) {
-      if (is_lecyer_cmrg_seed(oseed)) return(oseed)
-    }
+    #if (!is.na(seed) && seed) {
+    #  if (is_lecyer_cmrg_seed(oseed)) return(oseed)
+    #}
     
     ## Otherwise, generate a random one.
     on.exit(set_random_seed(oseed), add = TRUE)

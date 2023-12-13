@@ -4,6 +4,10 @@
 
  * Option `future.globals.maxSize` was never passed down in nested
    parallelization.
+   
+ * The assertion of argument `INDEX` of `future_tapply()` would fail
+   with another error in R (< 3.6.0), if `INDEX` was incorrect in the
+   first place.
 
 
 # Version 1.11.0 [2023-05-20]

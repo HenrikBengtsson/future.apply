@@ -182,14 +182,17 @@ future_xapply <- local({
       
       args_ii <- NULL    
   ##    stop_if_not(attr(globals_ii, "resolved"))
-  
+
+      if (!is.null(globals.maxSize)) {
+        globals_ii["...future.globals.maxSize"] <- list(globals.maxSize)
+      }
+
       ## Adjust option 'future.globals.maxSize' to account for the fact that more
       ## than one element is processed per future.  The adjustment is done by
       ## scaling up the limit by the number of elements in the chunk.  This is
       ## a "good enough" approach.
       ## (https://github.com/HenrikBengtsson/future.apply/issues/8).
       if (length(chunks) > 1L) {
-        globals_ii["...future.globals.maxSize"] <- list(globals.maxSize)
         options(future.globals.maxSize = length(chunks) * globals.maxSize.default)
         if (debug) mdebugf(" - Adjusted option 'future.globals.maxSize': %.0f -> %d * %.0f = %.0f (bytes)", globals.maxSize.default, length(chunks), globals.maxSize.default, getOption("future.globals.maxSize"))
         on.exit(options(future.globals.maxSize = globals.maxSize), add = TRUE)

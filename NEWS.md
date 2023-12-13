@@ -1,6 +1,9 @@
 # Version (development version)
 
- * ...
+## Bug Fixes
+
+ * Option `future.globals.maxSize` was never passed down in nested
+   parallelization.
 
 
 # Version 1.11.0 [2023-05-20]

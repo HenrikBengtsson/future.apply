@@ -188,10 +188,10 @@ future_xapply <- local({
       ## scaling up the limit by the number of elements in the chunk.  This is
       ## a "good enough" approach.
       ## (https://github.com/HenrikBengtsson/future.apply/issues/8).
-      if (length(chunk) > 1L) {
+      if (length(chunks) > 1L) {
         globals_ii["...future.globals.maxSize"] <- list(globals.maxSize)
-        options(future.globals.maxSize = length(chunk) * globals.maxSize.default)
-        if (debug) mdebugf(" - Adjusted option 'future.globals.maxSize': %.0f -> %d * %.0f = %.0f (bytes)", globals.maxSize.default, length(chunk), globals.maxSize.default, getOption("future.globals.maxSize"))
+        options(future.globals.maxSize = length(chunks) * globals.maxSize.default)
+        if (debug) mdebugf(" - Adjusted option 'future.globals.maxSize': %.0f -> %d * %.0f = %.0f (bytes)", globals.maxSize.default, length(chunks), globals.maxSize.default, getOption("future.globals.maxSize"))
         on.exit(options(future.globals.maxSize = globals.maxSize), add = TRUE)
       }
       

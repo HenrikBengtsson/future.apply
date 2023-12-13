@@ -202,7 +202,12 @@ future_xapply <- local({
         if (debug) mdebugf(" - seeds: [%d] <seeds>", length(chunk))
         globals_ii[["...future.seeds_ii"]] <- seeds[chunk]
       }
-  
+
+      if (debug) {
+        mdebugf(" - All globals exported: [n=%d] %s",
+                length(globals_ii), commaq(names(globals_ii)))
+      }
+
       fs[[ii]] <- future(
         expr, substitute = FALSE,
         envir = future.envir,

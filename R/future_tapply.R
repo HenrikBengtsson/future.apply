@@ -82,6 +82,17 @@ future_tapply <- function(X, INDEX, FUN = NULL, ...,
 }
 
 
-.formula2varlist <- import_base(".formula2varlist", default = function(...) {
-  stop(errorCondition("future_tapply(X, INDEX, ...), where 'INDEX' is a formula, requires R (>= 4.3.0"), class = "NotSupportedByThisRVersionError")
-})
+.formula2varlist <- import_base(".formula2varlist", default = local({
+  if (!exists("errorCondition", mode = "function", envir = baseenv(), inherits = FALSE)) {
+    errorCondition <- function(message, ..., class = NULL, call = NULL) {
+      structure(
+        list(message = as.character(message), call = call, ...),
+        class = c(class, "error", "condition")
+      )
+    }
+  }
+  
+  function(...) {
+    stop(errorCondition("future_tapply(X, INDEX, ...), where 'INDEX' is a formula, requires R (>= 4.3.0"), class = "NotSupportedByThisRVersionError")
+  }
+}))

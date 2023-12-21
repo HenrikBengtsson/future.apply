@@ -1,4 +1,16 @@
-# Version 1.11.0 [2023-50-20]
+# Version 1.11.1 [2023-12-19]
+
+## Bug Fixes
+
+ * Option `future.globals.maxSize` was never passed down to parallel
+   workers.
+   
+ * The assertion of argument `INDEX` of `future_tapply()` would fail
+   with another error in R (< 3.6.0), if `INDEX` was incorrect in the
+   first place.
+
+
+# Version 1.11.0 [2023-05-20]
 
 ## Significant Changes
 

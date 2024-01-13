@@ -67,8 +67,7 @@
 #' Since all function calls use the same set of globals, this function can do
 #' any gathering of globals upfront (once), which is more efficient than if
 #' it would be done for each future independently.
-#' If `TRUE`, `NULL` or not is specified (default), then globals
-#' are automatically identified and gathered.
+#' If `TRUE` (default), then globals are automatically identified and gathered.
 #' If a character vector of names is specified, then those globals are gathered.
 #' If a named list, then those globals are used as is.
 #' In all cases, `FUN` and any `\ldots` arguments are automatically

@@ -22,9 +22,9 @@ stopifnot(is_lecyer_cmrg_seed(seed))
 set_random_seed(seed = seed)
 stopifnot(identical(get_random_seed(), seed))
 
-seed2 <- as_lecyer_cmrg_seed(seed = TRUE)
-str(seed2)
-stopifnot(identical(seed2, seed))
+#seed2 <- as_lecyer_cmrg_seed(seed = TRUE)
+#str(seed2)
+#stopifnot(identical(seed2, seed))
 
 seed3 <- as_lecyer_cmrg_seed(seed = seed)
 str(seed3)

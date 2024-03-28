@@ -1,6 +1,11 @@
 # Version (development version)
 
- * ...
+## Miscellaneous
+
+ * Relaxed on unit test that triggered an error on Debian's package
+   check system for 32-bit architectures. The Debian checks do not run
+   the unit tests using `R CMD check`, but instead via `LC_ALL=C.UTF-8
+   R --no-save < test.R`, which is not necessary the same.
 
 
 # Version 1.11.1 [2023-12-19]

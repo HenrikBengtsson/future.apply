@@ -29,7 +29,7 @@ For settings specific to the \pkg{future} package, see
 All of the above \R \option{future.apply.*} options can be set by
 corresponding environment variable \env{R_FUTURE_APPLY_*} \emph{when the
 \pkg{future.apply} package is loaded}.
-For example, if \code{R_FUTURE_APPLY_DEBUG = "TRUE"}, then option
+For example, if \code{R_FUTURE_APPLY_DEBUG=TRUE}, then option
 \option{future.apply.debug} is set to \code{TRUE} (logical).
 }
 
@@ -42,4 +42,3 @@ options(future.apply.debug = TRUE)
 \seealso{
 To set \R options or environment variables when \R starts (even before the \pkg{future} package is loaded), see the \link[base]{Startup} help page.  The \href{https://cran.r-project.org/package=startup}{\pkg{startup}} package provides a friendly mechanism for configuring \R's startup process.
 }
-\keyword{internal}

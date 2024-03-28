@@ -92,6 +92,15 @@ future ecosystem.  For more alternatives, see the 'Reverse dependencies'
 section on the
 \href{https://cran.r-project.org/package=future}{future CRAN package page}.
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://future.apply.futureverse.org}
+  \item \url{https://github.com/HenrikBengtsson/future.apply}
+  \item Report bugs at \url{https://github.com/HenrikBengtsson/future.apply/issues}
+}
+
+}
 \author{
 Henrik Bengtsson, except for the implementations of \code{future_apply()},
 \code{future_Map()}, \code{future_replicate()}, \code{future_sapply()}, and

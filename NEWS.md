@@ -1,3 +1,10 @@
+# Version 1.11.2 [2024-03-27]
+
+## Miscellaneous
+
+ * Relaxed on unit test that triggered an error on 32-bit architectures.
+
+
 # Version 1.11.1 [2023-12-19]
 
 ## Bug Fixes

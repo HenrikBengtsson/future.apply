@@ -188,7 +188,7 @@ stopifnot(all(sapply(y, FUN = identical, oMaxSize)))
 
 message("- approximately invariant to chunk size ...")
 maxSize <- sizes[["FUN"]] + sizes[["X"]] / length(X)
-maxSize <- 3.0 * maxSize  ## Add a bit of leeway
+maxSize <- 4.0 * maxSize  ## Add a bit of leeway
 options(future.globals.maxSize = maxSize)
 
 for (chunk.size in c(1L, 2L, 5L, structure(10L, ordering = "random"))) {

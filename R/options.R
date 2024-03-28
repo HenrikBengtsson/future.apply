@@ -20,7 +20,7 @@
 #' All of the above \R \option{future.apply.*} options can be set by
 #' corresponding environment variable \env{R_FUTURE_APPLY_*} _when the
 #' \pkg{future.apply} package is loaded_.
-#' For example, if `R_FUTURE_APPLY_DEBUG = "TRUE"`, then option
+#' For example, if `R_FUTURE_APPLY_DEBUG=TRUE`, then option
 #' \option{future.apply.debug} is set to `TRUE` (logical).
 #'
 #' @examples
@@ -35,7 +35,6 @@
 #' future.apply.debug
 #' R_FUTURE_APPLY_DEBUG
 #'
-#' @keywords internal
 #' @name future.apply.options
 NULL
 
